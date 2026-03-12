@@ -24,9 +24,9 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TextBox_SeparatorSpalteAnzahl = New System.Windows.Forms.TextBox()
-        Me.Label_CardBorderLeft = New System.Windows.Forms.Label()
+        Me.Label_BorderCard = New System.Windows.Forms.Label()
         Me.TextBox_CardBorderBottom = New System.Windows.Forms.TextBox()
         Me.Label_SeparatorZeile = New System.Windows.Forms.Label()
         Me.Label_SeparatorAnzahl = New System.Windows.Forms.Label()
@@ -56,7 +56,7 @@ Partial Class Form1
         Me.Label_DIN = New System.Windows.Forms.Label()
         Me.TextBox_DPI = New System.Windows.Forms.TextBox()
         Me.TLP_Border = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label_Paper = New System.Windows.Forms.Label()
+        Me.Label_BorderPaper = New System.Windows.Forms.Label()
         Me.FD = New System.Windows.Forms.FontDialog()
         Me.Label_Import = New System.Windows.Forms.Label()
         Me.TextBox_Import = New System.Windows.Forms.TextBox()
@@ -141,7 +141,7 @@ Partial Class Form1
         Me.TSSL_SaveFile = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TSSL_SaveInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.TSSL_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BScsv = New System.Windows.Forms.BindingSource(Me.components)
         Me.TLP_Separator.SuspendLayout()
         Me.GroupBox_Separator.SuspendLayout()
@@ -168,38 +168,38 @@ Partial Class Form1
         Me.Panel1.SuspendLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MS_Main.SuspendLayout()
-        Me.StatusStrip1.SuspendLayout()
+        Me.StatusStrip_Main.SuspendLayout()
         CType(Me.BScsv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TextBox_SeparatorSpalteAnzahl
         '
         Me.TextBox_SeparatorSpalteAnzahl.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorSpalteAnzahl.Location = New System.Drawing.Point(45, 46)
+        Me.TextBox_SeparatorSpalteAnzahl.Location = New System.Drawing.Point(45, 20)
         Me.TextBox_SeparatorSpalteAnzahl.Name = "TextBox_SeparatorSpalteAnzahl"
         Me.TextBox_SeparatorSpalteAnzahl.Size = New System.Drawing.Size(74, 20)
         Me.TextBox_SeparatorSpalteAnzahl.TabIndex = 6
         Me.TextBox_SeparatorSpalteAnzahl.Tag = "Integer"
         Me.TextBox_SeparatorSpalteAnzahl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label_CardBorderLeft
+        'Label_BorderCard
         '
-        Me.Label_CardBorderLeft.AutoSize = True
-        Me.Label_CardBorderLeft.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_CardBorderLeft.Location = New System.Drawing.Point(117, 0)
-        Me.Label_CardBorderLeft.Name = "Label_CardBorderLeft"
-        Me.Label_CardBorderLeft.Size = New System.Drawing.Size(63, 17)
-        Me.Label_CardBorderLeft.TabIndex = 9
-        Me.Label_CardBorderLeft.Text = "Karte"
-        Me.Label_CardBorderLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.Label_CardBorderLeft.UseCompatibleTextRendering = True
+        Me.Label_BorderCard.AutoSize = True
+        Me.Label_BorderCard.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_BorderCard.Location = New System.Drawing.Point(127, 0)
+        Me.Label_BorderCard.Name = "Label_BorderCard"
+        Me.Label_BorderCard.Size = New System.Drawing.Size(73, 17)
+        Me.Label_BorderCard.TabIndex = 9
+        Me.Label_BorderCard.Text = "Karte"
+        Me.Label_BorderCard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label_BorderCard.UseCompatibleTextRendering = True
         '
         'TextBox_CardBorderBottom
         '
         Me.TextBox_CardBorderBottom.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderBottom.Location = New System.Drawing.Point(117, 98)
+        Me.TextBox_CardBorderBottom.Location = New System.Drawing.Point(127, 98)
         Me.TextBox_CardBorderBottom.Name = "TextBox_CardBorderBottom"
-        Me.TextBox_CardBorderBottom.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_CardBorderBottom.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_CardBorderBottom.TabIndex = 13
         Me.TextBox_CardBorderBottom.Tag = "Integer"
         Me.TextBox_CardBorderBottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -208,7 +208,7 @@ Partial Class Form1
         '
         Me.Label_SeparatorZeile.AutoSize = True
         Me.Label_SeparatorZeile.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_SeparatorZeile.Location = New System.Drawing.Point(3, 17)
+        Me.Label_SeparatorZeile.Location = New System.Drawing.Point(3, 43)
         Me.Label_SeparatorZeile.Name = "Label_SeparatorZeile"
         Me.Label_SeparatorZeile.Size = New System.Drawing.Size(36, 17)
         Me.Label_SeparatorZeile.TabIndex = 2
@@ -231,7 +231,7 @@ Partial Class Form1
         'TextBox_SeparatorZeileAnzahl
         '
         Me.TextBox_SeparatorZeileAnzahl.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorZeileAnzahl.Location = New System.Drawing.Point(45, 20)
+        Me.TextBox_SeparatorZeileAnzahl.Location = New System.Drawing.Point(45, 46)
         Me.TextBox_SeparatorZeileAnzahl.Name = "TextBox_SeparatorZeileAnzahl"
         Me.TextBox_SeparatorZeileAnzahl.Size = New System.Drawing.Size(74, 20)
         Me.TextBox_SeparatorZeileAnzahl.TabIndex = 3
@@ -241,7 +241,7 @@ Partial Class Form1
         'TextBox_SeparatorZeileWert
         '
         Me.TextBox_SeparatorZeileWert.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorZeileWert.Location = New System.Drawing.Point(125, 20)
+        Me.TextBox_SeparatorZeileWert.Location = New System.Drawing.Point(125, 46)
         Me.TextBox_SeparatorZeileWert.Name = "TextBox_SeparatorZeileWert"
         Me.TextBox_SeparatorZeileWert.Size = New System.Drawing.Size(75, 20)
         Me.TextBox_SeparatorZeileWert.TabIndex = 4
@@ -268,14 +268,14 @@ Partial Class Form1
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TLP_Separator.Controls.Add(Me.Label_SeparatorZeile, 0, 1)
+        Me.TLP_Separator.Controls.Add(Me.Label_SeparatorZeile, 0, 2)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorAnzahl, 1, 0)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileAnzahl, 1, 1)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileWert, 2, 1)
+        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileAnzahl, 1, 2)
+        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileWert, 2, 2)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorWert, 2, 0)
-        Me.TLP_Separator.Controls.Add(Me.Label_SeparatorSpalte, 0, 2)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteAnzahl, 1, 2)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteWert, 2, 2)
+        Me.TLP_Separator.Controls.Add(Me.Label_SeparatorSpalte, 0, 1)
+        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteAnzahl, 1, 1)
+        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteWert, 2, 1)
         Me.TLP_Separator.Dock = System.Windows.Forms.DockStyle.Top
         Me.TLP_Separator.Location = New System.Drawing.Point(3, 16)
         Me.TLP_Separator.Name = "TLP_Separator"
@@ -283,6 +283,7 @@ Partial Class Form1
         Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP_Separator.Size = New System.Drawing.Size(203, 69)
         Me.TLP_Separator.TabIndex = 0
         '
@@ -290,7 +291,7 @@ Partial Class Form1
         '
         Me.Label_SeparatorSpalte.AutoSize = True
         Me.Label_SeparatorSpalte.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_SeparatorSpalte.Location = New System.Drawing.Point(3, 43)
+        Me.Label_SeparatorSpalte.Location = New System.Drawing.Point(3, 17)
         Me.Label_SeparatorSpalte.Name = "Label_SeparatorSpalte"
         Me.Label_SeparatorSpalte.Size = New System.Drawing.Size(36, 17)
         Me.Label_SeparatorSpalte.TabIndex = 5
@@ -301,7 +302,7 @@ Partial Class Form1
         'TextBox_SeparatorSpalteWert
         '
         Me.TextBox_SeparatorSpalteWert.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorSpalteWert.Location = New System.Drawing.Point(125, 46)
+        Me.TextBox_SeparatorSpalteWert.Location = New System.Drawing.Point(125, 20)
         Me.TextBox_SeparatorSpalteWert.Name = "TextBox_SeparatorSpalteWert"
         Me.TextBox_SeparatorSpalteWert.Size = New System.Drawing.Size(75, 20)
         Me.TextBox_SeparatorSpalteWert.TabIndex = 7
@@ -313,9 +314,10 @@ Partial Class Form1
         Me.GroupBox_Separator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TLP_Main.SetColumnSpan(Me.GroupBox_Separator, 2)
         Me.GroupBox_Separator.Controls.Add(Me.TLP_Separator)
-        Me.GroupBox_Separator.Location = New System.Drawing.Point(3, 410)
+        Me.GroupBox_Separator.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Separator.Location = New System.Drawing.Point(3, 347)
         Me.GroupBox_Separator.Name = "GroupBox_Separator"
-        Me.GroupBox_Separator.Size = New System.Drawing.Size(209, 113)
+        Me.GroupBox_Separator.Size = New System.Drawing.Size(209, 91)
         Me.GroupBox_Separator.TabIndex = 3
         Me.GroupBox_Separator.TabStop = False
         Me.GroupBox_Separator.Text = "Separatoren"
@@ -338,7 +340,7 @@ Partial Class Form1
         Me.TextBox_PaperBorderBottom.Dock = System.Windows.Forms.DockStyle.Top
         Me.TextBox_PaperBorderBottom.Location = New System.Drawing.Point(48, 98)
         Me.TextBox_PaperBorderBottom.Name = "TextBox_PaperBorderBottom"
-        Me.TextBox_PaperBorderBottom.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_PaperBorderBottom.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_PaperBorderBottom.TabIndex = 8
         Me.TextBox_PaperBorderBottom.Tag = "Integer"
         Me.TextBox_PaperBorderBottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -358,9 +360,9 @@ Partial Class Form1
         'TextBox_CardBorderTop
         '
         Me.TextBox_CardBorderTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderTop.Location = New System.Drawing.Point(117, 72)
+        Me.TextBox_CardBorderTop.Location = New System.Drawing.Point(127, 72)
         Me.TextBox_CardBorderTop.Name = "TextBox_CardBorderTop"
-        Me.TextBox_CardBorderTop.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_CardBorderTop.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_CardBorderTop.TabIndex = 12
         Me.TextBox_CardBorderTop.Tag = "Integer"
         Me.TextBox_CardBorderTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -370,7 +372,7 @@ Partial Class Form1
         Me.TextBox_PaperBorderLeft.Dock = System.Windows.Forms.DockStyle.Top
         Me.TextBox_PaperBorderLeft.Location = New System.Drawing.Point(48, 20)
         Me.TextBox_PaperBorderLeft.Name = "TextBox_PaperBorderLeft"
-        Me.TextBox_PaperBorderLeft.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_PaperBorderLeft.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_PaperBorderLeft.TabIndex = 2
         Me.TextBox_PaperBorderLeft.Tag = "Integer"
         Me.TextBox_PaperBorderLeft.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -378,9 +380,9 @@ Partial Class Form1
         'TextBox_CardBorderRight
         '
         Me.TextBox_CardBorderRight.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderRight.Location = New System.Drawing.Point(117, 46)
+        Me.TextBox_CardBorderRight.Location = New System.Drawing.Point(127, 46)
         Me.TextBox_CardBorderRight.Name = "TextBox_CardBorderRight"
-        Me.TextBox_CardBorderRight.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_CardBorderRight.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_CardBorderRight.TabIndex = 11
         Me.TextBox_CardBorderRight.Tag = "Integer"
         Me.TextBox_CardBorderRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -388,9 +390,9 @@ Partial Class Form1
         'TextBox_CardBorderLeft
         '
         Me.TextBox_CardBorderLeft.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderLeft.Location = New System.Drawing.Point(117, 20)
+        Me.TextBox_CardBorderLeft.Location = New System.Drawing.Point(127, 20)
         Me.TextBox_CardBorderLeft.Name = "TextBox_CardBorderLeft"
-        Me.TextBox_CardBorderLeft.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_CardBorderLeft.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_CardBorderLeft.TabIndex = 10
         Me.TextBox_CardBorderLeft.Tag = "Integer"
         Me.TextBox_CardBorderLeft.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -400,7 +402,7 @@ Partial Class Form1
         Me.TextBox_PaperBorderTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.TextBox_PaperBorderTop.Location = New System.Drawing.Point(48, 72)
         Me.TextBox_PaperBorderTop.Name = "TextBox_PaperBorderTop"
-        Me.TextBox_PaperBorderTop.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_PaperBorderTop.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_PaperBorderTop.TabIndex = 6
         Me.TextBox_PaperBorderTop.Tag = "Integer"
         Me.TextBox_PaperBorderTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -434,7 +436,7 @@ Partial Class Form1
         Me.TextBox_PaperBorderRight.Dock = System.Windows.Forms.DockStyle.Top
         Me.TextBox_PaperBorderRight.Location = New System.Drawing.Point(48, 46)
         Me.TextBox_PaperBorderRight.Name = "TextBox_PaperBorderRight"
-        Me.TextBox_PaperBorderRight.Size = New System.Drawing.Size(63, 20)
+        Me.TextBox_PaperBorderRight.Size = New System.Drawing.Size(73, 20)
         Me.TextBox_PaperBorderRight.TabIndex = 4
         Me.TextBox_PaperBorderRight.Tag = "Integer"
         Me.TextBox_PaperBorderRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -526,8 +528,8 @@ Partial Class Form1
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TLP_Border.Controls.Add(Me.Label_Paper, 1, 0)
-        Me.TLP_Border.Controls.Add(Me.Label_CardBorderLeft, 2, 0)
+        Me.TLP_Border.Controls.Add(Me.Label_BorderPaper, 1, 0)
+        Me.TLP_Border.Controls.Add(Me.Label_BorderCard, 2, 0)
         Me.TLP_Border.Controls.Add(Me.TextBox_CardBorderBottom, 2, 4)
         Me.TLP_Border.Controls.Add(Me.Label_Left, 0, 1)
         Me.TLP_Border.Controls.Add(Me.TextBox_PaperBorderBottom, 1, 4)
@@ -550,20 +552,20 @@ Partial Class Form1
         Me.TLP_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Border.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TLP_Border.Size = New System.Drawing.Size(183, 158)
+        Me.TLP_Border.Size = New System.Drawing.Size(203, 122)
         Me.TLP_Border.TabIndex = 0
         '
-        'Label_Paper
+        'Label_BorderPaper
         '
-        Me.Label_Paper.AutoSize = True
-        Me.Label_Paper.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_Paper.Location = New System.Drawing.Point(48, 0)
-        Me.Label_Paper.Name = "Label_Paper"
-        Me.Label_Paper.Size = New System.Drawing.Size(63, 17)
-        Me.Label_Paper.TabIndex = 0
-        Me.Label_Paper.Text = "Papier"
-        Me.Label_Paper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.Label_Paper.UseCompatibleTextRendering = True
+        Me.Label_BorderPaper.AutoSize = True
+        Me.Label_BorderPaper.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_BorderPaper.Location = New System.Drawing.Point(48, 0)
+        Me.Label_BorderPaper.Name = "Label_BorderPaper"
+        Me.Label_BorderPaper.Size = New System.Drawing.Size(73, 17)
+        Me.Label_BorderPaper.TabIndex = 0
+        Me.Label_BorderPaper.Text = "Papier"
+        Me.Label_BorderPaper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label_BorderPaper.UseCompatibleTextRendering = True
         '
         'Label_Import
         '
@@ -584,7 +586,7 @@ Partial Class Form1
         Me.TextBox_Import.Location = New System.Drawing.Point(46, 9)
         Me.TextBox_Import.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
         Me.TextBox_Import.Name = "TextBox_Import"
-        Me.TextBox_Import.Size = New System.Drawing.Size(687, 20)
+        Me.TextBox_Import.Size = New System.Drawing.Size(487, 20)
         Me.TextBox_Import.TabIndex = 0
         Me.TextBox_Import.Tag = "String"
         '
@@ -607,7 +609,7 @@ Partial Class Form1
         Me.TextBox_Export.Location = New System.Drawing.Point(46, 53)
         Me.TextBox_Export.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
         Me.TextBox_Export.Name = "TextBox_Export"
-        Me.TextBox_Export.Size = New System.Drawing.Size(687, 20)
+        Me.TextBox_Export.Size = New System.Drawing.Size(487, 20)
         Me.TextBox_Export.TabIndex = 1
         Me.TextBox_Export.Tag = "String"
         '
@@ -617,7 +619,7 @@ Partial Class Form1
         Me.Button_Import.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Import.ImageKey = "Import.png"
         Me.Button_Import.ImageList = Me.IL
-        Me.Button_Import.Location = New System.Drawing.Point(739, 3)
+        Me.Button_Import.Location = New System.Drawing.Point(539, 3)
         Me.Button_Import.Name = "Button_Import"
         Me.Button_Import.Size = New System.Drawing.Size(38, 38)
         Me.Button_Import.TabIndex = 6
@@ -639,7 +641,7 @@ Partial Class Form1
         Me.Button_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Export.ImageKey = "File_Printer.png"
         Me.Button_Export.ImageList = Me.IL
-        Me.Button_Export.Location = New System.Drawing.Point(739, 47)
+        Me.Button_Export.Location = New System.Drawing.Point(539, 47)
         Me.Button_Export.Name = "Button_Export"
         Me.Button_Export.Size = New System.Drawing.Size(38, 38)
         Me.Button_Export.TabIndex = 7
@@ -665,7 +667,7 @@ Partial Class Form1
         Me.TLP_Files.RowCount = 2
         Me.TLP_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Files.Size = New System.Drawing.Size(780, 88)
+        Me.TLP_Files.Size = New System.Drawing.Size(580, 88)
         Me.TLP_Files.TabIndex = 0
         '
         'GroupBox_Files
@@ -675,7 +677,7 @@ Partial Class Form1
         Me.GroupBox_Files.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox_Files.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Files.Name = "GroupBox_Files"
-        Me.GroupBox_Files.Size = New System.Drawing.Size(786, 107)
+        Me.GroupBox_Files.Size = New System.Drawing.Size(586, 107)
         Me.GroupBox_Files.TabIndex = 43
         Me.GroupBox_Files.TabStop = False
         Me.GroupBox_Files.Text = "Dateien"
@@ -686,7 +688,7 @@ Partial Class Form1
         Me.Button_SearchAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchAdd.ImageKey = "ZoomIn.png"
         Me.Button_SearchAdd.ImageList = Me.IL
-        Me.Button_SearchAdd.Location = New System.Drawing.Point(745, 90)
+        Me.Button_SearchAdd.Location = New System.Drawing.Point(545, 90)
         Me.Button_SearchAdd.Name = "Button_SearchAdd"
         Me.Button_SearchAdd.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchAdd.TabIndex = 47
@@ -771,7 +773,7 @@ Partial Class Form1
         Me.BNcsv.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.BNcsv.Name = "BNcsv"
         Me.BNcsv.PositionItem = Me.BindingNavigatorPositionItem
-        Me.BNcsv.Size = New System.Drawing.Size(742, 25)
+        Me.BNcsv.Size = New System.Drawing.Size(542, 25)
         Me.BNcsv.TabIndex = 45
         Me.BNcsv.Text = "BindingNavigator1"
         '
@@ -808,7 +810,7 @@ Partial Class Form1
         Me.Button_SearchDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchDelete.ImageKey = "ZoomOut.png"
         Me.Button_SearchDelete.ImageList = Me.IL
-        Me.Button_SearchDelete.Location = New System.Drawing.Point(745, 3)
+        Me.Button_SearchDelete.Location = New System.Drawing.Point(545, 3)
         Me.Button_SearchDelete.Name = "Button_SearchDelete"
         Me.Button_SearchDelete.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchDelete.TabIndex = 46
@@ -817,8 +819,8 @@ Partial Class Form1
         'DGVcsv
         '
         Me.DGVcsv.AllowUserToAddRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGVcsv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGVcsv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGVcsv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -828,7 +830,7 @@ Partial Class Form1
         Me.DGVcsv.MultiSelect = False
         Me.DGVcsv.Name = "DGVcsv"
         Me.DGVcsv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGVcsv.Size = New System.Drawing.Size(736, 358)
+        Me.DGVcsv.Size = New System.Drawing.Size(536, 358)
         Me.DGVcsv.TabIndex = 44
         '
         'DGV_Search
@@ -844,7 +846,7 @@ Partial Class Form1
         Me.DGV_Search.Location = New System.Drawing.Point(3, 3)
         Me.DGV_Search.Name = "DGV_Search"
         Me.DGV_Search.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.DGV_Search.Size = New System.Drawing.Size(736, 56)
+        Me.DGV_Search.Size = New System.Drawing.Size(536, 56)
         Me.DGV_Search.TabIndex = 0
         '
         'TableLayoutPanel1
@@ -864,7 +866,7 @@ Partial Class Form1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(786, 265)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 188)
         Me.TableLayoutPanel1.TabIndex = 46
         '
         'TabPage_Files
@@ -874,7 +876,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(792, 378)
+        Me.TabPage_Files.Size = New System.Drawing.Size(592, 301)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -888,7 +890,7 @@ Partial Class Form1
         Me.TabControl_Default.Location = New System.Drawing.Point(0, 24)
         Me.TabControl_Default.Name = "TabControl_Default"
         Me.TabControl_Default.SelectedIndex = 0
-        Me.TabControl_Default.Size = New System.Drawing.Size(800, 404)
+        Me.TabControl_Default.Size = New System.Drawing.Size(600, 327)
         Me.TabControl_Default.TabIndex = 6
         '
         'TabPage_Paper
@@ -899,7 +901,7 @@ Partial Class Form1
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(792, 378)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -911,7 +913,7 @@ Partial Class Form1
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(223, 3)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(566, 372)
+        Me.Panel2.Size = New System.Drawing.Size(366, 522)
         Me.Panel2.TabIndex = 0
         '
         'PictureBox_Paper
@@ -946,7 +948,7 @@ Partial Class Form1
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Main.Size = New System.Drawing.Size(220, 372)
+        Me.TLP_Main.Size = New System.Drawing.Size(220, 522)
         Me.TLP_Main.TabIndex = 44
         '
         'GroupBox_Shema
@@ -1004,9 +1006,10 @@ Partial Class Form1
         '
         Me.GroupBox_Paper.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox_Paper.Controls.Add(Me.TLP_Paper)
+        Me.GroupBox_Paper.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox_Paper.Location = New System.Drawing.Point(3, 66)
         Me.GroupBox_Paper.Name = "GroupBox_Paper"
-        Me.GroupBox_Paper.Size = New System.Drawing.Size(203, 155)
+        Me.GroupBox_Paper.Size = New System.Drawing.Size(203, 128)
         Me.GroupBox_Paper.TabIndex = 1
         Me.GroupBox_Paper.TabStop = False
         Me.GroupBox_Paper.Text = "Papier"
@@ -1079,9 +1082,10 @@ Partial Class Form1
         Me.GroupBox_Border.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TLP_Main.SetColumnSpan(Me.GroupBox_Border, 2)
         Me.GroupBox_Border.Controls.Add(Me.TLP_Border)
-        Me.GroupBox_Border.Location = New System.Drawing.Point(3, 227)
+        Me.GroupBox_Border.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Border.Location = New System.Drawing.Point(3, 200)
         Me.GroupBox_Border.Name = "GroupBox_Border"
-        Me.GroupBox_Border.Size = New System.Drawing.Size(189, 177)
+        Me.GroupBox_Border.Size = New System.Drawing.Size(209, 141)
         Me.GroupBox_Border.TabIndex = 2
         Me.GroupBox_Border.TabStop = False
         Me.GroupBox_Border.Text = "Rahmen"
@@ -1092,7 +1096,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(792, 378)
+        Me.TabPage_Table.Size = New System.Drawing.Size(792, 556)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1104,7 +1108,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(786, 372)
+        Me.Panel1.Size = New System.Drawing.Size(786, 550)
         Me.Panel1.TabIndex = 2
         '
         'DGV_Table
@@ -1114,7 +1118,7 @@ Partial Class Form1
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Location = New System.Drawing.Point(0, 56)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(786, 316)
+        Me.DGV_Table.Size = New System.Drawing.Size(786, 494)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
@@ -1335,7 +1339,7 @@ Partial Class Form1
         Me.MS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.BearbeitenToolStripMenuItem, Me.ExtrasToolStripMenuItem, Me.HilfeToolStripMenuItem})
         Me.MS_Main.Location = New System.Drawing.Point(0, 0)
         Me.MS_Main.Name = "MS_Main"
-        Me.MS_Main.Size = New System.Drawing.Size(800, 24)
+        Me.MS_Main.Size = New System.Drawing.Size(600, 24)
         Me.MS_Main.TabIndex = 4
         Me.MS_Main.Text = "MenuStrip1"
         '
@@ -1362,23 +1366,28 @@ Partial Class Form1
         Me.TSSL_IsModified.Name = "TSSL_IsModified"
         Me.TSSL_IsModified.Size = New System.Drawing.Size(17, 17)
         '
-        'StatusStrip1
+        'StatusStrip_Main
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 428)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(800, 22)
-        Me.StatusStrip1.TabIndex = 5
-        Me.StatusStrip1.Text = "StatusStrip1"
+        Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 351)
+        Me.StatusStrip_Main.Name = "StatusStrip_Main"
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(600, 22)
+        Me.StatusStrip_Main.TabIndex = 5
+        Me.StatusStrip_Main.Text = "StatusStrip1"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = Global.CSVtoQR.My.MySettings.Default.MySize
         Me.Controls.Add(Me.TabControl_Default)
         Me.Controls.Add(Me.MS_Main)
-        Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.StatusStrip_Main)
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", Global.CSVtoQR.My.MySettings.Default, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.Location = Global.CSVtoQR.My.MySettings.Default.MyLocation
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.TLP_Separator.ResumeLayout(False)
@@ -1420,8 +1429,8 @@ Partial Class Form1
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MS_Main.ResumeLayout(False)
         Me.MS_Main.PerformLayout()
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
+        Me.StatusStrip_Main.ResumeLayout(False)
+        Me.StatusStrip_Main.PerformLayout()
         CType(Me.BScsv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1429,7 +1438,7 @@ Partial Class Form1
     End Sub
 
     Friend WithEvents TextBox_SeparatorSpalteAnzahl As TextBox
-    Friend WithEvents Label_CardBorderLeft As Label
+    Friend WithEvents Label_BorderCard As Label
     Friend WithEvents TextBox_CardBorderBottom As TextBox
     Friend WithEvents Label_SeparatorZeile As Label
     Friend WithEvents Label_SeparatorAnzahl As Label
@@ -1459,7 +1468,7 @@ Partial Class Form1
     Friend WithEvents Label_PaperWidthEinheit As Label
     Friend WithEvents GroupBox_Border As GroupBox
     Friend WithEvents TLP_Border As TableLayoutPanel
-    Friend WithEvents Label_Paper As Label
+    Friend WithEvents Label_BorderPaper As Label
     Friend WithEvents Label_Left As Label
     Friend WithEvents TextBox_PaperBorderBottom As TextBox
     Friend WithEvents Label_Bottom As Label
@@ -1545,5 +1554,5 @@ Partial Class Form1
     Friend WithEvents TSSL_SaveFile As ToolStripStatusLabel
     Friend WithEvents TSSL_SaveInfo As ToolStripStatusLabel
     Friend WithEvents TSSL_IsModified As ToolStripStatusLabel
-    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents StatusStrip_Main As StatusStrip
 End Class

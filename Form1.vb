@@ -113,30 +113,26 @@ Public Class Form1
 
     Private Sub DefaultControls()
 
+        Dim MyFont = My.Settings.MyFont
         TSSL_IsModified.BackColor = Color.Green
         DGV_Search.AutoSize = True
+        StatusStrip_Main.Font = MyFont
 
-        ' Enable clipboard copy for grids
-        With DGVcsv
-            .DefaultCellStyle.Font = My.Settings.MyFont
-            .MultiSelect = False
-            .AllowUserToAddRows = False
-        End With
-        With DGV_Search
-            .DefaultCellStyle.Font = My.Settings.MyFont
-            .MultiSelect = False
-            .AllowUserToAddRows = True
-        End With
-        With DGV_Table
-            .DefaultCellStyle.Font = My.Settings.MyFont
-            .MultiSelect = False
-            .AllowUserToAddRows = False
-        End With
-
-        Dim ControlList_GroupBox As New List(Of GroupBox) From {GroupBox_Shema, GroupBox_Paper, GroupBox_Border, GroupBox_Separator, GroupBox_Files}
-        For Each CON As GroupBox In ControlList_GroupBox
+        Dim ConList_DGV As New List(Of DataGridView) From {DGVcsv, DGV_Search, DGV_Table}
+        For Each CON As DataGridView In ConList_DGV
             With CON
-                .Font = My.Settings.MyFont
+                .DefaultCellStyle.Font = MyFont
+                .MultiSelect = False
+                .AllowUserToAddRows = False
+                .Margin = New Padding(3, 3, 3, 3)
+                .Padding = New Padding(0)
+            End With
+        Next
+
+        Dim ConList_GroupBox As New List(Of GroupBox) From {GroupBox_Shema, GroupBox_Paper, GroupBox_Border, GroupBox_Separator, GroupBox_Files}
+        For Each CON As GroupBox In ConList_GroupBox
+            With CON
+                .Font = MyFont
                 .Dock = DockStyle.Top
                 .AutoSize = True
                 .Margin = New Padding(3, 3, 21, 3)
@@ -144,68 +140,91 @@ Public Class Form1
             End With
         Next
 
-        Dim ControlList_TableLayoutPanel As New List(Of TableLayoutPanel) From {TLP_Shema, TLP_Paper, TLP_Border, TLP_Separator, TLP_Files}
-        For Each CON As TableLayoutPanel In ControlList_TableLayoutPanel
+        Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {
+            TLP_Shema, TLP_Paper, TLP_Border, TLP_Separator, TLP_Files}
+        For Each CON As TableLayoutPanel In ConList_TableLayoutPanel
             With CON
-                .Font = My.Settings.MyFont
+                .Font = MyFont
                 .Dock = DockStyle.Fill
                 .AutoSize = True
                 .BorderStyle = BorderStyle.Fixed3D
-                .Margin = New Padding(3, 3, 3, 3)
+                .Margin = New Padding(0)
                 .Padding = New Padding(0)
             End With
         Next
 
-        Dim ControlList_TextBox As New List(Of TextBox) From {
+        Dim ConList_TextBox As New List(Of TextBox) From {
             TextBox_Shema, TextBox_Import, TextBox_Export, TextBox_DPI, TextBox_PaperHeight, TextBox_PaperWidth,
             TextBox_SeparatorSpalteAnzahl, TextBox_SeparatorSpalteWert, TextBox_SeparatorZeileAnzahl, TextBox_SeparatorZeileWert,
             TextBox_PaperBorderLeft, TextBox_PaperBorderTop, TextBox_PaperBorderRight, TextBox_PaperBorderBottom,
             TextBox_CardBorderLeft, TextBox_CardBorderTop, TextBox_CardBorderRight, TextBox_CardBorderBottom}
-        For Each CON As TextBox In ControlList_TextBox
+        For Each CON As TextBox In ConList_TextBox
             With CON
-                .Font = My.Settings.MyFont
+                .Font = MyFont
                 .BorderStyle = BorderStyle.FixedSingle
                 .Dock = DockStyle.Top
                 .AutoSize = True
-                .Margin = New Padding(3, 3, 3, 3)
+                .Margin = New Padding(0)
                 .Padding = New Padding(0)
                 .TextAlign = HorizontalAlignment.Left
             End With
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
         Next
 
-        Dim ControlList_Label As New List(Of Label) From {
-            Label_Shema, Label_Import, Label_Export, Label_DPI, Label_DIN, Label_PaperHeight, Label_PaperWidth,
-            Label_SeparatorZeile, Label_SeparatorSpalte, Label_SeparatorAnzahl, Label_SeparatorWert,
-            Label_Left, Label_Top, Label_Right, Label_Bottom,
-            Label_CardBorderLeft, Label_Top, Label_Right, Label_Bottom, Label_PaperWidthEinheit, Label_PaperHeightEinheit}
-        For Each CON As Label In ControlList_Label
+        Dim ConList_LabelSpalten As New List(Of Label) From {
+            Label_SeparatorAnzahl, Label_SeparatorWert,
+            Label_BorderCard, Label_BorderPaper}
+        For Each CON As Label In ConList_LabelSpalten
             With CON
-                .Font = My.Settings.MyFont
+                .Font = MyFont
                 .Dock = DockStyle.Top
                 .AutoSize = True
-                .Margin = New Padding(3, 3, 3, 3)
+                .Margin = New Padding(0)
+                .Padding = New Padding(0)
+                .TextAlign = ContentAlignment.BottomCenter
+            End With
+        Next
+
+        Dim ConList_LabelZeilen As New List(Of Label) From {
+            Label_Shema, Label_Import, Label_Export, Label_DPI, Label_DIN,
+            Label_PaperHeight, Label_PaperHeightEinheit, Label_PaperWidth, Label_PaperWidthEinheit,
+            Label_SeparatorZeile, Label_SeparatorSpalte,
+            Label_Left, Label_Top, Label_Right, Label_Bottom,
+            Label_Left, Label_Top, Label_Right, Label_Bottom}
+        For Each CON As Label In ConList_LabelZeilen
+            With CON
+                .Font = MyFont
+                .Dock = DockStyle.Top
+                .AutoSize = True
+                .Margin = New Padding(0)
                 .Padding = New Padding(0)
                 .TextAlign = ContentAlignment.MiddleLeft
             End With
         Next
 
-        Dim ControlList_ToolStrip As New List(Of ToolStrip) From {MS_Main}
-        For Each CON As ToolStrip In ControlList_ToolStrip
+
+        Dim ConList_ToolStrip As New List(Of ToolStrip) From {MS_Main}
+        For Each CON As ToolStrip In ConList_ToolStrip
             With CON
-                .Font = My.Settings.MyFont
+                .Font = MyFont
                 .Dock = DockStyle.Top
                 .AutoSize = True
-                .Margin = New Padding(3, 3, 3, 3)
+                .Margin = New Padding(0)
                 .Padding = New Padding(0)
             End With
         Next
 
         With ComboBox_DIN
+            .Font = MyFont
+            .Dock = DockStyle.Left
+            .Margin = New Padding(0)
+            .Padding = New Padding(0)
+
             .DataSource = DS.Tables("PaperDIN")
             .DisplayMember = "DIN"
             .ValueMember = "DIN"
             .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
+
         End With
 
     End Sub
