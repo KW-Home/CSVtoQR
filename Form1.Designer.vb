@@ -24,39 +24,36 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.TextBox_SeparatorSpalteAnzahl = New System.Windows.Forms.TextBox()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_BorderCard = New System.Windows.Forms.Label()
-        Me.TextBox_CardBorderBottom = New System.Windows.Forms.TextBox()
         Me.Label_SeparatorZeile = New System.Windows.Forms.Label()
         Me.Label_SeparatorAnzahl = New System.Windows.Forms.Label()
-        Me.TextBox_SeparatorZeileAnzahl = New System.Windows.Forms.TextBox()
-        Me.TextBox_SeparatorZeileWert = New System.Windows.Forms.TextBox()
         Me.Label_SeparatorWert = New System.Windows.Forms.Label()
         Me.TLP_Separator = New System.Windows.Forms.TableLayoutPanel()
+        Me.NUD_SeparatorZeileAnzahl = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_SeparatorSpalteAnzahl = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_SeparatorSpalteWert = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_SeparatorZeileWert = New System.Windows.Forms.NumericUpDown()
         Me.Label_SeparatorSpalte = New System.Windows.Forms.Label()
-        Me.TextBox_SeparatorSpalteWert = New System.Windows.Forms.TextBox()
         Me.GroupBox_Separator = New System.Windows.Forms.GroupBox()
         Me.Label_Left = New System.Windows.Forms.Label()
-        Me.TextBox_PaperBorderBottom = New System.Windows.Forms.TextBox()
         Me.Label_Bottom = New System.Windows.Forms.Label()
-        Me.TextBox_CardBorderTop = New System.Windows.Forms.TextBox()
-        Me.TextBox_PaperBorderLeft = New System.Windows.Forms.TextBox()
-        Me.TextBox_CardBorderRight = New System.Windows.Forms.TextBox()
-        Me.TextBox_CardBorderLeft = New System.Windows.Forms.TextBox()
-        Me.TextBox_PaperBorderTop = New System.Windows.Forms.TextBox()
         Me.Label_Top = New System.Windows.Forms.Label()
         Me.Label_Right = New System.Windows.Forms.Label()
-        Me.TextBox_PaperBorderRight = New System.Windows.Forms.TextBox()
-        Me.TextBox_PaperWidth = New System.Windows.Forms.TextBox()
         Me.Label_PaperWidth = New System.Windows.Forms.Label()
-        Me.TextBox_PaperHeight = New System.Windows.Forms.TextBox()
         Me.Label_PaperHeight = New System.Windows.Forms.Label()
         Me.Label_DPI = New System.Windows.Forms.Label()
         Me.Label_DIN = New System.Windows.Forms.Label()
-        Me.TextBox_DPI = New System.Windows.Forms.TextBox()
         Me.TLP_Border = New System.Windows.Forms.TableLayoutPanel()
+        Me.NUD_CardBorderRight = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_CardBorderTop = New System.Windows.Forms.NumericUpDown()
         Me.Label_BorderPaper = New System.Windows.Forms.Label()
+        Me.NUD_PaperBorderTop = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_CardBorderBottom = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_PaperBorderBottom = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_PaperBorderLeft = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_CardBorderLeft = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_PaperBorderRight = New System.Windows.Forms.NumericUpDown()
         Me.FD = New System.Windows.Forms.FontDialog()
         Me.Label_Import = New System.Windows.Forms.Label()
         Me.TextBox_Import = New System.Windows.Forms.TextBox()
@@ -97,7 +94,9 @@ Partial Class Form1
         Me.TextBox_Shema = New System.Windows.Forms.TextBox()
         Me.GroupBox_Paper = New System.Windows.Forms.GroupBox()
         Me.TLP_Paper = New System.Windows.Forms.TableLayoutPanel()
-        Me.ComboBox_DIN = New System.Windows.Forms.ComboBox()
+        Me.NUD_PaperWidth = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_PaperHeight = New System.Windows.Forms.NumericUpDown()
+        Me.CB_DIN = New System.Windows.Forms.ComboBox()
         Me.Label_PaperHeightEinheit = New System.Windows.Forms.Label()
         Me.Label_PaperWidthEinheit = New System.Windows.Forms.Label()
         Me.GroupBox_Border = New System.Windows.Forms.GroupBox()
@@ -143,9 +142,22 @@ Partial Class Form1
         Me.TSSL_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BScsv = New System.Windows.Forms.BindingSource(Me.components)
+        Me.CB_DPI = New System.Windows.Forms.ComboBox()
         Me.TLP_Separator.SuspendLayout()
+        CType(Me.NUD_SeparatorZeileAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_SeparatorSpalteAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_SeparatorSpalteWert, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_SeparatorZeileWert, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox_Separator.SuspendLayout()
         Me.TLP_Border.SuspendLayout()
+        CType(Me.NUD_CardBorderRight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_CardBorderTop, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_PaperBorderTop, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_CardBorderBottom, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_PaperBorderBottom, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_PaperBorderLeft, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_CardBorderLeft, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_PaperBorderRight, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TLP_Files.SuspendLayout()
         Me.GroupBox_Files.SuspendLayout()
         CType(Me.BNcsv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -163,6 +175,8 @@ Partial Class Form1
         Me.TLP_Shema.SuspendLayout()
         Me.GroupBox_Paper.SuspendLayout()
         Me.TLP_Paper.SuspendLayout()
+        CType(Me.NUD_PaperWidth, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NUD_PaperHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox_Border.SuspendLayout()
         Me.TabPage_Table.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -171,16 +185,6 @@ Partial Class Form1
         Me.StatusStrip_Main.SuspendLayout()
         CType(Me.BScsv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'TextBox_SeparatorSpalteAnzahl
-        '
-        Me.TextBox_SeparatorSpalteAnzahl.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorSpalteAnzahl.Location = New System.Drawing.Point(45, 20)
-        Me.TextBox_SeparatorSpalteAnzahl.Name = "TextBox_SeparatorSpalteAnzahl"
-        Me.TextBox_SeparatorSpalteAnzahl.Size = New System.Drawing.Size(74, 20)
-        Me.TextBox_SeparatorSpalteAnzahl.TabIndex = 6
-        Me.TextBox_SeparatorSpalteAnzahl.Tag = "Integer"
-        Me.TextBox_SeparatorSpalteAnzahl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label_BorderCard
         '
@@ -193,16 +197,6 @@ Partial Class Form1
         Me.Label_BorderCard.Text = "Karte"
         Me.Label_BorderCard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.Label_BorderCard.UseCompatibleTextRendering = True
-        '
-        'TextBox_CardBorderBottom
-        '
-        Me.TextBox_CardBorderBottom.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderBottom.Location = New System.Drawing.Point(127, 98)
-        Me.TextBox_CardBorderBottom.Name = "TextBox_CardBorderBottom"
-        Me.TextBox_CardBorderBottom.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_CardBorderBottom.TabIndex = 13
-        Me.TextBox_CardBorderBottom.Tag = "Integer"
-        Me.TextBox_CardBorderBottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label_SeparatorZeile
         '
@@ -228,26 +222,6 @@ Partial Class Form1
         Me.Label_SeparatorAnzahl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.Label_SeparatorAnzahl.UseCompatibleTextRendering = True
         '
-        'TextBox_SeparatorZeileAnzahl
-        '
-        Me.TextBox_SeparatorZeileAnzahl.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorZeileAnzahl.Location = New System.Drawing.Point(45, 46)
-        Me.TextBox_SeparatorZeileAnzahl.Name = "TextBox_SeparatorZeileAnzahl"
-        Me.TextBox_SeparatorZeileAnzahl.Size = New System.Drawing.Size(74, 20)
-        Me.TextBox_SeparatorZeileAnzahl.TabIndex = 3
-        Me.TextBox_SeparatorZeileAnzahl.Tag = "Integer"
-        Me.TextBox_SeparatorZeileAnzahl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_SeparatorZeileWert
-        '
-        Me.TextBox_SeparatorZeileWert.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorZeileWert.Location = New System.Drawing.Point(125, 46)
-        Me.TextBox_SeparatorZeileWert.Name = "TextBox_SeparatorZeileWert"
-        Me.TextBox_SeparatorZeileWert.Size = New System.Drawing.Size(75, 20)
-        Me.TextBox_SeparatorZeileWert.TabIndex = 4
-        Me.TextBox_SeparatorZeileWert.Tag = "Integer"
-        Me.TextBox_SeparatorZeileWert.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label_SeparatorWert
         '
         Me.Label_SeparatorWert.AutoSize = True
@@ -268,14 +242,14 @@ Partial Class Form1
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TLP_Separator.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TLP_Separator.Controls.Add(Me.NUD_SeparatorZeileAnzahl, 1, 2)
+        Me.TLP_Separator.Controls.Add(Me.NUD_SeparatorSpalteAnzahl, 1, 1)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorZeile, 0, 2)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorAnzahl, 1, 0)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileAnzahl, 1, 2)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorZeileWert, 2, 2)
+        Me.TLP_Separator.Controls.Add(Me.NUD_SeparatorSpalteWert, 2, 1)
+        Me.TLP_Separator.Controls.Add(Me.NUD_SeparatorZeileWert, 2, 2)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorWert, 2, 0)
         Me.TLP_Separator.Controls.Add(Me.Label_SeparatorSpalte, 0, 1)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteAnzahl, 1, 1)
-        Me.TLP_Separator.Controls.Add(Me.TextBox_SeparatorSpalteWert, 2, 1)
         Me.TLP_Separator.Dock = System.Windows.Forms.DockStyle.Top
         Me.TLP_Separator.Location = New System.Drawing.Point(3, 16)
         Me.TLP_Separator.Name = "TLP_Separator"
@@ -286,6 +260,38 @@ Partial Class Form1
         Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP_Separator.Size = New System.Drawing.Size(203, 69)
         Me.TLP_Separator.TabIndex = 0
+        '
+        'NUD_SeparatorZeileAnzahl
+        '
+        Me.NUD_SeparatorZeileAnzahl.Location = New System.Drawing.Point(45, 46)
+        Me.NUD_SeparatorZeileAnzahl.Name = "NUD_SeparatorZeileAnzahl"
+        Me.NUD_SeparatorZeileAnzahl.Size = New System.Drawing.Size(74, 20)
+        Me.NUD_SeparatorZeileAnzahl.TabIndex = 54
+        Me.NUD_SeparatorZeileAnzahl.Tag = "Anzahl"
+        '
+        'NUD_SeparatorSpalteAnzahl
+        '
+        Me.NUD_SeparatorSpalteAnzahl.Location = New System.Drawing.Point(45, 20)
+        Me.NUD_SeparatorSpalteAnzahl.Name = "NUD_SeparatorSpalteAnzahl"
+        Me.NUD_SeparatorSpalteAnzahl.Size = New System.Drawing.Size(74, 20)
+        Me.NUD_SeparatorSpalteAnzahl.TabIndex = 55
+        Me.NUD_SeparatorSpalteAnzahl.Tag = "Anzahl"
+        '
+        'NUD_SeparatorSpalteWert
+        '
+        Me.NUD_SeparatorSpalteWert.Location = New System.Drawing.Point(125, 20)
+        Me.NUD_SeparatorSpalteWert.Name = "NUD_SeparatorSpalteWert"
+        Me.NUD_SeparatorSpalteWert.Size = New System.Drawing.Size(75, 20)
+        Me.NUD_SeparatorSpalteWert.TabIndex = 49
+        Me.NUD_SeparatorSpalteWert.Tag = "Double"
+        '
+        'NUD_SeparatorZeileWert
+        '
+        Me.NUD_SeparatorZeileWert.Location = New System.Drawing.Point(125, 46)
+        Me.NUD_SeparatorZeileWert.Name = "NUD_SeparatorZeileWert"
+        Me.NUD_SeparatorZeileWert.Size = New System.Drawing.Size(75, 20)
+        Me.NUD_SeparatorZeileWert.TabIndex = 48
+        Me.NUD_SeparatorZeileWert.Tag = "Double"
         '
         'Label_SeparatorSpalte
         '
@@ -298,16 +304,6 @@ Partial Class Form1
         Me.Label_SeparatorSpalte.Text = "Spalte"
         Me.Label_SeparatorSpalte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_SeparatorSpalte.UseCompatibleTextRendering = True
-        '
-        'TextBox_SeparatorSpalteWert
-        '
-        Me.TextBox_SeparatorSpalteWert.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_SeparatorSpalteWert.Location = New System.Drawing.Point(125, 20)
-        Me.TextBox_SeparatorSpalteWert.Name = "TextBox_SeparatorSpalteWert"
-        Me.TextBox_SeparatorSpalteWert.Size = New System.Drawing.Size(75, 20)
-        Me.TextBox_SeparatorSpalteWert.TabIndex = 7
-        Me.TextBox_SeparatorSpalteWert.Tag = "Integer"
-        Me.TextBox_SeparatorSpalteWert.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'GroupBox_Separator
         '
@@ -335,16 +331,6 @@ Partial Class Form1
         Me.Label_Left.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Left.UseCompatibleTextRendering = True
         '
-        'TextBox_PaperBorderBottom
-        '
-        Me.TextBox_PaperBorderBottom.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperBorderBottom.Location = New System.Drawing.Point(48, 98)
-        Me.TextBox_PaperBorderBottom.Name = "TextBox_PaperBorderBottom"
-        Me.TextBox_PaperBorderBottom.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_PaperBorderBottom.TabIndex = 8
-        Me.TextBox_PaperBorderBottom.Tag = "Integer"
-        Me.TextBox_PaperBorderBottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label_Bottom
         '
         Me.Label_Bottom.AutoSize = True
@@ -356,56 +342,6 @@ Partial Class Form1
         Me.Label_Bottom.Text = "Unten"
         Me.Label_Bottom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Bottom.UseCompatibleTextRendering = True
-        '
-        'TextBox_CardBorderTop
-        '
-        Me.TextBox_CardBorderTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderTop.Location = New System.Drawing.Point(127, 72)
-        Me.TextBox_CardBorderTop.Name = "TextBox_CardBorderTop"
-        Me.TextBox_CardBorderTop.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_CardBorderTop.TabIndex = 12
-        Me.TextBox_CardBorderTop.Tag = "Integer"
-        Me.TextBox_CardBorderTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_PaperBorderLeft
-        '
-        Me.TextBox_PaperBorderLeft.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperBorderLeft.Location = New System.Drawing.Point(48, 20)
-        Me.TextBox_PaperBorderLeft.Name = "TextBox_PaperBorderLeft"
-        Me.TextBox_PaperBorderLeft.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_PaperBorderLeft.TabIndex = 2
-        Me.TextBox_PaperBorderLeft.Tag = "Integer"
-        Me.TextBox_PaperBorderLeft.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_CardBorderRight
-        '
-        Me.TextBox_CardBorderRight.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderRight.Location = New System.Drawing.Point(127, 46)
-        Me.TextBox_CardBorderRight.Name = "TextBox_CardBorderRight"
-        Me.TextBox_CardBorderRight.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_CardBorderRight.TabIndex = 11
-        Me.TextBox_CardBorderRight.Tag = "Integer"
-        Me.TextBox_CardBorderRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_CardBorderLeft
-        '
-        Me.TextBox_CardBorderLeft.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_CardBorderLeft.Location = New System.Drawing.Point(127, 20)
-        Me.TextBox_CardBorderLeft.Name = "TextBox_CardBorderLeft"
-        Me.TextBox_CardBorderLeft.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_CardBorderLeft.TabIndex = 10
-        Me.TextBox_CardBorderLeft.Tag = "Integer"
-        Me.TextBox_CardBorderLeft.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_PaperBorderTop
-        '
-        Me.TextBox_PaperBorderTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperBorderTop.Location = New System.Drawing.Point(48, 72)
-        Me.TextBox_PaperBorderTop.Name = "TextBox_PaperBorderTop"
-        Me.TextBox_PaperBorderTop.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_PaperBorderTop.TabIndex = 6
-        Me.TextBox_PaperBorderTop.Tag = "Integer"
-        Me.TextBox_PaperBorderTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label_Top
         '
@@ -431,32 +367,11 @@ Partial Class Form1
         Me.Label_Right.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Right.UseCompatibleTextRendering = True
         '
-        'TextBox_PaperBorderRight
-        '
-        Me.TextBox_PaperBorderRight.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperBorderRight.Location = New System.Drawing.Point(48, 46)
-        Me.TextBox_PaperBorderRight.Name = "TextBox_PaperBorderRight"
-        Me.TextBox_PaperBorderRight.Size = New System.Drawing.Size(73, 20)
-        Me.TextBox_PaperBorderRight.TabIndex = 4
-        Me.TextBox_PaperBorderRight.Tag = "Integer"
-        Me.TextBox_PaperBorderRight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TextBox_PaperWidth
-        '
-        Me.TextBox_PaperWidth.BackColor = System.Drawing.Color.White
-        Me.TextBox_PaperWidth.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperWidth.Location = New System.Drawing.Point(43, 82)
-        Me.TextBox_PaperWidth.Name = "TextBox_PaperWidth"
-        Me.TextBox_PaperWidth.ReadOnly = True
-        Me.TextBox_PaperWidth.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_PaperWidth.TabIndex = 7
-        Me.TextBox_PaperWidth.Tag = "Integer"
-        '
         'Label_PaperWidth
         '
         Me.Label_PaperWidth.AutoSize = True
         Me.Label_PaperWidth.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_PaperWidth.Location = New System.Drawing.Point(3, 79)
+        Me.Label_PaperWidth.Location = New System.Drawing.Point(3, 80)
         Me.Label_PaperWidth.Name = "Label_PaperWidth"
         Me.Label_PaperWidth.Size = New System.Drawing.Size(34, 17)
         Me.Label_PaperWidth.TabIndex = 6
@@ -464,23 +379,11 @@ Partial Class Form1
         Me.Label_PaperWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_PaperWidth.UseCompatibleTextRendering = True
         '
-        'TextBox_PaperHeight
-        '
-        Me.TextBox_PaperHeight.BackColor = System.Drawing.Color.White
-        Me.TextBox_PaperHeight.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_PaperHeight.Location = New System.Drawing.Point(43, 56)
-        Me.TextBox_PaperHeight.Name = "TextBox_PaperHeight"
-        Me.TextBox_PaperHeight.ReadOnly = True
-        Me.TextBox_PaperHeight.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_PaperHeight.TabIndex = 5
-        Me.TextBox_PaperHeight.Tag = "Integer"
-        Me.TextBox_PaperHeight.WordWrap = False
-        '
         'Label_PaperHeight
         '
         Me.Label_PaperHeight.AutoSize = True
         Me.Label_PaperHeight.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_PaperHeight.Location = New System.Drawing.Point(3, 53)
+        Me.Label_PaperHeight.Location = New System.Drawing.Point(3, 54)
         Me.Label_PaperHeight.Name = "Label_PaperHeight"
         Me.Label_PaperHeight.Size = New System.Drawing.Size(34, 17)
         Me.Label_PaperHeight.TabIndex = 4
@@ -504,22 +407,13 @@ Partial Class Form1
         '
         Me.Label_DIN.AutoSize = True
         Me.Label_DIN.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_DIN.Location = New System.Drawing.Point(3, 26)
+        Me.Label_DIN.Location = New System.Drawing.Point(3, 27)
         Me.Label_DIN.Name = "Label_DIN"
         Me.Label_DIN.Size = New System.Drawing.Size(34, 17)
         Me.Label_DIN.TabIndex = 2
         Me.Label_DIN.Text = "DIN"
         Me.Label_DIN.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_DIN.UseCompatibleTextRendering = True
-        '
-        'TextBox_DPI
-        '
-        Me.TextBox_DPI.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_DPI.Location = New System.Drawing.Point(43, 3)
-        Me.TextBox_DPI.Name = "TextBox_DPI"
-        Me.TextBox_DPI.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_DPI.TabIndex = 1
-        Me.TextBox_DPI.Tag = "Integer"
         '
         'TLP_Border
         '
@@ -528,20 +422,20 @@ Partial Class Form1
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TLP_Border.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TLP_Border.Controls.Add(Me.NUD_CardBorderRight, 2, 2)
+        Me.TLP_Border.Controls.Add(Me.NUD_CardBorderTop, 2, 3)
         Me.TLP_Border.Controls.Add(Me.Label_BorderPaper, 1, 0)
+        Me.TLP_Border.Controls.Add(Me.NUD_PaperBorderTop, 1, 3)
+        Me.TLP_Border.Controls.Add(Me.NUD_CardBorderBottom, 2, 4)
+        Me.TLP_Border.Controls.Add(Me.NUD_PaperBorderBottom, 1, 4)
         Me.TLP_Border.Controls.Add(Me.Label_BorderCard, 2, 0)
-        Me.TLP_Border.Controls.Add(Me.TextBox_CardBorderBottom, 2, 4)
         Me.TLP_Border.Controls.Add(Me.Label_Left, 0, 1)
-        Me.TLP_Border.Controls.Add(Me.TextBox_PaperBorderBottom, 1, 4)
         Me.TLP_Border.Controls.Add(Me.Label_Bottom, 0, 4)
-        Me.TLP_Border.Controls.Add(Me.TextBox_CardBorderTop, 2, 3)
-        Me.TLP_Border.Controls.Add(Me.TextBox_PaperBorderLeft, 1, 1)
-        Me.TLP_Border.Controls.Add(Me.TextBox_CardBorderRight, 2, 2)
-        Me.TLP_Border.Controls.Add(Me.TextBox_CardBorderLeft, 2, 1)
-        Me.TLP_Border.Controls.Add(Me.TextBox_PaperBorderTop, 1, 3)
         Me.TLP_Border.Controls.Add(Me.Label_Top, 0, 3)
         Me.TLP_Border.Controls.Add(Me.Label_Right, 0, 2)
-        Me.TLP_Border.Controls.Add(Me.TextBox_PaperBorderRight, 1, 2)
+        Me.TLP_Border.Controls.Add(Me.NUD_PaperBorderLeft, 1, 1)
+        Me.TLP_Border.Controls.Add(Me.NUD_CardBorderLeft, 2, 1)
+        Me.TLP_Border.Controls.Add(Me.NUD_PaperBorderRight, 1, 2)
         Me.TLP_Border.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TLP_Border.Location = New System.Drawing.Point(3, 16)
         Me.TLP_Border.Name = "TLP_Border"
@@ -555,6 +449,22 @@ Partial Class Form1
         Me.TLP_Border.Size = New System.Drawing.Size(203, 122)
         Me.TLP_Border.TabIndex = 0
         '
+        'NUD_CardBorderRight
+        '
+        Me.NUD_CardBorderRight.Location = New System.Drawing.Point(127, 46)
+        Me.NUD_CardBorderRight.Name = "NUD_CardBorderRight"
+        Me.NUD_CardBorderRight.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_CardBorderRight.TabIndex = 46
+        Me.NUD_CardBorderRight.Tag = "Double"
+        '
+        'NUD_CardBorderTop
+        '
+        Me.NUD_CardBorderTop.Location = New System.Drawing.Point(127, 72)
+        Me.NUD_CardBorderTop.Name = "NUD_CardBorderTop"
+        Me.NUD_CardBorderTop.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_CardBorderTop.TabIndex = 47
+        Me.NUD_CardBorderTop.Tag = "Double"
+        '
         'Label_BorderPaper
         '
         Me.Label_BorderPaper.AutoSize = True
@@ -566,6 +476,54 @@ Partial Class Form1
         Me.Label_BorderPaper.Text = "Papier"
         Me.Label_BorderPaper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.Label_BorderPaper.UseCompatibleTextRendering = True
+        '
+        'NUD_PaperBorderTop
+        '
+        Me.NUD_PaperBorderTop.Location = New System.Drawing.Point(48, 72)
+        Me.NUD_PaperBorderTop.Name = "NUD_PaperBorderTop"
+        Me.NUD_PaperBorderTop.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_PaperBorderTop.TabIndex = 46
+        Me.NUD_PaperBorderTop.Tag = "Double"
+        '
+        'NUD_CardBorderBottom
+        '
+        Me.NUD_CardBorderBottom.Location = New System.Drawing.Point(127, 98)
+        Me.NUD_CardBorderBottom.Name = "NUD_CardBorderBottom"
+        Me.NUD_CardBorderBottom.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_CardBorderBottom.TabIndex = 50
+        Me.NUD_CardBorderBottom.Tag = "Double"
+        '
+        'NUD_PaperBorderBottom
+        '
+        Me.NUD_PaperBorderBottom.Location = New System.Drawing.Point(48, 98)
+        Me.NUD_PaperBorderBottom.Name = "NUD_PaperBorderBottom"
+        Me.NUD_PaperBorderBottom.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_PaperBorderBottom.TabIndex = 51
+        Me.NUD_PaperBorderBottom.Tag = "Double"
+        '
+        'NUD_PaperBorderLeft
+        '
+        Me.NUD_PaperBorderLeft.Location = New System.Drawing.Point(48, 20)
+        Me.NUD_PaperBorderLeft.Name = "NUD_PaperBorderLeft"
+        Me.NUD_PaperBorderLeft.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_PaperBorderLeft.TabIndex = 14
+        Me.NUD_PaperBorderLeft.Tag = "Double"
+        '
+        'NUD_CardBorderLeft
+        '
+        Me.NUD_CardBorderLeft.Location = New System.Drawing.Point(127, 20)
+        Me.NUD_CardBorderLeft.Name = "NUD_CardBorderLeft"
+        Me.NUD_CardBorderLeft.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_CardBorderLeft.TabIndex = 15
+        Me.NUD_CardBorderLeft.Tag = "Double"
+        '
+        'NUD_PaperBorderRight
+        '
+        Me.NUD_PaperBorderRight.Location = New System.Drawing.Point(48, 46)
+        Me.NUD_PaperBorderRight.Name = "NUD_PaperBorderRight"
+        Me.NUD_PaperBorderRight.Size = New System.Drawing.Size(73, 20)
+        Me.NUD_PaperBorderRight.TabIndex = 16
+        Me.NUD_PaperBorderRight.Tag = "Double"
         '
         'Label_Import
         '
@@ -819,8 +777,8 @@ Partial Class Form1
         'DGVcsv
         '
         Me.DGVcsv.AllowUserToAddRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
         Me.DGVcsv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGVcsv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGVcsv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -866,7 +824,7 @@ Partial Class Form1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 188)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 415)
         Me.TableLayoutPanel1.TabIndex = 46
         '
         'TabPage_Files
@@ -876,7 +834,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(592, 301)
+        Me.TabPage_Files.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -890,7 +848,7 @@ Partial Class Form1
         Me.TabControl_Default.Location = New System.Drawing.Point(0, 24)
         Me.TabControl_Default.Name = "TabControl_Default"
         Me.TabControl_Default.SelectedIndex = 0
-        Me.TabControl_Default.Size = New System.Drawing.Size(600, 327)
+        Me.TabControl_Default.Size = New System.Drawing.Size(600, 554)
         Me.TabControl_Default.TabIndex = 6
         '
         'TabPage_Paper
@@ -1021,14 +979,14 @@ Partial Class Form1
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
-        Me.TLP_Paper.Controls.Add(Me.TextBox_PaperWidth, 1, 3)
+        Me.TLP_Paper.Controls.Add(Me.CB_DPI, 1, 0)
+        Me.TLP_Paper.Controls.Add(Me.NUD_PaperWidth, 1, 3)
+        Me.TLP_Paper.Controls.Add(Me.NUD_PaperHeight, 1, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperWidth, 0, 3)
-        Me.TLP_Paper.Controls.Add(Me.TextBox_PaperHeight, 1, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperHeight, 0, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_DPI, 0, 0)
         Me.TLP_Paper.Controls.Add(Me.Label_DIN, 0, 1)
-        Me.TLP_Paper.Controls.Add(Me.TextBox_DPI, 1, 0)
-        Me.TLP_Paper.Controls.Add(Me.ComboBox_DIN, 1, 1)
+        Me.TLP_Paper.Controls.Add(Me.CB_DIN, 1, 1)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperHeightEinheit, 2, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperWidthEinheit, 2, 3)
         Me.TLP_Paper.Dock = System.Windows.Forms.DockStyle.Top
@@ -1039,26 +997,45 @@ Partial Class Form1
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Paper.Size = New System.Drawing.Size(197, 105)
+        Me.TLP_Paper.Size = New System.Drawing.Size(197, 106)
         Me.TLP_Paper.TabIndex = 0
         '
-        'ComboBox_DIN
+        'NUD_PaperWidth
         '
-        Me.ComboBox_DIN.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.ComboBox_DIN.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.TLP_Paper.SetColumnSpan(Me.ComboBox_DIN, 2)
-        Me.ComboBox_DIN.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ComboBox_DIN.DropDownWidth = 200
-        Me.ComboBox_DIN.FormattingEnabled = True
-        Me.ComboBox_DIN.Location = New System.Drawing.Point(43, 29)
-        Me.ComboBox_DIN.Name = "ComboBox_DIN"
-        Me.ComboBox_DIN.Size = New System.Drawing.Size(151, 21)
-        Me.ComboBox_DIN.TabIndex = 3
+        Me.NUD_PaperWidth.Location = New System.Drawing.Point(43, 83)
+        Me.NUD_PaperWidth.Name = "NUD_PaperWidth"
+        Me.NUD_PaperWidth.ReadOnly = True
+        Me.NUD_PaperWidth.Size = New System.Drawing.Size(75, 20)
+        Me.NUD_PaperWidth.TabIndex = 52
+        Me.NUD_PaperWidth.Tag = "Border"
+        '
+        'NUD_PaperHeight
+        '
+        Me.NUD_PaperHeight.Location = New System.Drawing.Point(43, 57)
+        Me.NUD_PaperHeight.Name = "NUD_PaperHeight"
+        Me.NUD_PaperHeight.ReadOnly = True
+        Me.NUD_PaperHeight.Size = New System.Drawing.Size(75, 20)
+        Me.NUD_PaperHeight.TabIndex = 53
+        Me.NUD_PaperHeight.Tag = "Border"
+        '
+        'CB_DIN
+        '
+        Me.CB_DIN.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.CB_DIN.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.TLP_Paper.SetColumnSpan(Me.CB_DIN, 2)
+        Me.CB_DIN.Dock = System.Windows.Forms.DockStyle.Top
+        Me.CB_DIN.DropDownWidth = 200
+        Me.CB_DIN.FormattingEnabled = True
+        Me.CB_DIN.Location = New System.Drawing.Point(43, 30)
+        Me.CB_DIN.Name = "CB_DIN"
+        Me.CB_DIN.Size = New System.Drawing.Size(151, 21)
+        Me.CB_DIN.TabIndex = 3
+        Me.CB_DIN.Tag = "DIN"
         '
         'Label_PaperHeightEinheit
         '
         Me.Label_PaperHeightEinheit.AutoSize = True
-        Me.Label_PaperHeightEinheit.Location = New System.Drawing.Point(125, 53)
+        Me.Label_PaperHeightEinheit.Location = New System.Drawing.Point(125, 54)
         Me.Label_PaperHeightEinheit.Name = "Label_PaperHeightEinheit"
         Me.Label_PaperHeightEinheit.Size = New System.Drawing.Size(23, 17)
         Me.Label_PaperHeightEinheit.TabIndex = 8
@@ -1069,7 +1046,7 @@ Partial Class Form1
         'Label_PaperWidthEinheit
         '
         Me.Label_PaperWidthEinheit.AutoSize = True
-        Me.Label_PaperWidthEinheit.Location = New System.Drawing.Point(125, 79)
+        Me.Label_PaperWidthEinheit.Location = New System.Drawing.Point(125, 80)
         Me.Label_PaperWidthEinheit.Name = "Label_PaperWidthEinheit"
         Me.Label_PaperWidthEinheit.Size = New System.Drawing.Size(23, 17)
         Me.Label_PaperWidthEinheit.TabIndex = 9
@@ -1096,7 +1073,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(792, 556)
+        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1108,7 +1085,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(786, 550)
+        Me.Panel1.Size = New System.Drawing.Size(586, 522)
         Me.Panel1.TabIndex = 2
         '
         'DGV_Table
@@ -1118,7 +1095,7 @@ Partial Class Form1
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Location = New System.Drawing.Point(0, 56)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(786, 494)
+        Me.DGV_Table.Size = New System.Drawing.Size(586, 466)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
@@ -1127,7 +1104,7 @@ Partial Class Form1
         Me.ListBox_Tabellen.FormattingEnabled = True
         Me.ListBox_Tabellen.Location = New System.Drawing.Point(0, 0)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(786, 56)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(586, 56)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'OptionenToolStripMenuItem
@@ -1153,7 +1130,7 @@ Partial Class Form1
         '
         Me.ExtrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnpassenToolStripMenuItem, Me.OptionenToolStripMenuItem})
         Me.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem"
-        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
+        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
         Me.ExtrasToolStripMenuItem.Text = "E&xtras"
         '
         'AlleauswählenToolStripMenuItem
@@ -1369,11 +1346,23 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 351)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 578)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.Size = New System.Drawing.Size(600, 22)
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
+        '
+        'CB_DPI
+        '
+        Me.CB_DPI.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.CB_DPI.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.CB_DPI.FormattingEnabled = True
+        Me.CB_DPI.Items.AddRange(New Object() {"32", "64", "96", "128", "160", "192", "224", "256"})
+        Me.CB_DPI.Location = New System.Drawing.Point(43, 3)
+        Me.CB_DPI.Name = "CB_DPI"
+        Me.CB_DPI.Size = New System.Drawing.Size(75, 21)
+        Me.CB_DPI.TabIndex = 46
+        Me.CB_DPI.Tag = "DPI"
         '
         'Form1
         '
@@ -1392,10 +1381,22 @@ Partial Class Form1
         Me.Text = "Form1"
         Me.TLP_Separator.ResumeLayout(False)
         Me.TLP_Separator.PerformLayout()
+        CType(Me.NUD_SeparatorZeileAnzahl, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_SeparatorSpalteAnzahl, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_SeparatorSpalteWert, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_SeparatorZeileWert, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox_Separator.ResumeLayout(False)
         Me.GroupBox_Separator.PerformLayout()
         Me.TLP_Border.ResumeLayout(False)
         Me.TLP_Border.PerformLayout()
+        CType(Me.NUD_CardBorderRight, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_CardBorderTop, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_PaperBorderTop, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_CardBorderBottom, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_PaperBorderBottom, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_PaperBorderLeft, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_CardBorderLeft, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_PaperBorderRight, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TLP_Files.ResumeLayout(False)
         Me.TLP_Files.PerformLayout()
         Me.GroupBox_Files.ResumeLayout(False)
@@ -1422,6 +1423,8 @@ Partial Class Form1
         Me.GroupBox_Paper.PerformLayout()
         Me.TLP_Paper.ResumeLayout(False)
         Me.TLP_Paper.PerformLayout()
+        CType(Me.NUD_PaperWidth, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NUD_PaperHeight, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox_Border.ResumeLayout(False)
         Me.GroupBox_Border.PerformLayout()
         Me.TabPage_Table.ResumeLayout(False)
@@ -1436,18 +1439,12 @@ Partial Class Form1
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents TextBox_SeparatorSpalteAnzahl As TextBox
     Friend WithEvents Label_BorderCard As Label
-    Friend WithEvents TextBox_CardBorderBottom As TextBox
     Friend WithEvents Label_SeparatorZeile As Label
     Friend WithEvents Label_SeparatorAnzahl As Label
-    Friend WithEvents TextBox_SeparatorZeileAnzahl As TextBox
-    Friend WithEvents TextBox_SeparatorZeileWert As TextBox
     Friend WithEvents Label_SeparatorWert As Label
     Friend WithEvents TLP_Separator As TableLayoutPanel
     Friend WithEvents Label_SeparatorSpalte As Label
-    Friend WithEvents TextBox_SeparatorSpalteWert As TextBox
     Friend WithEvents GroupBox_Separator As GroupBox
     Friend WithEvents TLP_Main As TableLayoutPanel
     Friend WithEvents GroupBox_Shema As GroupBox
@@ -1456,30 +1453,20 @@ Partial Class Form1
     Friend WithEvents TextBox_Shema As TextBox
     Friend WithEvents GroupBox_Paper As GroupBox
     Friend WithEvents TLP_Paper As TableLayoutPanel
-    Friend WithEvents TextBox_PaperWidth As TextBox
     Friend WithEvents Label_PaperWidth As Label
-    Friend WithEvents TextBox_PaperHeight As TextBox
     Friend WithEvents Label_PaperHeight As Label
     Friend WithEvents Label_DPI As Label
     Friend WithEvents Label_DIN As Label
-    Friend WithEvents TextBox_DPI As TextBox
-    Friend WithEvents ComboBox_DIN As ComboBox
+    Friend WithEvents CB_DIN As ComboBox
     Friend WithEvents Label_PaperHeightEinheit As Label
     Friend WithEvents Label_PaperWidthEinheit As Label
     Friend WithEvents GroupBox_Border As GroupBox
     Friend WithEvents TLP_Border As TableLayoutPanel
     Friend WithEvents Label_BorderPaper As Label
     Friend WithEvents Label_Left As Label
-    Friend WithEvents TextBox_PaperBorderBottom As TextBox
     Friend WithEvents Label_Bottom As Label
-    Friend WithEvents TextBox_CardBorderTop As TextBox
-    Friend WithEvents TextBox_PaperBorderLeft As TextBox
-    Friend WithEvents TextBox_CardBorderRight As TextBox
-    Friend WithEvents TextBox_CardBorderLeft As TextBox
-    Friend WithEvents TextBox_PaperBorderTop As TextBox
     Friend WithEvents Label_Top As Label
     Friend WithEvents Label_Right As Label
-    Friend WithEvents TextBox_PaperBorderRight As TextBox
     Friend WithEvents FD As FontDialog
     Friend WithEvents Label_Import As Label
     Friend WithEvents TextBox_Import As TextBox
@@ -1555,4 +1542,19 @@ Partial Class Form1
     Friend WithEvents TSSL_SaveInfo As ToolStripStatusLabel
     Friend WithEvents TSSL_IsModified As ToolStripStatusLabel
     Friend WithEvents StatusStrip_Main As StatusStrip
+    Friend WithEvents NUD_PaperBorderLeft As NumericUpDown
+    Friend WithEvents NUD_CardBorderLeft As NumericUpDown
+    Friend WithEvents NUD_CardBorderRight As NumericUpDown
+    Friend WithEvents NUD_CardBorderTop As NumericUpDown
+    Friend WithEvents NUD_PaperBorderTop As NumericUpDown
+    Friend WithEvents NUD_PaperBorderRight As NumericUpDown
+    Friend WithEvents NUD_SeparatorSpalteAnzahl As NumericUpDown
+    Friend WithEvents NUD_SeparatorZeileAnzahl As NumericUpDown
+    Friend WithEvents NUD_PaperHeight As NumericUpDown
+    Friend WithEvents NUD_PaperWidth As NumericUpDown
+    Friend WithEvents NUD_PaperBorderBottom As NumericUpDown
+    Friend WithEvents NUD_CardBorderBottom As NumericUpDown
+    Friend WithEvents NUD_SeparatorSpalteWert As NumericUpDown
+    Friend WithEvents NUD_SeparatorZeileWert As NumericUpDown
+    Friend WithEvents CB_DPI As ComboBox
 End Class

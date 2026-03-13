@@ -41,8 +41,7 @@ Public Class Form1
         InitializeComponent()
 
         MySettings_Load()
-        DataSetRead()
-        LoadTable()
+        DefaultControls()
 
         TSSL_IsModified.BackColor = Color.Green
 
@@ -60,8 +59,8 @@ Public Class Form1
             ImportFile = DS.Tables("Shema").Rows(0).Item("Import").ToString
         End If
 
-        DefaultControls()
-
+        DataSetRead()
+        LoadTable()
         PaperPaint()
 
     End Sub
@@ -154,10 +153,7 @@ Public Class Form1
         Next
 
         Dim ConList_TextBox As New List(Of TextBox) From {
-            TextBox_Shema, TextBox_Import, TextBox_Export, TextBox_DPI, TextBox_PaperHeight, TextBox_PaperWidth,
-            TextBox_SeparatorSpalteAnzahl, TextBox_SeparatorSpalteWert, TextBox_SeparatorZeileAnzahl, TextBox_SeparatorZeileWert,
-            TextBox_PaperBorderLeft, TextBox_PaperBorderTop, TextBox_PaperBorderRight, TextBox_PaperBorderBottom,
-            TextBox_CardBorderLeft, TextBox_CardBorderTop, TextBox_CardBorderRight, TextBox_CardBorderBottom}
+            TextBox_Shema, TextBox_Import, TextBox_Export}
         For Each CON As TextBox In ConList_TextBox
             With CON
                 .Font = MyFont
@@ -169,6 +165,51 @@ Public Class Form1
                 .TextAlign = HorizontalAlignment.Left
             End With
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
+        Next
+
+        Dim ConList_NumericUpDown As New List(Of NumericUpDown) From {
+            NUD_PaperHeight, NUD_PaperWidth, NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert,
+            NUD_SeparatorZeileAnzahl, NUD_SeparatorZeileWert,
+            NUD_PaperBorderLeft, NUD_PaperBorderTop, NUD_PaperBorderRight, NUD_PaperBorderBottom,
+            NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom}
+        For Each CON As NumericUpDown In ConList_NumericUpDown
+            With CON
+                .Font = MyFont
+                .BorderStyle = BorderStyle.FixedSingle
+                .Dock = DockStyle.Top
+                .AutoSize = True
+                .Margin = New Padding(3)
+                .Padding = New Padding(3)
+                .TextAlign = HorizontalAlignment.Left
+                Select Case .Tag
+                    Case "Integer"
+                        .Minimum = 1
+                        .Maximum = 2000
+                        .Increment = 1
+                        .DecimalPlaces = 0
+                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
+                    Case "Double"
+                        .Minimum = 0
+                        .Maximum = 9999
+                        .Increment = 0.1
+                        .DecimalPlaces = 1
+                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
+                    Case "Anzahl"
+                        .Minimum = 1
+                        .Maximum = 12
+                        .Increment = 1
+                        .DecimalPlaces = 0
+                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
+                    Case "Border"
+                        .Minimum = 1
+                        .Maximum = 2000
+                        .Increment = 1
+                        .DecimalPlaces = 0
+                        .ReadOnly = True
+                End Select
+                .TextAlign = HorizontalAlignment.Right
+            End With
+
         Next
 
         Dim ConList_LabelSpalten As New List(Of Label) From {
@@ -214,7 +255,7 @@ Public Class Form1
             End With
         Next
 
-        With ComboBox_DIN
+        With CB_DIN
             .Font = MyFont
             .Dock = DockStyle.Left
             .Margin = New Padding(0)
@@ -318,6 +359,10 @@ Public Class Form1
                 DS.WriteXml(SFD.FileName, XmlWriteMode.WriteSchema)
                 My.Settings.MySavePath = SFD.FileName
                 My.Settings.Save()
+
+                DataSetRead()
+                TSSL_SaveFile.Text = My.Settings.MySavePath
+
             End If
         End If
 
@@ -368,22 +413,22 @@ Public Class Form1
                 TextBox_Shema.Text = .Item("Shema").ToString
                 TextBox_Import.Text = .Item("Import").ToString
                 TextBox_Export.Text = .Item("Export").ToString
-                TextBox_DPI.Text = .Item("DPI").ToString
-                ComboBox_DIN.Text = .Item("DIN").ToString
-                TextBox_PaperHeight.Text = .Item("PaperHeight").ToString
-                TextBox_PaperWidth.Text = .Item("PaperWidth").ToString
-                TextBox_PaperBorderLeft.Text = .Item("PaperBorderLeft").ToString
-                TextBox_PaperBorderTop.Text = .Item("PaperBorderTop").ToString
-                TextBox_PaperBorderRight.Text = .Item("PaperBorderRight").ToString
-                TextBox_PaperBorderBottom.Text = .Item("PaperBorderBottom").ToString
-                TextBox_SeparatorSpalteAnzahl.Text = .Item("SeparatorSpalteAnzahl").ToString
-                TextBox_SeparatorSpalteWert.Text = .Item("SeparatorSpalteWert").ToString
-                TextBox_SeparatorZeileAnzahl.Text = .Item("SeparatorZeileAnzahl").ToString
-                TextBox_SeparatorZeileWert.Text = .Item("SeparatorZeileWert").ToString
-                TextBox_CardBorderLeft.Text = .Item("CardBorderLeft").ToString
-                TextBox_CardBorderTop.Text = .Item("CardBorderTop").ToString
-                TextBox_CardBorderRight.Text = .Item("CardBorderRight").ToString
-                TextBox_CardBorderBottom.Text = .Item("CardBorderBottom").ToString
+                CB_DPI.Text = .Item("DPI")
+                CB_DIN.Text = .Item("DIN").ToString
+                If IsNumeric(.Item("PaperHeight")) Then NUD_PaperHeight.Value = .Item("PaperHeight")
+                If IsNumeric(.Item("PaperWidth")) Then NUD_PaperWidth.Value = .Item("PaperWidth")
+                If IsNumeric(.Item("PaperBorderLeft")) Then NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
+                If IsNumeric(.Item("PaperBorderTop")) Then NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
+                If IsNumeric(.Item("PaperBorderRight")) Then NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
+                If IsNumeric(.Item("PaperBorderBottom")) Then NUD_PaperBorderBottom.Value = .Item("PaperBorderBottom")
+                If IsNumeric(.Item("SeparatorSpalteAnzahl")) Then NUD_SeparatorSpalteAnzahl.Value = .Item("SeparatorSpalteAnzahl")
+                If IsNumeric(.Item("SeparatorSpalteWert")) Then NUD_SeparatorSpalteWert.Value = .Item("SeparatorSpalteWert")
+                If IsNumeric(.Item("SeparatorZeileAnzahl")) Then NUD_SeparatorZeileAnzahl.Value = .Item("SeparatorZeileAnzahl")
+                If IsNumeric(.Item("SeparatorZeileWert")) Then NUD_SeparatorZeileWert.Value = .Item("SeparatorZeileWert")
+                If IsNumeric(.Item("CardBorderLeft")) Then NUD_CardBorderLeft.Value = .Item("CardBorderLeft")
+                If IsNumeric(.Item("CardBorderTop")) Then NUD_CardBorderTop.Value = .Item("CardBorderTop")
+                If IsNumeric(.Item("CardBorderRight")) Then NUD_CardBorderRight.Value = .Item("CardBorderRight")
+                If IsNumeric(.Item("CardBorderBottom")) Then NUD_CardBorderBottom.Value = .Item("CardBorderBottom")
             End With
         End With
 
@@ -399,22 +444,22 @@ Public Class Form1
                 .Item("Shema") = TextBox_Shema.Text
                 .Item("Import") = TextBox_Import.Text
                 .Item("Export") = TextBox_Export.Text
-                .Item("DIN") = ComboBox_DIN.Text
-                If IsNumeric(TextBox_DPI.Text) = True Then .Item("DPI") = TextBox_DPI.Text
-                If IsNumeric(TextBox_PaperHeight.Text) = True Then .Item("PaperHeight") = TextBox_PaperHeight.Text
-                If IsNumeric(TextBox_PaperWidth.Text) = True Then .Item("PaperWidth") = TextBox_PaperWidth.Text
-                If IsNumeric(TextBox_PaperBorderLeft.Text) = True Then .Item("PaperBorderLeft") = TextBox_PaperBorderLeft.Text
-                If IsNumeric(TextBox_PaperBorderTop.Text) = True Then .Item("PaperBorderTop") = TextBox_PaperBorderTop.Text
-                If IsNumeric(TextBox_PaperBorderRight.Text) = True Then .Item("PaperBorderRight") = TextBox_PaperBorderRight.Text
-                If IsNumeric(TextBox_PaperBorderBottom.Text) = True Then .Item("PaperBorderBottom") = TextBox_PaperBorderBottom.Text
-                If IsNumeric(TextBox_SeparatorSpalteAnzahl.Text) = True Then .Item("SeparatorSpalteAnzahl") = TextBox_SeparatorSpalteAnzahl.Text
-                If IsNumeric(TextBox_SeparatorSpalteWert.Text) = True Then .Item("SeparatorSpalteWert") = TextBox_SeparatorSpalteWert.Text
-                If IsNumeric(TextBox_SeparatorZeileAnzahl.Text) = True Then .Item("SeparatorZeileAnzahl") = TextBox_SeparatorZeileAnzahl.Text
-                If IsNumeric(TextBox_SeparatorZeileWert.Text) = True Then .Item("SeparatorZeileWert") = TextBox_SeparatorZeileWert.Text
-                If IsNumeric(TextBox_CardBorderLeft.Text) = True Then .Item("CardBorderLeft") = TextBox_CardBorderLeft.Text
-                If IsNumeric(TextBox_CardBorderTop.Text) = True Then .Item("CardBorderTop") = TextBox_CardBorderTop.Text
-                If IsNumeric(TextBox_CardBorderRight.Text) = True Then .Item("CardBorderRight") = TextBox_CardBorderRight.Text
-                If IsNumeric(TextBox_CardBorderBottom.Text) = True Then .Item("CardBorderBottom") = TextBox_CardBorderBottom.Text
+                .Item("DIN") = CB_DIN.Text
+                .Item("DPI") = CB_DPI.Text
+                If IsNumeric(NUD_PaperHeight.Value) = True Then .Item("PaperHeight") = NUD_PaperHeight.Value
+                If IsNumeric(NUD_PaperWidth.Value) = True Then .Item("PaperWidth") = NUD_PaperWidth.Value
+                If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("PaperBorderLeft") = NUD_PaperBorderLeft.Value
+                If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("PaperBorderTop") = NUD_PaperBorderTop.Value
+                If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("PaperBorderRight") = NUD_PaperBorderRight.Value
+                If IsNumeric(NUD_PaperBorderBottom.Value) = True Then .Item("PaperBorderBottom") = NUD_PaperBorderBottom.Value
+                If IsNumeric(NUD_SeparatorSpalteAnzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_SeparatorSpalteAnzahl.Value
+                If IsNumeric(NUD_SeparatorSpalteWert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_SeparatorSpalteWert.Value
+                If IsNumeric(NUD_SeparatorZeileAnzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_SeparatorZeileAnzahl.Value
+                If IsNumeric(NUD_SeparatorZeileWert.Value) = True Then .Item("SeparatorZeileWert") = NUD_SeparatorZeileWert.Value
+                If IsNumeric(NUD_CardBorderLeft.Value) = True Then .Item("CardBorderLeft") = NUD_CardBorderLeft.Value
+                If IsNumeric(NUD_CardBorderTop.Value) = True Then .Item("CardBorderTop") = NUD_CardBorderTop.Value
+                If IsNumeric(NUD_CardBorderRight.Value) = True Then .Item("CardBorderRight") = NUD_CardBorderRight.Value
+                If IsNumeric(NUD_CardBorderBottom.Value) = True Then .Item("CardBorderBottom") = NUD_CardBorderBottom.Value
             End With
 
             If .Rows.Count > 0 Then .Rows.Clear()
@@ -460,47 +505,47 @@ Public Class Form1
         MySettings_Save()
 
     End Sub
-    Private Sub TextBox_Paper_Changed(sender As Object, e As EventArgs) Handles TextBox_PaperWidth.TextChanged, TextBox_PaperHeight.TextChanged
+    'Private Sub TextBox_Paper_Changed(sender As Object, e As EventArgs)
 
-        If sender.CanSelect = False Then Return
-        IsModified = True
+    '    If sender.CanSelect = False Then Return
+    '    IsModified = True
 
-        If sender.Tag = "Integer" Then
-            If IsNumeric(sender.Text) = False Then
-                MessageBox.Show("Es sind nur Zahlen möglich!")
-                sender.Undo()
-            End If
-        End If
+    '    'If sender.Tag = "Integer" Then
+    '    '    If IsNumeric(sender.Text) = False Then
+    '    '        MessageBox.Show("Es sind nur Zahlen möglich!")
+    '    '        sender.Undo()
+    '    '    End If
+    '    'End If
 
-        If IsNumeric(TextBox_PaperWidth.Text) = False Then Return
-        DS.Tables("Shema").Rows(0).Item("PaperWidth") = TextBox_PaperWidth.Text
+    '    'If IsNumeric(NUD_PaperWidth.Text) = False Then Return
+    '    'DS.Tables("Shema").Rows(0).Item("PaperWidth") = NUD_PaperWidth.Text
 
-        If IsNumeric(TextBox_PaperHeight.Text) = False Then Return
-        DS.Tables("Shema").Rows(0).Item("PaperHeight") = TextBox_PaperHeight.Text
+    '    'If IsNumeric(NUD_PaperHeight.Text) = False Then Return
+    '    'DS.Tables("Shema").Rows(0).Item("PaperHeight") = NUD_PaperHeight.Text
 
-        PaperPaint()
+    '    PaperPaint()
 
-    End Sub
-
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged, TextBox_SeparatorZeileWert.TextChanged, TextBox_SeparatorZeileAnzahl.TextChanged,
-        TextBox_SeparatorSpalteWert.TextChanged, TextBox_SeparatorSpalteAnzahl.TextChanged, TextBox_PaperBorderTop.TextChanged,
-        TextBox_PaperBorderRight.TextChanged, TextBox_PaperBorderLeft.TextChanged, TextBox_PaperBorderBottom.TextChanged,
-        TextBox_DPI.TextChanged, TextBox_CardBorderTop.TextChanged, TextBox_CardBorderRight.TextChanged, TextBox_CardBorderLeft.TextChanged, TextBox_CardBorderBottom.TextChanged
+    'End Sub
+    Private Sub NUD_ValueChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
         IsModified = True
 
-        If sender.tag = "Integer" Then
-            If IsNumeric(sender.text) = False Then
-                MessageBox.Show("Es sind nur Zahlen möglich!")
-                sender.Undo()
-            Else
-                'ToDo : Werte in DS schreiben
-                Dim ObjName As String = sender.Name
-                ObjName = ObjName.Replace("TextBox_", "")
-                DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
-            End If
-        End If
+        Dim ObjName As String = sender.Name
+        ObjName = ObjName.Replace("NUD_", "")
+        DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
+
+        PaperPaint()
+
+    End Sub
+    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged
+
+        If sender.canselect = False Then Return
+        IsModified = True
+
+        Dim ObjName As String = sender.Name
+        ObjName = ObjName.Replace("TextBox_", "")
+        DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
 
         PaperPaint()
 
@@ -606,13 +651,14 @@ Public Class Form1
         If DS.Tables("Shema").Rows.Count = 0 Then Return
 
         'PictureBox_Paper.Invalidate()
-
         Dim PW As Integer = DS.Tables("Shema").Rows(0).Item("PaperWidth")
         Dim PH As Integer = DS.Tables("Shema").Rows(0).Item("PaperHeight")
         Dim PBL As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
         Dim PBT As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
         Dim PBR As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
         Dim PBB As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
+
+        Debug.Print("-----------------------------------" & vbNewLine & PW & vbTab & PH & vbTab & DS.Tables("Shema").Rows(0).Item("DIN").ToString)
 
         Dim P(2) As Pen
         P(0) = New Pen(Color.Red, 2)
@@ -666,18 +712,26 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ComboBox_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_DIN.SelectedIndexChanged
+    Private Sub ComboBox_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DIN.SelectedIndexChanged
 
-        If ComboBox_DIN.SelectedIndex = -1 Then Return
-        If ComboBox_DIN.CanFocus = False Then Return
+        If CB_DIN.SelectedIndex = -1 Then Return
+        If CB_DIN.CanFocus = False Then Return
 
-        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_DIN.SelectedItem("PaperHeight"), Integer)
-        TextBox_PaperHeight.Text = ComboBox_DIN.SelectedItem("PaperHeight").ToString
+        DS.Tables("Shema").Rows(0)("DIN") = CType(CB_DIN.Text, String)
 
-        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_DIN.SelectedItem("PaperWidth"), Integer)
-        TextBox_PaperWidth.Text = ComboBox_DIN.SelectedItem("PaperWidth").ToString
+        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(CB_DIN.SelectedItem("PaperHeight"), Integer)
+        NUD_PaperHeight.Value = CB_DIN.SelectedItem("PaperHeight").ToString
+
+        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(CB_DIN.SelectedItem("PaperWidth"), Integer)
+        NUD_PaperWidth.Value = CB_DIN.SelectedItem("PaperWidth").ToString
 
         PaperPaint()
+
+    End Sub
+
+    Private Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DPI.SelectedIndexChanged
+
+        DS.Tables("Shema").Rows(0)("DPI") = CType(CB_DPI.Text, Integer)
 
     End Sub
 
