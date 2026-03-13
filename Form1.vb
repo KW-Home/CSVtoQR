@@ -136,7 +136,7 @@ Public Class Form1
                 .Dock = DockStyle.Top
                 .AutoSize = True
                 .Margin = New Padding(3, 3, 21, 3)
-                .Padding = New Padding(0)
+                .Padding = New Padding(3)
             End With
         Next
 
@@ -148,8 +148,8 @@ Public Class Form1
                 .Dock = DockStyle.Fill
                 .AutoSize = True
                 .BorderStyle = BorderStyle.Fixed3D
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
+                .Margin = New Padding(3)
+                .Padding = New Padding(3)
             End With
         Next
 
@@ -164,8 +164,8 @@ Public Class Form1
                 .BorderStyle = BorderStyle.FixedSingle
                 .Dock = DockStyle.Top
                 .AutoSize = True
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
+                .Margin = New Padding(3)
+                .Padding = New Padding(3)
                 .TextAlign = HorizontalAlignment.Left
             End With
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
@@ -196,7 +196,7 @@ Public Class Form1
                 .Font = MyFont
                 .Dock = DockStyle.Top
                 .AutoSize = True
-                .Margin = New Padding(0)
+                .Margin = New Padding(0, 3, 0, 3)
                 .Padding = New Padding(0)
                 .TextAlign = ContentAlignment.MiddleLeft
             End With
