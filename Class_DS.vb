@@ -17,6 +17,7 @@ Public Class Class_DS
             .Add(DT_Shema)
             .Add(DT_CardZeile)
             .Add(DT_PaperDIN)
+            .Add(DT_Filter)
         End With
 
         Return DS
@@ -80,6 +81,21 @@ Public Class Class_DS
 
     End Function
 
+    Private Function DT_Filter() As DataTable
+
+        Dim DT As New DataTable
+        With DT
+            .TableName = "Filter"
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "FilterColumn", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "FilterOperator", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "FilterValue", .DataType = GetType(String)})
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
+        End With
+
+        Return DT
+
+    End Function
     ''' <summary>
     ''' Gibt eine Liste mit den DIN Papierformaten zurück
     ''' </summary>

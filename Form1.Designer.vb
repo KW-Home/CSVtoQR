@@ -75,9 +75,6 @@ Partial Class Form1
         Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
         Me.BNcsv = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.BindingNavigatorSeparator = New System.Windows.Forms.ToolStripSeparator()
-        Me.FilterValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FilterOperator = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.FilterColumn = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.Button_SearchDelete = New System.Windows.Forms.Button()
         Me.DGVcsv = New System.Windows.Forms.DataGridView()
         Me.DGV_Search = New System.Windows.Forms.DataGridView()
@@ -94,9 +91,9 @@ Partial Class Form1
         Me.TextBox_Shema = New System.Windows.Forms.TextBox()
         Me.GroupBox_Paper = New System.Windows.Forms.GroupBox()
         Me.TLP_Paper = New System.Windows.Forms.TableLayoutPanel()
+        Me.NUD_PaperWidth = New System.Windows.Forms.Label()
         Me.CB_DPI = New System.Windows.Forms.ComboBox()
-        Me.NUD_PaperWidth = New System.Windows.Forms.NumericUpDown()
-        Me.NUD_PaperHeight = New System.Windows.Forms.NumericUpDown()
+        Me.NUD_PaperHeight = New System.Windows.Forms.Label()
         Me.CB_DIN = New System.Windows.Forms.ComboBox()
         Me.Label_PaperHeightEinheit = New System.Windows.Forms.Label()
         Me.Label_PaperWidthEinheit = New System.Windows.Forms.Label()
@@ -175,8 +172,6 @@ Partial Class Form1
         Me.TLP_Shema.SuspendLayout()
         Me.GroupBox_Paper.SuspendLayout()
         Me.TLP_Paper.SuspendLayout()
-        CType(Me.NUD_PaperWidth, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NUD_PaperHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox_Border.SuspendLayout()
         Me.TabPage_Table.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -371,7 +366,7 @@ Partial Class Form1
         '
         Me.Label_PaperWidth.AutoSize = True
         Me.Label_PaperWidth.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_PaperWidth.Location = New System.Drawing.Point(3, 80)
+        Me.Label_PaperWidth.Location = New System.Drawing.Point(3, 71)
         Me.Label_PaperWidth.Name = "Label_PaperWidth"
         Me.Label_PaperWidth.Size = New System.Drawing.Size(34, 17)
         Me.Label_PaperWidth.TabIndex = 6
@@ -740,28 +735,6 @@ Partial Class Form1
         Me.BindingNavigatorSeparator.Name = "BindingNavigatorSeparator"
         Me.BindingNavigatorSeparator.Size = New System.Drawing.Size(6, 25)
         '
-        'FilterValue
-        '
-        Me.FilterValue.FillWeight = 200.0!
-        Me.FilterValue.HeaderText = "FilterValue"
-        Me.FilterValue.Name = "FilterValue"
-        Me.FilterValue.Width = 200
-        '
-        'FilterOperator
-        '
-        Me.FilterOperator.FillWeight = 200.0!
-        Me.FilterOperator.HeaderText = "FilterOperator"
-        Me.FilterOperator.Items.AddRange(New Object() {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"})
-        Me.FilterOperator.Name = "FilterOperator"
-        Me.FilterOperator.Width = 200
-        '
-        'FilterColumn
-        '
-        Me.FilterColumn.FillWeight = 200.0!
-        Me.FilterColumn.HeaderText = "FilterColumn"
-        Me.FilterColumn.Name = "FilterColumn"
-        Me.FilterColumn.Width = 200
-        '
         'Button_SearchDelete
         '
         Me.Button_SearchDelete.AutoSize = True
@@ -797,7 +770,6 @@ Partial Class Form1
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGV_Search.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV_Search.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.FilterColumn, Me.FilterOperator, Me.FilterValue})
         Me.DGV_Search.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Search.EnableHeadersVisualStyles = False
         Me.DGV_Search.GridColor = System.Drawing.Color.DarkGray
@@ -979,8 +951,8 @@ Partial Class Form1
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
-        Me.TLP_Paper.Controls.Add(Me.CB_DPI, 1, 0)
         Me.TLP_Paper.Controls.Add(Me.NUD_PaperWidth, 1, 3)
+        Me.TLP_Paper.Controls.Add(Me.CB_DPI, 1, 0)
         Me.TLP_Paper.Controls.Add(Me.NUD_PaperHeight, 1, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperWidth, 0, 3)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperHeight, 0, 2)
@@ -997,8 +969,17 @@ Partial Class Form1
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Paper.Size = New System.Drawing.Size(197, 106)
+        Me.TLP_Paper.Size = New System.Drawing.Size(197, 88)
         Me.TLP_Paper.TabIndex = 0
+        '
+        'NUD_PaperWidth
+        '
+        Me.NUD_PaperWidth.AutoSize = True
+        Me.NUD_PaperWidth.Location = New System.Drawing.Point(43, 71)
+        Me.NUD_PaperWidth.Name = "NUD_PaperWidth"
+        Me.NUD_PaperWidth.Size = New System.Drawing.Size(39, 13)
+        Me.NUD_PaperWidth.TabIndex = 47
+        Me.NUD_PaperWidth.Text = "Label2"
         '
         'CB_DPI
         '
@@ -1011,23 +992,14 @@ Partial Class Form1
         Me.CB_DPI.TabIndex = 0
         Me.CB_DPI.Tag = "DPI"
         '
-        'NUD_PaperWidth
-        '
-        Me.NUD_PaperWidth.Location = New System.Drawing.Point(43, 83)
-        Me.NUD_PaperWidth.Name = "NUD_PaperWidth"
-        Me.NUD_PaperWidth.ReadOnly = True
-        Me.NUD_PaperWidth.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_PaperWidth.TabIndex = 3
-        Me.NUD_PaperWidth.Tag = "Border"
-        '
         'NUD_PaperHeight
         '
-        Me.NUD_PaperHeight.Location = New System.Drawing.Point(43, 57)
+        Me.NUD_PaperHeight.AutoSize = True
+        Me.NUD_PaperHeight.Location = New System.Drawing.Point(43, 54)
         Me.NUD_PaperHeight.Name = "NUD_PaperHeight"
-        Me.NUD_PaperHeight.ReadOnly = True
-        Me.NUD_PaperHeight.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_PaperHeight.TabIndex = 2
-        Me.NUD_PaperHeight.Tag = "Border"
+        Me.NUD_PaperHeight.Size = New System.Drawing.Size(39, 13)
+        Me.NUD_PaperHeight.TabIndex = 46
+        Me.NUD_PaperHeight.Text = "Label1"
         '
         'CB_DIN
         '
@@ -1057,7 +1029,7 @@ Partial Class Form1
         'Label_PaperWidthEinheit
         '
         Me.Label_PaperWidthEinheit.AutoSize = True
-        Me.Label_PaperWidthEinheit.Location = New System.Drawing.Point(125, 80)
+        Me.Label_PaperWidthEinheit.Location = New System.Drawing.Point(125, 71)
         Me.Label_PaperWidthEinheit.Name = "Label_PaperWidthEinheit"
         Me.Label_PaperWidthEinheit.Size = New System.Drawing.Size(23, 17)
         Me.Label_PaperWidthEinheit.TabIndex = 9
@@ -1084,7 +1056,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
+        Me.TabPage_Table.Size = New System.Drawing.Size(714, 528)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1096,7 +1068,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(586, 522)
+        Me.Panel1.Size = New System.Drawing.Size(708, 522)
         Me.Panel1.TabIndex = 2
         '
         'DGV_Table
@@ -1104,18 +1076,18 @@ Partial Class Form1
         Me.DGV_Table.AllowUserToAddRows = False
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DGV_Table.Location = New System.Drawing.Point(0, 56)
+        Me.DGV_Table.Location = New System.Drawing.Point(143, 0)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(586, 466)
+        Me.DGV_Table.Size = New System.Drawing.Size(565, 522)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
         '
-        Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Left
         Me.ListBox_Tabellen.FormattingEnabled = True
         Me.ListBox_Tabellen.Location = New System.Drawing.Point(0, 0)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(586, 56)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(143, 522)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'OptionenToolStripMenuItem
@@ -1240,20 +1212,20 @@ Partial Class Form1
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.BeendenToolStripMenuItem.Text = "&Beenden"
         '
         'toolStripSeparator2
         '
         Me.toolStripSeparator2.Name = "toolStripSeparator2"
-        Me.toolStripSeparator2.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator2.Size = New System.Drawing.Size(165, 6)
         '
         'SeitenansichtToolStripMenuItem
         '
         Me.SeitenansichtToolStripMenuItem.Image = CType(resources.GetObject("SeitenansichtToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SeitenansichtToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SeitenansichtToolStripMenuItem.Name = "SeitenansichtToolStripMenuItem"
-        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.SeitenansichtToolStripMenuItem.Text = "&Seitenansicht"
         '
         'DruckenToolStripMenuItem
@@ -1262,18 +1234,18 @@ Partial Class Form1
         Me.DruckenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.DruckenToolStripMenuItem.Name = "DruckenToolStripMenuItem"
         Me.DruckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.DruckenToolStripMenuItem.Text = "&Drucken"
         '
         'toolStripSeparator1
         '
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
-        Me.toolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator1.Size = New System.Drawing.Size(165, 6)
         '
         'SpeichernunterToolStripMenuItem
         '
         Me.SpeichernunterToolStripMenuItem.Name = "SpeichernunterToolStripMenuItem"
-        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.SpeichernunterToolStripMenuItem.Text = "Speichern &unter"
         '
         'SpeichernToolStripMenuItem
@@ -1282,13 +1254,13 @@ Partial Class Form1
         Me.SpeichernToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
         Me.SpeichernToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.SpeichernToolStripMenuItem.Text = "&Speichern"
         '
         'toolStripSeparator
         '
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator.Size = New System.Drawing.Size(165, 6)
         '
         'ÖffnenToolStripMenuItem
         '
@@ -1296,7 +1268,7 @@ Partial Class Form1
         Me.ÖffnenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Ö&ffnen"
         '
         'NeuToolStripMenuItem
@@ -1305,7 +1277,7 @@ Partial Class Form1
         Me.NeuToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.NeuToolStripMenuItem.Text = "&Neu"
         '
         'DateiToolStripMenuItem
@@ -1422,8 +1394,6 @@ Partial Class Form1
         Me.GroupBox_Paper.PerformLayout()
         Me.TLP_Paper.ResumeLayout(False)
         Me.TLP_Paper.PerformLayout()
-        CType(Me.NUD_PaperWidth, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NUD_PaperHeight, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox_Border.ResumeLayout(False)
         Me.GroupBox_Border.PerformLayout()
         Me.TabPage_Table.ResumeLayout(False)
@@ -1487,9 +1457,6 @@ Partial Class Form1
     Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
     Friend WithEvents BNcsv As BindingNavigator
     Friend WithEvents BindingNavigatorSeparator As ToolStripSeparator
-    Friend WithEvents FilterValue As DataGridViewTextBoxColumn
-    Friend WithEvents FilterOperator As DataGridViewComboBoxColumn
-    Friend WithEvents FilterColumn As DataGridViewComboBoxColumn
     Friend WithEvents Button_SearchDelete As Button
     Friend WithEvents DGVcsv As DataGridView
     Friend WithEvents DGV_Search As DataGridView
@@ -1549,11 +1516,11 @@ Partial Class Form1
     Friend WithEvents NUD_PaperBorderRight As NumericUpDown
     Friend WithEvents NUD_SeparatorSpalteAnzahl As NumericUpDown
     Friend WithEvents NUD_SeparatorZeileAnzahl As NumericUpDown
-    Friend WithEvents NUD_PaperHeight As NumericUpDown
-    Friend WithEvents NUD_PaperWidth As NumericUpDown
     Friend WithEvents NUD_PaperBorderBottom As NumericUpDown
     Friend WithEvents NUD_CardBorderBottom As NumericUpDown
     Friend WithEvents NUD_SeparatorSpalteWert As NumericUpDown
     Friend WithEvents NUD_SeparatorZeileWert As NumericUpDown
     Friend WithEvents CB_DPI As ComboBox
+    Friend WithEvents NUD_PaperWidth As Label
+    Friend WithEvents NUD_PaperHeight As Label
 End Class

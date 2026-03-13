@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Security.Cryptography
 
 Public Class Form1
@@ -7,6 +8,7 @@ Public Class Form1
     Private CLcsv As New Class_ImportCSV
     Private DTcsv As DataTable
     Private DVcsv As DataView
+    Private WithEvents DTSearch As DataTable
 
     Private IsModified_Value As Boolean
     Public Property IsModified() As Boolean
@@ -175,7 +177,7 @@ Public Class Form1
         Next
 
         Dim ConList_NumericUpDown As New List(Of NumericUpDown) From {
-            NUD_PaperHeight, NUD_PaperWidth, NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert,
+            NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert,
             NUD_SeparatorZeileAnzahl, NUD_SeparatorZeileWert,
             NUD_PaperBorderLeft, NUD_PaperBorderTop, NUD_PaperBorderRight, NUD_PaperBorderBottom,
             NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom
@@ -242,8 +244,7 @@ Public Class Form1
             Label_PaperHeight, Label_PaperHeightEinheit, Label_PaperWidth, Label_PaperWidthEinheit,
             Label_SeparatorZeile, Label_SeparatorSpalte,
             Label_Left, Label_Top, Label_Right, Label_Bottom,
-            Label_Left, Label_Top, Label_Right, Label_Bottom
-        }
+            Label_Left, Label_Top, Label_Right, Label_Bottom}
         For Each CON As Label In ConList_LabelZeilen
             With CON
                 .Font = MyFont
@@ -255,9 +256,19 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_ToolStrip As New List(Of ToolStrip) From {
-            MS_Main
-        }
+        Dim ConList_LabelValue As New List(Of Label) From {NUD_PaperHeight, NUD_PaperWidth}
+        For Each CON As Label In ConList_LabelValue
+            With CON
+                .Font = MyFont
+                .Dock = DockStyle.Fill
+                .AutoSize = True
+                .Margin = New Padding(0, 3, 0, 3)
+                .Padding = New Padding(0)
+                .TextAlign = ContentAlignment.MiddleRight
+            End With
+        Next
+
+        Dim ConList_ToolStrip As New List(Of ToolStrip) From {MS_Main}
         For Each CON As ToolStrip In ConList_ToolStrip
             With CON
                 .Font = MyFont
@@ -367,8 +378,6 @@ Public Class Form1
 
     Private Sub SpeichernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpeichernToolStripMenuItem.Click, SpeichernunterToolStripMenuItem.Click
 
-        'DataSetWrite()
-
         Dim Path As String = My.Settings.MySavePath
         Select Case sender.name
             Case "SpeichernToolStripMenuItem"
@@ -430,8 +439,8 @@ Public Class Form1
                 TextBox_Export.Text = .Item("Export").ToString
                 CB_DPI.Text = .Item("DPI")
                 CB_DIN.Text = .Item("DIN").ToString
-                If IsNumeric(.Item("PaperHeight")) Then NUD_PaperHeight.Value = .Item("PaperHeight")
-                If IsNumeric(.Item("PaperWidth")) Then NUD_PaperWidth.Value = .Item("PaperWidth")
+                If IsNumeric(.Item("PaperHeight")) Then NUD_PaperHeight.Text = .Item("PaperHeight").ToString
+                If IsNumeric(.Item("PaperWidth")) Then NUD_PaperWidth.Text = .Item("PaperWidth")
                 If IsNumeric(.Item("PaperBorderLeft")) Then NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
                 If IsNumeric(.Item("PaperBorderTop")) Then NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
                 If IsNumeric(.Item("PaperBorderRight")) Then NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
@@ -445,6 +454,11 @@ Public Class Form1
                 If IsNumeric(.Item("CardBorderRight")) Then NUD_CardBorderRight.Value = .Item("CardBorderRight")
                 If IsNumeric(.Item("CardBorderBottom")) Then NUD_CardBorderBottom.Value = .Item("CardBorderBottom")
             End With
+        End With
+
+        With DS.Tables("Filter")
+            If .Rows.Count = 0 Then Exit Sub
+            DGV_Search.DataSource = DS.Tables("Filter")
         End With
 
     End Sub
@@ -461,8 +475,8 @@ Public Class Form1
                 .Item("Export") = TextBox_Export.Text
                 .Item("DIN") = CB_DIN.Text
                 .Item("DPI") = CB_DPI.Text
-                If IsNumeric(NUD_PaperHeight.Value) = True Then .Item("PaperHeight") = NUD_PaperHeight.Value
-                If IsNumeric(NUD_PaperWidth.Value) = True Then .Item("PaperWidth") = NUD_PaperWidth.Value
+                If IsNumeric(NUD_PaperHeight.Text) = True Then .Item("PaperHeight") = NUD_PaperHeight.Text
+                If IsNumeric(NUD_PaperWidth.Text) = True Then .Item("PaperWidth") = NUD_PaperWidth.Text
                 If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("PaperBorderLeft") = NUD_PaperBorderLeft.Value
                 If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("PaperBorderTop") = NUD_PaperBorderTop.Value
                 If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("PaperBorderRight") = NUD_PaperBorderRight.Value
@@ -515,14 +529,14 @@ Public Class Form1
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         If IsModified = True Then
-            If MessageBox.Show("Wollen Sie ohne Speichern schließen?", "Achtung Datenverlust !", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                e.Cancel = True
+            If MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                MySettings_Save()
+                DS.WriteXml(My.Settings.MySavePath, XmlWriteMode.WriteSchema)
             End If
         End If
 
-        MySettings_Save()
-
     End Sub
+
     Private Sub NUD_ValueChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
@@ -533,6 +547,7 @@ Public Class Form1
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
 
     End Sub
+
     Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
@@ -549,19 +564,21 @@ Public Class Form1
         DGV_Search.EndEdit()
 
         Dim FilterString As String = String.Empty
+        If DGV_Search.Columns.Count = 0 Then
+            DVcsv.RowFilter = String.Empty
+            Return
+        End If
 
-        For Each Wert As DataGridViewRow In DGV_Search.Rows
+        DTSearch = TryCast(DGV_Search.DataSource, DataTable)
+        For Each Wert As DataRow In DTSearch.Rows
 
-            If Wert.IsNewRow Then Continue For
-
-            Dim FilterColumn As String = Wert.Cells("FilterColumn").Value
-            Dim FilterValue As String = Wert.Cells("FilterValue").Value
-            Dim FilterOperator As String = Wert.Cells("FilterOperator").Value
-
+            Dim FilterColumn As String = Wert("FilterColumn").ToString()
+            Dim FilterOperator As String = Wert("FilterOperator").ToString()
+            Dim FilterValue As String = Wert("FilterValue").ToString()
             If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
 
-            If FilterString.Length > 0 Then FilterString &= " AND "
+            If FilterString.Length > 0 Then FilterString &= " And "
 
             'Enthält, Gleich, Ungleich, Beginnt mit, Endet mit, Länger als, Kürzer als
             Select Case FilterOperator
@@ -597,17 +614,47 @@ Public Class Form1
 
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_SearchAdd.Click
 
-        Dim DR As DataGridViewRow
-        DR = DGV_Search.Rows(DGV_Search.Rows.Add())
-        With DGVcsv
-            If .SelectedCells(0) Is Nothing Then Return
-            If .SelectedCells(0).ColumnIndex = 0 Then Return
-            DR.Cells("FilterColumn").Value = .Columns(.CurrentCell.ColumnIndex).HeaderText
-            DR.Cells("FilterOperator").Value = "Gleich"
-            DR.Cells("FilterValue").Value = .CurrentCell.Value
+        Dim DT As DataTable = DS.Tables("Filter")
+        Dim DR As DataRow = DT.NewRow
+        With DR
+            .Item("FilterColumn") = DGVcsv.Columns(DGVcsv.CurrentCell.ColumnIndex).HeaderText
+            .Item("FilterOperator") = "Gleich"
+            .Item("FilterValue") = DGVcsv.CurrentCell.Value.ToString
         End With
+        DT.Rows.Add(DR)
 
-        CSVSearch()
+        DGV_Search.DataSource = DT
+        DGV_Search.Update()
+
+        Dim lookupFilter As List(Of String) = CLcsv.DataColumnList
+        Dim FilterColumn As New DataGridViewComboBoxColumn() With {
+            .Name = "FilterColumn",
+            .HeaderText = "FilterColumn",
+            .DataPropertyName = "FilterColumn",
+            .DataSource = lookupFilter,
+            .ValueType = GetType(String)}
+        If DGV_Search.Columns.Contains("FilterColumn") Then
+            Dim idx = DGV_Search.Columns("FilterColumn").Index
+            DGV_Search.Columns.Remove("FilterColumn")
+            DGV_Search.Columns.Insert(idx, FilterColumn)
+        Else
+            DGV_Search.Columns.Insert(1, FilterColumn)
+        End If
+
+        Dim lookupOperator As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
+        Dim FilterOperator As New DataGridViewComboBoxColumn() With {
+            .Name = "FilterOperator",
+            .HeaderText = "FilterOperator",
+            .DataPropertyName = "FilterOperator",
+            .DataSource = lookupOperator,
+            .ValueType = GetType(String)}
+        If DGV_Search.Columns.Contains("FilterOperator") Then
+            Dim idx = DGV_Search.Columns("FilterOperator").Index
+            DGV_Search.Columns.Remove("FilterOperator")
+            DGV_Search.Columns.Insert(idx, FilterOperator)
+        Else
+            DGV_Search.Columns.Insert(1, FilterOperator)
+        End If
 
     End Sub
 
@@ -621,7 +668,7 @@ Public Class Form1
             DGV_Search.Rows.Remove(DR)
         Next
 
-        CSVSearch()
+        'CSVSearch()
 
     End Sub
 
@@ -711,16 +758,28 @@ Public Class Form1
         DS.Tables("Shema").Rows(0)("DIN") = CType(CB_DIN.Text, String)
 
         DS.Tables("Shema").Rows(0)("PaperHeight") = CType(CB_DIN.SelectedItem("PaperHeight"), Integer)
-        NUD_PaperHeight.Value = CB_DIN.SelectedItem("PaperHeight").ToString
+        NUD_PaperHeight.Text = CB_DIN.SelectedItem("PaperHeight").ToString
 
         DS.Tables("Shema").Rows(0)("PaperWidth") = CType(CB_DIN.SelectedItem("PaperWidth"), Integer)
-        NUD_PaperWidth.Value = CB_DIN.SelectedItem("PaperWidth").ToString
+        NUD_PaperWidth.Text = CB_DIN.SelectedItem("PaperWidth").ToString
+
+        IsModified = True
 
     End Sub
 
     Private Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs)
 
         DS.Tables("Shema").Rows(0)("DPI") = CType(CB_DPI.Text, Integer)
+
+    End Sub
+
+    Private Sub DGV_Search_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_Search.DataError
+        e.Cancel = True
+    End Sub
+
+    Private Sub DGV_Search_DataSourceChanged(sender As Object, e As EventArgs) Handles DGV_Search.DataSourceChanged
+
+        CSVSearch()
 
     End Sub
 
