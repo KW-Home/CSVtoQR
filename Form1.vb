@@ -601,36 +601,35 @@ Public Class Form1
 
     Private Sub PaperPaint()
 
+        If DS Is Nothing Then Return
+        If DS.Tables.Contains("Shema") = False Then Return
+        If DS.Tables("Shema").Rows.Count = 0 Then Return
+
+        'PictureBox_Paper.Invalidate()
+
+        Dim PW As Integer = DS.Tables("Shema").Rows(0).Item("PaperWidth")
+        Dim PH As Integer = DS.Tables("Shema").Rows(0).Item("PaperHeight")
+        Dim PBL As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
+        Dim PBT As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
+        Dim PBR As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
+        Dim PBB As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
+
+        Dim P(2) As Pen
+        P(0) = New Pen(Color.Red, 2)
+        P(1) = New Pen(Color.Green, 2)
+        PictureBox_Paper.Size = New Size(PW, PH)
+        PictureBox_Paper.Image = New Bitmap(PW, PH)
+
+        PBL += P(0).Width / 2
+        PBT += P(0).Width / 2
+        PBR += P(0).Width / 2
+        PBB += P(0).Width / 2
+        PW -= PBL
+        PW -= PBR
+        PH -= PBT
+        PH -= PBB
+
         Try
-
-            If DS Is Nothing Then Return
-            If DS.Tables.Contains("Shema") = False Then Return
-            If DS.Tables("Shema").Rows.Count = 0 Then Return
-
-            'PictureBox_Paper.Invalidate()
-
-            Dim PW As Integer = DS.Tables("Shema").Rows(0).Item("PaperWidth")
-            Dim PH As Integer = DS.Tables("Shema").Rows(0).Item("PaperHeight")
-            Dim PBL As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
-            Dim PBT As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
-            Dim PBR As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
-            Dim PBB As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
-
-            Dim P(2) As Pen
-            P(0) = New Pen(Color.Red, 2)
-            P(1) = New Pen(Color.Green, 2)
-            PictureBox_Paper.Size = New Size(PW, PH)
-            PictureBox_Paper.Image = New Bitmap(PW, PH)
-
-            PBL += P(0).Width / 2
-            PBT += P(0).Width / 2
-            PBR += P(0).Width / 2
-            PBB += P(0).Width / 2
-            PW -= PBL
-            PW -= PBR
-            PH -= PBT
-            PH -= PBB
-
             Using g As Graphics = Graphics.FromImage(PictureBox_Paper.Image)
                 g.Clear(Color.White)
                 g.DrawRectangle(P(0), PBL, PBT, PW, PH)
@@ -660,7 +659,7 @@ Public Class Form1
             End Using
 
         Catch ex As Exception
-            messagebox.show("Fehler bei der Darstellung des Papiers: " & ex.message, "Fehler", messageboxbuttons.ok, messageboxicon.error)
+
         End Try
 
 
