@@ -4,7 +4,6 @@ Imports System.Security.Cryptography
 Public Class Form1
 
     Private DS As New DataSet
-
     Private CLcsv As New Class_ImportCSV
     Private DTcsv As DataTable
     Private DVcsv As DataView
@@ -117,7 +116,9 @@ Public Class Form1
         DGV_Search.AutoSize = True
         StatusStrip_Main.Font = MyFont
 
-        Dim ConList_DGV As New List(Of DataGridView) From {DGVcsv, DGV_Search, DGV_Table}
+        Dim ConList_DGV As New List(Of DataGridView) From {
+            DGVcsv, DGV_Search, DGV_Table
+        }
         For Each CON As DataGridView In ConList_DGV
             With CON
                 .DefaultCellStyle.Font = MyFont
@@ -128,7 +129,9 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_GroupBox As New List(Of GroupBox) From {GroupBox_Shema, GroupBox_Paper, GroupBox_Border, GroupBox_Separator, GroupBox_Files}
+        Dim ConList_GroupBox As New List(Of GroupBox) From {
+            GroupBox_Shema, GroupBox_Paper, GroupBox_Border, GroupBox_Separator, GroupBox_Files
+        }
         For Each CON As GroupBox In ConList_GroupBox
             With CON
                 .Font = MyFont
@@ -153,7 +156,8 @@ Public Class Form1
         Next
 
         Dim ConList_TextBox As New List(Of TextBox) From {
-            TextBox_Shema, TextBox_Import, TextBox_Export}
+            TextBox_Shema, TextBox_Import, TextBox_Export
+        }
         For Each CON As TextBox In ConList_TextBox
             With CON
                 .Font = MyFont
@@ -164,14 +168,18 @@ Public Class Form1
                 .Padding = New Padding(3)
                 .TextAlign = HorizontalAlignment.Left
             End With
+
+            AddHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
+
         Next
 
         Dim ConList_NumericUpDown As New List(Of NumericUpDown) From {
             NUD_PaperHeight, NUD_PaperWidth, NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert,
             NUD_SeparatorZeileAnzahl, NUD_SeparatorZeileWert,
             NUD_PaperBorderLeft, NUD_PaperBorderTop, NUD_PaperBorderRight, NUD_PaperBorderBottom,
-            NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom}
+            NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom
+        }
         For Each CON As NumericUpDown In ConList_NumericUpDown
             With CON
                 .Font = MyFont
@@ -210,11 +218,14 @@ Public Class Form1
                 .TextAlign = HorizontalAlignment.Right
             End With
 
+            AddHandler CON.ValueChanged, AddressOf PaperPaint
+
         Next
 
         Dim ConList_LabelSpalten As New List(Of Label) From {
             Label_SeparatorAnzahl, Label_SeparatorWert,
-            Label_BorderCard, Label_BorderPaper}
+            Label_BorderCard, Label_BorderPaper
+        }
         For Each CON As Label In ConList_LabelSpalten
             With CON
                 .Font = MyFont
@@ -231,7 +242,8 @@ Public Class Form1
             Label_PaperHeight, Label_PaperHeightEinheit, Label_PaperWidth, Label_PaperWidthEinheit,
             Label_SeparatorZeile, Label_SeparatorSpalte,
             Label_Left, Label_Top, Label_Right, Label_Bottom,
-            Label_Left, Label_Top, Label_Right, Label_Bottom}
+            Label_Left, Label_Top, Label_Right, Label_Bottom
+        }
         For Each CON As Label In ConList_LabelZeilen
             With CON
                 .Font = MyFont
@@ -243,8 +255,9 @@ Public Class Form1
             End With
         Next
 
-
-        Dim ConList_ToolStrip As New List(Of ToolStrip) From {MS_Main}
+        Dim ConList_ToolStrip As New List(Of ToolStrip) From {
+            MS_Main
+        }
         For Each CON As ToolStrip In ConList_ToolStrip
             With CON
                 .Font = MyFont
@@ -255,18 +268,31 @@ Public Class Form1
             End With
         Next
 
-        With CB_DIN
-            .Font = MyFont
-            .Dock = DockStyle.Left
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-
-            .DataSource = DS.Tables("PaperDIN")
-            .DisplayMember = "DIN"
-            .ValueMember = "DIN"
-            .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
-
-        End With
+        Dim ConList_ComboBox As New List(Of ComboBox) From {
+            CB_DIN, CB_DPI
+        }
+        For Each CON As ComboBox In ConList_ComboBox
+            With CON
+                .Font = MyFont
+                .Dock = DockStyle.Left
+                .Margin = New Padding(0)
+                .Padding = New Padding(0)
+                Select Case CON.Name
+                    Case "CB_DPI"
+                        .Items.AddRange(New Object() {72, 96, 150, 300, 600})
+                        AddHandler CON.SelectedIndexChanged, AddressOf CB_DPI_SelectedIndexChanged
+                    Case "CB_DIN"
+                        .DataSource = DS.Tables("PaperDIN")
+                        .DisplayMember = "DIN"
+                        .ValueMember = "DIN"
+                        If DS.Tables("Shema").Rows.Count > 0 Then
+                            .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
+                        End If
+                        AddHandler CON.SelectedIndexChanged, AddressOf ComboBox_DIN_SelectedIndexChanged
+                End Select
+                AddHandler CON.SelectedValueChanged, AddressOf PaperPaint
+            End With
+        Next
 
     End Sub
 
@@ -339,43 +365,33 @@ Public Class Form1
 
     End Sub
 
-    Private Sub SpeichernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpeichernToolStripMenuItem.Click
+    Private Sub SpeichernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpeichernToolStripMenuItem.Click, SpeichernunterToolStripMenuItem.Click
 
-        DataSetWrite()
+        'DataSetWrite()
 
         Dim Path As String = My.Settings.MySavePath
+        Select Case sender.name
+            Case "SpeichernToolStripMenuItem"
+                If System.IO.File.Exists(Path) Then
+                    DS.WriteXml(Path, XmlWriteMode.WriteSchema)
+                    IsModified = False
+                Else
+                    SaveXML(Path)
+                End If
+            Case "SpeichernunterToolStripMenuItem"
+                SaveXML(Path)
+        End Select
 
-        If System.IO.File.Exists(Path) Then
-            DS.WriteXml(Path, XmlWriteMode.WriteSchema)
-        Else
-
-            Dim SFD As New SaveFileDialog With {
-                .Title = "Die Datei " & Path & " existiert nicht.",
-                .InitialDirectory = System.IO.Path.GetDirectoryName(Path),
-                .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-            }
-
-            If SFD.ShowDialog = DialogResult.OK Then
-                DS.WriteXml(SFD.FileName, XmlWriteMode.WriteSchema)
-                My.Settings.MySavePath = SFD.FileName
-                My.Settings.Save()
-
-                DataSetRead()
-                TSSL_SaveFile.Text = My.Settings.MySavePath
-
-            End If
-        End If
-
-        IsModified = False
 
     End Sub
 
-    Private Sub SpeichernunterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpeichernunterToolStripMenuItem.Click
+    Private Sub SaveXML(Path As String)
 
-        Dim Path As String = My.Settings.MySavePath
         Dim SFD As New SaveFileDialog With {
+            .CheckPathExists = True,
             .Title = "Die Datei " & Path & " existiert nicht.",
             .InitialDirectory = System.IO.Path.GetDirectoryName(Path),
+            .FileName = TextBox_Shema.Text,
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         }
 
@@ -388,7 +404,6 @@ Public Class Form1
         End If
 
     End Sub
-
     Private Sub LoadTable()
 
         ListBox_Tabellen.Items.Clear()
@@ -475,7 +490,9 @@ Public Class Form1
         Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
 
         If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
-        If OFD.ShowDialog = DialogResult.OK Then ImportFile = OFD.FileName
+        If OFD.ShowDialog = DialogResult.OK Then
+            ImportFile = OFD.FileName
+        End If
 
     End Sub
 
@@ -484,6 +501,7 @@ Public Class Form1
         Dim SFD As New SaveFileDialog With {.Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
         If SFD.ShowDialog = DialogResult.OK Then
             TextBox_Export.Text = SFD.FileName
+            My.Settings.MySavePath = SFD.FileName
         End If
 
     End Sub
@@ -505,27 +523,6 @@ Public Class Form1
         MySettings_Save()
 
     End Sub
-    'Private Sub TextBox_Paper_Changed(sender As Object, e As EventArgs)
-
-    '    If sender.CanSelect = False Then Return
-    '    IsModified = True
-
-    '    'If sender.Tag = "Integer" Then
-    '    '    If IsNumeric(sender.Text) = False Then
-    '    '        MessageBox.Show("Es sind nur Zahlen möglich!")
-    '    '        sender.Undo()
-    '    '    End If
-    '    'End If
-
-    '    'If IsNumeric(NUD_PaperWidth.Text) = False Then Return
-    '    'DS.Tables("Shema").Rows(0).Item("PaperWidth") = NUD_PaperWidth.Text
-
-    '    'If IsNumeric(NUD_PaperHeight.Text) = False Then Return
-    '    'DS.Tables("Shema").Rows(0).Item("PaperHeight") = NUD_PaperHeight.Text
-
-    '    PaperPaint()
-
-    'End Sub
     Private Sub NUD_ValueChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
@@ -535,10 +532,8 @@ Public Class Form1
         ObjName = ObjName.Replace("NUD_", "")
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
 
-        PaperPaint()
-
     End Sub
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged
+    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -546,8 +541,6 @@ Public Class Form1
         Dim ObjName As String = sender.Name
         ObjName = ObjName.Replace("TextBox_", "")
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
-
-        PaperPaint()
 
     End Sub
 
@@ -651,25 +644,18 @@ Public Class Form1
         If DS.Tables("Shema").Rows.Count = 0 Then Return
 
         'PictureBox_Paper.Invalidate()
-        Dim PW As Integer = DS.Tables("Shema").Rows(0).Item("PaperWidth")
-        Dim PH As Integer = DS.Tables("Shema").Rows(0).Item("PaperHeight")
-        Dim PBL As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
-        Dim PBT As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
-        Dim PBR As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
-        Dim PBB As Integer = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
-
-        Debug.Print("-----------------------------------" & vbNewLine & PW & vbTab & PH & vbTab & DS.Tables("Shema").Rows(0).Item("DIN").ToString)
+        Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
+        Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
+        Dim PBL As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
+        Dim PBT As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
+        Dim PBR As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
+        Dim PBB As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
 
         Dim P(2) As Pen
-        P(0) = New Pen(Color.Red, 2)
-        P(1) = New Pen(Color.Green, 2)
-        PictureBox_Paper.Size = New Size(PW, PH)
-        PictureBox_Paper.Image = New Bitmap(PW, PH)
-
-        PBL += P(0).Width / 2
-        PBT += P(0).Width / 2
-        PBR += P(0).Width / 2
-        PBB += P(0).Width / 2
+        P(0) = New Pen(Color.Red, 1)
+        P(1) = New Pen(Color.Green, 1)
+        PictureBox_Paper.Size = New Size(CInt(PW), CInt(PH))
+        PictureBox_Paper.Image = New Bitmap(CInt(PW), CInt(PH))
         PW -= PBL
         PW -= PBR
         PH -= PBT
@@ -678,41 +664,46 @@ Public Class Form1
         Try
             Using g As Graphics = Graphics.FromImage(PictureBox_Paper.Image)
                 g.Clear(Color.White)
+                g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+                g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
                 g.DrawRectangle(P(0), PBL, PBT, PW, PH)
 
                 Dim SSA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteAnzahl")
-                Dim SSW As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteWert")
-                Dim CW As Integer = (PW - ((SSA - 1) * SSW)) / SSA
+                Dim SSW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteWert")
+                Dim CW As Single
+                CW = (SSA - 1) * SSW
+                CW = PW - CW
+                CW /= SSA
 
                 Dim SZA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorZeileAnzahl")
-                Dim SZW As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorZeileWert")
-                Dim CH As Integer = (PH - ((SZA - 1) * SZW)) / SZA
+                Dim SZW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorZeileWert")
+                Dim CH As Single
+                CH = (SZA - 1) * SZW
+                CH = PH - CH
+                CH /= SZA
 
-                Dim CP As Point
-                Dim CS As New Size(CW, CH)
-                Dim R As Integer
-
-                'ToDo : Trennlinien zeichnen
-
-                For C = PBL To PW Step CS.Width + SZW - P(1).Width
-                    For R = PBT To PH Step CS.Height + SSW - P(1).Width
-                        CP = New Point(C, R)
+                Dim CS As New SizeF(CW, CH)
+                Dim CP = New PointF(PBL, PBT)
+                For C = 1 To SZA Step 1
+                    For R = 1 To SSA Step 1
                         g.DrawRectangle(P(1), CP.X, CP.Y, CS.Width, CS.Height)
+                        CP.X = CP.X + CW + SSW
                     Next
-                    R = PBT
+                    CP.X = PBL
+                    CP.Y = CP.Y + CS.Height + SZW
                 Next
 
             End Using
 
         Catch ex As Exception
-
+            MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
 
 
     End Sub
 
-    Private Sub ComboBox_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DIN.SelectedIndexChanged
+    Private Sub ComboBox_DIN_SelectedIndexChanged(sender As Object, e As EventArgs)
 
         If CB_DIN.SelectedIndex = -1 Then Return
         If CB_DIN.CanFocus = False Then Return
@@ -725,11 +716,9 @@ Public Class Form1
         DS.Tables("Shema").Rows(0)("PaperWidth") = CType(CB_DIN.SelectedItem("PaperWidth"), Integer)
         NUD_PaperWidth.Value = CB_DIN.SelectedItem("PaperWidth").ToString
 
-        PaperPaint()
-
     End Sub
 
-    Private Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DPI.SelectedIndexChanged
+    Private Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs)
 
         DS.Tables("Shema").Rows(0)("DPI") = CType(CB_DPI.Text, Integer)
 

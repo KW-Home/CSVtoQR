@@ -24,7 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_BorderCard = New System.Windows.Forms.Label()
         Me.Label_SeparatorZeile = New System.Windows.Forms.Label()
         Me.Label_SeparatorAnzahl = New System.Windows.Forms.Label()
@@ -94,6 +94,7 @@ Partial Class Form1
         Me.TextBox_Shema = New System.Windows.Forms.TextBox()
         Me.GroupBox_Paper = New System.Windows.Forms.GroupBox()
         Me.TLP_Paper = New System.Windows.Forms.TableLayoutPanel()
+        Me.CB_DPI = New System.Windows.Forms.ComboBox()
         Me.NUD_PaperWidth = New System.Windows.Forms.NumericUpDown()
         Me.NUD_PaperHeight = New System.Windows.Forms.NumericUpDown()
         Me.CB_DIN = New System.Windows.Forms.ComboBox()
@@ -142,7 +143,6 @@ Partial Class Form1
         Me.TSSL_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BScsv = New System.Windows.Forms.BindingSource(Me.components)
-        Me.CB_DPI = New System.Windows.Forms.ComboBox()
         Me.TLP_Separator.SuspendLayout()
         CType(Me.NUD_SeparatorZeileAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NUD_SeparatorSpalteAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -193,7 +193,7 @@ Partial Class Form1
         Me.Label_BorderCard.Location = New System.Drawing.Point(127, 0)
         Me.Label_BorderCard.Name = "Label_BorderCard"
         Me.Label_BorderCard.Size = New System.Drawing.Size(73, 17)
-        Me.Label_BorderCard.TabIndex = 9
+        Me.Label_BorderCard.TabIndex = 5
         Me.Label_BorderCard.Text = "Karte"
         Me.Label_BorderCard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.Label_BorderCard.UseCompatibleTextRendering = True
@@ -266,7 +266,7 @@ Partial Class Form1
         Me.NUD_SeparatorZeileAnzahl.Location = New System.Drawing.Point(45, 46)
         Me.NUD_SeparatorZeileAnzahl.Name = "NUD_SeparatorZeileAnzahl"
         Me.NUD_SeparatorZeileAnzahl.Size = New System.Drawing.Size(74, 20)
-        Me.NUD_SeparatorZeileAnzahl.TabIndex = 54
+        Me.NUD_SeparatorZeileAnzahl.TabIndex = 2
         Me.NUD_SeparatorZeileAnzahl.Tag = "Anzahl"
         '
         'NUD_SeparatorSpalteAnzahl
@@ -274,7 +274,7 @@ Partial Class Form1
         Me.NUD_SeparatorSpalteAnzahl.Location = New System.Drawing.Point(45, 20)
         Me.NUD_SeparatorSpalteAnzahl.Name = "NUD_SeparatorSpalteAnzahl"
         Me.NUD_SeparatorSpalteAnzahl.Size = New System.Drawing.Size(74, 20)
-        Me.NUD_SeparatorSpalteAnzahl.TabIndex = 55
+        Me.NUD_SeparatorSpalteAnzahl.TabIndex = 0
         Me.NUD_SeparatorSpalteAnzahl.Tag = "Anzahl"
         '
         'NUD_SeparatorSpalteWert
@@ -282,7 +282,7 @@ Partial Class Form1
         Me.NUD_SeparatorSpalteWert.Location = New System.Drawing.Point(125, 20)
         Me.NUD_SeparatorSpalteWert.Name = "NUD_SeparatorSpalteWert"
         Me.NUD_SeparatorSpalteWert.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_SeparatorSpalteWert.TabIndex = 49
+        Me.NUD_SeparatorSpalteWert.TabIndex = 1
         Me.NUD_SeparatorSpalteWert.Tag = "Double"
         '
         'NUD_SeparatorZeileWert
@@ -290,7 +290,7 @@ Partial Class Form1
         Me.NUD_SeparatorZeileWert.Location = New System.Drawing.Point(125, 46)
         Me.NUD_SeparatorZeileWert.Name = "NUD_SeparatorZeileWert"
         Me.NUD_SeparatorZeileWert.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_SeparatorZeileWert.TabIndex = 48
+        Me.NUD_SeparatorZeileWert.TabIndex = 3
         Me.NUD_SeparatorZeileWert.Tag = "Double"
         '
         'Label_SeparatorSpalte
@@ -454,7 +454,7 @@ Partial Class Form1
         Me.NUD_CardBorderRight.Location = New System.Drawing.Point(127, 46)
         Me.NUD_CardBorderRight.Name = "NUD_CardBorderRight"
         Me.NUD_CardBorderRight.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_CardBorderRight.TabIndex = 46
+        Me.NUD_CardBorderRight.TabIndex = 7
         Me.NUD_CardBorderRight.Tag = "Double"
         '
         'NUD_CardBorderTop
@@ -462,7 +462,7 @@ Partial Class Form1
         Me.NUD_CardBorderTop.Location = New System.Drawing.Point(127, 72)
         Me.NUD_CardBorderTop.Name = "NUD_CardBorderTop"
         Me.NUD_CardBorderTop.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_CardBorderTop.TabIndex = 47
+        Me.NUD_CardBorderTop.TabIndex = 8
         Me.NUD_CardBorderTop.Tag = "Double"
         '
         'Label_BorderPaper
@@ -482,7 +482,7 @@ Partial Class Form1
         Me.NUD_PaperBorderTop.Location = New System.Drawing.Point(48, 72)
         Me.NUD_PaperBorderTop.Name = "NUD_PaperBorderTop"
         Me.NUD_PaperBorderTop.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_PaperBorderTop.TabIndex = 46
+        Me.NUD_PaperBorderTop.TabIndex = 3
         Me.NUD_PaperBorderTop.Tag = "Double"
         '
         'NUD_CardBorderBottom
@@ -490,7 +490,7 @@ Partial Class Form1
         Me.NUD_CardBorderBottom.Location = New System.Drawing.Point(127, 98)
         Me.NUD_CardBorderBottom.Name = "NUD_CardBorderBottom"
         Me.NUD_CardBorderBottom.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_CardBorderBottom.TabIndex = 50
+        Me.NUD_CardBorderBottom.TabIndex = 9
         Me.NUD_CardBorderBottom.Tag = "Double"
         '
         'NUD_PaperBorderBottom
@@ -498,7 +498,7 @@ Partial Class Form1
         Me.NUD_PaperBorderBottom.Location = New System.Drawing.Point(48, 98)
         Me.NUD_PaperBorderBottom.Name = "NUD_PaperBorderBottom"
         Me.NUD_PaperBorderBottom.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_PaperBorderBottom.TabIndex = 51
+        Me.NUD_PaperBorderBottom.TabIndex = 4
         Me.NUD_PaperBorderBottom.Tag = "Double"
         '
         'NUD_PaperBorderLeft
@@ -506,7 +506,7 @@ Partial Class Form1
         Me.NUD_PaperBorderLeft.Location = New System.Drawing.Point(48, 20)
         Me.NUD_PaperBorderLeft.Name = "NUD_PaperBorderLeft"
         Me.NUD_PaperBorderLeft.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_PaperBorderLeft.TabIndex = 14
+        Me.NUD_PaperBorderLeft.TabIndex = 1
         Me.NUD_PaperBorderLeft.Tag = "Double"
         '
         'NUD_CardBorderLeft
@@ -514,7 +514,7 @@ Partial Class Form1
         Me.NUD_CardBorderLeft.Location = New System.Drawing.Point(127, 20)
         Me.NUD_CardBorderLeft.Name = "NUD_CardBorderLeft"
         Me.NUD_CardBorderLeft.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_CardBorderLeft.TabIndex = 15
+        Me.NUD_CardBorderLeft.TabIndex = 6
         Me.NUD_CardBorderLeft.Tag = "Double"
         '
         'NUD_PaperBorderRight
@@ -522,7 +522,7 @@ Partial Class Form1
         Me.NUD_PaperBorderRight.Location = New System.Drawing.Point(48, 46)
         Me.NUD_PaperBorderRight.Name = "NUD_PaperBorderRight"
         Me.NUD_PaperBorderRight.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_PaperBorderRight.TabIndex = 16
+        Me.NUD_PaperBorderRight.TabIndex = 2
         Me.NUD_PaperBorderRight.Tag = "Double"
         '
         'Label_Import
@@ -777,8 +777,8 @@ Partial Class Form1
         'DGVcsv
         '
         Me.DGVcsv.AllowUserToAddRows = False
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGVcsv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGVcsv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGVcsv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -957,7 +957,7 @@ Partial Class Form1
         Me.TextBox_Shema.Location = New System.Drawing.Point(43, 3)
         Me.TextBox_Shema.Name = "TextBox_Shema"
         Me.TextBox_Shema.Size = New System.Drawing.Size(157, 20)
-        Me.TextBox_Shema.TabIndex = 1
+        Me.TextBox_Shema.TabIndex = 0
         Me.TextBox_Shema.Tag = "String"
         '
         'GroupBox_Paper
@@ -1000,13 +1000,24 @@ Partial Class Form1
         Me.TLP_Paper.Size = New System.Drawing.Size(197, 106)
         Me.TLP_Paper.TabIndex = 0
         '
+        'CB_DPI
+        '
+        Me.CB_DPI.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.CB_DPI.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.CB_DPI.FormattingEnabled = True
+        Me.CB_DPI.Location = New System.Drawing.Point(43, 3)
+        Me.CB_DPI.Name = "CB_DPI"
+        Me.CB_DPI.Size = New System.Drawing.Size(75, 21)
+        Me.CB_DPI.TabIndex = 0
+        Me.CB_DPI.Tag = "DPI"
+        '
         'NUD_PaperWidth
         '
         Me.NUD_PaperWidth.Location = New System.Drawing.Point(43, 83)
         Me.NUD_PaperWidth.Name = "NUD_PaperWidth"
         Me.NUD_PaperWidth.ReadOnly = True
         Me.NUD_PaperWidth.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_PaperWidth.TabIndex = 52
+        Me.NUD_PaperWidth.TabIndex = 3
         Me.NUD_PaperWidth.Tag = "Border"
         '
         'NUD_PaperHeight
@@ -1015,7 +1026,7 @@ Partial Class Form1
         Me.NUD_PaperHeight.Name = "NUD_PaperHeight"
         Me.NUD_PaperHeight.ReadOnly = True
         Me.NUD_PaperHeight.Size = New System.Drawing.Size(75, 20)
-        Me.NUD_PaperHeight.TabIndex = 53
+        Me.NUD_PaperHeight.TabIndex = 2
         Me.NUD_PaperHeight.Tag = "Border"
         '
         'CB_DIN
@@ -1029,7 +1040,7 @@ Partial Class Form1
         Me.CB_DIN.Location = New System.Drawing.Point(43, 30)
         Me.CB_DIN.Name = "CB_DIN"
         Me.CB_DIN.Size = New System.Drawing.Size(151, 21)
-        Me.CB_DIN.TabIndex = 3
+        Me.CB_DIN.TabIndex = 1
         Me.CB_DIN.Tag = "DIN"
         '
         'Label_PaperHeightEinheit
@@ -1229,20 +1240,20 @@ Partial Class Form1
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BeendenToolStripMenuItem.Text = "&Beenden"
         '
         'toolStripSeparator2
         '
         Me.toolStripSeparator2.Name = "toolStripSeparator2"
-        Me.toolStripSeparator2.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator2.Size = New System.Drawing.Size(177, 6)
         '
         'SeitenansichtToolStripMenuItem
         '
         Me.SeitenansichtToolStripMenuItem.Image = CType(resources.GetObject("SeitenansichtToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SeitenansichtToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SeitenansichtToolStripMenuItem.Name = "SeitenansichtToolStripMenuItem"
-        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SeitenansichtToolStripMenuItem.Text = "&Seitenansicht"
         '
         'DruckenToolStripMenuItem
@@ -1251,18 +1262,18 @@ Partial Class Form1
         Me.DruckenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.DruckenToolStripMenuItem.Name = "DruckenToolStripMenuItem"
         Me.DruckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DruckenToolStripMenuItem.Text = "&Drucken"
         '
         'toolStripSeparator1
         '
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
-        Me.toolStripSeparator1.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator1.Size = New System.Drawing.Size(177, 6)
         '
         'SpeichernunterToolStripMenuItem
         '
         Me.SpeichernunterToolStripMenuItem.Name = "SpeichernunterToolStripMenuItem"
-        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpeichernunterToolStripMenuItem.Text = "Speichern &unter"
         '
         'SpeichernToolStripMenuItem
@@ -1271,13 +1282,13 @@ Partial Class Form1
         Me.SpeichernToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
         Me.SpeichernToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpeichernToolStripMenuItem.Text = "&Speichern"
         '
         'toolStripSeparator
         '
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator.Size = New System.Drawing.Size(177, 6)
         '
         'ÖffnenToolStripMenuItem
         '
@@ -1285,7 +1296,7 @@ Partial Class Form1
         Me.ÖffnenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Ö&ffnen"
         '
         'NeuToolStripMenuItem
@@ -1294,7 +1305,7 @@ Partial Class Form1
         Me.NeuToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NeuToolStripMenuItem.Text = "&Neu"
         '
         'DateiToolStripMenuItem
@@ -1351,18 +1362,6 @@ Partial Class Form1
         Me.StatusStrip_Main.Size = New System.Drawing.Size(600, 22)
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
-        '
-        'CB_DPI
-        '
-        Me.CB_DPI.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.CB_DPI.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.CB_DPI.FormattingEnabled = True
-        Me.CB_DPI.Items.AddRange(New Object() {"32", "64", "96", "128", "160", "192", "224", "256"})
-        Me.CB_DPI.Location = New System.Drawing.Point(43, 3)
-        Me.CB_DPI.Name = "CB_DPI"
-        Me.CB_DPI.Size = New System.Drawing.Size(75, 21)
-        Me.CB_DPI.TabIndex = 46
-        Me.CB_DPI.Tag = "DPI"
         '
         'Form1
         '
