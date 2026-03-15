@@ -24,7 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_BorderCard = New System.Windows.Forms.Label()
         Me.Label_SeparatorZeile = New System.Windows.Forms.Label()
         Me.Label_SeparatorAnzahl = New System.Windows.Forms.Label()
@@ -751,8 +751,8 @@ Partial Class Form1
         'DGVcsv
         '
         Me.DGVcsv.AllowUserToAddRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGVcsv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGVcsv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGVcsv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -797,7 +797,7 @@ Partial Class Form1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 347)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 415)
         Me.TableLayoutPanel1.TabIndex = 46
         '
         'TabPage_Files
@@ -807,7 +807,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(592, 460)
+        Me.TabPage_Files.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -821,7 +821,7 @@ Partial Class Form1
         Me.TabControl_Default.Location = New System.Drawing.Point(0, 24)
         Me.TabControl_Default.Name = "TabControl_Default"
         Me.TabControl_Default.SelectedIndex = 0
-        Me.TabControl_Default.Size = New System.Drawing.Size(600, 486)
+        Me.TabControl_Default.Size = New System.Drawing.Size(600, 554)
         Me.TabControl_Default.TabIndex = 6
         '
         'TabPage_Paper
@@ -832,7 +832,7 @@ Partial Class Form1
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 460)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -844,7 +844,7 @@ Partial Class Form1
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(223, 3)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(366, 454)
+        Me.Panel2.Size = New System.Drawing.Size(366, 522)
         Me.Panel2.TabIndex = 0
         '
         'PictureBox_Paper
@@ -879,7 +879,7 @@ Partial Class Form1
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Main.Size = New System.Drawing.Size(220, 454)
+        Me.TLP_Main.Size = New System.Drawing.Size(220, 522)
         Me.TLP_Main.TabIndex = 44
         '
         'GroupBox_Shema
@@ -1057,7 +1057,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
+        Me.TabPage_Table.Size = New System.Drawing.Size(592, 460)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1069,7 +1069,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(586, 522)
+        Me.Panel1.Size = New System.Drawing.Size(586, 454)
         Me.Panel1.TabIndex = 2
         '
         'DGV_Table
@@ -1079,7 +1079,7 @@ Partial Class Form1
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Location = New System.Drawing.Point(143, 0)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(443, 522)
+        Me.DGV_Table.Size = New System.Drawing.Size(443, 454)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
@@ -1088,7 +1088,7 @@ Partial Class Form1
         Me.ListBox_Tabellen.FormattingEnabled = True
         Me.ListBox_Tabellen.Location = New System.Drawing.Point(0, 0)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(143, 522)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(143, 454)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'OptionenToolStripMenuItem
@@ -1213,20 +1213,20 @@ Partial Class Form1
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.BeendenToolStripMenuItem.Text = "&Beenden"
         '
         'toolStripSeparator2
         '
         Me.toolStripSeparator2.Name = "toolStripSeparator2"
-        Me.toolStripSeparator2.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator2.Size = New System.Drawing.Size(165, 6)
         '
         'SeitenansichtToolStripMenuItem
         '
         Me.SeitenansichtToolStripMenuItem.Image = CType(resources.GetObject("SeitenansichtToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SeitenansichtToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SeitenansichtToolStripMenuItem.Name = "SeitenansichtToolStripMenuItem"
-        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.SeitenansichtToolStripMenuItem.Text = "&Seitenansicht"
         '
         'DruckenToolStripMenuItem
@@ -1235,18 +1235,18 @@ Partial Class Form1
         Me.DruckenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.DruckenToolStripMenuItem.Name = "DruckenToolStripMenuItem"
         Me.DruckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.DruckenToolStripMenuItem.Text = "&Drucken"
         '
         'toolStripSeparator1
         '
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
-        Me.toolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator1.Size = New System.Drawing.Size(165, 6)
         '
         'TSMI_XML_SaveAs
         '
         Me.TSMI_XML_SaveAs.Name = "TSMI_XML_SaveAs"
-        Me.TSMI_XML_SaveAs.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_XML_SaveAs.Size = New System.Drawing.Size(168, 22)
         Me.TSMI_XML_SaveAs.Text = "Speichern &unter"
         '
         'TSMI_Safe
@@ -1255,13 +1255,13 @@ Partial Class Form1
         Me.TSMI_Safe.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.TSMI_Safe.Name = "TSMI_Safe"
         Me.TSMI_Safe.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.TSMI_Safe.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_Safe.Size = New System.Drawing.Size(168, 22)
         Me.TSMI_Safe.Text = "&Speichern"
         '
         'toolStripSeparator
         '
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator.Size = New System.Drawing.Size(165, 6)
         '
         'ÖffnenToolStripMenuItem
         '
@@ -1269,7 +1269,7 @@ Partial Class Form1
         Me.ÖffnenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Ö&ffnen"
         '
         'TSMI_XML_New
@@ -1278,7 +1278,7 @@ Partial Class Form1
         Me.TSMI_XML_New.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.TSMI_XML_New.Name = "TSMI_XML_New"
         Me.TSMI_XML_New.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.TSMI_XML_New.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_XML_New.Size = New System.Drawing.Size(168, 22)
         Me.TSMI_XML_New.Text = "&Neu"
         '
         'DateiToolStripMenuItem
@@ -1330,7 +1330,7 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 510)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 578)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.Size = New System.Drawing.Size(600, 22)
         Me.StatusStrip_Main.TabIndex = 5

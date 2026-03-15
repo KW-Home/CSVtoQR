@@ -345,7 +345,7 @@ Public Class Form1
 
         Dim Path As String = My.Settings.MySavePath
         Select Case sender.name
-            Case "SpeichernToolStripMenuItem"
+            Case "TSMI_Safe"
                 If System.IO.File.Exists(Path) Then
                     DS.WriteXml(Path, XmlWriteMode.WriteSchema)
                     IsModified = False
@@ -353,7 +353,7 @@ Public Class Form1
                     SaveXML(Path)
                     IsModified = False
                 End If
-            Case "SpeichernunterToolStripMenuItem"
+            Case "TSMI_XML_SaveAs"
                 SaveXML(Path)
                 IsModified = False
         End Select
@@ -662,7 +662,8 @@ Public Class Form1
             DGV_Search.Rows.Remove(DR)
         Next
 
-        'CSVSearch()
+        IsModified = True
+        CSVSearch()
 
     End Sub
 
