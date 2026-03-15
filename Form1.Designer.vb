@@ -125,11 +125,11 @@ Partial Class Form1
         Me.SeitenansichtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DruckenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.SpeichernunterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TSMI_XML_SaveAs = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSMI_Safe = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NeuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TSMI_XML_New = New System.Windows.Forms.ToolStripMenuItem()
         Me.DateiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BearbeitenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS_Main = New System.Windows.Forms.MenuStrip()
@@ -797,7 +797,7 @@ Partial Class Form1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 415)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 347)
         Me.TableLayoutPanel1.TabIndex = 46
         '
         'TabPage_Files
@@ -807,7 +807,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(592, 528)
+        Me.TabPage_Files.Size = New System.Drawing.Size(592, 460)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -821,7 +821,7 @@ Partial Class Form1
         Me.TabControl_Default.Location = New System.Drawing.Point(0, 24)
         Me.TabControl_Default.Name = "TabControl_Default"
         Me.TabControl_Default.SelectedIndex = 0
-        Me.TabControl_Default.Size = New System.Drawing.Size(600, 554)
+        Me.TabControl_Default.Size = New System.Drawing.Size(600, 486)
         Me.TabControl_Default.TabIndex = 6
         '
         'TabPage_Paper
@@ -832,7 +832,7 @@ Partial Class Form1
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 528)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 460)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -844,7 +844,7 @@ Partial Class Form1
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(223, 3)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(366, 522)
+        Me.Panel2.Size = New System.Drawing.Size(366, 454)
         Me.Panel2.TabIndex = 0
         '
         'PictureBox_Paper
@@ -879,7 +879,7 @@ Partial Class Form1
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TLP_Main.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TLP_Main.Size = New System.Drawing.Size(220, 522)
+        Me.TLP_Main.Size = New System.Drawing.Size(220, 454)
         Me.TLP_Main.TabIndex = 44
         '
         'GroupBox_Shema
@@ -1243,11 +1243,11 @@ Partial Class Form1
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
         Me.toolStripSeparator1.Size = New System.Drawing.Size(177, 6)
         '
-        'SpeichernunterToolStripMenuItem
+        'TSMI_XML_SaveAs
         '
-        Me.SpeichernunterToolStripMenuItem.Name = "SpeichernunterToolStripMenuItem"
-        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SpeichernunterToolStripMenuItem.Text = "Speichern &unter"
+        Me.TSMI_XML_SaveAs.Name = "TSMI_XML_SaveAs"
+        Me.TSMI_XML_SaveAs.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_XML_SaveAs.Text = "Speichern &unter"
         '
         'TSMI_Safe
         '
@@ -1272,18 +1272,18 @@ Partial Class Form1
         Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Ö&ffnen"
         '
-        'NeuToolStripMenuItem
+        'TSMI_XML_New
         '
-        Me.NeuToolStripMenuItem.Image = CType(resources.GetObject("NeuToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.NeuToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
-        Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.NeuToolStripMenuItem.Text = "&Neu"
+        Me.TSMI_XML_New.Image = CType(resources.GetObject("TSMI_XML_New.Image"), System.Drawing.Image)
+        Me.TSMI_XML_New.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.TSMI_XML_New.Name = "TSMI_XML_New"
+        Me.TSMI_XML_New.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.TSMI_XML_New.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_XML_New.Text = "&Neu"
         '
         'DateiToolStripMenuItem
         '
-        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem, Me.ÖffnenToolStripMenuItem, Me.toolStripSeparator, Me.TSMI_Safe, Me.SpeichernunterToolStripMenuItem, Me.toolStripSeparator1, Me.DruckenToolStripMenuItem, Me.SeitenansichtToolStripMenuItem, Me.toolStripSeparator2, Me.BeendenToolStripMenuItem})
+        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMI_XML_New, Me.ÖffnenToolStripMenuItem, Me.toolStripSeparator, Me.TSMI_Safe, Me.TSMI_XML_SaveAs, Me.toolStripSeparator1, Me.DruckenToolStripMenuItem, Me.SeitenansichtToolStripMenuItem, Me.toolStripSeparator2, Me.BeendenToolStripMenuItem})
         Me.DateiToolStripMenuItem.Name = "DateiToolStripMenuItem"
         Me.DateiToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
         Me.DateiToolStripMenuItem.Text = "&Datei"
@@ -1330,7 +1330,7 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 578)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(0, 510)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.Size = New System.Drawing.Size(600, 22)
         Me.StatusStrip_Main.TabIndex = 5
@@ -1494,11 +1494,11 @@ Partial Class Form1
     Friend WithEvents SeitenansichtToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DruckenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents toolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents SpeichernunterToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TSMI_XML_SaveAs As ToolStripMenuItem
     Friend WithEvents TSMI_Safe As ToolStripMenuItem
     Friend WithEvents toolStripSeparator As ToolStripSeparator
     Friend WithEvents ÖffnenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NeuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TSMI_XML_New As ToolStripMenuItem
     Friend WithEvents DateiToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BearbeitenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MS_Main As MenuStrip

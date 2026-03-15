@@ -95,6 +95,31 @@ Public Class Class_DS
         Return DT
 
     End Function
+
+    Private Function DT_Operante() As DataTable
+
+        Dim DT As New DataTable
+        With DT
+            .TableName = "Operante"
+            .Columns.Add(New DataColumn With {.ColumnName = "Operant", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
+            .Columns.Add(New DataColumn With {.ColumnName = "OperantLeft", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "OperantRight", .DataType = GetType(String)})
+            .PrimaryKey = New DataColumn() { .Columns("Operant")}
+        End With
+        '"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"
+        DT.Rows.Add("Enthält", "LIKE", "LIKE")
+        DT.Rows.Add("Gleich", "=", "=")
+        DT.Rows.Add("Ungleich", "<>", "<>")
+        DT.Rows.Add("Beginnt mit", "LIKE", "LIKE")
+        DT.Rows.Add("Endet mit", "LIKE", "LIKE")
+        DT.Rows.Add("Länger als", ">", ">")
+        DT.Rows.Add("Kürzer als", "<", "<")
+
+
+        Return DT
+
+    End Function
+
     ''' <summary>
     ''' Gibt eine Liste mit den DIN Papierformaten zurück
     ''' </summary>

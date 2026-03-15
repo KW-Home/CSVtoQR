@@ -91,6 +91,7 @@ Public Class Form1
             cbCol.DataSource = CLcsv.DataColumnList
         End If
 
+        DGV_Sarch_Formatting()
         TextBox_Import.Text = Value
 
     End Sub
@@ -164,17 +165,15 @@ Public Class Form1
                 .Padding = New Padding(3)
                 .TextAlign = HorizontalAlignment.Left
             End With
-
             AddHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
-
         Next
 
-        Dim ConList_NumericUpDown As New List(Of NumericUpDown) From {
+        Dim ConList_NUD_Decimal As New List(Of NumericUpDown) From {
         NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert, NUD_SeparatorZeileAnzahl, NUD_SeparatorZeileWert,
         NUD_PaperBorderLeft, NUD_PaperBorderTop, NUD_PaperBorderRight, NUD_PaperBorderBottom,
         NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom}
-        For Each CON As NumericUpDown In ConList_NumericUpDown
+        For Each CON As NumericUpDown In ConList_NUD_Decimal
             With CON
                 .Font = MyFont
                 .BorderStyle = BorderStyle.FixedSingle
@@ -182,38 +181,37 @@ Public Class Form1
                 .AutoSize = True
                 .Margin = New Padding(3)
                 .Padding = New Padding(3)
-                .TextAlign = HorizontalAlignment.Left
-
-                .Minimum = 1
-                .Increment = 1
-                .Maximum = 9999
-
-                .DecimalPlaces = 0
-
-                Select Case .Tag
-                    Case "Integer"
-                        .Maximum = 2000
-                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
-                    Case "Decimal"
-                        .Minimum = 0
-                        .Increment = 0.1
-                        .DecimalPlaces = 1
-                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
-                    Case "Anzahl"
-                        .Maximum = 12
-                        AddHandler CON.ValueChanged, AddressOf NUD_ValueChanged
-                    Case "Border"
-                        .ReadOnly = True
-                End Select
                 .TextAlign = HorizontalAlignment.Right
+                .Minimum = 0
+                .Maximum = 9999
+                .Increment = 0.1
+                .DecimalPlaces = 1
+                AddHandler .ValueChanged, AddressOf NUD_ValueChanged
+                AddHandler .ValueChanged, AddressOf PaperPaint
             End With
-
-            AddHandler CON.ValueChanged, AddressOf PaperPaint
-
         Next
 
-        Dim ConList_LabelSpalten As New List(Of Label) From {Label_SeparatorAnzahl, Label_SeparatorWert, Label_BorderCard, Label_BorderPaper}
-        For Each CON As Label In ConList_LabelSpalten
+        Dim ConList_NUD_Anzahl As New List(Of NumericUpDown) From {NUD_SeparatorSpalteAnzahl, NUD_SeparatorZeileAnzahl}
+        For Each CON As NumericUpDown In ConList_NUD_Anzahl
+            With CON
+                .Font = MyFont
+                .BorderStyle = BorderStyle.FixedSingle
+                .Dock = DockStyle.Top
+                .AutoSize = True
+                .Margin = New Padding(3)
+                .Padding = New Padding(3)
+                .TextAlign = HorizontalAlignment.Right
+                .Minimum = 1
+                .Increment = 1
+                .Maximum = 12
+                .DecimalPlaces = 0
+                AddHandler .ValueChanged, AddressOf NUD_ValueChanged
+                AddHandler .ValueChanged, AddressOf PaperPaint
+            End With
+        Next
+
+        Dim ConList_Label_Spalten As New List(Of Label) From {Label_SeparatorAnzahl, Label_SeparatorWert, Label_BorderCard, Label_BorderPaper}
+        For Each CON As Label In ConList_Label_Spalten
             With CON
                 .Font = MyFont
                 .Dock = DockStyle.Top
@@ -224,12 +222,10 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_LabelZeilen As New List(Of Label) From {
-        Label_Shema, Label_Import, Label_Export, Label_DPI, Label_DIN,
+        Dim ConList_Label_Zeilen As New List(Of Label) From {Label_Shema, Label_Import, Label_Export, Label_DPI, Label_DIN,
         Label_PaperHeight, Label_PaperHeightEinheit, Label_PaperWidth, Label_PaperWidthEinheit,
-        Label_SeparatorZeile, Label_SeparatorSpalte,
-        Label_Left, Label_Top, Label_Right, Label_Bottom}
-        For Each CON As Label In ConList_LabelZeilen
+        Label_SeparatorZeile, Label_SeparatorSpalte, Label_Left, Label_Top, Label_Right, Label_Bottom}
+        For Each CON As Label In ConList_Label_Zeilen
             With CON
                 .Font = MyFont
                 .Dock = DockStyle.Top
@@ -240,8 +236,8 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_LabelValue As New List(Of Label) From {Label_PaperHeight_Value, Label_PaperWidth_Value}
-        For Each CON As Label In ConList_LabelValue
+        Dim ConList_Label_Value As New List(Of Label) From {Label_PaperHeight_Value, Label_PaperWidth_Value}
+        For Each CON As Label In ConList_Label_Value
             With CON
                 .Font = MyFont
                 .Dock = DockStyle.Fill
@@ -251,7 +247,6 @@ Public Class Form1
                 .TextAlign = ContentAlignment.MiddleRight
             End With
         Next
-
 
         Dim ConList_ComboBox As New List(Of ComboBox) From {CB_DIN, CB_DPI}
         For Each CON As ComboBox In ConList_ComboBox
@@ -292,7 +287,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub NeuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NeuToolStripMenuItem.Click
+    Private Sub TSMI_XML_New_Click(sender As Object, e As EventArgs) Handles TSMI_XML_New.Click
 
         DS = New Class_DS().Get_DS
 
@@ -346,8 +341,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub SpeichernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TSMI_Safe.Click,
-        SpeichernunterToolStripMenuItem.Click
+    Private Sub TSMI_Save(sender As Object, e As EventArgs) Handles TSMI_Safe.Click, TSMI_XML_SaveAs.Click
 
         Dim Path As String = My.Settings.MySavePath
         Select Case sender.name
@@ -378,10 +372,11 @@ Public Class Form1
 
         If SFD.ShowDialog = DialogResult.OK Then
             DS.WriteXml(SFD.FileName, XmlWriteMode.WriteSchema)
+            TSSL_SaveFile.Text = SFD.FileName
+            ImportFile = SFD.FileName
+            IsModified = False
             My.Settings.MySavePath = SFD.FileName
             My.Settings.Save()
-            TSSL_SaveFile.Text = My.Settings.MySavePath
-            IsModified = False
         End If
 
     End Sub
@@ -408,6 +403,18 @@ Public Class Form1
                 DR.Item("DIN") = "A4"
                 DR.Item("PaperHeight") = 297
                 DR.Item("PaperWidth") = 210
+                DR.Item("PaperBorderLeft") = 0
+                DR.Item("PaperBorderTop") = 0
+                DR.Item("PaperBorderRight") = 0
+                DR.Item("PaperBorderBottom") = 0
+                DR.Item("SeparatorSpalteAnzahl") = 1
+                DR.Item("SeparatorSpalteWert") = 0
+                DR.Item("SeparatorZeileAnzahl") = 1
+                DR.Item("SeparatorZeileWert") = 0
+                DR.Item("CardBorderLeft") = 0
+                DR.Item("CardBorderTop") = 0
+                DR.Item("CardBorderRight") = 0
+                DR.Item("CardBorderBottom") = 0
                 .Rows.Add(DR)
                 IsModified = True
             Else
@@ -420,20 +427,20 @@ Public Class Form1
                 TextBox_Export.Text = .Item("Export").ToString
                 CB_DPI.Text = .Item("DPI")
                 CB_DIN.Text = .Item("DIN").ToString
-                If IsNumeric(.Item("PaperHeight")) Then Label_PaperHeight_Value.Text = .Item("PaperHeight").ToString
-                If IsNumeric(.Item("PaperWidth")) Then Label_PaperWidth_Value.Text = .Item("PaperWidth")
-                If IsNumeric(.Item("PaperBorderLeft")) Then NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
-                If IsNumeric(.Item("PaperBorderTop")) Then NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
-                If IsNumeric(.Item("PaperBorderRight")) Then NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
-                If IsNumeric(.Item("PaperBorderBottom")) Then NUD_PaperBorderBottom.Value = .Item("PaperBorderBottom")
-                If IsNumeric(.Item("SeparatorSpalteAnzahl")) Then NUD_SeparatorSpalteAnzahl.Value = .Item("SeparatorSpalteAnzahl")
-                If IsNumeric(.Item("SeparatorSpalteWert")) Then NUD_SeparatorSpalteWert.Value = .Item("SeparatorSpalteWert")
-                If IsNumeric(.Item("SeparatorZeileAnzahl")) Then NUD_SeparatorZeileAnzahl.Value = .Item("SeparatorZeileAnzahl")
-                If IsNumeric(.Item("SeparatorZeileWert")) Then NUD_SeparatorZeileWert.Value = .Item("SeparatorZeileWert")
-                If IsNumeric(.Item("CardBorderLeft")) Then NUD_CardBorderLeft.Value = .Item("CardBorderLeft")
-                If IsNumeric(.Item("CardBorderTop")) Then NUD_CardBorderTop.Value = .Item("CardBorderTop")
-                If IsNumeric(.Item("CardBorderRight")) Then NUD_CardBorderRight.Value = .Item("CardBorderRight")
-                If IsNumeric(.Item("CardBorderBottom")) Then NUD_CardBorderBottom.Value = .Item("CardBorderBottom")
+                Label_PaperHeight_Value.Text = .Item("PaperHeight").ToString
+                Label_PaperWidth_Value.Text = .Item("PaperWidth")
+                NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
+                NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
+                NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
+                NUD_PaperBorderBottom.Value = .Item("PaperBorderBottom")
+                NUD_SeparatorSpalteAnzahl.Value = .Item("SeparatorSpalteAnzahl")
+                NUD_SeparatorSpalteWert.Value = .Item("SeparatorSpalteWert")
+                NUD_SeparatorZeileAnzahl.Value = .Item("SeparatorZeileAnzahl")
+                NUD_SeparatorZeileWert.Value = .Item("SeparatorZeileWert")
+                NUD_CardBorderLeft.Value = .Item("CardBorderLeft")
+                NUD_CardBorderTop.Value = .Item("CardBorderTop")
+                NUD_CardBorderRight.Value = .Item("CardBorderRight")
+                NUD_CardBorderBottom.Value = .Item("CardBorderBottom")
             End With
         End With
 
@@ -501,19 +508,20 @@ Public Class Form1
 
     End Sub
 
-    'Private Sub DateiToolStripMenuItem_DropDownOpening(sender As Object, e As EventArgs) Handles DateiToolStripMenuItem.DropDownOpening
-
-    '    TSMI_Safe.Enabled = IsModified
-
-    'End Sub
-
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         If IsModified = True Then
-            If MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                MySettings_Save()
-                DS.WriteXml(My.Settings.MySavePath, XmlWriteMode.WriteSchema)
-            End If
+            Dim Result As DialogResult = MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !",
+                                                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            Select Case Result
+                Case DialogResult.Yes
+                    MySettings_Save()
+                    DS.WriteXml(My.Settings.MySavePath, XmlWriteMode.WriteSchema)
+                Case DialogResult.No
+                    ' Do nothing
+                Case DialogResult.Cancel
+                    e.Cancel = True
+            End Select
         End If
 
     End Sub
@@ -550,12 +558,15 @@ Public Class Form1
             Return
         End If
 
+        DGV_Search.EndEdit()
+
         DTSearch = TryCast(DGV_Search.DataSource, DataTable)
         For Each Wert As DataRow In DTSearch.Rows
 
             Dim FilterColumn As String = Wert("FilterColumn").ToString()
             Dim FilterOperator As String = Wert("FilterOperator").ToString()
             Dim FilterValue As String = Wert("FilterValue").ToString()
+
             If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
 
@@ -595,6 +606,8 @@ Public Class Form1
 
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_SearchAdd.Click
 
+        DGV_Sarch_Formatting()
+
         Dim DT As DataTable = DS.Tables("Filter")
         Dim DR As DataRow = DT.NewRow
         With DR
@@ -607,35 +620,35 @@ Public Class Form1
         DGV_Search.DataSource = DT
         DGV_Search.Update()
 
-        Dim lookupFilter As List(Of String) = CLcsv.DataColumnList
-        Dim FilterColumn As New DataGridViewComboBoxColumn() With {
-            .Name = "FilterColumn",
-            .HeaderText = "FilterColumn",
-            .DataPropertyName = "FilterColumn",
-            .DataSource = lookupFilter,
-            .ValueType = GetType(String)}
-        If DGV_Search.Columns.Contains("FilterColumn") Then
-            Dim idx = DGV_Search.Columns("FilterColumn").Index
-            DGV_Search.Columns.Remove("FilterColumn")
-            DGV_Search.Columns.Insert(idx, FilterColumn)
-        Else
-            DGV_Search.Columns.Insert(1, FilterColumn)
-        End If
 
-        Dim lookupOperator As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
-        Dim FilterOperator As New DataGridViewComboBoxColumn() With {
-            .Name = "FilterOperator",
-            .HeaderText = "FilterOperator",
-            .DataPropertyName = "FilterOperator",
-            .DataSource = lookupOperator,
-            .ValueType = GetType(String)}
-        If DGV_Search.Columns.Contains("FilterOperator") Then
-            Dim idx = DGV_Search.Columns("FilterOperator").Index
-            DGV_Search.Columns.Remove("FilterOperator")
-            DGV_Search.Columns.Insert(idx, FilterOperator)
-        Else
-            DGV_Search.Columns.Insert(1, FilterOperator)
-        End If
+    End Sub
+    Private Sub DGV_Sarch_Formatting()
+
+        Try
+
+            Dim lookupFilter As List(Of String) = CLcsv.DataColumnList
+            Dim FilterColumn As New DataGridViewComboBoxColumn() With {.Name = "FilterColumn", .HeaderText = "FilterColumn", .DataPropertyName = "FilterColumn", .DataSource = lookupFilter, .ValueType = GetType(String)}
+            If DGV_Search.Columns.Contains("FilterColumn") Then
+                Dim idx = DGV_Search.Columns("FilterColumn").Index
+                DGV_Search.Columns.Remove("FilterColumn")
+                DGV_Search.Columns.Insert(idx, FilterColumn)
+            Else
+                DGV_Search.Columns.Insert(1, FilterColumn)
+            End If
+
+            Dim lookupOperator As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
+            Dim FilterOperator As New DataGridViewComboBoxColumn() With {.Name = "FilterOperator", .HeaderText = "FilterOperator", .DataPropertyName = "FilterOperator", .DataSource = lookupOperator, .ValueType = GetType(String)}
+            If DGV_Search.Columns.Contains("FilterOperator") Then
+                Dim idx = DGV_Search.Columns("FilterOperator").Index
+                DGV_Search.Columns.Remove("FilterOperator")
+                DGV_Search.Columns.Insert(idx, FilterOperator)
+            Else
+                DGV_Search.Columns.Insert(1, FilterOperator)
+            End If
+
+        Catch ex As Exception
+            Beep()
+        End Try
 
     End Sub
 
@@ -726,8 +739,6 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
-
 
     End Sub
 
