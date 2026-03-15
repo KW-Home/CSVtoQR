@@ -82,9 +82,9 @@ Public Class Form1
         DTcsv = CLcsv.Load_CSV(Value)
         DVcsv = New DataView(DTcsv)
 
-        BScsv.DataSource = DVcsv
-        BNcsv.BindingSource = BScsv
-        DGVcsv.DataSource = BScsv
+        Main_BindingSource_CSV.DataSource = DVcsv
+        Main_BindingNavigator_CSV.BindingSource = Main_BindingSource_CSV
+        DGV_CSV.DataSource = Main_BindingSource_CSV
 
         Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("FilterColumn"), DataGridViewComboBoxColumn)
         If cbCol IsNot Nothing Then
@@ -98,14 +98,25 @@ Public Class Form1
 
     Private Sub DefaultControls()
 
+        Dim MyFont = My.Settings.MyFont
         TSSL_IsModified.BackColor = Color.Green
 
-        Dim MyFont = My.Settings.MyFont
-        Main_MenuStrip.Font = MyFont
-        Main_StatusStrip.Font = MyFont
-        Main_TabControl.Font = MyFont
+        With Main_StatusStrip
+            .Font = MyFont
+            .Dock = DockStyle.Bottom
+            .AutoSize = True
+            .Margin = New Padding(0)
+            .Padding = New Padding(0)
+        End With
 
-        With Main_MenuStrip
+        With Main_TabControl
+            .Font = MyFont
+            .Dock = DockStyle.Fill
+            .AutoSize = True
+            .Margin = New Padding(0)
+        End With
+
+        With Main_BindingNavigator_CSV
             .Font = MyFont
             .Dock = DockStyle.Top
             .AutoSize = True
@@ -121,9 +132,14 @@ Public Class Form1
             .BackColor = Color.WhiteSmoke
         End With
 
-        Dim ConList_DGV As New List(Of DataGridView) From {DGVcsv, DGV_Search, DGV_Table}
-        For Each CON As DataGridView In ConList_DGV
+        Dim ConList_DataGridView As New List(Of DataGridView) From {
+            DGV_CSV,
+            DGV_Search,
+            DGV_Table}
+        For Each CON As DataGridView In ConList_DataGridView
             With CON
+                .Dock = DockStyle.Fill
+                .Font = MyFont
                 .AutoSize = True
                 .DefaultCellStyle.Font = MyFont
                 .MultiSelect = False
@@ -134,7 +150,10 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_GroupBox As New List(Of GroupBox) From {GroupBox_Shema, GroupBox_Paper, GroupBox_Border, GroupBox_Separator, GroupBox_Files}
+        Dim ConList_GroupBox As New List(Of GroupBox) From {
+            GroupBox_Shema,
+            GroupBox_Separator,
+            GroupBox_Files}
         For Each CON As GroupBox In ConList_GroupBox
             With CON
                 .Font = MyFont
@@ -145,7 +164,11 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {TLP_Shema, TLP_Paper, TLP_Border, TLP_Separator, TLP_Files}
+        Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {
+            TableLayoutPanel_Shema,
+            TableLayoutPanel_Paper,
+            TableLayoutPanel_Separator,
+            TableLayoutPanel_Files}
         For Each CON As TableLayoutPanel In ConList_TableLayoutPanel
             With CON
                 .Font = MyFont
@@ -157,7 +180,10 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_TextBox As New List(Of TextBox) From {TextBox_Shema, TextBox_Import, TextBox_Export}
+        Dim ConList_TextBox As New List(Of TextBox) From {
+            TextBox_Shema,
+            TextBox_Import,
+            TextBox_Export}
         For Each CON As TextBox In ConList_TextBox
             With CON
                 .Font = MyFont
@@ -172,11 +198,18 @@ Public Class Form1
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
         Next
 
-        Dim ConList_NUD_Decimal As New List(Of NumericUpDown) From {
-        NUD_SeparatorSpalteAnzahl, NUD_SeparatorSpalteWert, NUD_SeparatorZeileAnzahl, NUD_SeparatorZeileWert,
-        NUD_PaperBorderLeft, NUD_PaperBorderTop, NUD_PaperBorderRight, NUD_PaperBorderBottom,
-        NUD_CardBorderLeft, NUD_CardBorderTop, NUD_CardBorderRight, NUD_CardBorderBottom}
-        For Each CON As NumericUpDown In ConList_NUD_Decimal
+        Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
+            NUD_SeparatorSpalteWert,
+            NUD_SeparatorZeileWert,
+            NUD_PaperBorderLeft,
+            NUD_PaperBorderTop,
+            NUD_PaperBorderRight,
+            NUD_PaperBorderBottom,
+            NUD_CardBorderLeft,
+            NUD_CardBorderTop,
+            NUD_CardBorderRight,
+            NUD_CardBorderBottom}
+        For Each CON As NumericUpDown In ConList_NumericUpDown_Decimal
             With CON
                 .Font = MyFont
                 .BorderStyle = BorderStyle.FixedSingle
@@ -194,8 +227,10 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_NUD_Anzahl As New List(Of NumericUpDown) From {NUD_SeparatorSpalteAnzahl, NUD_SeparatorZeileAnzahl}
-        For Each CON As NumericUpDown In ConList_NUD_Anzahl
+        Dim ConList_NumericUpDown_Anzahl As New List(Of NumericUpDown) From {
+            NUD_SeparatorSpalteAnzahl,
+            NUD_SeparatorZeileAnzahl}
+        For Each CON As NumericUpDown In ConList_NumericUpDown_Anzahl
             With CON
                 .Font = MyFont
                 .BorderStyle = BorderStyle.FixedSingle
@@ -213,7 +248,12 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_Label_Spalten As New List(Of Label) From {Label_SeparatorAnzahl, Label_SeparatorWert, Label_BorderCard, Label_BorderPaper}
+        Dim ConList_Label_Spalten As New List(Of Label) From {
+            Label_Border,
+            Label_Separator_Anzahl,
+            Label_Separator_Wert,
+            Label_Border_Card,
+            Label_Border_Paper}
         For Each CON As Label In ConList_Label_Spalten
             With CON
                 .Font = MyFont
@@ -225,9 +265,22 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_Label_Zeilen As New List(Of Label) From {Label_Shema, Label_Import, Label_Export, Label_DPI, Label_DIN,
-        Label_PaperHeight, Label_PaperHeightEinheit, Label_PaperWidth, Label_PaperWidthEinheit,
-        Label_SeparatorZeile, Label_SeparatorSpalte, Label_Left, Label_Top, Label_Right, Label_Bottom}
+        Dim ConList_Label_Zeilen As New List(Of Label) From {
+            Label_Shema,
+            Label_Import,
+            Label_Export,
+            Label_DPI,
+            Label_DIN,
+            Label_Paper_Height,
+            Label_Paper_Einheit_Height,
+            Label_Paper_Width,
+            Label_Paper_Einheit_Width,
+            Label_Separator_Zeile,
+            Label_Separator_Spalte,
+            Label_Left,
+            Label_Top,
+            Label_Right,
+            Label_Bottom}
         For Each CON As Label In ConList_Label_Zeilen
             With CON
                 .Font = MyFont
@@ -239,7 +292,9 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_Label_Value As New List(Of Label) From {Label_PaperHeight_Value, Label_PaperWidth_Value}
+        Dim ConList_Label_Value As New List(Of Label) From {
+            Label_Paper_Value_Height,
+            Label_Paper_Value_Width}
         For Each CON As Label In ConList_Label_Value
             With CON
                 .Font = MyFont
@@ -251,7 +306,9 @@ Public Class Form1
             End With
         Next
 
-        Dim ConList_ComboBox As New List(Of ComboBox) From {CB_DIN, CB_DPI}
+        Dim ConList_ComboBox As New List(Of ComboBox) From {
+            CB_DIN,
+            CB_DPI}
         For Each CON As ComboBox In ConList_ComboBox
             With CON
                 .Font = MyFont
@@ -430,8 +487,8 @@ Public Class Form1
                 TextBox_Export.Text = .Item("Export").ToString
                 CB_DPI.Text = .Item("DPI")
                 CB_DIN.Text = .Item("DIN").ToString
-                Label_PaperHeight_Value.Text = .Item("PaperHeight").ToString
-                Label_PaperWidth_Value.Text = .Item("PaperWidth")
+                Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
+                Label_Paper_Value_Width.Text = .Item("PaperWidth")
                 NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
                 NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
                 NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
@@ -466,8 +523,8 @@ Public Class Form1
                 .Item("Export") = TextBox_Export.Text
                 .Item("DIN") = CB_DIN.Text
                 .Item("DPI") = CB_DPI.Text
-                If IsNumeric(Label_PaperHeight_Value.Text) = True Then .Item("PaperHeight") = Label_PaperHeight_Value.Text
-                If IsNumeric(Label_PaperWidth_Value.Text) = True Then .Item("PaperWidth") = Label_PaperWidth_Value.Text
+                If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
+                If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
                 If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("PaperBorderLeft") = NUD_PaperBorderLeft.Value
                 If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("PaperBorderTop") = NUD_PaperBorderTop.Value
                 If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("PaperBorderRight") = NUD_PaperBorderRight.Value
@@ -614,9 +671,9 @@ Public Class Form1
         Dim DT As DataTable = DS.Tables("Filter")
         Dim DR As DataRow = DT.NewRow
         With DR
-            .Item("FilterColumn") = DGVcsv.Columns(DGVcsv.CurrentCell.ColumnIndex).HeaderText
+            .Item("FilterColumn") = DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).HeaderText
             .Item("FilterOperator") = "Gleich"
-            .Item("FilterValue") = DGVcsv.CurrentCell.Value.ToString
+            .Item("FilterValue") = DGV_CSV.CurrentCell.Value.ToString
         End With
         DT.Rows.Add(DR)
 
@@ -754,10 +811,10 @@ Public Class Form1
         DS.Tables("Shema").Rows(0)("DIN") = CType(CB_DIN.Text, String)
 
         DS.Tables("Shema").Rows(0)("PaperHeight") = CType(CB_DIN.SelectedItem("PaperHeight"), Integer)
-        Label_PaperHeight_Value.Text = CB_DIN.SelectedItem("PaperHeight").ToString
+        Label_Paper_Value_Height.Text = CB_DIN.SelectedItem("PaperHeight").ToString
 
         DS.Tables("Shema").Rows(0)("PaperWidth") = CType(CB_DIN.SelectedItem("PaperWidth"), Integer)
-        Label_PaperWidth_Value.Text = CB_DIN.SelectedItem("PaperWidth").ToString
+        Label_Paper_Value_Width.Text = CB_DIN.SelectedItem("PaperWidth").ToString
 
         IsModified = True
 
