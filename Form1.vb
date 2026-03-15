@@ -98,12 +98,14 @@ Public Class Form1
 
     Private Sub DefaultControls()
 
-        Dim MyFont = My.Settings.MyFont
         TSSL_IsModified.BackColor = Color.Green
-        DGV_Search.AutoSize = True
-        StatusStrip_Main.Font = MyFont
 
-        With MS_Main
+        Dim MyFont = My.Settings.MyFont
+        Main_MenuStrip.Font = MyFont
+        Main_StatusStrip.Font = MyFont
+        Main_TabControl.Font = MyFont
+
+        With Main_MenuStrip
             .Font = MyFont
             .Dock = DockStyle.Top
             .AutoSize = True
@@ -122,6 +124,7 @@ Public Class Form1
         Dim ConList_DGV As New List(Of DataGridView) From {DGVcsv, DGV_Search, DGV_Table}
         For Each CON As DataGridView In ConList_DGV
             With CON
+                .AutoSize = True
                 .DefaultCellStyle.Font = MyFont
                 .MultiSelect = False
                 .AllowUserToAddRows = False
