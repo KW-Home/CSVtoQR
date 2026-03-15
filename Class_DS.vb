@@ -74,7 +74,6 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Integer)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
-
         End With
 
         Return DT

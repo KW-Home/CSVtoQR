@@ -24,7 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_BorderCard = New System.Windows.Forms.Label()
         Me.Label_SeparatorZeile = New System.Windows.Forms.Label()
         Me.Label_SeparatorAnzahl = New System.Windows.Forms.Label()
@@ -91,9 +91,9 @@ Partial Class Form1
         Me.TextBox_Shema = New System.Windows.Forms.TextBox()
         Me.GroupBox_Paper = New System.Windows.Forms.GroupBox()
         Me.TLP_Paper = New System.Windows.Forms.TableLayoutPanel()
-        Me.NUD_PaperWidth = New System.Windows.Forms.Label()
+        Me.Label_PaperWidth_Value = New System.Windows.Forms.Label()
         Me.CB_DPI = New System.Windows.Forms.ComboBox()
-        Me.NUD_PaperHeight = New System.Windows.Forms.Label()
+        Me.Label_PaperHeight_Value = New System.Windows.Forms.Label()
         Me.CB_DIN = New System.Windows.Forms.ComboBox()
         Me.Label_PaperHeightEinheit = New System.Windows.Forms.Label()
         Me.Label_PaperWidthEinheit = New System.Windows.Forms.Label()
@@ -126,7 +126,7 @@ Partial Class Form1
         Me.DruckenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.SpeichernunterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SpeichernToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TSMI_Safe = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NeuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -255,6 +255,7 @@ Partial Class Form1
         Me.TLP_Separator.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP_Separator.Size = New System.Drawing.Size(203, 69)
         Me.TLP_Separator.TabIndex = 0
+        Me.TLP_Separator.Tag = "Decimal"
         '
         'NUD_SeparatorZeileAnzahl
         '
@@ -278,7 +279,7 @@ Partial Class Form1
         Me.NUD_SeparatorSpalteWert.Name = "NUD_SeparatorSpalteWert"
         Me.NUD_SeparatorSpalteWert.Size = New System.Drawing.Size(75, 20)
         Me.NUD_SeparatorSpalteWert.TabIndex = 1
-        Me.NUD_SeparatorSpalteWert.Tag = "Double"
+        Me.NUD_SeparatorSpalteWert.Tag = "Decimal"
         '
         'NUD_SeparatorZeileWert
         '
@@ -286,7 +287,7 @@ Partial Class Form1
         Me.NUD_SeparatorZeileWert.Name = "NUD_SeparatorZeileWert"
         Me.NUD_SeparatorZeileWert.Size = New System.Drawing.Size(75, 20)
         Me.NUD_SeparatorZeileWert.TabIndex = 3
-        Me.NUD_SeparatorZeileWert.Tag = "Double"
+        Me.NUD_SeparatorZeileWert.Tag = "Decimal"
         '
         'Label_SeparatorSpalte
         '
@@ -450,7 +451,7 @@ Partial Class Form1
         Me.NUD_CardBorderRight.Name = "NUD_CardBorderRight"
         Me.NUD_CardBorderRight.Size = New System.Drawing.Size(73, 20)
         Me.NUD_CardBorderRight.TabIndex = 7
-        Me.NUD_CardBorderRight.Tag = "Double"
+        Me.NUD_CardBorderRight.Tag = "Decimal"
         '
         'NUD_CardBorderTop
         '
@@ -458,7 +459,7 @@ Partial Class Form1
         Me.NUD_CardBorderTop.Name = "NUD_CardBorderTop"
         Me.NUD_CardBorderTop.Size = New System.Drawing.Size(73, 20)
         Me.NUD_CardBorderTop.TabIndex = 8
-        Me.NUD_CardBorderTop.Tag = "Double"
+        Me.NUD_CardBorderTop.Tag = "Decimal"
         '
         'Label_BorderPaper
         '
@@ -478,7 +479,7 @@ Partial Class Form1
         Me.NUD_PaperBorderTop.Name = "NUD_PaperBorderTop"
         Me.NUD_PaperBorderTop.Size = New System.Drawing.Size(73, 20)
         Me.NUD_PaperBorderTop.TabIndex = 3
-        Me.NUD_PaperBorderTop.Tag = "Double"
+        Me.NUD_PaperBorderTop.Tag = "Decimal"
         '
         'NUD_CardBorderBottom
         '
@@ -486,7 +487,7 @@ Partial Class Form1
         Me.NUD_CardBorderBottom.Name = "NUD_CardBorderBottom"
         Me.NUD_CardBorderBottom.Size = New System.Drawing.Size(73, 20)
         Me.NUD_CardBorderBottom.TabIndex = 9
-        Me.NUD_CardBorderBottom.Tag = "Double"
+        Me.NUD_CardBorderBottom.Tag = "Decimal"
         '
         'NUD_PaperBorderBottom
         '
@@ -494,7 +495,7 @@ Partial Class Form1
         Me.NUD_PaperBorderBottom.Name = "NUD_PaperBorderBottom"
         Me.NUD_PaperBorderBottom.Size = New System.Drawing.Size(73, 20)
         Me.NUD_PaperBorderBottom.TabIndex = 4
-        Me.NUD_PaperBorderBottom.Tag = "Double"
+        Me.NUD_PaperBorderBottom.Tag = "Decimal"
         '
         'NUD_PaperBorderLeft
         '
@@ -502,7 +503,7 @@ Partial Class Form1
         Me.NUD_PaperBorderLeft.Name = "NUD_PaperBorderLeft"
         Me.NUD_PaperBorderLeft.Size = New System.Drawing.Size(73, 20)
         Me.NUD_PaperBorderLeft.TabIndex = 1
-        Me.NUD_PaperBorderLeft.Tag = "Double"
+        Me.NUD_PaperBorderLeft.Tag = "Decimal"
         '
         'NUD_CardBorderLeft
         '
@@ -510,7 +511,7 @@ Partial Class Form1
         Me.NUD_CardBorderLeft.Name = "NUD_CardBorderLeft"
         Me.NUD_CardBorderLeft.Size = New System.Drawing.Size(73, 20)
         Me.NUD_CardBorderLeft.TabIndex = 6
-        Me.NUD_CardBorderLeft.Tag = "Double"
+        Me.NUD_CardBorderLeft.Tag = "Decimal"
         '
         'NUD_PaperBorderRight
         '
@@ -518,7 +519,7 @@ Partial Class Form1
         Me.NUD_PaperBorderRight.Name = "NUD_PaperBorderRight"
         Me.NUD_PaperBorderRight.Size = New System.Drawing.Size(73, 20)
         Me.NUD_PaperBorderRight.TabIndex = 2
-        Me.NUD_PaperBorderRight.Tag = "Double"
+        Me.NUD_PaperBorderRight.Tag = "Decimal"
         '
         'Label_Import
         '
@@ -750,8 +751,8 @@ Partial Class Form1
         'DGVcsv
         '
         Me.DGVcsv.AllowUserToAddRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGVcsv.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGVcsv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGVcsv.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.DGVcsv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -951,9 +952,9 @@ Partial Class Form1
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TLP_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
-        Me.TLP_Paper.Controls.Add(Me.NUD_PaperWidth, 1, 3)
+        Me.TLP_Paper.Controls.Add(Me.Label_PaperWidth_Value, 1, 3)
         Me.TLP_Paper.Controls.Add(Me.CB_DPI, 1, 0)
-        Me.TLP_Paper.Controls.Add(Me.NUD_PaperHeight, 1, 2)
+        Me.TLP_Paper.Controls.Add(Me.Label_PaperHeight_Value, 1, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperWidth, 0, 3)
         Me.TLP_Paper.Controls.Add(Me.Label_PaperHeight, 0, 2)
         Me.TLP_Paper.Controls.Add(Me.Label_DPI, 0, 0)
@@ -972,14 +973,14 @@ Partial Class Form1
         Me.TLP_Paper.Size = New System.Drawing.Size(197, 88)
         Me.TLP_Paper.TabIndex = 0
         '
-        'NUD_PaperWidth
+        'Label_PaperWidth_Value
         '
-        Me.NUD_PaperWidth.AutoSize = True
-        Me.NUD_PaperWidth.Location = New System.Drawing.Point(43, 71)
-        Me.NUD_PaperWidth.Name = "NUD_PaperWidth"
-        Me.NUD_PaperWidth.Size = New System.Drawing.Size(39, 13)
-        Me.NUD_PaperWidth.TabIndex = 47
-        Me.NUD_PaperWidth.Text = "Label2"
+        Me.Label_PaperWidth_Value.AutoSize = True
+        Me.Label_PaperWidth_Value.Location = New System.Drawing.Point(43, 71)
+        Me.Label_PaperWidth_Value.Name = "Label_PaperWidth_Value"
+        Me.Label_PaperWidth_Value.Size = New System.Drawing.Size(39, 13)
+        Me.Label_PaperWidth_Value.TabIndex = 47
+        Me.Label_PaperWidth_Value.Text = "Label2"
         '
         'CB_DPI
         '
@@ -992,14 +993,14 @@ Partial Class Form1
         Me.CB_DPI.TabIndex = 0
         Me.CB_DPI.Tag = "DPI"
         '
-        'NUD_PaperHeight
+        'Label_PaperHeight_Value
         '
-        Me.NUD_PaperHeight.AutoSize = True
-        Me.NUD_PaperHeight.Location = New System.Drawing.Point(43, 54)
-        Me.NUD_PaperHeight.Name = "NUD_PaperHeight"
-        Me.NUD_PaperHeight.Size = New System.Drawing.Size(39, 13)
-        Me.NUD_PaperHeight.TabIndex = 46
-        Me.NUD_PaperHeight.Text = "Label1"
+        Me.Label_PaperHeight_Value.AutoSize = True
+        Me.Label_PaperHeight_Value.Location = New System.Drawing.Point(43, 54)
+        Me.Label_PaperHeight_Value.Name = "Label_PaperHeight_Value"
+        Me.Label_PaperHeight_Value.Size = New System.Drawing.Size(39, 13)
+        Me.Label_PaperHeight_Value.TabIndex = 46
+        Me.Label_PaperHeight_Value.Text = "Label1"
         '
         'CB_DIN
         '
@@ -1056,7 +1057,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(714, 528)
+        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1068,7 +1069,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(708, 522)
+        Me.Panel1.Size = New System.Drawing.Size(586, 522)
         Me.Panel1.TabIndex = 2
         '
         'DGV_Table
@@ -1078,7 +1079,7 @@ Partial Class Form1
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Location = New System.Drawing.Point(143, 0)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(565, 522)
+        Me.DGV_Table.Size = New System.Drawing.Size(443, 522)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
@@ -1113,7 +1114,7 @@ Partial Class Form1
         '
         Me.ExtrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnpassenToolStripMenuItem, Me.OptionenToolStripMenuItem})
         Me.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem"
-        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
+        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
         Me.ExtrasToolStripMenuItem.Text = "E&xtras"
         '
         'AlleauswählenToolStripMenuItem
@@ -1212,20 +1213,20 @@ Partial Class Form1
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BeendenToolStripMenuItem.Text = "&Beenden"
         '
         'toolStripSeparator2
         '
         Me.toolStripSeparator2.Name = "toolStripSeparator2"
-        Me.toolStripSeparator2.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator2.Size = New System.Drawing.Size(177, 6)
         '
         'SeitenansichtToolStripMenuItem
         '
         Me.SeitenansichtToolStripMenuItem.Image = CType(resources.GetObject("SeitenansichtToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SeitenansichtToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SeitenansichtToolStripMenuItem.Name = "SeitenansichtToolStripMenuItem"
-        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SeitenansichtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SeitenansichtToolStripMenuItem.Text = "&Seitenansicht"
         '
         'DruckenToolStripMenuItem
@@ -1234,33 +1235,33 @@ Partial Class Form1
         Me.DruckenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.DruckenToolStripMenuItem.Name = "DruckenToolStripMenuItem"
         Me.DruckenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.DruckenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DruckenToolStripMenuItem.Text = "&Drucken"
         '
         'toolStripSeparator1
         '
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
-        Me.toolStripSeparator1.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator1.Size = New System.Drawing.Size(177, 6)
         '
         'SpeichernunterToolStripMenuItem
         '
         Me.SpeichernunterToolStripMenuItem.Name = "SpeichernunterToolStripMenuItem"
-        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SpeichernunterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SpeichernunterToolStripMenuItem.Text = "Speichern &unter"
         '
-        'SpeichernToolStripMenuItem
+        'TSMI_Safe
         '
-        Me.SpeichernToolStripMenuItem.Image = CType(resources.GetObject("SpeichernToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.SpeichernToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.SpeichernToolStripMenuItem.Name = "SpeichernToolStripMenuItem"
-        Me.SpeichernToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SpeichernToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
-        Me.SpeichernToolStripMenuItem.Text = "&Speichern"
+        Me.TSMI_Safe.Image = CType(resources.GetObject("TSMI_Safe.Image"), System.Drawing.Image)
+        Me.TSMI_Safe.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.TSMI_Safe.Name = "TSMI_Safe"
+        Me.TSMI_Safe.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.TSMI_Safe.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_Safe.Text = "&Speichern"
         '
         'toolStripSeparator
         '
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(165, 6)
+        Me.toolStripSeparator.Size = New System.Drawing.Size(177, 6)
         '
         'ÖffnenToolStripMenuItem
         '
@@ -1268,7 +1269,7 @@ Partial Class Form1
         Me.ÖffnenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
         Me.ÖffnenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ÖffnenToolStripMenuItem.Text = "Ö&ffnen"
         '
         'NeuToolStripMenuItem
@@ -1277,12 +1278,12 @@ Partial Class Form1
         Me.NeuToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.NeuToolStripMenuItem.Name = "NeuToolStripMenuItem"
         Me.NeuToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.NeuToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NeuToolStripMenuItem.Text = "&Neu"
         '
         'DateiToolStripMenuItem
         '
-        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem, Me.ÖffnenToolStripMenuItem, Me.toolStripSeparator, Me.SpeichernToolStripMenuItem, Me.SpeichernunterToolStripMenuItem, Me.toolStripSeparator1, Me.DruckenToolStripMenuItem, Me.SeitenansichtToolStripMenuItem, Me.toolStripSeparator2, Me.BeendenToolStripMenuItem})
+        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NeuToolStripMenuItem, Me.ÖffnenToolStripMenuItem, Me.toolStripSeparator, Me.TSMI_Safe, Me.SpeichernunterToolStripMenuItem, Me.toolStripSeparator1, Me.DruckenToolStripMenuItem, Me.SeitenansichtToolStripMenuItem, Me.toolStripSeparator2, Me.BeendenToolStripMenuItem})
         Me.DateiToolStripMenuItem.Name = "DateiToolStripMenuItem"
         Me.DateiToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
         Me.DateiToolStripMenuItem.Text = "&Datei"
@@ -1494,7 +1495,7 @@ Partial Class Form1
     Friend WithEvents DruckenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents toolStripSeparator1 As ToolStripSeparator
     Friend WithEvents SpeichernunterToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SpeichernToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TSMI_Safe As ToolStripMenuItem
     Friend WithEvents toolStripSeparator As ToolStripSeparator
     Friend WithEvents ÖffnenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents NeuToolStripMenuItem As ToolStripMenuItem
@@ -1521,6 +1522,6 @@ Partial Class Form1
     Friend WithEvents NUD_SeparatorSpalteWert As NumericUpDown
     Friend WithEvents NUD_SeparatorZeileWert As NumericUpDown
     Friend WithEvents CB_DPI As ComboBox
-    Friend WithEvents NUD_PaperWidth As Label
-    Friend WithEvents NUD_PaperHeight As Label
+    Friend WithEvents Label_PaperWidth_Value As Label
+    Friend WithEvents Label_PaperHeight_Value As Label
 End Class
