@@ -25,6 +25,7 @@ Partial Class Form1
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_Border_Card = New System.Windows.Forms.Label()
         Me.Label_Separator_Zeile = New System.Windows.Forms.Label()
         Me.Label_Separator_Anzahl = New System.Windows.Forms.Label()
@@ -484,7 +485,7 @@ Partial Class Form1
         Me.TextBox_Import.Location = New System.Drawing.Point(46, 12)
         Me.TextBox_Import.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
         Me.TextBox_Import.Name = "TextBox_Import"
-        Me.TextBox_Import.Size = New System.Drawing.Size(410, 20)
+        Me.TextBox_Import.Size = New System.Drawing.Size(445, 20)
         Me.TextBox_Import.TabIndex = 0
         Me.TextBox_Import.Tag = "String"
         '
@@ -505,7 +506,7 @@ Partial Class Form1
         Me.TextBox_Export.Location = New System.Drawing.Point(46, 56)
         Me.TextBox_Export.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
         Me.TextBox_Export.Name = "TextBox_Export"
-        Me.TextBox_Export.Size = New System.Drawing.Size(410, 20)
+        Me.TextBox_Export.Size = New System.Drawing.Size(445, 20)
         Me.TextBox_Export.TabIndex = 1
         Me.TextBox_Export.Tag = "String"
         '
@@ -515,7 +516,7 @@ Partial Class Form1
         Me.Button_Import.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Import.ImageKey = "Import.png"
         Me.Button_Import.ImageList = Me.Main_ImageList
-        Me.Button_Import.Location = New System.Drawing.Point(462, 3)
+        Me.Button_Import.Location = New System.Drawing.Point(497, 3)
         Me.Button_Import.Name = "Button_Import"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Import, 3)
         Me.Button_Import.Size = New System.Drawing.Size(38, 38)
@@ -538,7 +539,7 @@ Partial Class Form1
         Me.Button_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Export.ImageKey = "File_Printer.png"
         Me.Button_Export.ImageList = Me.Main_ImageList
-        Me.Button_Export.Location = New System.Drawing.Point(462, 47)
+        Me.Button_Export.Location = New System.Drawing.Point(497, 47)
         Me.Button_Export.Name = "Button_Export"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Export, 3)
         Me.Button_Export.Size = New System.Drawing.Size(38, 38)
@@ -553,12 +554,12 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Files.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_Files.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Files.Controls.Add(Me.DGV_Search, 0, 6)
         Me.TableLayoutPanel_Files.Controls.Add(Me.DGV_CSV, 0, 8)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Button_SearchAdd, 2, 8)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Main_BindingNavigator_CSV, 0, 7)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Button_SearchDelete, 2, 6)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Button_Import, 2, 0)
-        Me.TableLayoutPanel_Files.Controls.Add(Me.DGV_Search, 0, 6)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Label_Import, 0, 1)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Button_Export, 2, 3)
         Me.TableLayoutPanel_Files.Controls.Add(Me.TextBox_Import, 1, 1)
@@ -577,10 +578,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(503, 289)
+        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(538, 361)
         Me.TableLayoutPanel_Files.TabIndex = 0
         '
         'GroupBox_Files
@@ -590,7 +588,7 @@ Partial Class Form1
         Me.GroupBox_Files.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_Files.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Files.Name = "GroupBox_Files"
-        Me.GroupBox_Files.Size = New System.Drawing.Size(509, 308)
+        Me.GroupBox_Files.Size = New System.Drawing.Size(544, 380)
         Me.GroupBox_Files.TabIndex = 43
         Me.GroupBox_Files.TabStop = False
         Me.GroupBox_Files.Text = "Dateien"
@@ -601,7 +599,7 @@ Partial Class Form1
         Me.Button_SearchAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchAdd.ImageKey = "ZoomIn.png"
         Me.Button_SearchAdd.ImageList = Me.Main_ImageList
-        Me.Button_SearchAdd.Location = New System.Drawing.Point(462, 160)
+        Me.Button_SearchAdd.Location = New System.Drawing.Point(497, 160)
         Me.Button_SearchAdd.Name = "Button_SearchAdd"
         Me.Button_SearchAdd.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchAdd.TabIndex = 47
@@ -702,7 +700,7 @@ Partial Class Form1
         Me.Button_SearchDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchDelete.ImageKey = "ZoomOut.png"
         Me.Button_SearchDelete.ImageList = Me.Main_ImageList
-        Me.Button_SearchDelete.Location = New System.Drawing.Point(462, 91)
+        Me.Button_SearchDelete.Location = New System.Drawing.Point(497, 91)
         Me.Button_SearchDelete.Name = "Button_SearchDelete"
         Me.Button_SearchDelete.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchDelete.TabIndex = 46
@@ -710,23 +708,23 @@ Partial Class Form1
         '
         'DGV_CSV
         '
-        Me.DGV_CSV.AllowUserToAddRows = False
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
-        Me.DGV_CSV.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
-        Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.TableLayoutPanel_Files.SetColumnSpan(Me.DGV_CSV, 2)
         Me.DGV_CSV.GridColor = System.Drawing.Color.DarkGray
         Me.DGV_CSV.Location = New System.Drawing.Point(3, 160)
         Me.DGV_CSV.MultiSelect = False
         Me.DGV_CSV.Name = "DGV_CSV"
         Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGV_CSV.Size = New System.Drawing.Size(77, 76)
+        Me.DGV_CSV.Size = New System.Drawing.Size(382, 38)
         Me.DGV_CSV.TabIndex = 44
         '
         'DGV_Search
         '
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
@@ -746,7 +744,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(515, 314)
+        Me.TabPage_Files.Size = New System.Drawing.Size(550, 386)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -760,7 +758,7 @@ Partial Class Form1
         Me.Main_TabControl.Location = New System.Drawing.Point(0, 24)
         Me.Main_TabControl.Name = "Main_TabControl"
         Me.Main_TabControl.SelectedIndex = 0
-        Me.Main_TabControl.Size = New System.Drawing.Size(523, 340)
+        Me.Main_TabControl.Size = New System.Drawing.Size(558, 412)
         Me.Main_TabControl.TabIndex = 6
         '
         'TabPage_Paper
@@ -1198,7 +1196,7 @@ Partial Class Form1
         Me.Main_MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.BearbeitenToolStripMenuItem, Me.ExtrasToolStripMenuItem, Me.HilfeToolStripMenuItem})
         Me.Main_MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.Main_MenuStrip.Name = "Main_MenuStrip"
-        Me.Main_MenuStrip.Size = New System.Drawing.Size(523, 24)
+        Me.Main_MenuStrip.Size = New System.Drawing.Size(558, 24)
         Me.Main_MenuStrip.TabIndex = 4
         Me.Main_MenuStrip.Text = "MenuStrip1"
         '
@@ -1228,9 +1226,9 @@ Partial Class Form1
         'Main_StatusStrip
         '
         Me.Main_StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.Main_StatusStrip.Location = New System.Drawing.Point(0, 364)
+        Me.Main_StatusStrip.Location = New System.Drawing.Point(0, 436)
         Me.Main_StatusStrip.Name = "Main_StatusStrip"
-        Me.Main_StatusStrip.Size = New System.Drawing.Size(523, 22)
+        Me.Main_StatusStrip.Size = New System.Drawing.Size(558, 22)
         Me.Main_StatusStrip.TabIndex = 5
         Me.Main_StatusStrip.Text = "StatusStrip1"
         '
@@ -1269,8 +1267,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = Global.CSVtoQR.My.MySettings.Default.MySize
         Me.Controls.Add(Me.Main_TabControl)
-        Me.Controls.Add(Me.Main_MenuStrip)
         Me.Controls.Add(Me.Main_StatusStrip)
+        Me.Controls.Add(Me.Main_MenuStrip)
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", Global.CSVtoQR.My.MySettings.Default, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))

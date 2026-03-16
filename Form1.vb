@@ -141,12 +141,23 @@ Public Class Form1
                 .Dock = DockStyle.Fill
                 .Font = MyFont
                 .AutoSize = True
+                .AutoResizeColumnHeadersHeight()
                 .DefaultCellStyle.Font = MyFont
                 .MultiSelect = False
+
                 .AllowUserToAddRows = False
+                .AllowUserToDeleteRows = False
+                .AllowUserToOrderColumns = False
+                .AllowUserToResizeColumns = False
+                .AllowUserToResizeRows = False
+
                 .Margin = New Padding(3, 3, 3, 3)
                 .Padding = New Padding(0)
                 .DefaultCellStyle.BackColor = Color.White
+                .ScrollBars = ScrollBars.Both
+
+                .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
+
             End With
         Next
 
@@ -175,8 +186,8 @@ Public Class Form1
                 .Dock = DockStyle.Fill
                 .AutoSize = True
                 .BorderStyle = BorderStyle.Fixed3D
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
+                .Margin = New Padding(0)
+                .Padding = New Padding(0)
             End With
         Next
 
@@ -619,9 +630,11 @@ Public Class Form1
         End If
 
         DGV_Search.EndEdit()
+        DGV_Search.Refresh()
 
-        DTSearch = TryCast(DGV_Search.DataSource, DataTable)
-        For Each Wert As DataRow In DTSearch.Rows
+        For Each Wert As DataRow In DS.Tables("Filter").Rows
+
+            If Wert("FilterColumn") Is DBNull.Value Then Continue For
 
             Dim FilterColumn As String = Wert("FilterColumn").ToString()
             Dim FilterOperator As String = Wert("FilterOperator").ToString()
@@ -680,6 +693,7 @@ Public Class Form1
         DGV_Search.DataSource = DT
         DGV_Search.Update()
 
+        CSVSearch()
 
     End Sub
     Private Sub DGV_Sarch_Formatting()
@@ -707,7 +721,9 @@ Public Class Form1
             End If
 
         Catch ex As Exception
-            Beep()
+
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
         End Try
 
     End Sub
