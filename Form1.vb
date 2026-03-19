@@ -52,15 +52,22 @@ Public Class Form1
     Private Sub MySettings_Load()
 
         With My.Settings
+
             Me.Size = .MySize
             Me.Font = .MyFont
+
             If System.IO.File.Exists(.MySavePath) Then
                 DS = New DataSet
                 DS.ReadXml(.MySavePath)
             Else
                 DS = New Class_DS().Get_DS
             End If
+
+            ListBox_Tabellen.Items.Clear()
+            ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
+
             TSSL_SaveFile.Text = .MySavePath
+
         End With
 
     End Sub
@@ -86,12 +93,36 @@ Public Class Form1
         Main_BindingNavigator_CSV.BindingSource = Main_BindingSource_CSV
         DGV_CSV.DataSource = Main_BindingSource_CSV
 
+        'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
+
+        'Dim Filter_lookup As List(Of String) = CLcsv.DataColumnList
+        'Dim Filter_Column As New DataGridViewComboBoxColumn() With {
+        '        .Name = "FilterColumn",
+        '        .HeaderText = "Spalte",
+        '        .DataPropertyName = "FilterColumn",
+        '        .DataSource = Filter_lookup,
+        '        .ValueType = GetType(String)}
+
+        'If DGV_Search.Columns.Contains("FilterColumn") Then
+        '    'Dim IDFC As Integer = DGV_Search.Columns("FilterColumn").Index
+        '    DGV_Search.Columns.Remove("FilterColumn")
+        '    '    Filter_Column = DGV_Search.Columns("FilterColumn")
+        '    '    With Filter_Column
+        '    '        .DataPropertyName = Filter_Column.DataPropertyName
+        '    '        .DataSource = Filter_lookup
+        '    '    End With
+
+        '    'Else
+        'End If
+        'DGV_Search.Columns.Insert(0, Filter_Column)
+
+
         Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("FilterColumn"), DataGridViewComboBoxColumn)
         If cbCol IsNot Nothing Then
             cbCol.DataSource = CLcsv.DataColumnList
         End If
 
-        DGV_Sarch_Formatting()
+        'DGV_Sarch_Formatting()
         TextBox_Import.Text = Value
 
     End Sub
@@ -138,7 +169,7 @@ Public Class Form1
             DGV_Table}
         For Each CON As DataGridView In ConList_DataGridView
             With CON
-                .Dock = DockStyle.Fill
+                .Dock = DockStyle.Top
                 .Font = MyFont
                 .AutoSize = True
                 .AutoResizeColumnHeadersHeight()
@@ -463,31 +494,10 @@ Public Class Form1
         If IsNothing(DS) Then Exit Sub
         If IsNothing(DS.Tables("Shema")) Then Exit Sub
 
-        ListBox_Tabellen.Items.Clear()
-        ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
 
         With DS.Tables("Shema")
             If .Rows.Count = 0 Then
-                Dim DR As DataRow = .NewRow
-                DR.Item("Shema") = "Standard"
-                DR.Item("DPI") = 96
-                DR.Item("DIN") = "A4"
-                DR.Item("PaperHeight") = 297
-                DR.Item("PaperWidth") = 210
-                DR.Item("PaperBorderLeft") = 0
-                DR.Item("PaperBorderTop") = 0
-                DR.Item("PaperBorderRight") = 0
-                DR.Item("PaperBorderBottom") = 0
-                DR.Item("SeparatorSpalteAnzahl") = 1
-                DR.Item("SeparatorSpalteWert") = 0
-                DR.Item("SeparatorZeileAnzahl") = 1
-                DR.Item("SeparatorZeileWert") = 0
-                DR.Item("CardBorderLeft") = 0
-                DR.Item("CardBorderTop") = 0
-                DR.Item("CardBorderRight") = 0
-                DR.Item("CardBorderBottom") = 0
-                .Rows.Add(DR)
-                IsModified = True
+                NewRow_Shema()
             Else
                 ImportFile = .Rows(0).Item("Import").ToString
             End If
@@ -521,6 +531,44 @@ Public Class Form1
         End With
 
     End Sub
+
+    ''' <summary>
+    ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
+    ''' </summary>
+    Private Sub NewRow_Shema()
+
+        If IsNothing(DS) Then Exit Sub
+        If IsNothing(DS.Tables("Shema")) Then Exit Sub
+
+        Dim DR As DataRow = DS.Tables("Shema").NewRow
+        With DS.Tables("Shema")
+            With DR
+                .Item("Shema") = "Standard"
+                .Item("Import") = String.Empty
+                .Item("Export") = String.Empty
+                .Item("DIN") = "A4"
+                .Item("DPI") = 96
+                .Item("PaperHeight") = 297
+                .Item("PaperWidth") = 210
+                .Item("PaperBorderLeft") = 0
+                .Item("PaperBorderTop") = 0
+                .Item("PaperBorderRight") = 0
+                .Item("PaperBorderBottom") = 0
+                .Item("SeparatorSpalteAnzahl") = 1
+                .Item("SeparatorSpalteWert") = 0
+                .Item("SeparatorZeileAnzahl") = 1
+                .Item("SeparatorZeileWert") = 0
+                .Item("CardBorderLeft") = 0
+                .Item("CardBorderTop") = 0
+                .Item("CardBorderRight") = 0
+                .Item("CardBorderBottom") = 0
+            End With
+            .Rows.Add(DR)
+            IsModified = True
+        End With
+
+    End Sub
+
     Private Sub DataSetWrite()
 
         If IsNothing(DS) Then Exit Sub
@@ -529,25 +577,31 @@ Public Class Form1
         Dim DR As DataRow = DS.Tables("Shema").NewRow
         With DS.Tables("Shema")
             With DR
+
                 .Item("Shema") = TextBox_Shema.Text
                 .Item("Import") = TextBox_Import.Text
                 .Item("Export") = TextBox_Export.Text
                 .Item("DIN") = CB_DIN.Text
                 .Item("DPI") = CB_DPI.Text
+
                 If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
                 If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
+
                 If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("PaperBorderLeft") = NUD_PaperBorderLeft.Value
                 If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("PaperBorderTop") = NUD_PaperBorderTop.Value
                 If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("PaperBorderRight") = NUD_PaperBorderRight.Value
                 If IsNumeric(NUD_PaperBorderBottom.Value) = True Then .Item("PaperBorderBottom") = NUD_PaperBorderBottom.Value
+
                 If IsNumeric(NUD_SeparatorSpalteAnzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_SeparatorSpalteAnzahl.Value
                 If IsNumeric(NUD_SeparatorSpalteWert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_SeparatorSpalteWert.Value
                 If IsNumeric(NUD_SeparatorZeileAnzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_SeparatorZeileAnzahl.Value
                 If IsNumeric(NUD_SeparatorZeileWert.Value) = True Then .Item("SeparatorZeileWert") = NUD_SeparatorZeileWert.Value
+
                 If IsNumeric(NUD_CardBorderLeft.Value) = True Then .Item("CardBorderLeft") = NUD_CardBorderLeft.Value
                 If IsNumeric(NUD_CardBorderTop.Value) = True Then .Item("CardBorderTop") = NUD_CardBorderTop.Value
                 If IsNumeric(NUD_CardBorderRight.Value) = True Then .Item("CardBorderRight") = NUD_CardBorderRight.Value
                 If IsNumeric(NUD_CardBorderBottom.Value) = True Then .Item("CardBorderBottom") = NUD_CardBorderBottom.Value
+
             End With
 
             If .Rows.Count > 0 Then .Rows.Clear()
@@ -698,31 +752,58 @@ Public Class Form1
     End Sub
     Private Sub DGV_Sarch_Formatting()
 
+        'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
+        'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "FilterColumn" und "FilterOperator" Spalten führen kann.
         Try
 
-            Dim lookupFilter As List(Of String) = CLcsv.DataColumnList
-            Dim FilterColumn As New DataGridViewComboBoxColumn() With {.Name = "FilterColumn", .HeaderText = "FilterColumn", .DataPropertyName = "FilterColumn", .DataSource = lookupFilter, .ValueType = GetType(String)}
-            If DGV_Search.Columns.Contains("FilterColumn") Then
-                Dim idx = DGV_Search.Columns("FilterColumn").Index
-                DGV_Search.Columns.Remove("FilterColumn")
-                DGV_Search.Columns.Insert(idx, FilterColumn)
-            Else
-                DGV_Search.Columns.Insert(1, FilterColumn)
-            End If
+            Dim Filter_lookup As List(Of String) = CLcsv.DataColumnList
+            Dim Filter_Column As New DataGridViewComboBoxColumn() With {
+                .Name = "FilterColumn",
+                .HeaderText = "Spalte",
+                .DataPropertyName = "FilterColumn",
+                .DataSource = Filter_lookup,
+                .ValueType = GetType(String)}
 
-            Dim lookupOperator As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
-            Dim FilterOperator As New DataGridViewComboBoxColumn() With {.Name = "FilterOperator", .HeaderText = "FilterOperator", .DataPropertyName = "FilterOperator", .DataSource = lookupOperator, .ValueType = GetType(String)}
-            If DGV_Search.Columns.Contains("FilterOperator") Then
-                Dim idx = DGV_Search.Columns("FilterOperator").Index
-                DGV_Search.Columns.Remove("FilterOperator")
-                DGV_Search.Columns.Insert(idx, FilterOperator)
-            Else
-                DGV_Search.Columns.Insert(1, FilterOperator)
+            If DGV_Search.Columns.Contains("FilterColumn") Then
+                'Dim IDFC As Integer = DGV_Search.Columns("FilterColumn").Index
+                DGV_Search.Columns.Remove("FilterColumn")
+                '    Filter_Column = DGV_Search.Columns("FilterColumn")
+                '    With Filter_Column
+                '        .DataPropertyName = Filter_Column.DataPropertyName
+                '        .DataSource = Filter_lookup
+                '    End With
+
+                'Else
             End If
+            DGV_Search.Columns.Insert(1, Filter_Column)
 
         Catch ex As Exception
 
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.Message, "Error Filter_lookup", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Try
+
+        Try
+
+            Dim Operator_lookup As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
+            Dim Filter_Operator As New DataGridViewComboBoxColumn() With {
+                .Name = "FilterOperator",
+                .HeaderText = "FilterOperator",
+                .DataPropertyName = "FilterOperator",
+                .DataSource = Operator_lookup,
+                .ValueType = GetType(String)}
+
+            If DGV_Search.Columns.Contains("FilterOperator") Then
+                'Dim IDFO As Integer = DGV_Search.Columns("FilterOperator").Index
+                DGV_Search.Columns.Remove("FilterOperator")
+                'DGV_Search.Columns.Insert(2, Filter_Operator)
+                'Else
+            End If
+            DGV_Search.Columns.Insert(2, Filter_Operator)
+
+        Catch ex As Exception
+
+            MessageBox.Show(ex.Message, "Error Operator_lookup", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
         End Try
 
