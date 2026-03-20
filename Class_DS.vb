@@ -17,7 +17,9 @@ Public Class Class_DS
             .Add(DT_Shema)
             .Add(DT_CardZeile)
             .Add(DT_PaperDIN)
-            .Add(DT_Filter)
+            .Add(DT_Search)
+            .Add(DT_Search_Columns)
+            .Add(DT_Search_Operante)
         End With
 
         Return DS
@@ -80,11 +82,11 @@ Public Class Class_DS
 
     End Function
 
-    Private Function DT_Filter() As DataTable
+    Private Function DT_Search() As DataTable
 
         Dim DT As New DataTable
         With DT
-            .TableName = "Filter"
+            .TableName = "Search"
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "FilterColumn", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "FilterOperator", .DataType = GetType(String)})
@@ -96,25 +98,34 @@ Public Class Class_DS
 
     End Function
 
-    Private Function DT_Operante() As DataTable
+    Private Function DT_Search_Columns() As DataTable
 
         Dim DT As New DataTable
         With DT
-            .TableName = "Operante"
+            .TableName = "Search_Columns"
+            .Columns.Add(New DataColumn With {.ColumnName = "Column", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
+            .PrimaryKey = New DataColumn() { .Columns("Column")}
+        End With
+
+        Return DT
+
+    End Function
+    Private Function DT_Search_Operante() As DataTable
+
+        Dim DT As New DataTable
+        With DT
+            .TableName = "Search_Operante"
             .Columns.Add(New DataColumn With {.ColumnName = "Operant", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
             .Columns.Add(New DataColumn With {.ColumnName = "OperantLeft", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "OperantRight", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("Operant")}
         End With
-        '"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"
-        DT.Rows.Add("Enthält", "LIKE", "LIKE")
-        DT.Rows.Add("Gleich", "=", "=")
-        DT.Rows.Add("Ungleich", "<>", "<>")
-        DT.Rows.Add("Beginnt mit", "LIKE", "LIKE")
-        DT.Rows.Add("Endet mit", "LIKE", "LIKE")
-        DT.Rows.Add("Länger als", ">", ">")
-        DT.Rows.Add("Kürzer als", "<", "<")
 
+        DT.Rows.Add("Enthält", "LIKE '*", "*'")
+        DT.Rows.Add("Gleich", "=", "")
+        DT.Rows.Add("Ungleich", "<> '*", "*'")
+        DT.Rows.Add("Beginnt mit", "LIKE '*", "'")
+        DT.Rows.Add("Endet mit", "LIKE '", "*'")
 
         Return DT
 
