@@ -82,7 +82,7 @@ Partial Class Form1
         Me.Main_TabControl = New System.Windows.Forms.TabControl()
         Me.TabPage_Paper = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_Paper = New System.Windows.Forms.TableLayoutPanel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Panel_Paper = New System.Windows.Forms.Panel()
         Me.PictureBox_Paper = New System.Windows.Forms.PictureBox()
         Me.GroupBox_Shema = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel_Shema = New System.Windows.Forms.TableLayoutPanel()
@@ -96,7 +96,6 @@ Partial Class Form1
         Me.Label_Border = New System.Windows.Forms.Label()
         Me.CB_DIN = New System.Windows.Forms.ComboBox()
         Me.TabPage_Table = New System.Windows.Forms.TabPage()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.DGV_Table = New System.Windows.Forms.DataGridView()
         Me.ListBox_Tabellen = New System.Windows.Forms.ListBox()
         Me.OptionenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -161,12 +160,11 @@ Partial Class Form1
         Me.Main_TabControl.SuspendLayout()
         Me.TabPage_Paper.SuspendLayout()
         Me.TableLayoutPanel_Paper.SuspendLayout()
-        Me.Panel2.SuspendLayout()
+        Me.Panel_Paper.SuspendLayout()
         CType(Me.PictureBox_Paper, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox_Shema.SuspendLayout()
         Me.TableLayoutPanel_Shema.SuspendLayout()
         Me.TabPage_Table.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Main_MenuStrip.SuspendLayout()
         Me.Main_StatusStrip.SuspendLayout()
@@ -516,7 +514,7 @@ Partial Class Form1
         Me.Button_Import.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Import.ImageKey = "Import.png"
         Me.Button_Import.ImageList = Me.Main_ImageList
-        Me.Button_Import.Location = New System.Drawing.Point(732, 3)
+        Me.Button_Import.Location = New System.Drawing.Point(544, 3)
         Me.Button_Import.Name = "Button_Import"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Import, 3)
         Me.Button_Import.Size = New System.Drawing.Size(38, 38)
@@ -539,7 +537,7 @@ Partial Class Form1
         Me.Button_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Export.ImageKey = "File_Printer.png"
         Me.Button_Export.ImageList = Me.Main_ImageList
-        Me.Button_Export.Location = New System.Drawing.Point(732, 47)
+        Me.Button_Export.Location = New System.Drawing.Point(544, 47)
         Me.Button_Export.Name = "Button_Export"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Export, 3)
         Me.Button_Export.Size = New System.Drawing.Size(38, 38)
@@ -578,7 +576,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(773, 350)
+        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(585, 347)
         Me.TableLayoutPanel_Files.TabIndex = 0
         '
         'DGV_Search
@@ -619,7 +617,7 @@ Partial Class Form1
         Me.Button_SearchAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchAdd.ImageKey = "ZoomIn.png"
         Me.Button_SearchAdd.ImageList = Me.Main_ImageList
-        Me.Button_SearchAdd.Location = New System.Drawing.Point(732, 160)
+        Me.Button_SearchAdd.Location = New System.Drawing.Point(544, 160)
         Me.Button_SearchAdd.Name = "Button_SearchAdd"
         Me.Button_SearchAdd.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchAdd.TabIndex = 47
@@ -720,7 +718,7 @@ Partial Class Form1
         Me.Button_SearchDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchDelete.ImageKey = "ZoomOut.png"
         Me.Button_SearchDelete.ImageList = Me.Main_ImageList
-        Me.Button_SearchDelete.Location = New System.Drawing.Point(732, 91)
+        Me.Button_SearchDelete.Location = New System.Drawing.Point(544, 91)
         Me.Button_SearchDelete.Name = "Button_SearchDelete"
         Me.Button_SearchDelete.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchDelete.TabIndex = 46
@@ -733,7 +731,7 @@ Partial Class Form1
         Me.GroupBox_Files.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_Files.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Files.Name = "GroupBox_Files"
-        Me.GroupBox_Files.Size = New System.Drawing.Size(779, 369)
+        Me.GroupBox_Files.Size = New System.Drawing.Size(591, 366)
         Me.GroupBox_Files.TabIndex = 43
         Me.GroupBox_Files.TabStop = False
         Me.GroupBox_Files.Text = "Dateien"
@@ -744,7 +742,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(785, 375)
+        Me.TabPage_Files.Size = New System.Drawing.Size(597, 372)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -758,50 +756,45 @@ Partial Class Form1
         Me.Main_TabControl.Location = New System.Drawing.Point(0, 24)
         Me.Main_TabControl.Name = "Main_TabControl"
         Me.Main_TabControl.SelectedIndex = 0
-        Me.Main_TabControl.Size = New System.Drawing.Size(793, 401)
+        Me.Main_TabControl.Size = New System.Drawing.Size(600, 554)
         Me.Main_TabControl.TabIndex = 6
         '
         'TabPage_Paper
         '
-        Me.TabPage_Paper.AutoScroll = True
         Me.TabPage_Paper.Controls.Add(Me.TableLayoutPanel_Paper)
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(785, 375)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel_Paper
         '
-        Me.TableLayoutPanel_Paper.AutoScroll = True
         Me.TableLayoutPanel_Paper.ColumnCount = 3
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Separator, 1, 0)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Panel2, 1, 1)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Panel_Paper, 1, 1)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Shema, 0, 0)
-        Me.TableLayoutPanel_Paper.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
         Me.TableLayoutPanel_Paper.RowCount = 2
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(779, 369)
+        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(491, 306)
         Me.TableLayoutPanel_Paper.TabIndex = 45
         '
-        'Panel2
+        'Panel_Paper
         '
-        Me.Panel2.AutoScroll = True
-        Me.TableLayoutPanel_Paper.SetColumnSpan(Me.Panel2, 2)
-        Me.Panel2.Controls.Add(Me.PictureBox_Paper)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(223, 100)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(536, 419)
-        Me.Panel2.TabIndex = 0
+        Me.Panel_Paper.AutoScroll = True
+        Me.Panel_Paper.Controls.Add(Me.PictureBox_Paper)
+        Me.Panel_Paper.Location = New System.Drawing.Point(223, 100)
+        Me.Panel_Paper.Name = "Panel_Paper"
+        Me.Panel_Paper.Size = New System.Drawing.Size(176, 195)
+        Me.Panel_Paper.TabIndex = 0
         '
         'PictureBox_Paper
         '
@@ -821,7 +814,7 @@ Partial Class Form1
         Me.GroupBox_Shema.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Shema.Name = "GroupBox_Shema"
         Me.TableLayoutPanel_Paper.SetRowSpan(Me.GroupBox_Shema, 2)
-        Me.GroupBox_Shema.Size = New System.Drawing.Size(214, 516)
+        Me.GroupBox_Shema.Size = New System.Drawing.Size(214, 300)
         Me.GroupBox_Shema.TabIndex = 0
         Me.GroupBox_Shema.TabStop = False
         Me.GroupBox_Shema.Text = "Shema"
@@ -877,7 +870,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Shema.Size = New System.Drawing.Size(208, 497)
+        Me.TableLayoutPanel_Shema.Size = New System.Drawing.Size(208, 281)
         Me.TableLayoutPanel_Shema.TabIndex = 0
         '
         'Label_Paper_Einheit_Width
@@ -978,68 +971,57 @@ Partial Class Form1
         '
         'TabPage_Table
         '
-        Me.TabPage_Table.Controls.Add(Me.Panel1)
+        Me.TabPage_Table.Controls.Add(Me.DGV_Table)
+        Me.TabPage_Table.Controls.Add(Me.ListBox_Tabellen)
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
+        Me.TabPage_Table.Size = New System.Drawing.Size(597, 372)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.DGV_Table)
-        Me.Panel1.Controls.Add(Me.ListBox_Tabellen)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(3, 3)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(586, 522)
-        Me.Panel1.TabIndex = 2
         '
         'DGV_Table
         '
         Me.DGV_Table.AllowUserToAddRows = False
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DGV_Table.Location = New System.Drawing.Point(143, 0)
+        Me.DGV_Table.Location = New System.Drawing.Point(219, 35)
         Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(443, 522)
+        Me.DGV_Table.Size = New System.Drawing.Size(125, 134)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
         '
-        Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Left
         Me.ListBox_Tabellen.FormattingEnabled = True
-        Me.ListBox_Tabellen.Location = New System.Drawing.Point(0, 0)
+        Me.ListBox_Tabellen.Location = New System.Drawing.Point(19, 20)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(143, 522)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(147, 134)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'OptionenToolStripMenuItem
         '
         Me.OptionenToolStripMenuItem.Name = "OptionenToolStripMenuItem"
-        Me.OptionenToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.OptionenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OptionenToolStripMenuItem.Text = "&Optionen"
         '
         'TSMI_Font
         '
         Me.TSMI_Font.Name = "TSMI_Font"
-        Me.TSMI_Font.Size = New System.Drawing.Size(122, 22)
+        Me.TSMI_Font.Size = New System.Drawing.Size(180, 22)
         Me.TSMI_Font.Text = "Schriftart"
         '
         'AnpassenToolStripMenuItem
         '
         Me.AnpassenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMI_Font})
         Me.AnpassenToolStripMenuItem.Name = "AnpassenToolStripMenuItem"
-        Me.AnpassenToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.AnpassenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AnpassenToolStripMenuItem.Text = "&Anpassen"
         '
         'ExtrasToolStripMenuItem
         '
         Me.ExtrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnpassenToolStripMenuItem, Me.OptionenToolStripMenuItem})
         Me.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem"
-        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
+        Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
         Me.ExtrasToolStripMenuItem.Text = "E&xtras"
         '
         'AlleauswählenToolStripMenuItem
@@ -1225,7 +1207,7 @@ Partial Class Form1
         Me.Main_MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.BearbeitenToolStripMenuItem, Me.ExtrasToolStripMenuItem, Me.HilfeToolStripMenuItem})
         Me.Main_MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.Main_MenuStrip.Name = "Main_MenuStrip"
-        Me.Main_MenuStrip.Size = New System.Drawing.Size(793, 24)
+        Me.Main_MenuStrip.Size = New System.Drawing.Size(600, 24)
         Me.Main_MenuStrip.TabIndex = 4
         Me.Main_MenuStrip.Text = "MenuStrip1"
         '
@@ -1255,16 +1237,17 @@ Partial Class Form1
         'Main_StatusStrip
         '
         Me.Main_StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSSL_IsModified, Me.TSSL_SaveInfo, Me.TSSL_SaveFile})
-        Me.Main_StatusStrip.Location = New System.Drawing.Point(0, 425)
+        Me.Main_StatusStrip.Location = New System.Drawing.Point(0, 578)
         Me.Main_StatusStrip.Name = "Main_StatusStrip"
-        Me.Main_StatusStrip.Size = New System.Drawing.Size(793, 22)
+        Me.Main_StatusStrip.Size = New System.Drawing.Size(600, 22)
+        Me.Main_StatusStrip.SizingGrip = False
         Me.Main_StatusStrip.TabIndex = 5
         Me.Main_StatusStrip.Text = "StatusStrip1"
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = Global.CSVtoQR.My.MySettings.Default.MySize
         Me.Controls.Add(Me.Main_TabControl)
         Me.Controls.Add(Me.Main_StatusStrip)
@@ -1306,14 +1289,13 @@ Partial Class Form1
         Me.TabPage_Paper.ResumeLayout(False)
         Me.TableLayoutPanel_Paper.ResumeLayout(False)
         Me.TableLayoutPanel_Paper.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
+        Me.Panel_Paper.ResumeLayout(False)
         CType(Me.PictureBox_Paper, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox_Shema.ResumeLayout(False)
         Me.GroupBox_Shema.PerformLayout()
         Me.TableLayoutPanel_Shema.ResumeLayout(False)
         Me.TableLayoutPanel_Shema.PerformLayout()
         Me.TabPage_Table.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Main_MenuStrip.ResumeLayout(False)
         Me.Main_MenuStrip.PerformLayout()
@@ -1374,10 +1356,9 @@ Partial Class Form1
     Friend WithEvents TabPage_Files As TabPage
     Friend WithEvents Main_TabControl As TabControl
     Friend WithEvents TabPage_Paper As TabPage
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel_Paper As Panel
     Friend WithEvents PictureBox_Paper As PictureBox
     Friend WithEvents TabPage_Table As TabPage
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents DGV_Table As DataGridView
     Friend WithEvents ListBox_Tabellen As ListBox
     Friend WithEvents OptionenToolStripMenuItem As ToolStripMenuItem

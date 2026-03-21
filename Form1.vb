@@ -4,6 +4,7 @@ Imports System.Security.Cryptography
 
 Public Class Form1
 
+    Private MyFont As Font = My.Settings.MyFont
     Private DS As New DataSet
     Private CLcsv As New Class_ImportCSV
     Private DTcsv As DataTable
@@ -25,6 +26,7 @@ Public Class Form1
                 TSSL_IsModified.BackColor = Color.Green
                 TSMI_Safe.Enabled = False
             End If
+            Main_StatusStrip.Refresh
         End Set
     End Property
 
@@ -47,7 +49,7 @@ Public Class Form1
         MySettings_Load()
         DefaultControls()
         DataSetRead()
-        PaperPaint()
+        PaperPaint(Nothing, Nothing)
 
     End Sub
     Private Sub MySettings_Load()
@@ -56,6 +58,7 @@ Public Class Form1
 
             Me.Size = .MySize
             Me.Font = .MyFont
+            MyFont = .MyFont
 
             If System.IO.File.Exists(.MySavePath) Then
                 DS = New DataSet
@@ -113,7 +116,7 @@ Public Class Form1
 
     Private Sub DefaultControls()
 
-        Dim MyFont = My.Settings.MyFont
+        'MyFont = My.Settings.MyFont
         TSSL_IsModified.BackColor = Color.Green
 
         With Main_StatusStrip
@@ -139,8 +142,27 @@ Public Class Form1
             .Padding = New Padding(0)
         End With
 
+        With ListBox_Tabellen
+            .Font = MyFont
+            .Dock = DockStyle.Left
+            .AutoSize = True
+            .Margin = New Padding(0)
+            .Padding = New Padding(0)
+        End With
+
+        With Panel_Paper
+            .BorderStyle = BorderStyle.FixedSingle
+            .Dock = DockStyle.Fill
+            .Margin = New Padding(3)
+            .Padding = New Padding(3)
+            .BackColor = Color.WhiteSmoke
+            TableLayoutPanel_Paper.SetColumnSpan(Panel_Paper, 2)
+        End With
+
         With PictureBox_Paper
             .BorderStyle = BorderStyle.FixedSingle
+            .Dock = DockStyle.None
+            .Location = New Point(0, 0)
             .SizeMode = PictureBoxSizeMode.AutoSize
             .Margin = New Padding(3)
             .Padding = New Padding(3)
@@ -220,8 +242,13 @@ Public Class Form1
                 .Padding = New Padding(3)
                 .TextAlign = HorizontalAlignment.Left
             End With
+
+            RemoveHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
             AddHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
+
+            RemoveHandler CON.Enter, AddressOf TextBox_SelectAll
             AddHandler CON.Enter, AddressOf TextBox_SelectAll
+
         Next
 
         Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
@@ -248,8 +275,13 @@ Public Class Form1
                 .Maximum = 9999
                 .Increment = 0.1
                 .DecimalPlaces = 1
+
+                RemoveHandler .ValueChanged, AddressOf NUD_ValueChanged
                 AddHandler .ValueChanged, AddressOf NUD_ValueChanged
+
+                RemoveHandler .ValueChanged, AddressOf PaperPaint
                 AddHandler .ValueChanged, AddressOf PaperPaint
+
             End With
         Next
 
@@ -269,8 +301,12 @@ Public Class Form1
                 .Increment = 1
                 .Maximum = 12
                 .DecimalPlaces = 0
+
+                RemoveHandler .ValueChanged, AddressOf NUD_ValueChanged
                 AddHandler .ValueChanged, AddressOf NUD_ValueChanged
+                RemoveHandler .ValueChanged, AddressOf PaperPaint
                 AddHandler .ValueChanged, AddressOf PaperPaint
+
             End With
         Next
 
@@ -344,15 +380,24 @@ Public Class Form1
                 Select Case CON.Name
                     Case "CB_DPI"
                         .Items.AddRange(New Object() {72, 96, 150, 300, 600})
+
+                        RemoveHandler CON.SelectedIndexChanged, AddressOf CB_DPI_SelectedIndexChanged
                         AddHandler CON.SelectedIndexChanged, AddressOf CB_DPI_SelectedIndexChanged
+
                     Case "CB_DIN"
                         .DataSource = DS.Tables("PaperDIN")
                         .DisplayMember = "DIN"
                         .ValueMember = "DIN"
                         If DS.Tables("Shema").Rows.Count > 0 Then .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
+
+                        RemoveHandler CON.SelectedIndexChanged, AddressOf ComboBox_DIN_SelectedIndexChanged
                         AddHandler CON.SelectedIndexChanged, AddressOf ComboBox_DIN_SelectedIndexChanged
+
                 End Select
+
+                RemoveHandler CON.SelectedValueChanged, AddressOf PaperPaint
                 AddHandler CON.SelectedValueChanged, AddressOf PaperPaint
+
             End With
         Next
 
@@ -360,11 +405,13 @@ Public Class Form1
 
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
     Private Sub TextBox_SelectAll(sender As Object, e As EventArgs)
+
         Dim tb As TextBox = TryCast(sender, TextBox)
         If tb Is Nothing Then Return
         If tb.CanSelect Then
             tb.SelectAll()
         End If
+
     End Sub
 
     Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BeendenToolStripMenuItem.Click
@@ -805,15 +852,16 @@ Public Class Form1
 
         Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
         If FD.ShowDialog = DialogResult.OK Then
-            Me.Font = FD.Font
-            My.Settings.MyFont = FD.Font
-            DefaultControls()
-        End If
 
+            My.Settings.MyFont = FD.Font
+            Me.Font = FD.Font
+            MyFont = FD.Font
+
+        End If
 
     End Sub
 
-    Private Sub PaperPaint()
+    Private Sub PaperPaint(Sender As Object, e As EventArgs)
 
         If DS Is Nothing Then Return
         If DS.Tables.Contains("Shema") = False Then Return
