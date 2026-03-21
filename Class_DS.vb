@@ -88,15 +88,24 @@ Public Class Class_DS
         With DT
             .TableName = "Search"
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            .Columns.Add(New DataColumn With {.ColumnName = "FilterColumn", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "FilterOperator", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "FilterValue", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Search_Column", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Search_Operator", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Search_Value", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
         End With
 
         Return DT
 
     End Function
+
+    Public Sub NEW_Search_Columns(ColumnList As List(Of String))
+
+        Dim DT As DataTable = DT_Search_Columns()
+        For Each SC As String In ColumnList
+            If DT.Rows.Find(SC) Is Nothing Then DT.Rows.Add(SC)
+        Next
+
+    End Sub
 
     Private Function DT_Search_Columns() As DataTable
 
@@ -116,8 +125,8 @@ Public Class Class_DS
         With DT
             .TableName = "Search_Operante"
             .Columns.Add(New DataColumn With {.ColumnName = "Operant", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
-            .Columns.Add(New DataColumn With {.ColumnName = "OperantLeft", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "OperantRight", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Operant_Left", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Operant_Right", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("Operant")}
         End With
 

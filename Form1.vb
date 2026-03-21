@@ -8,6 +8,7 @@ Public Class Form1
     Private CLcsv As New Class_ImportCSV
     Private DTcsv As DataTable
     Private DVcsv As DataView
+    Private CLDS As New Class_DS
     Private WithEvents DTSearch As DataTable
 
     Private IsModified_Value As Boolean
@@ -89,40 +90,23 @@ Public Class Form1
         DTcsv = CLcsv.Load_CSV(Value)
         DVcsv = New DataView(DTcsv)
 
+        CLDS.NEW_Search_Columns(CLcsv.DataColumnList)
+
+
         Main_BindingSource_CSV.DataSource = DVcsv
         Main_BindingNavigator_CSV.BindingSource = Main_BindingSource_CSV
         DGV_CSV.DataSource = Main_BindingSource_CSV
 
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
 
-        'Dim Filter_lookup As List(Of String) = CLcsv.DataColumnList
-        'Dim Filter_Column As New DataGridViewComboBoxColumn() With {
-        '        .Name = "FilterColumn",
-        '        .HeaderText = "Spalte",
-        '        .DataPropertyName = "FilterColumn",
-        '        .DataSource = Filter_lookup,
-        '        .ValueType = GetType(String)}
+        DGV_Sarch_Formatting()
 
-        'If DGV_Search.Columns.Contains("FilterColumn") Then
-        '    'Dim IDFC As Integer = DGV_Search.Columns("FilterColumn").Index
-        '    DGV_Search.Columns.Remove("FilterColumn")
-        '    '    Filter_Column = DGV_Search.Columns("FilterColumn")
-        '    '    With Filter_Column
-        '    '        .DataPropertyName = Filter_Column.DataPropertyName
-        '    '        .DataSource = Filter_lookup
-        '    '    End With
 
-        '    'Else
+        'Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("Search_Column"), DataGridViewComboBoxColumn)
+        'If cbCol IsNot Nothing Then
+        '    cbCol.DataSource = CLcsv.DataColumnList
         'End If
-        'DGV_Search.Columns.Insert(0, Filter_Column)
 
-
-        Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("FilterColumn"), DataGridViewComboBoxColumn)
-        If cbCol IsNot Nothing Then
-            cbCol.DataSource = CLcsv.DataColumnList
-        End If
-
-        'DGV_Sarch_Formatting()
         TextBox_Import.Text = Value
 
     End Sub
@@ -169,7 +153,7 @@ Public Class Form1
             DGV_Table}
         For Each CON As DataGridView In ConList_DataGridView
             With CON
-                .Dock = DockStyle.Top
+                .Dock = DockStyle.Fill
                 .Font = MyFont
                 .AutoSize = True
                 .AutoResizeColumnHeadersHeight()
@@ -525,10 +509,12 @@ Public Class Form1
             End With
         End With
 
-        With DS.Tables("Filter")
-            If .Rows.Count = 0 Then Exit Sub
-            DGV_Search.DataSource = DS.Tables("Filter")
-        End With
+        If Not IsNothing(DS.Tables("Search")) Then
+            With DS.Tables("Search")
+                If .Rows.Count = 0 Then Exit Sub
+                DGV_Search.DataSource = DS.Tables("Search")
+            End With
+        End If
 
     End Sub
 
@@ -641,6 +627,7 @@ Public Class Form1
             Select Case Result
                 Case DialogResult.Yes
                     MySettings_Save()
+                    On Error Resume Next
                     DS.WriteXml(My.Settings.MySavePath, XmlWriteMode.WriteSchema)
                 Case DialogResult.No
                     ' Do nothing
@@ -686,13 +673,13 @@ Public Class Form1
         DGV_Search.EndEdit()
         DGV_Search.Refresh()
 
-        For Each Wert As DataRow In DS.Tables("Filter").Rows
+        For Each Wert As DataRow In DS.Tables("Search").Rows
 
-            If Wert("FilterColumn") Is DBNull.Value Then Continue For
+            If Wert("Search_Column") Is DBNull.Value Then Continue For
 
-            Dim FilterColumn As String = Wert("FilterColumn").ToString()
-            Dim FilterOperator As String = Wert("FilterOperator").ToString()
-            Dim FilterValue As String = Wert("FilterValue").ToString()
+            Dim FilterColumn As String = Wert("Search_Column").ToString()
+            Dim FilterOperator As String = Wert("Search_Operator").ToString()
+            Dim FilterValue As String = Wert("Search_Value").ToString()
 
             If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
@@ -733,14 +720,14 @@ Public Class Form1
 
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_SearchAdd.Click
 
-        DGV_Sarch_Formatting()
+        'DGV_Sarch_Formatting()
 
-        Dim DT As DataTable = DS.Tables("Filter")
+        Dim DT As DataTable = DS.Tables("Search")
         Dim DR As DataRow = DT.NewRow
         With DR
-            .Item("FilterColumn") = DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).HeaderText
-            .Item("FilterOperator") = "Gleich"
-            .Item("FilterValue") = DGV_CSV.CurrentCell.Value.ToString
+            .Item("Search_Column") = DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).HeaderText
+            .Item("Search_Operator") = "Gleich"
+            .Item("Search_Value") = DGV_CSV.CurrentCell.Value.ToString
         End With
         DT.Rows.Add(DR)
 
@@ -750,62 +737,52 @@ Public Class Form1
         CSVSearch()
 
     End Sub
+
     Private Sub DGV_Sarch_Formatting()
 
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
-        'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "FilterColumn" und "FilterOperator" Spalten führen kann.
-        Try
+        'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "Search_Column" und "Search_Operator" Spalten führen kann.
 
-            Dim Filter_lookup As List(Of String) = CLcsv.DataColumnList
-            Dim Filter_Column As New DataGridViewComboBoxColumn() With {
-                .Name = "FilterColumn",
-                .HeaderText = "Spalte",
-                .DataPropertyName = "FilterColumn",
-                .DataSource = Filter_lookup,
-                .ValueType = GetType(String)}
+        '0. Erstelle die TextBox-Spalte für die ID
+        Dim Search_ID As New DataGridViewTextBoxColumn() With {
+            .Name = "ID",
+            .HeaderText = "ID",
+            .DataPropertyName = "ID",
+            .ValueType = GetType(Integer)
+        }
+        If DGV_Search.Columns.Contains("ID") Then DGV_Search.Columns.Remove("ID")
+        DGV_Search.Columns.Insert(0, Search_ID)
 
-            If DGV_Search.Columns.Contains("FilterColumn") Then
-                'Dim IDFC As Integer = DGV_Search.Columns("FilterColumn").Index
-                DGV_Search.Columns.Remove("FilterColumn")
-                '    Filter_Column = DGV_Search.Columns("FilterColumn")
-                '    With Filter_Column
-                '        .DataPropertyName = Filter_Column.DataPropertyName
-                '        .DataSource = Filter_lookup
-                '    End With
+        '1. Erstelle die ComboBox-Spalte für die Spaltennamen
+        Dim Search_Column As New DataGridViewComboBoxColumn() With {
+            .Name = "Search_Column",
+            .HeaderText = "Search_Column",
+            .DataPropertyName = "Search_Column",
+            .DataSource = DS.Tables("Search_Columns"),
+            .ValueType = GetType(String)}
+        If DGV_Search.Columns.Contains("Search_Column") Then DGV_Search.Columns.Remove("Search_Column")
+        DGV_Search.Columns.Insert(1, Search_Column)
 
-                'Else
-            End If
-            DGV_Search.Columns.Insert(1, Filter_Column)
+        '2. Erstelle die ComboBox-Spalte für die Operatoren
+        Dim Search_Operator As New DataGridViewComboBoxColumn() With {
+            .Name = "Search_Operator",
+            .HeaderText = "Search_Operator",
+            .DataSource = DS.Tables("Search_Operante"),
+            .DisplayMember = "Operant",
+            .ValueMember = "Operant",
+            .Width = 120}
+        If DGV_Search.Columns.Contains("Search_Operator") Then DGV_Search.Columns.Remove("Search_Operator")
+        DGV_Search.Columns.Insert(2, Search_Operator)
 
-        Catch ex As Exception
-
-            MessageBox.Show(ex.Message, "Error Filter_lookup", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-        End Try
-
-        Try
-
-            Dim Operator_lookup As New List(Of String) From {"Enthält", "Gleich", "Ungleich", "Beginnt mit", "Endet mit", "Länger als", "Kürzer als"}
-            Dim Filter_Operator As New DataGridViewComboBoxColumn() With {
-                .Name = "FilterOperator",
-                .HeaderText = "FilterOperator",
-                .DataPropertyName = "FilterOperator",
-                .DataSource = Operator_lookup,
-                .ValueType = GetType(String)}
-
-            If DGV_Search.Columns.Contains("FilterOperator") Then
-                'Dim IDFO As Integer = DGV_Search.Columns("FilterOperator").Index
-                DGV_Search.Columns.Remove("FilterOperator")
-                'DGV_Search.Columns.Insert(2, Filter_Operator)
-                'Else
-            End If
-            DGV_Search.Columns.Insert(2, Filter_Operator)
-
-        Catch ex As Exception
-
-            MessageBox.Show(ex.Message, "Error Operator_lookup", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-        End Try
+        '3. Erstelle die TextBox-Spalte für die Werte
+        Dim Search_Value As New DataGridViewTextBoxColumn() With {
+            .Name = "Search_Value",
+            .HeaderText = "Search_Value",
+            .DataPropertyName = "Search_Value",
+            .ValueType = GetType(String)
+        }
+        If DGV_Search.Columns.Contains("Search_Value") Then DGV_Search.Columns.Remove("Search_Value")
+        DGV_Search.Columns.Insert(3, Search_Value)
 
     End Sub
 
