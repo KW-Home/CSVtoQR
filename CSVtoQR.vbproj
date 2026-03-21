@@ -133,5 +133,8 @@
   <ItemGroup>
     <None Include="Resources\ZoomOut.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Info\Images\Refresh\112_RefreshArrow_Green_32x32_72.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
