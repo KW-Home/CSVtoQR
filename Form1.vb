@@ -151,14 +151,21 @@ Public Class Form1
             .Padding = New Padding(0)
         End With
 
-        With Panel_Paper
-            .BorderStyle = BorderStyle.FixedSingle
-            .Dock = DockStyle.Fill
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
-            .BackColor = Color.WhiteSmoke
-            TableLayoutPanel_Paper.SetColumnSpan(Panel_Paper, 2)
-        End With
+        Dim ConList_Panel As New List(Of Panel) From {
+            Panel_Daten_CSV,
+            Panel_Paper}
+        For Each CON As Panel In ConList_Panel
+            With CON
+                .BorderStyle = BorderStyle.FixedSingle
+                .Dock = DockStyle.Fill
+                .Margin = New Padding(3)
+                .Padding = New Padding(3)
+
+                .BackColor = Color.AliceBlue
+
+                TableLayoutPanel_Paper.SetColumnSpan(Panel_Paper, 2)
+            End With
+        Next
 
         With PictureBox_Paper
             .BorderStyle = BorderStyle.FixedSingle
@@ -176,9 +183,10 @@ Public Class Form1
             DGV_Table}
         For Each CON As DataGridView In ConList_DataGridView
             With CON
+
                 .Dock = DockStyle.Fill
                 .Font = MyFont
-                .AutoSize = True
+
                 .AutoResizeColumnHeadersHeight()
                 .DefaultCellStyle.Font = MyFont
                 .MultiSelect = False
@@ -195,14 +203,14 @@ Public Class Form1
                 .ScrollBars = ScrollBars.Both
 
                 .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
+                .AutoSize = True
 
             End With
         Next
 
         Dim ConList_GroupBox As New List(Of GroupBox) From {
             GroupBox_Shema,
-            GroupBox_Separator,
-            GroupBox_Files}
+            GroupBox_Separator}
         For Each CON As GroupBox In ConList_GroupBox
             With CON
                 .Font = MyFont
@@ -222,10 +230,14 @@ Public Class Form1
             With CON
                 .Font = MyFont
                 .Dock = DockStyle.Fill
-                .AutoSize = True
+                '.AutoSize = True
                 .BorderStyle = BorderStyle.Fixed3D
+
                 .Margin = New Padding(0)
                 .Padding = New Padding(0)
+
+                .Location = New Point(0, 0)
+
             End With
         Next
 
@@ -723,42 +735,29 @@ Public Class Form1
             Return
         End If
 
-        DGV_Search.EndEdit()
-        DGV_Search.Refresh()
+        Dim FilterColumn As String
+        Dim FilterOperator As String
+        Dim FilterValue As String
+
+        Dim DT As DataTable
+        Dim DR() As DataRow
 
         For Each Wert As DataRow In DS.Tables("Search").Rows
 
-            Debug.Print(Wert("Search_Column").ToString)
-
-
             If Wert("Search_Column") Is DBNull.Value Then Continue For
 
-            Dim FilterColumn As String = Wert("Search_Column").ToString()
-            Dim FilterOperator As String = Wert("Search_Operator").ToString()
-            Dim FilterValue As String = Wert("Search_Value").ToString()
+            FilterColumn = Wert("Search_Column").ToString()
+            FilterOperator = Wert("Search_Operator").ToString()
+            FilterValue = Wert("Search_Value").ToString()
+
+            DT = DS.Tables("Search_Operator")
+            DR = DT.Select($"[Operator] = '{FilterOperator}' ")
 
             If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
-
             If FilterString.Length > 0 Then FilterString &= " And "
+            FilterString &= $"[{FilterColumn}] {DR(0)("Operator_Left")}{FilterValue}{DR(0)("Operator_Right")}"
 
-            'Enthält, Gleich, Ungleich, Beginnt mit, Endet mit, Länger als, Kürzer als
-            Select Case FilterOperator
-                Case "Enthält"
-                    FilterString &= $"([{FilterColumn}] Like '%{FilterValue}%')"
-                Case "Gleich"
-                    FilterString &= $"([{FilterColumn}] = '{FilterValue}')"
-                Case "Ungleich"
-                    FilterString &= $"([{FilterColumn}] <> '{FilterValue}')"
-                Case "Beginnt mit"
-                    FilterString &= $"([{FilterColumn}] Like '{FilterValue}%')"
-                Case "Endet mit"
-                    FilterString &= $"([{FilterColumn}] Like '%{FilterValue}')"
-                Case "Länger als"
-                    FilterString &= $"(Len([{FilterColumn}]) > {FilterValue})"
-                Case "Kürzer als"
-                    FilterString &= $"(Len([{FilterColumn}]) < {FilterValue})"
-            End Select
         Next
 
         Try
@@ -768,15 +767,12 @@ Public Class Form1
 
     End Sub
 
-    'Private Sub DGV_Search_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles DGV_Search.CellLeave
-
-    '    CSVSearch()
-
-    'End Sub
-
-    Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_SearchAdd.Click
+    Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_Search_Add.Click
 
         'DGV_Sarch_Formatting()
+
+        'If DGV_CSV.CurrentCell.ColumnIndex < 1 Then Return
+        If DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).Name = "ID" Then Return
 
         Dim DT As DataTable = DS.Tables("Search")
         Dim DR As DataRow = DT.NewRow
@@ -857,7 +853,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button_SearchDelete_Click(sender As Object, e As EventArgs) Handles Button_SearchDelete.Click
+    Private Sub Button_SearchDelete_Click(sender As Object, e As EventArgs) Handles Button_Search_Delete.Click
 
         If DGV_Search.SelectedCells.Count = 0 Then Return
 
@@ -981,6 +977,12 @@ Public Class Form1
     End Sub
 
     Private Sub DGV_Search_DataSourceChanged(sender As Object, e As EventArgs) Handles DGV_Search.DataSourceChanged
+
+        CSVSearch()
+
+    End Sub
+
+    Private Sub Button_Search_Refresh_Click(sender As Object, e As EventArgs) Handles Button_Search_Refresh.Click
 
         CSVSearch()
 
