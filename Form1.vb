@@ -100,14 +100,7 @@ Public Class Form1
         DGV_CSV.DataSource = Main_BindingSource_CSV
 
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
-
         DGV_Search_Formatting()
-
-
-        'Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("Search_Column"), DataGridViewComboBoxColumn)
-        'If cbCol IsNot Nothing Then
-        '    cbCol.DataSource = CLcsv.DataColumnList
-        'End If
 
         TextBox_Import.Text = Value
 
@@ -225,7 +218,8 @@ Public Class Form1
             TableLayoutPanel_Shema,
             TableLayoutPanel_Paper,
             TableLayoutPanel_Separator,
-            TableLayoutPanel_Files}
+            TableLayoutPanel_Files,
+            TableLayoutPanel_Card}
         For Each CON As TableLayoutPanel In ConList_TableLayoutPanel
             With CON
                 .Font = MyFont
@@ -326,9 +320,7 @@ Public Class Form1
         Dim ConList_Label_Spalten As New List(Of Label) From {
             Label_Border,
             Label_Separator_Anzahl,
-            Label_Separator_Wert,
-            Label_Border_Card,
-            Label_Border_Paper}
+            Label_Separator_Wert}
         For Each CON As Label In ConList_Label_Spalten
             With CON
                 .Font = MyFont
@@ -411,6 +403,18 @@ Public Class Form1
                 RemoveHandler CON.SelectedValueChanged, AddressOf PaperPaint
                 AddHandler CON.SelectedValueChanged, AddressOf PaperPaint
 
+            End With
+        Next
+
+        Dim ConList_TabPage As New List(Of TabPage) From {
+            TabPage_Card,
+            TabPage_Files,
+            TabPage_Paper,
+            TabPage_Table}
+        For Each CON As TabPage In ConList_TabPage
+            With CON
+                .Font = MyFont
+                .BackColor = Color.Transparent
             End With
         Next
 
@@ -532,6 +536,7 @@ Public Class Form1
 
     Private Sub ListBox_Tabellen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_Tabellen.SelectedIndexChanged
 
+        If ListBox_Tabellen.SelectedIndex < 0 Then Return
         DGV_Table.DataSource = DS.Tables(ListBox_Tabellen.SelectedItem.ToString)
 
     End Sub
@@ -557,18 +562,14 @@ Public Class Form1
                 CB_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
                 Label_Paper_Value_Width.Text = .Item("PaperWidth")
-                NUD_PaperBorderLeft.Value = .Item("PaperBorderLeft")
-                NUD_PaperBorderTop.Value = .Item("PaperBorderTop")
-                NUD_PaperBorderRight.Value = .Item("PaperBorderRight")
-                NUD_PaperBorderBottom.Value = .Item("PaperBorderBottom")
+                NUD_PaperBorderLeft.Value = .Item("BorderLeft")
+                NUD_PaperBorderTop.Value = .Item("BorderTop")
+                NUD_PaperBorderRight.Value = .Item("BorderRight")
+                NUD_PaperBorderBottom.Value = .Item("BorderBottom")
                 NUD_SeparatorSpalteAnzahl.Value = .Item("SeparatorSpalteAnzahl")
                 NUD_SeparatorSpalteWert.Value = .Item("SeparatorSpalteWert")
                 NUD_SeparatorZeileAnzahl.Value = .Item("SeparatorZeileAnzahl")
                 NUD_SeparatorZeileWert.Value = .Item("SeparatorZeileWert")
-                NUD_CardBorderLeft.Value = .Item("CardBorderLeft")
-                NUD_CardBorderTop.Value = .Item("CardBorderTop")
-                NUD_CardBorderRight.Value = .Item("CardBorderRight")
-                NUD_CardBorderBottom.Value = .Item("CardBorderBottom")
             End With
         End With
 
@@ -599,18 +600,14 @@ Public Class Form1
                 .Item("DPI") = 96
                 .Item("PaperHeight") = 297
                 .Item("PaperWidth") = 210
-                .Item("PaperBorderLeft") = 0
-                .Item("PaperBorderTop") = 0
-                .Item("PaperBorderRight") = 0
-                .Item("PaperBorderBottom") = 0
+                .Item("BorderLeft") = 0
+                .Item("BorderTop") = 0
+                .Item("BorderRight") = 0
+                .Item("BorderBottom") = 0
                 .Item("SeparatorSpalteAnzahl") = 1
                 .Item("SeparatorSpalteWert") = 0
                 .Item("SeparatorZeileAnzahl") = 1
                 .Item("SeparatorZeileWert") = 0
-                .Item("CardBorderLeft") = 0
-                .Item("CardBorderTop") = 0
-                .Item("CardBorderRight") = 0
-                .Item("CardBorderBottom") = 0
             End With
             .Rows.Add(DR)
             IsModified = True
@@ -636,20 +633,15 @@ Public Class Form1
                 If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
                 If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
 
-                If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("PaperBorderLeft") = NUD_PaperBorderLeft.Value
-                If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("PaperBorderTop") = NUD_PaperBorderTop.Value
-                If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("PaperBorderRight") = NUD_PaperBorderRight.Value
-                If IsNumeric(NUD_PaperBorderBottom.Value) = True Then .Item("PaperBorderBottom") = NUD_PaperBorderBottom.Value
+                If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("BorderLeft") = NUD_PaperBorderLeft.Value
+                If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("BorderTop") = NUD_PaperBorderTop.Value
+                If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("BorderRight") = NUD_PaperBorderRight.Value
+                If IsNumeric(NUD_PaperBorderBottom.Value) = True Then .Item("BorderBottom") = NUD_PaperBorderBottom.Value
 
                 If IsNumeric(NUD_SeparatorSpalteAnzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_SeparatorSpalteAnzahl.Value
                 If IsNumeric(NUD_SeparatorSpalteWert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_SeparatorSpalteWert.Value
                 If IsNumeric(NUD_SeparatorZeileAnzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_SeparatorZeileAnzahl.Value
                 If IsNumeric(NUD_SeparatorZeileWert.Value) = True Then .Item("SeparatorZeileWert") = NUD_SeparatorZeileWert.Value
-
-                If IsNumeric(NUD_CardBorderLeft.Value) = True Then .Item("CardBorderLeft") = NUD_CardBorderLeft.Value
-                If IsNumeric(NUD_CardBorderTop.Value) = True Then .Item("CardBorderTop") = NUD_CardBorderTop.Value
-                If IsNumeric(NUD_CardBorderRight.Value) = True Then .Item("CardBorderRight") = NUD_CardBorderRight.Value
-                If IsNumeric(NUD_CardBorderBottom.Value) = True Then .Item("CardBorderBottom") = NUD_CardBorderBottom.Value
 
             End With
 
@@ -708,8 +700,7 @@ Public Class Form1
         If sender.canselect = False Then Return
         IsModified = True
 
-        Dim ObjName As String = sender.Name
-        ObjName = ObjName.Replace("NUD_", "")
+        Dim ObjName As String = sender.tag
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
 
     End Sub
@@ -894,10 +885,10 @@ Public Class Form1
         'PictureBox_Paper.Invalidate()
         Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
         Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
-        Dim PBL As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderLeft")
-        Dim PBT As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderTop")
-        Dim PBR As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderRight")
-        Dim PBB As Single = DS.Tables("Shema").Rows(0).Item("PaperBorderBottom")
+        Dim PBL As Single = DS.Tables("Shema").Rows(0).Item("BorderLeft")
+        Dim PBT As Single = DS.Tables("Shema").Rows(0).Item("BorderTop")
+        Dim PBR As Single = DS.Tables("Shema").Rows(0).Item("BorderRight")
+        Dim PBB As Single = DS.Tables("Shema").Rows(0).Item("BorderBottom")
 
         Dim P(2) As Pen
         P(0) = New Pen(Color.Red, 1)

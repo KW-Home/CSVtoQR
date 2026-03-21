@@ -15,6 +15,7 @@ Public Class Class_DS
         Dim DS As New DataSet With {.DataSetName = "DataSetSystem"}
         With DS.Tables
             .Add(DT_Shema)
+            .Add(DT_Card)
             .Add(DT_CardZeile)
             .Add(DT_PaperDIN)
             .Add(DT_Search)
@@ -38,14 +39,10 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "DIN", .DataType = GetType(String), .DefaultValue = "A4"})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperHeight", .DataType = GetType(Double), .DefaultValue = 297})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperWidth", .DataType = GetType(Double), .DefaultValue = 210})
-            .Columns.Add(New DataColumn With {.ColumnName = "PaperBorderLeft", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "PaperBorderRight", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "PaperBorderTop", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "PaperBorderBottom", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardBorderLeft", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardBorderRight", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardBorderTop", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardBorderBottom", .DataType = GetType(Double), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileWert", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorSpalteAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
@@ -68,13 +65,31 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "ObjectSizeWidth", .DataType = GetType(Integer)})
-            .Columns.Add(New DataColumn With {.ColumnName = "ObjectSizeHeight", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Integer)})
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
+        End With
+
+        Return DT
+
+    End Function
+
+
+    Private Function DT_Card() As DataTable
+
+        Dim DT As New DataTable
+        With DT
+            .TableName = "Card"
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
+            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
         End With
 
@@ -134,10 +149,10 @@ Public Class Class_DS
         End With
 
         DT.Rows.Add("Enthält", "LIKE '*", "*'")
-        DT.Rows.Add("Gleich", "=", "")
+        DT.Rows.Add("Gleich", "= '", "'")
         DT.Rows.Add("Ungleich", "<> '*", "*'")
-        DT.Rows.Add("Beginnt mit", "LIKE '*", "'")
-        DT.Rows.Add("Endet mit", "LIKE '", "*'")
+        DT.Rows.Add("Beginnt mit", "LIKE '", "*'")
+        DT.Rows.Add("Endet mit", "LIKE '*", "'")
 
         Return DT
 
