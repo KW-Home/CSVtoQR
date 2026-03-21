@@ -26,7 +26,6 @@ Public Class Form1
                 TSSL_IsModified.BackColor = Color.Green
                 TSMI_Safe.Enabled = False
             End If
-            Main_StatusStrip.Refresh
         End Set
     End Property
 
@@ -93,7 +92,7 @@ Public Class Form1
         DTcsv = CLcsv.Load_CSV(Value)
         DVcsv = New DataView(DTcsv)
 
-        CLDS.NEW_Search_Columns(CLcsv.DataColumnList)
+        CLDS.NEW_Search_Columns(DS, CLcsv.DataColumnList)
 
 
         Main_BindingSource_CSV.DataSource = DVcsv
@@ -102,7 +101,7 @@ Public Class Form1
 
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
 
-        DGV_Sarch_Formatting()
+        DGV_Search_Formatting()
 
 
         'Dim cbCol As DataGridViewComboBoxColumn = TryCast(DGV_Search.Columns("Search_Column"), DataGridViewComboBoxColumn)
@@ -116,7 +115,9 @@ Public Class Form1
 
     Private Sub DefaultControls()
 
-        'MyFont = My.Settings.MyFont
+        Me.SuspendLayout()
+        Main_TabControl.SuspendLayout()
+
         TSSL_IsModified.BackColor = Color.Green
 
         With Main_StatusStrip
@@ -401,6 +402,9 @@ Public Class Form1
             End With
         Next
 
+        Main_TabControl.ResumeLayout()
+        Me.ResumeLayout()
+
     End Sub
 
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
@@ -681,6 +685,8 @@ Public Class Form1
                 Case DialogResult.Cancel
                     e.Cancel = True
             End Select
+        Else
+            e.Cancel = False
         End If
 
     End Sub
@@ -722,6 +728,9 @@ Public Class Form1
 
         For Each Wert As DataRow In DS.Tables("Search").Rows
 
+            Debug.Print(Wert("Search_Column").ToString)
+
+
             If Wert("Search_Column") Is DBNull.Value Then Continue For
 
             Dim FilterColumn As String = Wert("Search_Column").ToString()
@@ -759,11 +768,11 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DGV_Search_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles DGV_Search.CellLeave
+    'Private Sub DGV_Search_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles DGV_Search.CellLeave
 
-        CSVSearch()
+    '    CSVSearch()
 
-    End Sub
+    'End Sub
 
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_SearchAdd.Click
 
@@ -785,7 +794,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DGV_Sarch_Formatting()
+    Private Sub DGV_Search_Formatting()
 
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
         'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "Search_Column" und "Search_Operator" Spalten führen kann.
@@ -795,9 +804,11 @@ Public Class Form1
             .Name = "ID",
             .HeaderText = "ID",
             .DataPropertyName = "ID",
-            .ValueType = GetType(Integer)
-        }
-        If DGV_Search.Columns.Contains("ID") Then DGV_Search.Columns.Remove("ID")
+            .ValueType = GetType(Integer),
+            .ReadOnly = True, .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+        If DGV_Search.Columns.ToString.Contains("ID") Then
+            DGV_Search.Columns.Remove("ID")
+        End If
         DGV_Search.Columns.Insert(0, Search_ID)
 
         '1. Erstelle die ComboBox-Spalte für die Spaltennamen
@@ -806,19 +817,30 @@ Public Class Form1
             .HeaderText = "Search_Column",
             .DataPropertyName = "Search_Column",
             .DataSource = DS.Tables("Search_Columns"),
-            .ValueType = GetType(String)}
-        If DGV_Search.Columns.Contains("Search_Column") Then DGV_Search.Columns.Remove("Search_Column")
+            .DisplayMember = "Column",
+            .ValueMember = "Column",
+            .ValueType = GetType(String),
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+
+        If DGV_Search.Columns.ToString.Contains("Search_Column") Then
+            DGV_Search.Columns.Remove("Search_Column")
+        End If
         DGV_Search.Columns.Insert(1, Search_Column)
 
         '2. Erstelle die ComboBox-Spalte für die Operatoren
         Dim Search_Operator As New DataGridViewComboBoxColumn() With {
             .Name = "Search_Operator",
             .HeaderText = "Search_Operator",
-            .DataSource = DS.Tables("Search_Operante"),
-            .DisplayMember = "Operant",
-            .ValueMember = "Operant",
-            .Width = 120}
-        If DGV_Search.Columns.Contains("Search_Operator") Then DGV_Search.Columns.Remove("Search_Operator")
+            .DataPropertyName = "Search_Operator",
+            .DataSource = DS.Tables("Search_Operator"),
+            .DisplayMember = "Operator",
+            .ValueMember = "Operator",
+            .ValueType = GetType(String),
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+
+        If DGV_Search.Columns.ToString.Contains("Search_Operator") Then
+            DGV_Search.Columns.Remove("Search_Operator")
+        End If
         DGV_Search.Columns.Insert(2, Search_Operator)
 
         '3. Erstelle die TextBox-Spalte für die Werte
@@ -826,9 +848,11 @@ Public Class Form1
             .Name = "Search_Value",
             .HeaderText = "Search_Value",
             .DataPropertyName = "Search_Value",
-            .ValueType = GetType(String)
-        }
-        If DGV_Search.Columns.Contains("Search_Value") Then DGV_Search.Columns.Remove("Search_Value")
+            .ValueType = GetType(String),
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill}
+        If DGV_Search.Columns.ToString.Contains("Search_Value") Then
+            DGV_Search.Columns.Remove("Search_Value")
+        End If
         DGV_Search.Columns.Insert(3, Search_Value)
 
     End Sub
@@ -843,6 +867,8 @@ Public Class Form1
             DGV_Search.Rows.Remove(DR)
         Next
 
+        Debug.Print(DS.Tables("Search").Rows.Count)
+
         IsModified = True
         CSVSearch()
 
@@ -856,6 +882,8 @@ Public Class Form1
             My.Settings.MyFont = FD.Font
             Me.Font = FD.Font
             MyFont = FD.Font
+
+            DefaultControls()
 
         End If
 

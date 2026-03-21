@@ -19,7 +19,7 @@ Public Class Class_DS
             .Add(DT_PaperDIN)
             .Add(DT_Search)
             .Add(DT_Search_Columns)
-            .Add(DT_Search_Operante)
+            .Add(DT_Search_Operator)
         End With
 
         Return DS
@@ -98,12 +98,15 @@ Public Class Class_DS
 
     End Function
 
-    Public Sub NEW_Search_Columns(ColumnList As List(Of String))
+    Public Sub NEW_Search_Columns(DS As DataSet, ColumnList As List(Of String))
 
-        Dim DT As DataTable = DT_Search_Columns()
-        For Each SC As String In ColumnList
-            If DT.Rows.Find(SC) Is Nothing Then DT.Rows.Add(SC)
-        Next
+        With DS.Tables("Search_Columns")
+            For Each SC As String In ColumnList
+                If .Rows.Find(SC) Is Nothing Then
+                    .Rows.Add(SC)
+                End If
+            Next
+        End With
 
     End Sub
 
@@ -119,15 +122,15 @@ Public Class Class_DS
         Return DT
 
     End Function
-    Private Function DT_Search_Operante() As DataTable
+    Private Function DT_Search_Operator() As DataTable
 
         Dim DT As New DataTable
         With DT
-            .TableName = "Search_Operante"
-            .Columns.Add(New DataColumn With {.ColumnName = "Operant", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
-            .Columns.Add(New DataColumn With {.ColumnName = "Operant_Left", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Operant_Right", .DataType = GetType(String)})
-            .PrimaryKey = New DataColumn() { .Columns("Operant")}
+            .TableName = "Search_Operator"
+            .Columns.Add(New DataColumn With {.ColumnName = "Operator", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
+            .Columns.Add(New DataColumn With {.ColumnName = "Operator_Left", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Operator_Right", .DataType = GetType(String)})
+            .PrimaryKey = New DataColumn() { .Columns("Operator")}
         End With
 
         DT.Rows.Add("Enthält", "LIKE '*", "*'")

@@ -136,6 +136,7 @@ Partial Class Form1
         Me.TSSL_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Main_StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.Main_BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel_Separator.SuspendLayout()
         CType(Me.NUD_SeparatorZeileAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NUD_SeparatorSpalteAnzahl, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -514,7 +515,7 @@ Partial Class Form1
         Me.Button_Import.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Import.ImageKey = "Import.png"
         Me.Button_Import.ImageList = Me.Main_ImageList
-        Me.Button_Import.Location = New System.Drawing.Point(544, 3)
+        Me.Button_Import.Location = New System.Drawing.Point(539, 3)
         Me.Button_Import.Name = "Button_Import"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Import, 3)
         Me.Button_Import.Size = New System.Drawing.Size(38, 38)
@@ -537,7 +538,7 @@ Partial Class Form1
         Me.Button_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Export.ImageKey = "File_Printer.png"
         Me.Button_Export.ImageList = Me.Main_ImageList
-        Me.Button_Export.Location = New System.Drawing.Point(544, 47)
+        Me.Button_Export.Location = New System.Drawing.Point(539, 47)
         Me.Button_Export.Name = "Button_Export"
         Me.TableLayoutPanel_Files.SetRowSpan(Me.Button_Export, 3)
         Me.Button_Export.Size = New System.Drawing.Size(38, 38)
@@ -563,6 +564,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.Controls.Add(Me.TextBox_Import, 1, 1)
         Me.TableLayoutPanel_Files.Controls.Add(Me.Label_Export, 0, 4)
         Me.TableLayoutPanel_Files.Controls.Add(Me.TextBox_Export, 1, 4)
+        Me.TableLayoutPanel_Files.Controls.Add(Me.Button1, 2, 7)
         Me.TableLayoutPanel_Files.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_Files.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Files.Name = "TableLayoutPanel_Files"
@@ -576,7 +578,8 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(585, 347)
+        Me.TableLayoutPanel_Files.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_Files.Size = New System.Drawing.Size(580, 503)
         Me.TableLayoutPanel_Files.TabIndex = 0
         '
         'DGV_Search
@@ -604,7 +607,7 @@ Partial Class Form1
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.TableLayoutPanel_Files.SetColumnSpan(Me.DGV_CSV, 2)
         Me.DGV_CSV.GridColor = System.Drawing.Color.DarkGray
-        Me.DGV_CSV.Location = New System.Drawing.Point(3, 160)
+        Me.DGV_CSV.Location = New System.Drawing.Point(3, 179)
         Me.DGV_CSV.MultiSelect = False
         Me.DGV_CSV.Name = "DGV_CSV"
         Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
@@ -617,7 +620,7 @@ Partial Class Form1
         Me.Button_SearchAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchAdd.ImageKey = "ZoomIn.png"
         Me.Button_SearchAdd.ImageList = Me.Main_ImageList
-        Me.Button_SearchAdd.Location = New System.Drawing.Point(544, 160)
+        Me.Button_SearchAdd.Location = New System.Drawing.Point(539, 179)
         Me.Button_SearchAdd.Name = "Button_SearchAdd"
         Me.Button_SearchAdd.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchAdd.TabIndex = 47
@@ -626,7 +629,7 @@ Partial Class Form1
         'Main_BindingNavigator_CSV
         '
         Me.Main_BindingNavigator_CSV.AddNewItem = Nothing
-        Me.TableLayoutPanel_Files.SetColumnSpan(Me.Main_BindingNavigator_CSV, 3)
+        Me.TableLayoutPanel_Files.SetColumnSpan(Me.Main_BindingNavigator_CSV, 2)
         Me.Main_BindingNavigator_CSV.CountItem = Me.BindingNavigatorCountItem
         Me.Main_BindingNavigator_CSV.DeleteItem = Nothing
         Me.Main_BindingNavigator_CSV.Dock = System.Windows.Forms.DockStyle.None
@@ -718,7 +721,7 @@ Partial Class Form1
         Me.Button_SearchDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_SearchDelete.ImageKey = "ZoomOut.png"
         Me.Button_SearchDelete.ImageList = Me.Main_ImageList
-        Me.Button_SearchDelete.Location = New System.Drawing.Point(544, 91)
+        Me.Button_SearchDelete.Location = New System.Drawing.Point(539, 91)
         Me.Button_SearchDelete.Name = "Button_SearchDelete"
         Me.Button_SearchDelete.Size = New System.Drawing.Size(38, 38)
         Me.Button_SearchDelete.TabIndex = 46
@@ -731,7 +734,7 @@ Partial Class Form1
         Me.GroupBox_Files.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_Files.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Files.Name = "GroupBox_Files"
-        Me.GroupBox_Files.Size = New System.Drawing.Size(591, 366)
+        Me.GroupBox_Files.Size = New System.Drawing.Size(586, 522)
         Me.GroupBox_Files.TabIndex = 43
         Me.GroupBox_Files.TabStop = False
         Me.GroupBox_Files.Text = "Dateien"
@@ -742,7 +745,7 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(597, 372)
+        Me.TabPage_Files.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         Me.TabPage_Files.UseVisualStyleBackColor = True
@@ -976,7 +979,7 @@ Partial Class Form1
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(597, 372)
+        Me.TabPage_Table.Size = New System.Drawing.Size(592, 528)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1001,20 +1004,20 @@ Partial Class Form1
         'OptionenToolStripMenuItem
         '
         Me.OptionenToolStripMenuItem.Name = "OptionenToolStripMenuItem"
-        Me.OptionenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OptionenToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.OptionenToolStripMenuItem.Text = "&Optionen"
         '
         'TSMI_Font
         '
         Me.TSMI_Font.Name = "TSMI_Font"
-        Me.TSMI_Font.Size = New System.Drawing.Size(180, 22)
+        Me.TSMI_Font.Size = New System.Drawing.Size(122, 22)
         Me.TSMI_Font.Text = "Schriftart"
         '
         'AnpassenToolStripMenuItem
         '
         Me.AnpassenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMI_Font})
         Me.AnpassenToolStripMenuItem.Name = "AnpassenToolStripMenuItem"
-        Me.AnpassenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AnpassenToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.AnpassenToolStripMenuItem.Text = "&Anpassen"
         '
         'ExtrasToolStripMenuItem
@@ -1244,10 +1247,22 @@ Partial Class Form1
         Me.Main_StatusStrip.TabIndex = 5
         Me.Main_StatusStrip.Text = "StatusStrip1"
         '
+        'Button1
+        '
+        Me.Button1.AutoSize = True
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ImageKey = "(Keine)"
+        Me.Button1.ImageList = Me.Main_ImageList
+        Me.Button1.Location = New System.Drawing.Point(539, 135)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(38, 38)
+        Me.Button1.TabIndex = 48
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Form1
         '
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = Global.CSVtoQR.My.MySettings.Default.MySize
         Me.Controls.Add(Me.Main_TabControl)
         Me.Controls.Add(Me.Main_StatusStrip)
@@ -1256,9 +1271,11 @@ Partial Class Form1
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", Global.CSVtoQR.My.MySettings.Default, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Location = Global.CSVtoQR.My.MySettings.Default.MyLocation
         Me.Name = "Form1"
         Me.Text = "Form1"
+        Me.TopMost = True
         Me.TableLayoutPanel_Separator.ResumeLayout(False)
         Me.TableLayoutPanel_Separator.PerformLayout()
         CType(Me.NUD_SeparatorZeileAnzahl, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1416,4 +1433,5 @@ Partial Class Form1
     Friend WithEvents Label_Paper_Value_Height As Label
     Friend WithEvents TableLayoutPanel_Paper As TableLayoutPanel
     Friend WithEvents Label_Border As Label
+    Friend WithEvents Button1 As Button
 End Class
