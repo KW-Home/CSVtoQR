@@ -53,6 +53,37 @@ Public Class Class_DS
         Return DT
 
     End Function
+    ''' <summary>
+    ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
+    ''' </summary>
+    Public Sub NewRow_Shema(ByRef DS As DataSet)
+
+        If IsNothing(DS) Then DS = Get_DS()
+        If IsNothing(DS.Tables("Shema")) Then DS.Tables.Add(DT_Shema())
+
+        Dim DR As DataRow = DS.Tables("Shema").NewRow
+        With DS.Tables("Shema")
+            With DR
+                .Item("Shema") = "Standard"
+                .Item("Import") = String.Empty
+                .Item("Export") = String.Empty
+                .Item("DIN") = "A4"
+                .Item("DPI") = 96
+                .Item("PaperHeight") = 297
+                .Item("PaperWidth") = 210
+                .Item("BorderLeft") = 0
+                .Item("BorderTop") = 0
+                .Item("BorderRight") = 0
+                .Item("BorderBottom") = 0
+                .Item("SeparatorSpalteAnzahl") = 1
+                .Item("SeparatorSpalteWert") = 0
+                .Item("SeparatorZeileAnzahl") = 1
+                .Item("SeparatorZeileWert") = 0
+            End With
+            .Rows.Add(DR)
+        End With
+
+    End Sub
 
     Private Function DT_CardZeile() As DataTable
 
@@ -113,14 +144,12 @@ Public Class Class_DS
 
     End Function
 
-    Public Sub NEW_Search_Columns(DS As DataSet, ColumnList As List(Of String))
+    Public Sub NEW_Search_Columns(ByRef DS As DataSet, Column As String)
 
         With DS.Tables("Search_Columns")
-            For Each SC As String In ColumnList
-                If .Rows.Find(SC) Is Nothing Then
-                    .Rows.Add(SC)
-                End If
-            Next
+            If .Rows.Find(Column) Is Nothing Then
+                .Rows.Add(Column)
+            End If
         End With
 
     End Sub

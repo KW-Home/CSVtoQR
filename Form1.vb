@@ -6,10 +6,10 @@ Public Class Form1
 
     Private MyFont As Font = My.Settings.MyFont
     Private DS As New DataSet
-    Private CLcsv As New Class_ImportCSV
-    Private DTcsv As DataTable
-    Private DVcsv As DataView
-    Private CLDS As New Class_DS
+    Private CL_CSV As New Class_ImportCSV
+    Private CL_DS As New Class_DS
+    Private DT_CSV As DataTable
+    Private DV_CSV As DataView
     Private WithEvents DTSearch As DataTable
 
     Private IsModified_Value As Boolean
@@ -36,7 +36,7 @@ Public Class Form1
         End Get
         Set(ByVal value As String)
             ImportFile_Value = value
-            CSVLoad(value)
+            Load_CSV(value)
         End Set
     End Property
 
@@ -87,29 +87,23 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CSVLoad(Value As String)
+    Private Sub Load_CSV(ByVal Value As String)
 
-        DTcsv = CLcsv.Load_CSV(Value)
-        DVcsv = New DataView(DTcsv)
+        DT_CSV = CL_CSV.Load_CSV(DS, CL_DS, Value)
+        DV_CSV = New DataView(DT_CSV)
 
-        CLDS.NEW_Search_Columns(DS, CLcsv.DataColumnList)
-
-
-        Main_BindingSource_CSV.DataSource = DVcsv
+        Main_BindingSource_CSV.DataSource = DV_CSV
         Main_BindingNavigator_CSV.BindingSource = Main_BindingSource_CSV
         DGV_CSV.DataSource = Main_BindingSource_CSV
 
-        'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
         DGV_Search_Formatting()
 
         TextBox_Import.Text = Value
+        IsModified = True
 
     End Sub
 
     Private Sub DefaultControls()
-
-        Me.SuspendLayout()
-        Main_TabControl.SuspendLayout()
 
         TSSL_IsModified.BackColor = Color.Green
 
@@ -147,16 +141,18 @@ Public Class Form1
         Dim ConList_Panel As New List(Of Panel) From {
             Panel_Daten_CSV,
             Panel_Paper}
+        ' Die Panel_Paper soll sich über 3 Zeilen und 2 Spalten erstrecken, damit sie genügend Platz für die Papierdarstellung bietet.
+        With TableLayoutPanel_Paper
+            .SetRowSpan(Panel_Paper, 3)
+            .SetColumnSpan(Panel_Paper, 2)
+        End With
         For Each CON As Panel In ConList_Panel
             With CON
                 .BorderStyle = BorderStyle.FixedSingle
                 .Dock = DockStyle.Fill
                 .Margin = New Padding(3)
                 .Padding = New Padding(3)
-
                 .BackColor = Color.AliceBlue
-
-                TableLayoutPanel_Paper.SetColumnSpan(Panel_Paper, 2)
             End With
         Next
 
@@ -176,38 +172,33 @@ Public Class Form1
             DGV_Table}
         For Each CON As DataGridView In ConList_DataGridView
             With CON
-
                 .Dock = DockStyle.Fill
                 .Font = MyFont
-
                 .AutoResizeColumnHeadersHeight()
                 .DefaultCellStyle.Font = MyFont
                 .MultiSelect = False
-
                 .AllowUserToAddRows = False
                 .AllowUserToDeleteRows = False
                 .AllowUserToOrderColumns = False
                 .AllowUserToResizeColumns = False
                 .AllowUserToResizeRows = False
-
                 .Margin = New Padding(3, 3, 3, 3)
                 .Padding = New Padding(0)
                 .DefaultCellStyle.BackColor = Color.White
                 .ScrollBars = ScrollBars.Both
-
                 .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
                 .AutoSize = True
-
             End With
         Next
 
         Dim ConList_GroupBox As New List(Of GroupBox) From {
             GroupBox_Shema,
-            GroupBox_Separator}
+            GroupBox_Separator,
+            GroupBox_Paper_Border}
         For Each CON As GroupBox In ConList_GroupBox
             With CON
                 .Font = MyFont
-                .Dock = DockStyle.Top
+                .Dock = DockStyle.Left
                 .AutoSize = True
                 .Margin = New Padding(3, 3, 21, 3)
                 .Padding = New Padding(3)
@@ -217,6 +208,7 @@ Public Class Form1
         Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {
             TableLayoutPanel_Shema,
             TableLayoutPanel_Paper,
+            TableLayoutPanel_Paper_Border,
             TableLayoutPanel_Separator,
             TableLayoutPanel_Files,
             TableLayoutPanel_Card}
@@ -259,12 +251,12 @@ Public Class Form1
         Next
 
         Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
-            NUD_SeparatorSpalteWert,
-            NUD_SeparatorZeileWert,
-            NUD_PaperBorderLeft,
-            NUD_PaperBorderTop,
-            NUD_PaperBorderRight,
-            NUD_PaperBorderBottom,
+            NUD_Separator_Spalte_Wert,
+            NUD_Separator_Zeile_Wert,
+            NUD_Paper_Border_Left,
+            NUD_Paper_Border_Top,
+            NUD_Paper_Border_Right,
+            NUD_Paper_Border_Bottom,
             NUD_CardBorderLeft,
             NUD_CardBorderTop,
             NUD_CardBorderRight,
@@ -293,8 +285,8 @@ Public Class Form1
         Next
 
         Dim ConList_NumericUpDown_Anzahl As New List(Of NumericUpDown) From {
-            NUD_SeparatorSpalteAnzahl,
-            NUD_SeparatorZeileAnzahl}
+            NUD_Separator_Spalte_Anzahl,
+            NUD_Separator_Zeile_Anzahl}
         For Each CON As NumericUpDown In ConList_NumericUpDown_Anzahl
             With CON
                 .Font = MyFont
@@ -318,7 +310,6 @@ Public Class Form1
         Next
 
         Dim ConList_Label_Spalten As New List(Of Label) From {
-            Label_Border,
             Label_Separator_Anzahl,
             Label_Separator_Wert}
         For Each CON As Label In ConList_Label_Spalten
@@ -419,7 +410,6 @@ Public Class Form1
         Next
 
         Main_TabControl.ResumeLayout()
-        Me.ResumeLayout()
 
     End Sub
 
@@ -543,13 +533,14 @@ Public Class Form1
 
     Private Sub DataSetRead()
 
-        If IsNothing(DS) Then Exit Sub
+        If IsNothing(DS) Then DS = CL_DS.Get_DS()
         If IsNothing(DS.Tables("Shema")) Then Exit Sub
 
 
         With DS.Tables("Shema")
             If .Rows.Count = 0 Then
-                NewRow_Shema()
+                CL_DS.NewRow_Shema(DS)
+                IsModified = True
             Else
                 ImportFile = .Rows(0).Item("Import").ToString
             End If
@@ -562,14 +553,14 @@ Public Class Form1
                 CB_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
                 Label_Paper_Value_Width.Text = .Item("PaperWidth")
-                NUD_PaperBorderLeft.Value = .Item("BorderLeft")
-                NUD_PaperBorderTop.Value = .Item("BorderTop")
-                NUD_PaperBorderRight.Value = .Item("BorderRight")
-                NUD_PaperBorderBottom.Value = .Item("BorderBottom")
-                NUD_SeparatorSpalteAnzahl.Value = .Item("SeparatorSpalteAnzahl")
-                NUD_SeparatorSpalteWert.Value = .Item("SeparatorSpalteWert")
-                NUD_SeparatorZeileAnzahl.Value = .Item("SeparatorZeileAnzahl")
-                NUD_SeparatorZeileWert.Value = .Item("SeparatorZeileWert")
+                NUD_Paper_Border_Left.Value = .Item("BorderLeft")
+                NUD_Paper_Border_Top.Value = .Item("BorderTop")
+                NUD_Paper_Border_Right.Value = .Item("BorderRight")
+                NUD_Paper_Border_Bottom.Value = .Item("BorderBottom")
+                NUD_Separator_Spalte_Anzahl.Value = .Item("SeparatorSpalteAnzahl")
+                NUD_Separator_Spalte_Wert.Value = .Item("SeparatorSpalteWert")
+                NUD_Separator_Zeile_Anzahl.Value = .Item("SeparatorZeileAnzahl")
+                NUD_Separator_Zeile_Wert.Value = .Item("SeparatorZeileWert")
             End With
         End With
 
@@ -582,46 +573,13 @@ Public Class Form1
 
     End Sub
 
-    ''' <summary>
-    ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
-    ''' </summary>
-    Private Sub NewRow_Shema()
-
-        If IsNothing(DS) Then Exit Sub
-        If IsNothing(DS.Tables("Shema")) Then Exit Sub
-
-        Dim DR As DataRow = DS.Tables("Shema").NewRow
-        With DS.Tables("Shema")
-            With DR
-                .Item("Shema") = "Standard"
-                .Item("Import") = String.Empty
-                .Item("Export") = String.Empty
-                .Item("DIN") = "A4"
-                .Item("DPI") = 96
-                .Item("PaperHeight") = 297
-                .Item("PaperWidth") = 210
-                .Item("BorderLeft") = 0
-                .Item("BorderTop") = 0
-                .Item("BorderRight") = 0
-                .Item("BorderBottom") = 0
-                .Item("SeparatorSpalteAnzahl") = 1
-                .Item("SeparatorSpalteWert") = 0
-                .Item("SeparatorZeileAnzahl") = 1
-                .Item("SeparatorZeileWert") = 0
-            End With
-            .Rows.Add(DR)
-            IsModified = True
-        End With
-
-    End Sub
-
     Private Sub DataSetWrite()
 
-        If IsNothing(DS) Then Exit Sub
-        If IsNothing(DS.Tables("Shema")) Then Exit Sub
-
-        Dim DR As DataRow = DS.Tables("Shema").NewRow
-        With DS.Tables("Shema")
+        If IsNothing(DS) Then DS = CL_DS.Get_DS()
+        If IsNothing(DS.Tables("Shema")) Then CL_DS.NewRow_Shema(DS)
+        Dim DT As DataTable = DS.Tables("Shema")
+        Dim DR As DataRow = DT.NewRow
+        With DT
             With DR
 
                 .Item("Shema") = TextBox_Shema.Text
@@ -633,15 +591,15 @@ Public Class Form1
                 If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
                 If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
 
-                If IsNumeric(NUD_PaperBorderLeft.Value) = True Then .Item("BorderLeft") = NUD_PaperBorderLeft.Value
-                If IsNumeric(NUD_PaperBorderTop.Value) = True Then .Item("BorderTop") = NUD_PaperBorderTop.Value
-                If IsNumeric(NUD_PaperBorderRight.Value) = True Then .Item("BorderRight") = NUD_PaperBorderRight.Value
-                If IsNumeric(NUD_PaperBorderBottom.Value) = True Then .Item("BorderBottom") = NUD_PaperBorderBottom.Value
+                If IsNumeric(NUD_Paper_Border_Left.Value) = True Then .Item("BorderLeft") = NUD_Paper_Border_Left.Value
+                If IsNumeric(NUD_Paper_Border_Top.Value) = True Then .Item("BorderTop") = NUD_Paper_Border_Top.Value
+                If IsNumeric(NUD_Paper_Border_Right.Value) = True Then .Item("BorderRight") = NUD_Paper_Border_Right.Value
+                If IsNumeric(NUD_Paper_Border_Bottom.Value) = True Then .Item("BorderBottom") = NUD_Paper_Border_Bottom.Value
 
-                If IsNumeric(NUD_SeparatorSpalteAnzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_SeparatorSpalteAnzahl.Value
-                If IsNumeric(NUD_SeparatorSpalteWert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_SeparatorSpalteWert.Value
-                If IsNumeric(NUD_SeparatorZeileAnzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_SeparatorZeileAnzahl.Value
-                If IsNumeric(NUD_SeparatorZeileWert.Value) = True Then .Item("SeparatorZeileWert") = NUD_SeparatorZeileWert.Value
+                If IsNumeric(NUD_Separator_Spalte_Anzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_Separator_Spalte_Anzahl.Value
+                If IsNumeric(NUD_Separator_Spalte_Wert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_Separator_Spalte_Wert.Value
+                If IsNumeric(NUD_Separator_Zeile_Anzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_Separator_Zeile_Anzahl.Value
+                If IsNumeric(NUD_Separator_Zeile_Wert.Value) = True Then .Item("SeparatorZeileWert") = NUD_Separator_Zeile_Wert.Value
 
             End With
 
@@ -649,6 +607,8 @@ Public Class Form1
             .Rows.Add(DR)
 
         End With
+
+        IsModified = True
 
     End Sub
 
@@ -722,7 +682,7 @@ Public Class Form1
 
         Dim FilterString As String = String.Empty
         If DGV_Search.Columns.Count = 0 Then
-            DVcsv.RowFilter = String.Empty
+            DV_CSV.RowFilter = String.Empty
             Return
         End If
 
@@ -752,7 +712,7 @@ Public Class Form1
         Next
 
         Try
-            DVcsv.RowFilter = FilterString
+            DV_CSV.RowFilter = FilterString
         Catch ex As Exception
         End Try
 
@@ -792,7 +752,8 @@ Public Class Form1
             .HeaderText = "ID",
             .DataPropertyName = "ID",
             .ValueType = GetType(Integer),
-            .ReadOnly = True, .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+            .ReadOnly = True,
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
         If DGV_Search.Columns.ToString.Contains("ID") Then
             DGV_Search.Columns.Remove("ID")
         End If
@@ -808,7 +769,6 @@ Public Class Form1
             .ValueMember = "Column",
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
-
         If DGV_Search.Columns.ToString.Contains("Search_Column") Then
             DGV_Search.Columns.Remove("Search_Column")
         End If
@@ -824,7 +784,6 @@ Public Class Form1
             .ValueMember = "Operator",
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
-
         If DGV_Search.Columns.ToString.Contains("Search_Operator") Then
             DGV_Search.Columns.Remove("Search_Operator")
         End If
