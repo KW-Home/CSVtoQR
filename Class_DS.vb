@@ -60,28 +60,26 @@ Public Class Class_DS
 
         If IsNothing(DS) Then DS = Get_DS()
         If IsNothing(DS.Tables("Shema")) Then DS.Tables.Add(DT_Shema())
-
-        Dim DR As DataRow = DS.Tables("Shema").NewRow
-        With DS.Tables("Shema")
-            With DR
-                .Item("Shema") = "Standard"
-                .Item("Import") = String.Empty
-                .Item("Export") = String.Empty
-                .Item("DIN") = "A4"
-                .Item("DPI") = 96
-                .Item("PaperHeight") = 297
-                .Item("PaperWidth") = 210
-                .Item("BorderLeft") = 0
-                .Item("BorderTop") = 0
-                .Item("BorderRight") = 0
-                .Item("BorderBottom") = 0
-                .Item("SeparatorSpalteAnzahl") = 1
-                .Item("SeparatorSpalteWert") = 0
-                .Item("SeparatorZeileAnzahl") = 1
-                .Item("SeparatorZeileWert") = 0
-            End With
-            .Rows.Add(DR)
+        Dim DT As DataTable = DS.Tables("Shema")
+        Dim DR As DataRow = DT.NewRow
+        With DR
+            .Item("Shema") = "Standard"
+            .Item("Import") = String.Empty
+            .Item("Export") = String.Empty
+            .Item("DIN") = "A4"
+            .Item("DPI") = 96
+            .Item("PaperHeight") = 297
+            .Item("PaperWidth") = 210
+            .Item("BorderLeft") = 0
+            .Item("BorderTop") = 0
+            .Item("BorderRight") = 0
+            .Item("BorderBottom") = 0
+            .Item("SeparatorSpalteAnzahl") = 1
+            .Item("SeparatorSpalteWert") = 0
+            .Item("SeparatorZeileAnzahl") = 1
+            .Item("SeparatorZeileWert") = 0
         End With
+        DT.Rows.Add(DR)
 
     End Sub
 
@@ -144,13 +142,17 @@ Public Class Class_DS
 
     End Function
 
-    Public Sub NEW_Search_Columns(ByRef DS As DataSet, Column As String)
+    Public Sub Search_Columns_NEW(ByRef DS As DataSet, DT As DataTable)
 
-        With DS.Tables("Search_Columns")
-            If .Rows.Find(Column) Is Nothing Then
-                .Rows.Add(Column)
-            End If
-        End With
+        DS.Tables("Search_Columns").Rows.Clear()
+
+        For Each Col As DataColumn In DT.Columns
+            With DS.Tables("Search_Columns")
+                If .Rows.Find(Col.ColumnName) Is Nothing Then
+                    .Rows.Add(Col.ColumnName)
+                End If
+            End With
+        Next
 
     End Sub
 

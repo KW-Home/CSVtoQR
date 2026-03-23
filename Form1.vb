@@ -4,9 +4,10 @@ Imports System.Security.Cryptography
 
 Public Class Form1
 
+    Public DS As New DataSet
     Private MyFont As Font = My.Settings.MyFont
-    Private DS As New DataSet
     Private CL_CSV As New Class_ImportCSV
+    Private CL_Default As New Class_Default
     Private CL_DS As New Class_DS
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
@@ -46,9 +47,9 @@ Public Class Form1
         InitializeComponent()
 
         MySettings_Load()
-        DefaultControls()
         DataSetRead()
         PaperPaint(Nothing, Nothing)
+        CL_Default.DefaultControls(Me, My.Settings.MyFont)
 
     End Sub
     Private Sub MySettings_Load()
@@ -103,318 +104,8 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DefaultControls()
-
-        TSSL_IsModified.BackColor = Color.Green
-
-        With Main_StatusStrip
-            .Font = MyFont
-            .Dock = DockStyle.Bottom
-            .AutoSize = True
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-        End With
-
-        With Main_TabControl
-            .Font = MyFont
-            .Dock = DockStyle.Fill
-            .AutoSize = True
-            .Margin = New Padding(0)
-        End With
-
-        With Main_BindingNavigator_CSV
-            .Font = MyFont
-            .Dock = DockStyle.Top
-            .AutoSize = True
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-        End With
-
-        With ListBox_Tabellen
-            .Font = MyFont
-            .Dock = DockStyle.Left
-            .AutoSize = True
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-        End With
-
-        Dim ConList_Panel As New List(Of Panel) From {
-            Panel_Daten_CSV,
-            Panel_Paper}
-        ' Die Panel_Paper soll sich über 3 Zeilen und 2 Spalten erstrecken, damit sie genügend Platz für die Papierdarstellung bietet.
-        With TableLayoutPanel_Paper
-            .SetRowSpan(Panel_Paper, 3)
-            .SetColumnSpan(Panel_Paper, 2)
-        End With
-        For Each CON As Panel In ConList_Panel
-            With CON
-                .BorderStyle = BorderStyle.FixedSingle
-                .Dock = DockStyle.Fill
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
-                .BackColor = Color.AliceBlue
-            End With
-        Next
-
-        With PictureBox_Paper
-            .BorderStyle = BorderStyle.FixedSingle
-            .Dock = DockStyle.None
-            .Location = New Point(0, 0)
-            .SizeMode = PictureBoxSizeMode.AutoSize
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
-            .BackColor = Color.WhiteSmoke
-        End With
-
-        Dim ConList_DataGridView As New List(Of DataGridView) From {
-            DGV_CSV,
-            DGV_Search,
-            DGV_Table}
-        For Each CON As DataGridView In ConList_DataGridView
-            With CON
-                .Dock = DockStyle.Fill
-                .Font = MyFont
-                .AutoResizeColumnHeadersHeight()
-                .DefaultCellStyle.Font = MyFont
-                .MultiSelect = False
-                .AllowUserToAddRows = False
-                .AllowUserToDeleteRows = False
-                .AllowUserToOrderColumns = False
-                .AllowUserToResizeColumns = False
-                .AllowUserToResizeRows = False
-                .Margin = New Padding(3, 3, 3, 3)
-                .Padding = New Padding(0)
-                .DefaultCellStyle.BackColor = Color.White
-                .ScrollBars = ScrollBars.Both
-                .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
-                .AutoSize = True
-            End With
-        Next
-
-        Dim ConList_GroupBox As New List(Of GroupBox) From {
-            GroupBox_Shema,
-            GroupBox_Separator,
-            GroupBox_Paper_Border}
-        For Each CON As GroupBox In ConList_GroupBox
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Left
-                .AutoSize = True
-                .Margin = New Padding(3, 3, 21, 3)
-                .Padding = New Padding(3)
-            End With
-        Next
-
-        Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {
-            TableLayoutPanel_Shema,
-            TableLayoutPanel_Paper,
-            TableLayoutPanel_Paper_Border,
-            TableLayoutPanel_Separator,
-            TableLayoutPanel_Files,
-            TableLayoutPanel_Card}
-        For Each CON As TableLayoutPanel In ConList_TableLayoutPanel
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Fill
-                '.AutoSize = True
-                .BorderStyle = BorderStyle.Fixed3D
-
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-
-                .Location = New Point(0, 0)
-
-            End With
-        Next
-
-        Dim ConList_TextBox As New List(Of TextBox) From {
-            TextBox_Shema,
-            TextBox_Import,
-            TextBox_Export}
-        For Each CON As TextBox In ConList_TextBox
-            With CON
-                .Font = MyFont
-                .BorderStyle = BorderStyle.FixedSingle
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
-                .TextAlign = HorizontalAlignment.Left
-            End With
-
-            RemoveHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
-            AddHandler CON.TextChanged, AddressOf TextBox_Shema_TextChanged
-
-            RemoveHandler CON.Enter, AddressOf TextBox_SelectAll
-            AddHandler CON.Enter, AddressOf TextBox_SelectAll
-
-        Next
-
-        Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
-            NUD_Separator_Spalte_Wert,
-            NUD_Separator_Zeile_Wert,
-            NUD_Paper_Border_Left,
-            NUD_Paper_Border_Top,
-            NUD_Paper_Border_Right,
-            NUD_Paper_Border_Bottom,
-            NUD_CardBorderLeft,
-            NUD_CardBorderTop,
-            NUD_CardBorderRight,
-            NUD_CardBorderBottom}
-        For Each CON As NumericUpDown In ConList_NumericUpDown_Decimal
-            With CON
-                .Font = MyFont
-                .BorderStyle = BorderStyle.FixedSingle
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
-                .TextAlign = HorizontalAlignment.Right
-                .Minimum = 0
-                .Maximum = 9999
-                .Increment = 0.1
-                .DecimalPlaces = 1
-
-                RemoveHandler .ValueChanged, AddressOf NUD_ValueChanged
-                AddHandler .ValueChanged, AddressOf NUD_ValueChanged
-
-                RemoveHandler .ValueChanged, AddressOf PaperPaint
-                AddHandler .ValueChanged, AddressOf PaperPaint
-
-            End With
-        Next
-
-        Dim ConList_NumericUpDown_Anzahl As New List(Of NumericUpDown) From {
-            NUD_Separator_Spalte_Anzahl,
-            NUD_Separator_Zeile_Anzahl}
-        For Each CON As NumericUpDown In ConList_NumericUpDown_Anzahl
-            With CON
-                .Font = MyFont
-                .BorderStyle = BorderStyle.FixedSingle
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
-                .TextAlign = HorizontalAlignment.Right
-                .Minimum = 1
-                .Increment = 1
-                .Maximum = 12
-                .DecimalPlaces = 0
-
-                RemoveHandler .ValueChanged, AddressOf NUD_ValueChanged
-                AddHandler .ValueChanged, AddressOf NUD_ValueChanged
-                RemoveHandler .ValueChanged, AddressOf PaperPaint
-                AddHandler .ValueChanged, AddressOf PaperPaint
-
-            End With
-        Next
-
-        Dim ConList_Label_Spalten As New List(Of Label) From {
-            Label_Separator_Anzahl,
-            Label_Separator_Wert}
-        For Each CON As Label In ConList_Label_Spalten
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-                .TextAlign = ContentAlignment.BottomCenter
-            End With
-        Next
-
-        Dim ConList_Label_Zeilen As New List(Of Label) From {
-            Label_Shema,
-            Label_Import,
-            Label_Export,
-            Label_DPI,
-            Label_DIN,
-            Label_Paper_Height,
-            Label_Paper_Einheit_Height,
-            Label_Paper_Width,
-            Label_Paper_Einheit_Width,
-            Label_Separator_Zeile,
-            Label_Separator_Spalte,
-            Label_Left,
-            Label_Top,
-            Label_Right,
-            Label_Bottom}
-        For Each CON As Label In ConList_Label_Zeilen
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(0, 3, 0, 3)
-                .Padding = New Padding(0)
-                .TextAlign = ContentAlignment.MiddleLeft
-            End With
-        Next
-
-        Dim ConList_Label_Value As New List(Of Label) From {
-            Label_Paper_Value_Height,
-            Label_Paper_Value_Width}
-        For Each CON As Label In ConList_Label_Value
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Fill
-                .AutoSize = True
-                .Margin = New Padding(0, 3, 0, 3)
-                .Padding = New Padding(0)
-                .TextAlign = ContentAlignment.MiddleRight
-            End With
-        Next
-
-        Dim ConList_ComboBox As New List(Of ComboBox) From {
-            CB_DIN,
-            CB_DPI}
-        For Each CON As ComboBox In ConList_ComboBox
-            With CON
-                .Font = MyFont
-                .Dock = DockStyle.Left
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-                Select Case CON.Name
-                    Case "CB_DPI"
-                        .Items.AddRange(New Object() {72, 96, 150, 300, 600})
-
-                        RemoveHandler CON.SelectedIndexChanged, AddressOf CB_DPI_SelectedIndexChanged
-                        AddHandler CON.SelectedIndexChanged, AddressOf CB_DPI_SelectedIndexChanged
-
-                    Case "CB_DIN"
-                        .DataSource = DS.Tables("PaperDIN")
-                        .DisplayMember = "DIN"
-                        .ValueMember = "DIN"
-                        If DS.Tables("Shema").Rows.Count > 0 Then .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
-
-                        RemoveHandler CON.SelectedIndexChanged, AddressOf ComboBox_DIN_SelectedIndexChanged
-                        AddHandler CON.SelectedIndexChanged, AddressOf ComboBox_DIN_SelectedIndexChanged
-
-                End Select
-
-                RemoveHandler CON.SelectedValueChanged, AddressOf PaperPaint
-                AddHandler CON.SelectedValueChanged, AddressOf PaperPaint
-
-            End With
-        Next
-
-        Dim ConList_TabPage As New List(Of TabPage) From {
-            TabPage_Card,
-            TabPage_Files,
-            TabPage_Paper,
-            TabPage_Table}
-        For Each CON As TabPage In ConList_TabPage
-            With CON
-                .Font = MyFont
-                .BackColor = Color.Transparent
-            End With
-        Next
-
-        Main_TabControl.ResumeLayout()
-
-    End Sub
-
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
-    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs)
+    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Shema.Enter, TextBox_Import.Enter, TextBox_Export.Enter
 
         Dim tb As TextBox = TryCast(sender, TextBox)
         If tb Is Nothing Then Return
@@ -534,8 +225,7 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS()
-        If IsNothing(DS.Tables("Shema")) Then Exit Sub
-
+        If IsNothing(DS.Tables("Shema")) Then CL_DS.NewRow_Shema(DS)
 
         With DS.Tables("Shema")
             If .Rows.Count = 0 Then
@@ -655,7 +345,8 @@ Public Class Form1
 
     End Sub
 
-    Private Sub NUD_ValueChanged(sender As Object, e As EventArgs)
+    Public Sub NUD_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged,
+    NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged, NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -663,9 +354,12 @@ Public Class Form1
         Dim ObjName As String = sender.tag
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
 
+        PaperPaint(Nothing, Nothing)
+
     End Sub
 
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs)
+    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged,
+        TextBox_Import.TextChanged, TextBox_Export.TextChanged
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -829,13 +523,15 @@ Public Class Form1
             Me.Font = FD.Font
             MyFont = FD.Font
 
-            DefaultControls()
+            CL_Default.DefaultControls(Me, FD.Font)
 
         End If
 
     End Sub
 
-    Private Sub PaperPaint(Sender As Object, e As EventArgs)
+    Public Sub PaperPaint(Sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged,
+        NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged,
+        NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged
 
         If DS Is Nothing Then Return
         If DS.Tables.Contains("Shema") = False Then Return
@@ -899,7 +595,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ComboBox_DIN_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DIN.SelectedIndexChanged
 
         If CB_DIN.SelectedIndex = -1 Then Return
         If CB_DIN.CanFocus = False Then Return
@@ -916,7 +612,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DPI.SelectedIndexChanged
 
         DS.Tables("Shema").Rows(0)("DPI") = CType(CB_DPI.Text, Integer)
 

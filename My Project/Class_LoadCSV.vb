@@ -3,17 +3,6 @@ Imports System.IO
 
 Public Class Class_ImportCSV
 
-    Private DataColumnList_Value As New List(Of String)
-    <[Browsable](False), [ReadOnly](True), [Category](" System"), [DisplayName]("Spalten")>
-    Public Property DataColumnList() As List(Of String)
-        Get
-            Return DataColumnList_Value
-        End Get
-        Set(ByVal value As List(Of String))
-            DataColumnList_Value = value
-        End Set
-    End Property
-
     Public Function Load_CSV(ByRef DS As DataSet, ByRef CLDS As Class_DS, ByVal FilePath As String) As DataTable
 
         If File.Exists(FilePath) = True Then
@@ -42,12 +31,8 @@ Public Class Class_ImportCSV
                 ' ID-Spalte als schreibgeschützt markieren
                 DT.Columns("ID").ReadOnly = True
 
-                ' Spaltennamen in die Liste übernehmen
-                DataColumnList.Clear()
-                For Each Col In DT.Columns
-                    DataColumnList.Add(Col.ColumnName)
-                    CLDS.NEW_Search_Columns(DS, Col.ColumnName)
-                Next
+                ' Spaltennamen in die Tabelle der Suchspalten übernehmen
+                CLDS.Search_Columns_NEW(DS, DT)
 
             End If
 
