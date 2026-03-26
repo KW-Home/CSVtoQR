@@ -105,9 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +121,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="Werkbank\DataTable_Border.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\File_Printer.png" />
@@ -135,7 +136,10 @@
     <None Include="Resources\ZoomOut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Info\Images\Refresh\112_RefreshArrow_Green_32x32_72.png" />
+    <None Include="Werkbank\TextEditor.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Werkbank\Bonus\Images\Refresh\Refresh Arrow Green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

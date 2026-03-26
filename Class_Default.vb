@@ -238,7 +238,7 @@
         Next
 
         Dim ConList_ComboBox As New List(Of ComboBox) From {
-       FRM.CB_DIN,
+       FRM.ComboBox_DIN,
         FRM.CB_DPI}
         For Each CON As ComboBox In ConList_ComboBox
             With CON

@@ -240,7 +240,7 @@ Public Class Form1
                 TextBox_Import.Text = ImportFile
                 TextBox_Export.Text = .Item("Export").ToString
                 CB_DPI.Text = .Item("DPI")
-                CB_DIN.Text = .Item("DIN").ToString
+                ComboBox_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
                 Label_Paper_Value_Width.Text = .Item("PaperWidth")
                 NUD_Paper_Border_Left.Value = .Item("BorderLeft")
@@ -275,7 +275,7 @@ Public Class Form1
                 .Item("Shema") = TextBox_Shema.Text
                 .Item("Import") = TextBox_Import.Text
                 .Item("Export") = TextBox_Export.Text
-                .Item("DIN") = CB_DIN.Text
+                .Item("DIN") = ComboBox_DIN.Text
                 .Item("DPI") = CB_DPI.Text
 
                 If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
@@ -595,18 +595,18 @@ Public Class Form1
 
     End Sub
 
-    Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DIN.SelectedIndexChanged
+    Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_DIN.SelectedIndexChanged
 
-        If CB_DIN.SelectedIndex = -1 Then Return
-        If CB_DIN.CanFocus = False Then Return
+        If ComboBox_DIN.SelectedIndex = -1 Then Return
+        If ComboBox_DIN.CanFocus = False Then Return
 
-        DS.Tables("Shema").Rows(0)("DIN") = CType(CB_DIN.Text, String)
+        DS.Tables("Shema").Rows(0)("DIN") = CType(ComboBox_DIN.Text, String)
 
-        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(CB_DIN.SelectedItem("PaperHeight"), Integer)
-        Label_Paper_Value_Height.Text = CB_DIN.SelectedItem("PaperHeight").ToString
+        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_DIN.SelectedItem("PaperHeight"), Integer)
+        Label_Paper_Value_Height.Text = ComboBox_DIN.SelectedItem("PaperHeight").ToString
 
-        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(CB_DIN.SelectedItem("PaperWidth"), Integer)
-        Label_Paper_Value_Width.Text = CB_DIN.SelectedItem("PaperWidth").ToString
+        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_DIN.SelectedItem("PaperWidth"), Integer)
+        Label_Paper_Value_Width.Text = ComboBox_DIN.SelectedItem("PaperWidth").ToString
 
         IsModified = True
 

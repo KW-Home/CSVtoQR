@@ -83,9 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property RefreshArrow_Green() As System.Drawing.Bitmap
+        Friend ReadOnly Property Refresh_Arrow_Green() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("RefreshArrow_Green", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Refresh_Arrow_Green", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -93,9 +93,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property ZoomIn() As System.Drawing.Bitmap
+        Friend ReadOnly Property Zoom_In() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("ZoomIn", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Zoom_In", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -103,9 +103,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property ZoomOut() As System.Drawing.Bitmap
+        Friend ReadOnly Property Zoom_Out() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("ZoomOut", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Zoom_Out", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

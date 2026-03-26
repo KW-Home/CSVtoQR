@@ -106,7 +106,6 @@ Public Class Class_DS
 
     End Function
 
-
     Private Function DT_Card() As DataTable
 
         Dim DT As New DataTable
@@ -189,24 +188,24 @@ Public Class Class_DS
 
     End Function
 
-    ''' <summary>
-    ''' Gibt eine Liste mit den DIN Papierformaten zurück
-    ''' </summary>
-    ''' <returns>
-    ''' Liste mit den DIN Papierformaten
-    ''' </returns>
-    Public Function Get_PaperDIN_ListOf() As List(Of String)
+    '''' <summary>
+    '''' Gibt eine Liste mit den DIN Papierformaten zurück
+    '''' </summary>
+    '''' <returns>
+    '''' Liste mit den DIN Papierformaten
+    '''' </returns>
+    'Public Function Get_PaperDIN_ListOf() As List(Of String)
 
-        Dim LoS As New List(Of String)
+    '    Dim LoS As New List(Of String)
 
-        Dim DT As DataTable = DT_PaperDIN()
-        For Each DR As DataRow In DT.Rows
-            LoS.Add(DR("DIN").ToString())
-        Next
+    '    Dim DT As DataTable = DT_PaperDIN()
+    '    For Each DR As DataRow In DT.Rows
+    '        LoS.Add(DR("DIN").ToString())
+    '    Next
 
-        Return LoS
+    '    Return LoS
 
-    End Function
+    'End Function
 
     Public Function DT_PaperDIN() As DataTable
 

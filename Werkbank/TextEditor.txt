@@ -1,0 +1,2 @@
+PaperDIN([DIN],[Height];[Width])	'A4;210;297
+Border([Step],[Border];[Value])		'Paper;Left;0
