@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Class_Default.vb" />
     <Compile Include="Class_DS.vb" />
+    <Compile Include="Class_Paint.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +122,10 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="Werkbank\DataSet\DataSet.csv" />
+    <None Include="Werkbank\DataSet\DataSet.xlsx" />
+    <None Include="Werkbank\DataSet\DataTable_Border.csv" />
+    <None Include="Werkbank\DataSet\DataTable_Border.xlsx" />
     <None Include="Werkbank\DataTable_Border.csv" />
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +141,21 @@
     <None Include="Resources\ZoomOut.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Werkbank\Import\Import1.csv" />
+    <None Include="Werkbank\Import\Import2.csv" />
+    <None Include="Werkbank\Import\Import3.csv" />
+    <None Include="Werkbank\Import\Import4.csv" />
+    <None Include="Werkbank\Import\Import5.csv" />
+    <None Include="Werkbank\Import\Import6.csv" />
+    <None Include="Werkbank\Import\Import7.csv" />
     <None Include="Werkbank\TextEditor.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Werkbank\Bonus\Images\Refresh\Refresh Arrow Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Werkbank\DataSet\DataSetNeu.xml" />
+    <Content Include="Werkbank\DataSet\Standard.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
