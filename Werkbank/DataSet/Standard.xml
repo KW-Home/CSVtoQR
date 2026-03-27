@@ -1,0 +1,463 @@
+<?xml version="1.0" standalone="yes"?>
+<DataSetSystem>
+  <xs:schema id="DataSetSystem" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="DataSetSystem" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Shema">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Shema" type="xs:string" />
+                <xs:element name="Import" type="xs:string" minOccurs="0" />
+                <xs:element name="Export" type="xs:string" minOccurs="0" />
+                <xs:element name="DPI" type="xs:int" default="96" minOccurs="0" />
+                <xs:element name="DIN" type="xs:string" default="A4" minOccurs="0" />
+                <xs:element name="PaperHeight" type="xs:double" default="297" minOccurs="0" />
+                <xs:element name="PaperWidth" type="xs:double" default="210" minOccurs="0" />
+                <xs:element name="BorderLeft" type="xs:double" default="0" minOccurs="0" />
+                <xs:element name="BorderRight" type="xs:double" default="0" minOccurs="0" />
+                <xs:element name="BorderTop" type="xs:double" default="0" minOccurs="0" />
+                <xs:element name="BorderBottom" type="xs:double" default="0" minOccurs="0" />
+                <xs:element name="SeparatorZeileAnzahl" type="xs:int" default="1" minOccurs="0" />
+                <xs:element name="SeparatorZeileWert" type="xs:double" default="0" minOccurs="0" />
+                <xs:element name="SeparatorSpalteAnzahl" type="xs:int" default="1" minOccurs="0" />
+                <xs:element name="SeparatorSpalteWert" type="xs:double" default="0" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Card">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
+                <xs:element name="BorderLeft" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderRight" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderTop" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderBottom" type="xs:double" minOccurs="0" />
+                <xs:element name="CardSizeWidth" type="xs:int" minOccurs="0" />
+                <xs:element name="CardSizeHeight" type="xs:int" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="CardZeile">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
+                <xs:element name="QRCode" type="xs:boolean" minOccurs="0" />
+                <xs:element name="BorderLeft" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderRight" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderTop" type="xs:double" minOccurs="0" />
+                <xs:element name="BorderBottom" type="xs:double" minOccurs="0" />
+                <xs:element name="DataColumn" type="xs:string" minOccurs="0" />
+                <xs:element name="LinePos" type="xs:int" minOccurs="0" />
+                <xs:element name="Font" type="xs:string" minOccurs="0" />
+                <xs:element name="FontColor" type="xs:string" minOccurs="0" />
+                <xs:element name="AutoFont" type="xs:int" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PaperDIN">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="DIN" type="xs:string" />
+                <xs:element name="PaperWidth" type="xs:double" minOccurs="0" />
+                <xs:element name="PaperHeight" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Search">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
+                <xs:element name="Search_Column" type="xs:string" minOccurs="0" />
+                <xs:element name="Search_Operator" type="xs:string" minOccurs="0" />
+                <xs:element name="Search_Value" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Search_Columns">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Column" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Search_Operator">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Operator" type="xs:string" />
+                <xs:element name="Operator_Left" type="xs:string" minOccurs="0" />
+                <xs:element name="Operator_Right" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Border">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Area" type="xs:string" />
+                <xs:element name="Border" type="xs:string" />
+                <xs:element name="Value" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Shema" />
+        <xs:field xpath="Shema" />
+      </xs:unique>
+      <xs:unique name="Card_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Card" />
+        <xs:field xpath="ID" />
+      </xs:unique>
+      <xs:unique name="CardZeile_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//CardZeile" />
+        <xs:field xpath="ID" />
+      </xs:unique>
+      <xs:unique name="PaperDIN_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//PaperDIN" />
+        <xs:field xpath="DIN" />
+      </xs:unique>
+      <xs:unique name="Search_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Search" />
+        <xs:field xpath="ID" />
+      </xs:unique>
+      <xs:unique name="Search_Columns_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Search_Columns" />
+        <xs:field xpath="Column" />
+      </xs:unique>
+      <xs:unique name="Search_Operator_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Search_Operator" />
+        <xs:field xpath="Operator" />
+      </xs:unique>
+      <xs:unique name="Border_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Border" />
+        <xs:field xpath="Area" />
+        <xs:field xpath="Border" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <Shema>
+    <Shema>Standard</Shema>
+    <Import>C:\Users\peter\source\repos\KW-Home\CSVtoQR\Werkbank\Import\Import4.csv</Import>
+    <Export />
+    <DPI>96</DPI>
+    <DIN>A4</DIN>
+    <PaperHeight>297</PaperHeight>
+    <PaperWidth>210</PaperWidth>
+    <BorderLeft>0</BorderLeft>
+    <BorderRight>0</BorderRight>
+    <BorderTop>0</BorderTop>
+    <BorderBottom>0</BorderBottom>
+    <SeparatorZeileAnzahl>1</SeparatorZeileAnzahl>
+    <SeparatorZeileWert>0</SeparatorZeileWert>
+    <SeparatorSpalteAnzahl>1</SeparatorSpalteAnzahl>
+    <SeparatorSpalteWert>0</SeparatorSpalteWert>
+  </Shema>
+  <PaperDIN>
+    <DIN>A0</DIN>
+    <PaperWidth>841</PaperWidth>
+    <PaperHeight>1189</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>A1</DIN>
+    <PaperWidth>594</PaperWidth>
+    <PaperHeight>841</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>A2</DIN>
+    <PaperWidth>420</PaperWidth>
+    <PaperHeight>594</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>A3</DIN>
+    <PaperWidth>297</PaperWidth>
+    <PaperHeight>420</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>A4</DIN>
+    <PaperWidth>210</PaperWidth>
+    <PaperHeight>297</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>A5</DIN>
+    <PaperWidth>148</PaperWidth>
+    <PaperHeight>210</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B0</DIN>
+    <PaperWidth>1000</PaperWidth>
+    <PaperHeight>1414</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B1</DIN>
+    <PaperWidth>707</PaperWidth>
+    <PaperHeight>1000</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B2</DIN>
+    <PaperWidth>500</PaperWidth>
+    <PaperHeight>707</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B3</DIN>
+    <PaperWidth>353</PaperWidth>
+    <PaperHeight>500</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B4</DIN>
+    <PaperWidth>250</PaperWidth>
+    <PaperHeight>353</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>B5</DIN>
+    <PaperWidth>176</PaperWidth>
+    <PaperHeight>250</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Crown</DIN>
+    <PaperWidth>381</PaperWidth>
+    <PaperHeight>508</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Demy</DIN>
+    <PaperWidth>445</PaperWidth>
+    <PaperHeight>572</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>DoubleDemy</DIN>
+    <PaperWidth>572</PaperWidth>
+    <PaperHeight>889</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Elephant</DIN>
+    <PaperWidth>584</PaperWidth>
+    <PaperHeight>711</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Executive</DIN>
+    <PaperWidth>184</PaperWidth>
+    <PaperHeight>267</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Folio</DIN>
+    <PaperWidth>210</PaperWidth>
+    <PaperHeight>330</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Foolscap</DIN>
+    <PaperWidth>203</PaperWidth>
+    <PaperHeight>330</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>GovernmentLetter</DIN>
+    <PaperWidth>203</PaperWidth>
+    <PaperHeight>267</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>LargePost</DIN>
+    <PaperWidth>419</PaperWidth>
+    <PaperHeight>533</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Ledger</DIN>
+    <PaperWidth>432</PaperWidth>
+    <PaperHeight>279</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Legal</DIN>
+    <PaperWidth>216</PaperWidth>
+    <PaperHeight>356</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Letter</DIN>
+    <PaperWidth>216</PaperWidth>
+    <PaperHeight>279</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Medium</DIN>
+    <PaperWidth>457</PaperWidth>
+    <PaperHeight>584</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Post</DIN>
+    <PaperWidth>394</PaperWidth>
+    <PaperHeight>489</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>QuadDemy</DIN>
+    <PaperWidth>889</PaperWidth>
+    <PaperHeight>1143</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Quarto</DIN>
+    <PaperWidth>203</PaperWidth>
+    <PaperHeight>254</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA0</DIN>
+    <PaperWidth>860</PaperWidth>
+    <PaperHeight>1220</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA1</DIN>
+    <PaperWidth>610</PaperWidth>
+    <PaperHeight>860</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA2</DIN>
+    <PaperWidth>430</PaperWidth>
+    <PaperHeight>610</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA3</DIN>
+    <PaperWidth>305</PaperWidth>
+    <PaperHeight>430</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA4</DIN>
+    <PaperWidth>215</PaperWidth>
+    <PaperHeight>305</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>RA5</DIN>
+    <PaperWidth>152</PaperWidth>
+    <PaperHeight>215</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Royal</DIN>
+    <PaperWidth>508</PaperWidth>
+    <PaperHeight>635</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Size10x14</DIN>
+    <PaperWidth>254</PaperWidth>
+    <PaperHeight>356</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Statement</DIN>
+    <PaperWidth>140</PaperWidth>
+    <PaperHeight>216</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>STMT</DIN>
+    <PaperWidth>140</PaperWidth>
+    <PaperHeight>216</PaperHeight>
+  </PaperDIN>
+  <PaperDIN>
+    <DIN>Tabloid</DIN>
+    <PaperWidth>279</PaperWidth>
+    <PaperHeight>432</PaperHeight>
+  </PaperDIN>
+  <Search>
+    <ID>2</ID>
+    <Search_Column>ID</Search_Column>
+    <Search_Operator>Gleich</Search_Operator>
+    <Search_Value>4</Search_Value>
+  </Search>
+  <Search_Columns>
+    <Column>ID</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>Artikelnummer</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>Bezeichnung</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>Model</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>Size</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>Modell + Size</Column>
+  </Search_Columns>
+  <Search_Columns>
+    <Column>URL</Column>
+  </Search_Columns>
+  <Search_Operator>
+    <Operator>Enthält</Operator>
+    <Operator_Left>LIKE '*</Operator_Left>
+    <Operator_Right>*'</Operator_Right>
+  </Search_Operator>
+  <Search_Operator>
+    <Operator>Gleich</Operator>
+    <Operator_Left>= '</Operator_Left>
+    <Operator_Right>'</Operator_Right>
+  </Search_Operator>
+  <Search_Operator>
+    <Operator>Ungleich</Operator>
+    <Operator_Left>&lt;&gt; '*</Operator_Left>
+    <Operator_Right>*'</Operator_Right>
+  </Search_Operator>
+  <Search_Operator>
+    <Operator>Beginnt mit</Operator>
+    <Operator_Left>LIKE '</Operator_Left>
+    <Operator_Right>*'</Operator_Right>
+  </Search_Operator>
+  <Search_Operator>
+    <Operator>Endet mit</Operator>
+    <Operator_Left>LIKE '*</Operator_Left>
+    <Operator_Right>'</Operator_Right>
+  </Search_Operator>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Bottom</Border>
+    <Value>7</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Left</Border>
+    <Value>11.3</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Right</Border>
+    <Value>11</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Top</Border>
+    <Value>7</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Bottom</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Left</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Right</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Top</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Bottom</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Left</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Right</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Top</Border>
+    <Value>0</Value>
+  </Border>
+</DataSetSystem>
