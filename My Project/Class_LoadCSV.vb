@@ -7,7 +7,6 @@ Public Class Class_ImportCSV
 
         If File.Exists(FilePath) = True Then
 
-            'Dim CL_DS As New Class_DS
             Dim lines() As String = IO.File.ReadAllLines(FilePath, System.Text.Encoding.GetEncoding("Windows-1252"))
             Dim DT As New DataTable
 
@@ -23,10 +22,14 @@ Public Class Class_ImportCSV
                 Next
 
                 ' Datenzeilen
-                For I As Integer = 1 To lines.Length - 1
-                    Dim values() As String = ($"{I - 1};" & lines(I)).Split(";"c)
-                    DT.Rows.Add(values)
-                Next
+                Try
+                    For I As Integer = 1 To lines.Length - 1
+                        Dim values() As String = ($"{I - 1};" & lines(I)).Split(";"c)
+                        DT.Rows.Add(values)
+                    Next
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, "Load_CSV")
+                End Try
 
                 ' ID-Spalte als schreibgeschützt markieren
                 DT.Columns("ID").ReadOnly = True

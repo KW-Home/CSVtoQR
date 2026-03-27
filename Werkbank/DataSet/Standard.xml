@@ -90,6 +90,15 @@
               </xs:sequence>
             </xs:complexType>
           </xs:element>
+          <xs:element name="Border">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Area" type="xs:string" />
+                <xs:element name="Border" type="xs:string" />
+                <xs:element name="Value" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:choice>
       </xs:complexType>
       <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -120,12 +129,17 @@
         <xs:selector xpath=".//Search_Operator" />
         <xs:field xpath="Operator" />
       </xs:unique>
+      <xs:unique name="Border_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//Border" />
+        <xs:field xpath="Area" />
+        <xs:field xpath="Border" />
+      </xs:unique>
     </xs:element>
   </xs:schema>
   <Shema>
     <Shema>Standard</Shema>
-    <Import>C:\Users\werne\source\repos\KW-Home\CSVtoQR\Werkbank\Import\Import3.csv</Import>
-    <Export>C:\Users\werne\source\repos\KW-Home\CSVtoQR\Werkbank\Export\Ausgabe.PDF</Export>
+    <Import>C:\Users\peter\source\repos\KW-Home\CSVtoQR\Werkbank\Import\Import4.csv</Import>
+    <Export />
     <DPI>96</DPI>
     <DIN>A4</DIN>
     <PaperHeight>297</PaperHeight>
@@ -134,9 +148,9 @@
     <BorderRight>0</BorderRight>
     <BorderTop>0</BorderTop>
     <BorderBottom>0</BorderBottom>
-    <SeparatorZeileAnzahl>6</SeparatorZeileAnzahl>
+    <SeparatorZeileAnzahl>1</SeparatorZeileAnzahl>
     <SeparatorZeileWert>0</SeparatorZeileWert>
-    <SeparatorSpalteAnzahl>4</SeparatorSpalteAnzahl>
+    <SeparatorSpalteAnzahl>1</SeparatorSpalteAnzahl>
     <SeparatorSpalteWert>0</SeparatorSpalteWert>
   </Shema>
   <PaperDIN>
@@ -336,9 +350,9 @@
   </PaperDIN>
   <Search>
     <ID>2</ID>
-    <Search_Column>Artikelnummer</Search_Column>
+    <Search_Column>ID</Search_Column>
     <Search_Operator>Gleich</Search_Operator>
-    <Search_Value>02110001101A100</Search_Value>
+    <Search_Value>4</Search_Value>
   </Search>
   <Search_Columns>
     <Column>ID</Column>
@@ -356,7 +370,7 @@
     <Column>Size</Column>
   </Search_Columns>
   <Search_Columns>
-    <Column>ModellSize</Column>
+    <Column>Modell + Size</Column>
   </Search_Columns>
   <Search_Columns>
     <Column>URL</Column>
@@ -386,4 +400,64 @@
     <Operator_Left>LIKE '*</Operator_Left>
     <Operator_Right>'</Operator_Right>
   </Search_Operator>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Bottom</Border>
+    <Value>7</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Left</Border>
+    <Value>11.3</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Right</Border>
+    <Value>11</Value>
+  </Border>
+  <Border>
+    <Area>Paper</Area>
+    <Border>Top</Border>
+    <Value>7</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Bottom</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Left</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Right</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Card</Area>
+    <Border>Top</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Bottom</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Left</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Right</Border>
+    <Value>0</Value>
+  </Border>
+  <Border>
+    <Area>Zeile(0)</Area>
+    <Border>Top</Border>
+    <Value>0</Value>
+  </Border>
 </DataSetSystem>

@@ -21,6 +21,7 @@ Public Class Class_DS
             .Add(DT_Search)
             .Add(DT_Search_Columns)
             .Add(DT_Search_Operator)
+            .Add(DT_Border)
         End With
 
         Return DS
@@ -29,9 +30,8 @@ Public Class Class_DS
 
     Private Function DT_Shema() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "Shema"}
         With DT
-            .TableName = "Shema"
             .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String)})
@@ -39,10 +39,6 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "DIN", .DataType = GetType(String), .DefaultValue = "A4"})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperHeight", .DataType = GetType(Double), .DefaultValue = 297})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperWidth", .DataType = GetType(Double), .DefaultValue = 210})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double), .DefaultValue = 0})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileWert", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorSpalteAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
@@ -53,13 +49,15 @@ Public Class Class_DS
         Return DT
 
     End Function
+
     ''' <summary>
     ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
     ''' </summary>
-    Public Sub NewRow_Shema(ByRef DS As DataSet)
+    Public Sub Shema_NewRow(ByRef DS As DataSet)
 
         If IsNothing(DS) Then DS = Get_DS()
         If IsNothing(DS.Tables("Shema")) Then DS.Tables.Add(DT_Shema())
+
         Dim DT As DataTable = DS.Tables("Shema")
         Dim DR As DataRow = DT.NewRow
         With DR
@@ -70,10 +68,6 @@ Public Class Class_DS
             .Item("DPI") = 96
             .Item("PaperHeight") = 297
             .Item("PaperWidth") = 210
-            .Item("BorderLeft") = 0
-            .Item("BorderTop") = 0
-            .Item("BorderRight") = 0
-            .Item("BorderBottom") = 0
             .Item("SeparatorSpalteAnzahl") = 1
             .Item("SeparatorSpalteWert") = 0
             .Item("SeparatorZeileAnzahl") = 1
@@ -85,15 +79,14 @@ Public Class Class_DS
 
     Private Function DT_CardZeile() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "CardZeile"}
         With DT
-            .TableName = "CardZeile"
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
@@ -108,14 +101,13 @@ Public Class Class_DS
 
     Private Function DT_Card() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "Card"}
         With DT
-            .TableName = "Card"
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderLeft", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderRight", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderTop", .DataType = GetType(Double)})
+            '.Columns.Add(New DataColumn With {.ColumnName = "BorderBottom", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
@@ -125,11 +117,39 @@ Public Class Class_DS
 
     End Function
 
+    Private Function DT_Border() As DataTable
+
+        Dim DT As New DataTable With {.TableName = "Border"}
+        With DT
+            .Columns.Add(New DataColumn With {.ColumnName = "Area", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Border", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Value", .DataType = GetType(Double)})
+            .PrimaryKey = New DataColumn() { .Columns("Area"), .Columns("Border")}
+        End With
+
+        DT.Rows.Add("Paper", "Bottom", 0)
+        DT.Rows.Add("Paper", "Left", 0)
+        DT.Rows.Add("Paper", "Right", 0)
+        DT.Rows.Add("Paper", "Top", 0)
+
+        DT.Rows.Add("Card", "Bottom", 0)
+        DT.Rows.Add("Card", "Left", 0)
+        DT.Rows.Add("Card", "Right", 0)
+        DT.Rows.Add("Card", "Top", 0)
+
+        DT.Rows.Add("Zeile(0)", "Bottom", 0)
+        DT.Rows.Add("Zeile(0)", "Left", 0)
+        DT.Rows.Add("Zeile(0)", "Right", 0)
+        DT.Rows.Add("Zeile(0)", "Top", 0)
+
+        Return DT
+
+    End Function
+
     Private Function DT_Search() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "Search"}
         With DT
-            .TableName = "Search"
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "Search_Column", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Search_Operator", .DataType = GetType(String)})
@@ -144,7 +164,6 @@ Public Class Class_DS
     Public Sub Search_Columns_NEW(ByRef DS As DataSet, DT As DataTable)
 
         DS.Tables("Search_Columns").Rows.Clear()
-
         For Each Col As DataColumn In DT.Columns
             With DS.Tables("Search_Columns")
                 If .Rows.Find(Col.ColumnName) Is Nothing Then
@@ -157,9 +176,8 @@ Public Class Class_DS
 
     Private Function DT_Search_Columns() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "Search_Columns"}
         With DT
-            .TableName = "Search_Columns"
             .Columns.Add(New DataColumn With {.ColumnName = "Column", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
             .PrimaryKey = New DataColumn() { .Columns("Column")}
         End With
@@ -169,9 +187,8 @@ Public Class Class_DS
     End Function
     Private Function DT_Search_Operator() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "Search_Operator"}
         With DT
-            .TableName = "Search_Operator"
             .Columns.Add(New DataColumn With {.ColumnName = "Operator", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Left", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Right", .DataType = GetType(String)})
@@ -188,36 +205,13 @@ Public Class Class_DS
 
     End Function
 
-    '''' <summary>
-    '''' Gibt eine Liste mit den DIN Papierformaten zurück
-    '''' </summary>
-    '''' <returns>
-    '''' Liste mit den DIN Papierformaten
-    '''' </returns>
-    'Public Function Get_PaperDIN_ListOf() As List(Of String)
-
-    '    Dim LoS As New List(Of String)
-
-    '    Dim DT As DataTable = DT_PaperDIN()
-    '    For Each DR As DataRow In DT.Rows
-    '        LoS.Add(DR("DIN").ToString())
-    '    Next
-
-    '    Return LoS
-
-    'End Function
-
     Public Function DT_PaperDIN() As DataTable
 
-        Dim DT As New DataTable
+        Dim DT As New DataTable With {.TableName = "PaperDIN"}
         With DT
-
-            .TableName = "PaperDIN"
-
             .Columns.Add("DIN", GetType(String))
             .Columns.Add("PaperWidth", GetType(Double))
             .Columns.Add("PaperHeight", GetType(Double))
-
             .PrimaryKey = New DataColumn() { .Columns("DIN")}
 
             .Rows.Add("A0", 841, 1189)

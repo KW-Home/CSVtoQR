@@ -9,6 +9,8 @@ Public Class Form1
     Private CL_CSV As New Class_ImportCSV
     Private CL_Default As New Class_Default
     Private CL_DS As New Class_DS
+    Private CL_P As New Class_Paint
+
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
     Private WithEvents DTSearch As DataTable
@@ -49,7 +51,8 @@ Public Class Form1
         MySettings_Load()
         DataSetRead()
         PaperPaint(Nothing, Nothing)
-        CL_Default.DefaultControls(Me, My.Settings.MyFont)
+
+        CL_Default.DefaultControls(Me, DS)
 
     End Sub
     Private Sub MySettings_Load()
@@ -142,6 +145,7 @@ Public Class Form1
             My.Settings.MySavePath = SFD.FileName
             My.Settings.Save()
             TSSL_SaveFile.Text = My.Settings.MySavePath
+            CL_Default.DefaultControls(Me, DS)
         End If
 
     End Sub
@@ -225,11 +229,10 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS()
-        If IsNothing(DS.Tables("Shema")) Then CL_DS.NewRow_Shema(DS)
 
         With DS.Tables("Shema")
             If .Rows.Count = 0 Then
-                CL_DS.NewRow_Shema(DS)
+                CL_DS.Shema_NewRow(DS)
                 IsModified = True
             Else
                 ImportFile = .Rows(0).Item("Import").ToString
@@ -239,20 +242,19 @@ Public Class Form1
                 TextBox_Shema.Text = .Item("Shema").ToString
                 TextBox_Import.Text = ImportFile
                 TextBox_Export.Text = .Item("Export").ToString
-                CB_DPI.Text = .Item("DPI")
+                ComboBox_DPI.Text = .Item("DPI")
                 ComboBox_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
                 Label_Paper_Value_Width.Text = .Item("PaperWidth")
-                NUD_Paper_Border_Left.Value = .Item("BorderLeft")
-                NUD_Paper_Border_Top.Value = .Item("BorderTop")
-                NUD_Paper_Border_Right.Value = .Item("BorderRight")
-                NUD_Paper_Border_Bottom.Value = .Item("BorderBottom")
                 NUD_Separator_Spalte_Anzahl.Value = .Item("SeparatorSpalteAnzahl")
                 NUD_Separator_Spalte_Wert.Value = .Item("SeparatorSpalteWert")
                 NUD_Separator_Zeile_Anzahl.Value = .Item("SeparatorZeileAnzahl")
                 NUD_Separator_Zeile_Wert.Value = .Item("SeparatorZeileWert")
             End With
         End With
+
+        ReadToNUD_BorderPaper()
+        ReadToNUD_BorderCard()
 
         If Not IsNothing(DS.Tables("Search")) Then
             With DS.Tables("Search")
@@ -262,11 +264,35 @@ Public Class Form1
         End If
 
     End Sub
+    Private Sub ReadToNUD_BorderPaper()
 
+        For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
+            Select Case DR("Border")
+                Case "Left" : NUD_Paper_Border_Left.Value = DR("Value")
+                Case "Top" : NUD_Paper_Border_Top.Value = DR("Value")
+                Case "Right" : NUD_Paper_Border_Right.Value = DR("Value")
+                Case "Bottom" : NUD_Paper_Border_Bottom.Value = DR("Value")
+            End Select
+        Next
+
+    End Sub
+    Private Sub ReadToNUD_BorderCard()
+
+        For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Card'")
+            Select Case DR("Border")
+                Case "Left" : NUD_Card_Border_Left.Value = DR("Value")
+                Case "Top" : NUD_Card_Border_Top.Value = DR("Value")
+                Case "Right" : NUD_Card_Border_Right.Value = DR("Value")
+                Case "Bottom" : NUD_Card_Border_Bottom.Value = DR("Value")
+            End Select
+        Next
+
+    End Sub
     Private Sub DataSetWrite()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS()
-        If IsNothing(DS.Tables("Shema")) Then CL_DS.NewRow_Shema(DS)
+        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
+
         Dim DT As DataTable = DS.Tables("Shema")
         Dim DR As DataRow = DT.NewRow
         With DT
@@ -276,7 +302,7 @@ Public Class Form1
                 .Item("Import") = TextBox_Import.Text
                 .Item("Export") = TextBox_Export.Text
                 .Item("DIN") = ComboBox_DIN.Text
-                .Item("DPI") = CB_DPI.Text
+                .Item("DPI") = ComboBox_DPI.Text
 
                 If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
                 If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
@@ -345,9 +371,8 @@ Public Class Form1
 
     End Sub
 
-    Public Sub NUD_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged,
-    NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged, NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged
 
+    Public Sub NUD_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged, NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged
         If sender.canselect = False Then Return
         IsModified = True
 
@@ -357,6 +382,35 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
+
+    Public Sub NUD_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged
+
+        If sender.canselect = False Then Return
+        IsModified = True
+
+        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
+        Dim DT As DataTable = DS.Tables("Border")
+        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
+        DR(0)("Value") = sender.value
+
+        PaperPaint(Nothing, Nothing)
+
+    End Sub
+
+    Private Sub NUD_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Card_Border_Top.ValueChanged, NUD_Card_Border_Right.ValueChanged, NUD_Card_Border_Left.ValueChanged, NUD_Card_Border_Bottom.ValueChanged
+
+        If sender.canselect = False Then Return
+        IsModified = True
+
+        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
+        Dim DT As DataTable = DS.Tables("Border")
+        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
+        DR(0)("Value") = sender.value
+
+        'PaperPaint(Nothing, Nothing)
+
+    End Sub
+
 
     Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged,
         TextBox_Import.TextChanged, TextBox_Export.TextChanged
@@ -414,9 +468,6 @@ Public Class Form1
 
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_Search_Add.Click
 
-        'DGV_Sarch_Formatting()
-
-        'If DGV_CSV.CurrentCell.ColumnIndex < 1 Then Return
         If DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).Name = "ID" Then Return
 
         Dim DT As DataTable = DS.Tables("Search")
@@ -456,7 +507,7 @@ Public Class Form1
         '1. Erstelle die ComboBox-Spalte für die Spaltennamen
         Dim Search_Column As New DataGridViewComboBoxColumn() With {
             .Name = "Search_Column",
-            .HeaderText = "Search_Column",
+            .HeaderText = "Spalte",
             .DataPropertyName = "Search_Column",
             .DataSource = DS.Tables("Search_Columns"),
             .DisplayMember = "Column",
@@ -471,7 +522,7 @@ Public Class Form1
         '2. Erstelle die ComboBox-Spalte für die Operatoren
         Dim Search_Operator As New DataGridViewComboBoxColumn() With {
             .Name = "Search_Operator",
-            .HeaderText = "Search_Operator",
+            .HeaderText = "Operator",
             .DataPropertyName = "Search_Operator",
             .DataSource = DS.Tables("Search_Operator"),
             .DisplayMember = "Operator",
@@ -486,7 +537,7 @@ Public Class Form1
         '3. Erstelle die TextBox-Spalte für die Werte
         Dim Search_Value As New DataGridViewTextBoxColumn() With {
             .Name = "Search_Value",
-            .HeaderText = "Search_Value",
+            .HeaderText = "Suche",
             .DataPropertyName = "Search_Value",
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill}
@@ -523,75 +574,20 @@ Public Class Form1
             Me.Font = FD.Font
             MyFont = FD.Font
 
-            CL_Default.DefaultControls(Me, FD.Font)
+            CL_Default.DefaultControls(Me, DS)
 
         End If
 
     End Sub
 
-    Public Sub PaperPaint(Sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged,
+    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged,
         NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged,
         NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged
 
-        If DS Is Nothing Then Return
-        If DS.Tables.Contains("Shema") = False Then Return
-        If DS.Tables("Shema").Rows.Count = 0 Then Return
+        If DS Is Nothing Then CL_DS.Get_DS()
+        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
 
-        'PictureBox_Paper.Invalidate()
-        Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
-        Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
-        Dim PBL As Single = DS.Tables("Shema").Rows(0).Item("BorderLeft")
-        Dim PBT As Single = DS.Tables("Shema").Rows(0).Item("BorderTop")
-        Dim PBR As Single = DS.Tables("Shema").Rows(0).Item("BorderRight")
-        Dim PBB As Single = DS.Tables("Shema").Rows(0).Item("BorderBottom")
-
-        Dim P(2) As Pen
-        P(0) = New Pen(Color.Red, 1)
-        P(1) = New Pen(Color.Green, 1)
-        PictureBox_Paper.Size = New Size(CInt(PW), CInt(PH))
-        PictureBox_Paper.Image = New Bitmap(CInt(PW), CInt(PH))
-        PW -= PBL
-        PW -= PBR
-        PH -= PBT
-        PH -= PBB
-
-        Try
-            Using g As Graphics = Graphics.FromImage(PictureBox_Paper.Image)
-                g.Clear(Color.White)
-                g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-                g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-                g.DrawRectangle(P(0), PBL, PBT, PW, PH)
-
-                Dim SSA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteAnzahl")
-                Dim SSW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteWert")
-                Dim CW As Single
-                CW = (SSA - 1) * SSW
-                CW = PW - CW
-                CW /= SSA
-
-                Dim SZA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorZeileAnzahl")
-                Dim SZW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorZeileWert")
-                Dim CH As Single
-                CH = (SZA - 1) * SZW
-                CH = PH - CH
-                CH /= SZA
-
-                Dim CS As New SizeF(CW, CH)
-                Dim CP = New PointF(PBL, PBT)
-                For C = 1 To SZA Step 1
-                    For R = 1 To SSA Step 1
-                        g.DrawRectangle(P(1), CP.X, CP.Y, CS.Width, CS.Height)
-                        CP.X = CP.X + CW + SSW
-                    Next
-                    CP.X = PBL
-                    CP.Y = CP.Y + CS.Height + SZW
-                Next
-
-            End Using
-
-        Catch ex As Exception
-            MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
 
@@ -612,10 +608,8 @@ Public Class Form1
 
     End Sub
 
-    Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CB_DPI.SelectedIndexChanged
-
-        DS.Tables("Shema").Rows(0)("DPI") = CType(CB_DPI.Text, Integer)
-
+    Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_DPI.SelectedIndexChanged
+        DS.Tables("Shema").Rows(0)("DPI") = CType(ComboBox_DPI.Text, Integer)
     End Sub
 
     Private Sub DGV_Search_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_Search.DataError
@@ -623,14 +617,21 @@ Public Class Form1
     End Sub
 
     Private Sub DGV_Search_DataSourceChanged(sender As Object, e As EventArgs) Handles DGV_Search.DataSourceChanged
-
         CSVSearch()
-
     End Sub
 
     Private Sub Button_Search_Refresh_Click(sender As Object, e As EventArgs) Handles Button_Search_Refresh.Click
-
         CSVSearch()
+    End Sub
+
+    Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Main_TabControl.SelectedIndexChanged
+
+        Select Case Main_TabControl.TabPages(Main_TabControl.SelectedIndex).Name
+            Case "TabPage_Files", "TabPage_Table"
+                SplitContainer1.Panel2Collapsed = True
+            Case Else
+                SplitContainer1.Panel2Collapsed = False
+        End Select
 
     End Sub
 
