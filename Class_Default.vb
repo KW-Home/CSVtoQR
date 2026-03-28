@@ -5,10 +5,12 @@
     Public Sub DefaultControls(ByRef FRM As Form1, ByRef DS As DataSet)
 
         With FRM
-            MyFont = .Font
-            .Main_MenuStrip.Font = MyFont
 
-            .TSSL_IsModified.BackColor = Color.Green
+            MyFont = .Font
+
+            .Main_SplitContainer.Dock = DockStyle.Fill
+            .Main_MenuStrip.Font = MyFont
+            .ToolStripStatusLabel_IsModified.BackColor = Color.Green
 
             With .Main_StatusStrip
                 .Font = MyFont
@@ -20,7 +22,7 @@
 
             With .Main_TabControl
                 .Font = MyFont
-                '.Dock = DockStyle.Fill
+                .Dock = DockStyle.Fill
                 .AutoSize = True
                 .Margin = New Padding(0)
             End With
@@ -100,7 +102,8 @@
 
             Dim ConList_GroupBox As New List(Of GroupBox) From {
         .GroupBox_Shema,
-        .GroupBox_Separator,
+        .GroupBox_Separator_Row,
+        .GroupBox_Separator_Column,
         .GroupBox_Paper_Border,
         .GroupBox_Row_Border,
         .GroupBox_Row_Line,
@@ -108,7 +111,7 @@
             For Each CON As GroupBox In ConList_GroupBox
                 With CON
                     .Font = MyFont
-                    .Dock = DockStyle.Left
+                    .Dock = DockStyle.Fill
                     .AutoSize = True
                     .Margin = New Padding(3, 3, 21, 3)
                     .Padding = New Padding(3)
@@ -171,16 +174,16 @@
             Next
 
             Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
-        .NUD_Separator_Spalte_Wert,
-        .NUD_Separator_Zeile_Wert,
-        .NUD_Paper_Border_Left,
-        .NUD_Paper_Border_Top,
-        .NUD_Paper_Border_Right,
-        .NUD_Paper_Border_Bottom,
-        .NUD_Card_Border_Left,
-        .NUD_Card_Border_Top,
-        .NUD_Card_Border_Right,
-        .NUD_Card_Border_Bottom}
+        .NumericUpDown_Separator_Spalte_Wert,
+        .NumericUpDown_Separator_Zeile_Wert,
+        .NumericUpDown_Paper_Border_Left,
+        .NumericUpDown_Paper_Border_Top,
+        .NumericUpDown_Paper_Border_Right,
+        .NumericUpDown_Paper_Border_Bottom,
+        .NumericUpDown_Card_Border_Left,
+        .NumericUpDown_Card_Border_Top,
+        .NumericUpDown_Card_Border_Right,
+        .NumericUpDown_Card_Border_Bottom}
             For Each CON As NumericUpDown In ConList_NumericUpDown_Decimal
                 With CON
                     .Font = MyFont
@@ -198,8 +201,8 @@
             Next
 
             Dim ConList_NumericUpDown_Anzahl As New List(Of NumericUpDown) From {
-        .NUD_Separator_Spalte_Anzahl,
-        .NUD_Separator_Zeile_Anzahl}
+        .NumericUpDown_Separator_Column_Count,
+        .NumericUpDown_Separator_Row_Anzahl}
             For Each CON As NumericUpDown In ConList_NumericUpDown_Anzahl
                 With CON
                     .Font = MyFont
@@ -217,8 +220,8 @@
             Next
 
             Dim ConList_Label_Spalten As New List(Of Label) From {
-        .Label_Separator_Anzahl,
-        .Label_Separator_Wert}
+        .Label_Separator_Row_Count,
+        .Label_Separator_Row_Value}
             For Each CON As Label In ConList_Label_Spalten
                 With CON
                     .Font = MyFont
@@ -237,17 +240,19 @@
         .Label_DPI,
         .Label_DIN,
         .Label_Paper_Height,
-        .Label_Paper_Einheit_Height,
+        .Label_Paper_Height_Unit,
         .Label_Paper_Width,
-        .Label_Paper_Einheit_Width,
-        .Label_Separator_Zeile,
-        .Label_Separator_Spalte,
-        .Label_Left,
-        .Label_Top,
-        .Label_Right,
-        .Label_Bottom,
-        .Label19, .Label20, .Label21,
-        .Label22, .Label12, .Label13, .Label14, .Label6,
+        .Label_Paper_Width_Unit,
+        .Label_Separator_Row_Count,
+        .Label_Separator_Row_Value,
+        .Label_Separator_Column_Count,
+        .Label_Separator_Column_Value,
+        .Label_Paper_Border_Left,
+        .Label_Paper_Border_Top,
+        .Label_Paper_Border_Right,
+        .Label_Paper_Border_Bottom,
+        .Label_Paper_Border_Right_Unit, .Label_Paper_Border_Top_Unit, .Label_Paper_Border_Bottom_Unit,
+        .Label_Paper_Border_Left_Unit, .Label12, .Label13, .Label14, .Label6,
         .Label8, .Label9, .Label10, .Label11}
             For Each CON As Label In ConList_Label_Zeilen
                 With CON
@@ -261,8 +266,8 @@
             Next
 
             Dim ConList_Label_Value As New List(Of Label) From {
-        .Label_Paper_Value_Height,
-        .Label_Paper_Value_Width}
+        .Label_Paper_Height_Value,
+        .Label_Paper_Width_Value}
             For Each CON As Label In ConList_Label_Value
                 With CON
                     .Font = MyFont

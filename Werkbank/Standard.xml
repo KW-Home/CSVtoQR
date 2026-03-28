@@ -25,10 +25,6 @@
             <xs:complexType>
               <xs:sequence>
                 <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
-                <xs:element name="BorderLeft" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderRight" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderTop" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderBottom" type="xs:double" minOccurs="0" />
                 <xs:element name="CardSizeWidth" type="xs:int" minOccurs="0" />
                 <xs:element name="CardSizeHeight" type="xs:int" minOccurs="0" />
               </xs:sequence>
@@ -39,10 +35,6 @@
               <xs:sequence>
                 <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" type="xs:int" />
                 <xs:element name="QRCode" type="xs:boolean" minOccurs="0" />
-                <xs:element name="BorderLeft" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderRight" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderTop" type="xs:double" minOccurs="0" />
-                <xs:element name="BorderBottom" type="xs:double" minOccurs="0" />
                 <xs:element name="DataColumn" type="xs:string" minOccurs="0" />
                 <xs:element name="LinePos" type="xs:int" minOccurs="0" />
                 <xs:element name="Font" type="xs:string" minOccurs="0" />
@@ -134,7 +126,7 @@
   </xs:schema>
   <Shema>
     <Shema>Standard</Shema>
-    <Import>C:\Users\peter\source\repos\KW-Home\CSVtoQR\Werkbank\Import\Import4.csv</Import>
+    <Import>C:\Users\werne\source\repos\KW-Home\CSVtoQR\Werkbank\Import\Import4.csv</Import>
     <Export />
     <DPI>96</DPI>
     <DIN>A4</DIN>
@@ -342,21 +334,9 @@
   </PaperDIN>
   <Search>
     <ID>1</ID>
-    <Search_Column>Modell + Size</Search_Column>
-    <Search_Operator>Ungleich</Search_Operator>
-    <Search_Value>Modell 11 Size (4/4)</Search_Value>
-  </Search>
-  <Search>
-    <ID>2</ID>
-    <Search_Column>Size</Search_Column>
+    <Search_Column>Model</Search_Column>
     <Search_Operator>Gleich</Search_Operator>
-    <Search_Value>4/4</Search_Value>
-  </Search>
-  <Search>
-    <ID>3</ID>
-    <Search_Column>Bezeichnung</Search_Column>
-    <Search_Operator>Gleich</Search_Operator>
-    <Search_Value>F-Tuba</Search_Value>
+    <Search_Value>Modell 11</Search_Value>
   </Search>
   <Search_Columns>
     <Column>ID</Column>
@@ -427,22 +407,22 @@
   <Border>
     <Area>Card</Area>
     <Border>Bottom</Border>
-    <Value>0.8</Value>
+    <Value>0</Value>
   </Border>
   <Border>
     <Area>Card</Area>
     <Border>Left</Border>
-    <Value>0.5</Value>
+    <Value>0</Value>
   </Border>
   <Border>
     <Area>Card</Area>
     <Border>Right</Border>
-    <Value>0.6</Value>
+    <Value>0</Value>
   </Border>
   <Border>
     <Area>Card</Area>
     <Border>Top</Border>
-    <Value>0.7</Value>
+    <Value>0</Value>
   </Border>
   <Border>
     <Area>Zeile(0)</Area>

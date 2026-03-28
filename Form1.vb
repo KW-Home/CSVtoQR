@@ -23,11 +23,11 @@ Public Class Form1
         Set(ByVal value As Boolean)
             IsModified_Value = value
             If value = True Then
-                TSSL_IsModified.BackColor = Color.Red
-                TSMI_Safe.Enabled = True
+                ToolStripStatusLabel_IsModified.BackColor = Color.Red
+                ToolStripMenuItem_Safe.Enabled = True
             Else
-                TSSL_IsModified.BackColor = Color.Green
-                TSMI_Safe.Enabled = False
+                ToolStripStatusLabel_IsModified.BackColor = Color.Green
+                ToolStripMenuItem_Safe.Enabled = False
             End If
         End Set
     End Property
@@ -73,7 +73,7 @@ Public Class Form1
             ListBox_Tabellen.Items.Clear()
             ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
 
-            TSSL_SaveFile.Text = .MySavePath
+            ToolStripStatusLabel_SaveFile.Text = .MySavePath
 
         End With
 
@@ -85,7 +85,7 @@ Public Class Form1
         With My.Settings
             .MySize = Me.Size
             .MyFont = Me.Font
-            .MySavePath = TSSL_SaveFile.Text
+            .MySavePath = ToolStripStatusLabel_SaveFile.Text
             .Save()
         End With
 
@@ -118,13 +118,13 @@ Public Class Form1
 
     End Sub
 
-    Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BeendenToolStripMenuItem.Click
+    Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Beenden.Click
 
         Me.Close()
 
     End Sub
 
-    Private Sub TSMI_XML_New_Click(sender As Object, e As EventArgs) Handles TSMI_XML_New.Click
+    Private Sub TSMI_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
         DS = New Class_DS().Get_DS
 
@@ -144,13 +144,13 @@ Public Class Form1
             DS.WriteXml(SFD.FileName, XmlWriteMode.WriteSchema)
             My.Settings.MySavePath = SFD.FileName
             My.Settings.Save()
-            TSSL_SaveFile.Text = My.Settings.MySavePath
+            ToolStripStatusLabel_SaveFile.Text = My.Settings.MySavePath
             CL_Default.DefaultControls(Me, DS)
         End If
 
     End Sub
 
-    Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÖffnenToolStripMenuItem.Click
+    Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Öffnen.Click
 
         Dim Path As String = "C:\Temp\DS.xml"
 
@@ -172,14 +172,14 @@ Public Class Form1
                 My.Settings.MySavePath = OFD.FileName
                 My.Settings.Save()
                 DataSetRead()
-                TSSL_SaveFile.Text = My.Settings.MySavePath
+                ToolStripStatusLabel_SaveFile.Text = My.Settings.MySavePath
             End If
 
         End If
 
     End Sub
 
-    Private Sub TSMI_Save(sender As Object, e As EventArgs) Handles TSMI_Safe.Click, TSMI_XML_SaveAs.Click
+    Private Sub TSMI_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Safe.Click, ToolStripMenuItem_XML_SaveAs.Click
 
         Dim Path As String = My.Settings.MySavePath
         Select Case sender.name
@@ -210,7 +210,7 @@ Public Class Form1
 
         If SFD.ShowDialog = DialogResult.OK Then
             DS.WriteXml(SFD.FileName, XmlWriteMode.WriteSchema)
-            TSSL_SaveFile.Text = SFD.FileName
+            ToolStripStatusLabel_SaveFile.Text = SFD.FileName
             ImportFile = SFD.FileName
             IsModified = False
             My.Settings.MySavePath = SFD.FileName
@@ -244,17 +244,17 @@ Public Class Form1
                 TextBox_Export.Text = .Item("Export").ToString
                 ComboBox_DPI.Text = .Item("DPI")
                 ComboBox_DIN.Text = .Item("DIN").ToString
-                Label_Paper_Value_Height.Text = .Item("PaperHeight").ToString
-                Label_Paper_Value_Width.Text = .Item("PaperWidth")
-                NUD_Separator_Spalte_Anzahl.Value = .Item("SeparatorSpalteAnzahl")
-                NUD_Separator_Spalte_Wert.Value = .Item("SeparatorSpalteWert")
-                NUD_Separator_Zeile_Anzahl.Value = .Item("SeparatorZeileAnzahl")
-                NUD_Separator_Zeile_Wert.Value = .Item("SeparatorZeileWert")
+                Label_Paper_Height_Value.Text = .Item("PaperHeight").ToString
+                Label_Paper_Width_Value.Text = .Item("PaperWidth")
+                NumericUpDown_Separator_Column_Count.Value = .Item("SeparatorSpalteAnzahl")
+                NumericUpDown_Separator_Spalte_Wert.Value = .Item("SeparatorSpalteWert")
+                NumericUpDown_Separator_Row_Anzahl.Value = .Item("SeparatorZeileAnzahl")
+                NumericUpDown_Separator_Zeile_Wert.Value = .Item("SeparatorZeileWert")
             End With
         End With
 
-        ReadToNUD_BorderPaper()
-        ReadToNUD_BorderCard()
+        ReadToNumericUpDown_BorderPaper()
+        ReadToNumericUpDown_BorderCard()
 
         If Not IsNothing(DS.Tables("Search")) Then
             With DS.Tables("Search")
@@ -264,26 +264,26 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub ReadToNUD_BorderPaper()
+    Private Sub ReadToNumericUpDown_BorderPaper()
 
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
             Select Case DR("Border")
-                Case "Left" : NUD_Paper_Border_Left.Value = DR("Value")
-                Case "Top" : NUD_Paper_Border_Top.Value = DR("Value")
-                Case "Right" : NUD_Paper_Border_Right.Value = DR("Value")
-                Case "Bottom" : NUD_Paper_Border_Bottom.Value = DR("Value")
+                Case "Left" : NumericUpDown_Paper_Border_Left.Value = DR("Value")
+                Case "Top" : NumericUpDown_Paper_Border_Top.Value = DR("Value")
+                Case "Right" : NumericUpDown_Paper_Border_Right.Value = DR("Value")
+                Case "Bottom" : NumericUpDown_Paper_Border_Bottom.Value = DR("Value")
             End Select
         Next
 
     End Sub
-    Private Sub ReadToNUD_BorderCard()
+    Private Sub ReadToNumericUpDown_BorderCard()
 
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Card'")
             Select Case DR("Border")
-                Case "Left" : NUD_Card_Border_Left.Value = DR("Value")
-                Case "Top" : NUD_Card_Border_Top.Value = DR("Value")
-                Case "Right" : NUD_Card_Border_Right.Value = DR("Value")
-                Case "Bottom" : NUD_Card_Border_Bottom.Value = DR("Value")
+                Case "Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
+                Case "Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
+                Case "Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
+                Case "Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
             End Select
         Next
 
@@ -304,18 +304,18 @@ Public Class Form1
                 .Item("DIN") = ComboBox_DIN.Text
                 .Item("DPI") = ComboBox_DPI.Text
 
-                If IsNumeric(Label_Paper_Value_Height.Text) = True Then .Item("PaperHeight") = Label_Paper_Value_Height.Text
-                If IsNumeric(Label_Paper_Value_Width.Text) = True Then .Item("PaperWidth") = Label_Paper_Value_Width.Text
+                If IsNumeric(Label_Paper_Height_Value.Text) = True Then .Item("PaperHeight") = Label_Paper_Height_Value.Text
+                If IsNumeric(Label_Paper_Width_Value.Text) = True Then .Item("PaperWidth") = Label_Paper_Width_Value.Text
 
-                If IsNumeric(NUD_Paper_Border_Left.Value) = True Then .Item("BorderLeft") = NUD_Paper_Border_Left.Value
-                If IsNumeric(NUD_Paper_Border_Top.Value) = True Then .Item("BorderTop") = NUD_Paper_Border_Top.Value
-                If IsNumeric(NUD_Paper_Border_Right.Value) = True Then .Item("BorderRight") = NUD_Paper_Border_Right.Value
-                If IsNumeric(NUD_Paper_Border_Bottom.Value) = True Then .Item("BorderBottom") = NUD_Paper_Border_Bottom.Value
+                If IsNumeric(NumericUpDown_Paper_Border_Left.Value) = True Then .Item("BorderLeft") = NumericUpDown_Paper_Border_Left.Value
+                If IsNumeric(NumericUpDown_Paper_Border_Top.Value) = True Then .Item("BorderTop") = NumericUpDown_Paper_Border_Top.Value
+                If IsNumeric(NumericUpDown_Paper_Border_Right.Value) = True Then .Item("BorderRight") = NumericUpDown_Paper_Border_Right.Value
+                If IsNumeric(NumericUpDown_Paper_Border_Bottom.Value) = True Then .Item("BorderBottom") = NumericUpDown_Paper_Border_Bottom.Value
 
-                If IsNumeric(NUD_Separator_Spalte_Anzahl.Value) = True Then .Item("SeparatorSpalteAnzahl") = NUD_Separator_Spalte_Anzahl.Value
-                If IsNumeric(NUD_Separator_Spalte_Wert.Value) = True Then .Item("SeparatorSpalteWert") = NUD_Separator_Spalte_Wert.Value
-                If IsNumeric(NUD_Separator_Zeile_Anzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NUD_Separator_Zeile_Anzahl.Value
-                If IsNumeric(NUD_Separator_Zeile_Wert.Value) = True Then .Item("SeparatorZeileWert") = NUD_Separator_Zeile_Wert.Value
+                If IsNumeric(NumericUpDown_Separator_Column_Count.Value) = True Then .Item("SeparatorSpalteAnzahl") = NumericUpDown_Separator_Column_Count.Value
+                If IsNumeric(NumericUpDown_Separator_Spalte_Wert.Value) = True Then .Item("SeparatorSpalteWert") = NumericUpDown_Separator_Spalte_Wert.Value
+                If IsNumeric(NumericUpDown_Separator_Row_Anzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NumericUpDown_Separator_Row_Anzahl.Value
+                If IsNumeric(NumericUpDown_Separator_Zeile_Wert.Value) = True Then .Item("SeparatorZeileWert") = NumericUpDown_Separator_Zeile_Wert.Value
 
             End With
 
@@ -372,7 +372,7 @@ Public Class Form1
     End Sub
 
 
-    Public Sub NUD_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged, NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged
+    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Spalte_Wert.ValueChanged, NumericUpDown_Separator_Row_Anzahl.ValueChanged, NumericUpDown_Separator_Zeile_Wert.ValueChanged
         If sender.canselect = False Then Return
         IsModified = True
 
@@ -383,7 +383,7 @@ Public Class Form1
 
     End Sub
 
-    Public Sub NUD_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged
+    Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -397,7 +397,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub NUD_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Card_Border_Top.ValueChanged, NUD_Card_Border_Right.ValueChanged, NUD_Card_Border_Left.ValueChanged, NUD_Card_Border_Bottom.ValueChanged
+    Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -565,7 +565,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub TSMI_Font_Click(sender As Object, e As EventArgs) Handles TSMI_Font.Click
+    Private Sub TSMI_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
 
         Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
         If FD.ShowDialog = DialogResult.OK Then
@@ -582,9 +582,9 @@ Public Class Form1
 
     End Sub
 
-    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NUD_Separator_Spalte_Anzahl.ValueChanged, NUD_Separator_Spalte_Wert.ValueChanged,
-        NUD_Separator_Zeile_Anzahl.ValueChanged, NUD_Separator_Zeile_Wert.ValueChanged,
-        NUD_Paper_Border_Left.ValueChanged, NUD_Paper_Border_Top.ValueChanged, NUD_Paper_Border_Right.ValueChanged, NUD_Paper_Border_Bottom.ValueChanged
+    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Spalte_Wert.ValueChanged,
+        NumericUpDown_Separator_Row_Anzahl.ValueChanged, NumericUpDown_Separator_Zeile_Wert.ValueChanged,
+        NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If DS Is Nothing Then CL_DS.Get_DS()
         If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
@@ -601,10 +601,10 @@ Public Class Form1
         DS.Tables("Shema").Rows(0)("DIN") = CType(ComboBox_DIN.Text, String)
 
         DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_DIN.SelectedItem("PaperHeight"), Integer)
-        Label_Paper_Value_Height.Text = ComboBox_DIN.SelectedItem("PaperHeight").ToString
+        Label_Paper_Height_Value.Text = ComboBox_DIN.SelectedItem("PaperHeight").ToString
 
         DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_DIN.SelectedItem("PaperWidth"), Integer)
-        Label_Paper_Value_Width.Text = ComboBox_DIN.SelectedItem("PaperWidth").ToString
+        Label_Paper_Width_Value.Text = ComboBox_DIN.SelectedItem("PaperWidth").ToString
 
         IsModified = True
 
@@ -630,9 +630,9 @@ Public Class Form1
 
         Select Case Main_TabControl.TabPages(Main_TabControl.SelectedIndex).Name
             Case "TabPage_Files", "TabPage_Table"
-                SplitContainer1.Panel2Collapsed = True
+                Main_SplitContainer.Panel2Collapsed = True
             Case Else
-                SplitContainer1.Panel2Collapsed = False
+                Main_SplitContainer.Panel2Collapsed = False
         End Select
 
     End Sub

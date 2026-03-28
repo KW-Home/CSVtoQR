@@ -1,6 +1,10 @@
 ﻿Public Class Class_Paint
 
+    Private ReadOnly CL_DS As Class_DS
+
     Public Sub Ivalidate_Paper(ByRef FRM As Form1, ByRef DS As DataSet)
+
+        If IsNothing(DS) Then DS = CL_DS.Get_DS()
 
         Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
         Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
