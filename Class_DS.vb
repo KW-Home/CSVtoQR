@@ -56,7 +56,6 @@ Public Class Class_DS
     Public Sub Shema_NewRow(ByRef DS As DataSet)
 
         If IsNothing(DS) Then DS = Get_DS()
-        If IsNothing(DS.Tables("Shema")) Then DS.Tables.Add(DT_Shema())
 
         Dim DT As DataTable = DS.Tables("Shema")
         Dim DR As DataRow = DT.NewRow
