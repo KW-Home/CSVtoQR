@@ -183,7 +183,7 @@ Public Class Form1
 
         Dim Path As String = My.Settings.MySavePath
         Select Case sender.name
-            Case "TSMI_Safe"
+            Case "ToolStripMenuItem_Safe"
                 If System.IO.File.Exists(Path) Then
                     DS.WriteXml(Path, XmlWriteMode.WriteSchema)
                     IsModified = False
@@ -191,7 +191,7 @@ Public Class Form1
                     SaveXML(Path)
                     IsModified = False
                 End If
-            Case "TSMI_XML_SaveAs"
+            Case ToolStripMenuItem_XML_SaveAs.Name
                 SaveXML(Path)
                 IsModified = False
         End Select

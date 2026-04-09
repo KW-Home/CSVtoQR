@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Werkbank/DataSet20260326.xml
+/Werkbank/DataSet/DataSetNeu.xml
+/Werkbank/DataSet/Standard.xml
+/Werkbank/DataSet/Standard.xml
