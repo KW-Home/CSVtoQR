@@ -7,7 +7,7 @@ Public Class Form1
     Public DS As New DataSet
     Private MyFont As Font = My.Settings.MyFont
     Private CL_CSV As New Class_ImportCSV
-    Private CL_Default As New Class_Default
+    Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
 
@@ -52,9 +52,16 @@ Public Class Form1
         DataSetRead()
         PaperPaint(Nothing, Nothing)
 
-        CL_Default.DefaultControls(Me, DS)
+        'CL_Default.DefaultControls(Me, DS)
 
     End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        CL_Default = New Class_Default(Me, DS)
+
+    End Sub
+
     Private Sub MySettings_Load()
 
         With My.Settings
@@ -96,11 +103,16 @@ Public Class Form1
         DT_CSV = CL_CSV.Load_CSV(DS, CL_DS, Value)
         DV_CSV = New DataView(DT_CSV)
 
-        Main_BindingSource_CSV.DataSource = DV_CSV
-        Main_BindingNavigator_CSV.BindingSource = Main_BindingSource_CSV
-        DGV_CSV.DataSource = Main_BindingSource_CSV
+        BindingSource_CSV.DataSource = DV_CSV
+        BindingNavigator_CSV.BindingSource = BindingSource_CSV
+        DGV_CSV.DataSource = BindingSource_CSV
 
         DGV_Search_Formatting()
+
+        With ComboBox_DataColumn
+            .DataSource = Nothing
+            .DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
+        End With
 
         TextBox_Import.Text = Value
         IsModified = True
@@ -145,7 +157,7 @@ Public Class Form1
             My.Settings.MySavePath = SFD.FileName
             My.Settings.Save()
             ToolStripStatusLabel_SaveFile.Text = My.Settings.MySavePath
-            CL_Default.DefaultControls(Me, DS)
+            'CL_Default.DefaultControls(Me, DS)
         End If
 
     End Sub
@@ -247,9 +259,9 @@ Public Class Form1
                 Label_Paper_Height_Value.Text = .Item("PaperHeight").ToString
                 Label_Paper_Width_Value.Text = .Item("PaperWidth")
                 NumericUpDown_Separator_Column_Count.Value = .Item("SeparatorSpalteAnzahl")
-                NumericUpDown_Separator_Spalte_Wert.Value = .Item("SeparatorSpalteWert")
-                NumericUpDown_Separator_Row_Anzahl.Value = .Item("SeparatorZeileAnzahl")
-                NumericUpDown_Separator_Zeile_Wert.Value = .Item("SeparatorZeileWert")
+                NumericUpDown_Separator_Column_Value.Value = .Item("SeparatorSpalteWert")
+                NumericUpDown_Separator_Row_Count.Value = .Item("SeparatorZeileAnzahl")
+                NumericUpDown_Separator_Row_Value.Value = .Item("SeparatorZeileWert")
             End With
         End With
 
@@ -313,9 +325,9 @@ Public Class Form1
                 If IsNumeric(NumericUpDown_Paper_Border_Bottom.Value) = True Then .Item("BorderBottom") = NumericUpDown_Paper_Border_Bottom.Value
 
                 If IsNumeric(NumericUpDown_Separator_Column_Count.Value) = True Then .Item("SeparatorSpalteAnzahl") = NumericUpDown_Separator_Column_Count.Value
-                If IsNumeric(NumericUpDown_Separator_Spalte_Wert.Value) = True Then .Item("SeparatorSpalteWert") = NumericUpDown_Separator_Spalte_Wert.Value
-                If IsNumeric(NumericUpDown_Separator_Row_Anzahl.Value) = True Then .Item("SeparatorZeileAnzahl") = NumericUpDown_Separator_Row_Anzahl.Value
-                If IsNumeric(NumericUpDown_Separator_Zeile_Wert.Value) = True Then .Item("SeparatorZeileWert") = NumericUpDown_Separator_Zeile_Wert.Value
+                If IsNumeric(NumericUpDown_Separator_Column_Value.Value) = True Then .Item("SeparatorSpalteWert") = NumericUpDown_Separator_Column_Value.Value
+                If IsNumeric(NumericUpDown_Separator_Row_Count.Value) = True Then .Item("SeparatorZeileAnzahl") = NumericUpDown_Separator_Row_Count.Value
+                If IsNumeric(NumericUpDown_Separator_Row_Value.Value) = True Then .Item("SeparatorZeileWert") = NumericUpDown_Separator_Row_Value.Value
 
             End With
 
@@ -372,7 +384,7 @@ Public Class Form1
     End Sub
 
 
-    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Spalte_Wert.ValueChanged, NumericUpDown_Separator_Row_Anzahl.ValueChanged, NumericUpDown_Separator_Zeile_Wert.ValueChanged
+    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged
         If sender.canselect = False Then Return
         IsModified = True
 
@@ -420,6 +432,10 @@ Public Class Form1
 
         Dim ObjName As String = sender.Name
         ObjName = ObjName.Replace("TextBox_", "")
+
+        If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
+        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
+
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
 
     End Sub
@@ -491,6 +507,8 @@ Public Class Form1
         'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
         'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "Search_Column" und "Search_Operator" Spalten führen kann.
 
+        DGV_Search.Columns.Clear()
+
         '0. Erstelle die TextBox-Spalte für die ID
         Dim Search_ID As New DataGridViewTextBoxColumn() With {
             .Name = "ID",
@@ -540,7 +558,7 @@ Public Class Form1
             .HeaderText = "Suche",
             .DataPropertyName = "Search_Value",
             .ValueType = GetType(String),
-            .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill}
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
         If DGV_Search.Columns.ToString.Contains("Search_Value") Then
             DGV_Search.Columns.Remove("Search_Value")
         End If
@@ -557,15 +575,12 @@ Public Class Form1
             If DR.IsNewRow Then Continue For
             DGV_Search.Rows.Remove(DR)
         Next
-
-        Debug.Print(DS.Tables("Search").Rows.Count)
-
         IsModified = True
         CSVSearch()
 
     End Sub
 
-    Private Sub TSMI_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
+    Private Sub ToolStripMenuItem_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
 
         Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
         If FD.ShowDialog = DialogResult.OK Then
@@ -573,17 +588,14 @@ Public Class Form1
             My.Settings.MyFont = FD.Font
             My.Settings.Save()
 
-            Me.Font = FD.Font
-            MyFont = FD.Font
-
-            CL_Default.DefaultControls(Me, DS)
+            CL_Default = New Class_Default(Me, DS)
 
         End If
 
     End Sub
 
-    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Spalte_Wert.ValueChanged,
-        NumericUpDown_Separator_Row_Anzahl.ValueChanged, NumericUpDown_Separator_Zeile_Wert.ValueChanged,
+    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
+        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If DS Is Nothing Then CL_DS.Get_DS()
@@ -626,13 +638,13 @@ Public Class Form1
         CSVSearch()
     End Sub
 
-    Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Main_TabControl.SelectedIndexChanged
+    Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl_Main.SelectedIndexChanged
 
-        Select Case Main_TabControl.TabPages(Main_TabControl.SelectedIndex).Name
+        Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
             Case "TabPage_Files", "TabPage_Table"
-                Main_SplitContainer.Panel2Collapsed = True
+                SplitContainer_Main.Panel2Collapsed = True
             Case Else
-                Main_SplitContainer.Panel2Collapsed = False
+                SplitContainer_Main.Panel2Collapsed = False
         End Select
 
     End Sub

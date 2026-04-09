@@ -1,323 +1,323 @@
 ﻿Public Class Class_Default
 
-    Private MyFont As Font
+    Private ReadOnly MyFont As Font = My.Settings.MyFont
+    Private ReadOnly FRM As Form1
+    Private ReadOnly DS As DataSet
+    Private ReadOnly ControlsListGesamt As New List(Of Control)
 
-    Public Sub DefaultControls(ByRef FRM As Form1, ByRef DS As DataSet)
+    Public Sub New(ByRef _FRM As Form1, ByRef _DS As DataSet)
 
-        With FRM
+        FRM = _FRM
+        DS = _DS
 
-            MyFont = .Font
+        With ControlsListGesamt
+            .Add(FRM.SplitContainer_Main)
 
-            .Main_SplitContainer.Dock = DockStyle.Fill
-            .Main_MenuStrip.Font = MyFont
-            .ToolStripStatusLabel_IsModified.BackColor = Color.Green
+            .Add(FRM.TextBox_Shema)
+            .Add(FRM.TextBox_Import)
+            .Add(FRM.TextBox_Export)
 
-            With .Main_StatusStrip
-                .Font = MyFont
-                .Dock = DockStyle.Bottom
-                .AutoSize = True
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-            End With
+            .Add(FRM.NumericUpDown_Paper_Border_Left)
+            .Add(FRM.NumericUpDown_Paper_Border_Top)
+            .Add(FRM.NumericUpDown_Paper_Border_Right)
+            .Add(FRM.NumericUpDown_Paper_Border_Bottom)
+            .Add(FRM.NumericUpDown_Card_Border_Left)
+            .Add(FRM.NumericUpDown_Card_Border_Top)
+            .Add(FRM.NumericUpDown_Card_Border_Right)
+            .Add(FRM.NumericUpDown_Card_Border_Bottom)
+            .Add(FRM.NumericUpDown_CardRow_Border_Bottom)
+            .Add(FRM.NumericUpDown_CardRow_Border_Left)
+            .Add(FRM.NumericUpDown_CardRow_Border_Right)
+            .Add(FRM.NumericUpDown_CardRow_Border_Top)
+            .Add(FRM.NumericUpDown_Separator_Column_Value)
+            .Add(FRM.NumericUpDown_Separator_Column_Count)
+            .Add(FRM.NumericUpDown_Separator_Row_Value)
+            .Add(FRM.NumericUpDown_Separator_Row_Count)
 
-            With .Main_TabControl
-                .Font = MyFont
-                .Dock = DockStyle.Fill
-                .AutoSize = True
-                .Margin = New Padding(0)
-            End With
+            .Add(FRM.Label_Separator_Row_Count)
+            .Add(FRM.Label_Separator_Row_Value)
 
-            With .Main_BindingNavigator_CSV
-                .Font = MyFont
-                .Dock = DockStyle.Top
-                .AutoSize = True
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-            End With
+            .Add(FRM.Label_Shema)
+            .Add(FRM.Label_Import)
+            .Add(FRM.Label_Export)
+            .Add(FRM.Label_DPI)
+            .Add(FRM.Label_DIN)
+            .Add(FRM.Label_Paper_Height)
+            .Add(FRM.Label_Paper_Height_Unit)
+            .Add(FRM.Label_Paper_Width)
+            .Add(FRM.Label_Paper_Width_Unit)
+            .Add(FRM.Label_Separator_Row_Count)
+            .Add(FRM.Label_Separator_Row_Value)
+            .Add(FRM.Label_Separator_Column_Count)
+            .Add(FRM.Label_Separator_Column_Value)
+            .Add(FRM.Label_Paper_Border_Left)
+            .Add(FRM.Label_Paper_Border_Top)
+            .Add(FRM.Label_Paper_Border_Right)
+            .Add(FRM.Label_Paper_Border_Bottom)
+            .Add(FRM.Label_Paper_Border_Right_Unit)
+            .Add(FRM.Label_Paper_Border_Top_Unit)
+            .Add(FRM.Label_Paper_Border_Bottom_Unit)
+            .Add(FRM.Label_Paper_Border_Left_Unit)
+            .Add(FRM.Label6)
+            .Add(FRM.Label8)
+            .Add(FRM.Label9)
+            .Add(FRM.Label10)
+            .Add(FRM.Label11)
+            .Add(FRM.Label12)
+            .Add(FRM.Label13)
+            .Add(FRM.Label14)
 
-            With .ListBox_Tabellen
-                .Font = MyFont
-                .Dock = DockStyle.Left
-                .AutoSize = True
-                .Margin = New Padding(0)
-                .Padding = New Padding(0)
-            End With
+            .Add(FRM.Label_Paper_Height_Value)
+            .Add(FRM.Label_Paper_Width_Value)
 
-            Dim ConList_Panel As New List(Of Panel) From {
-        .Panel_Daten_CSV,
-        .Panel_Paper}
-            ' Die Panel_Paper soll sich über 3 Zeilen und 2 Spalten erstrecken, damit sie genügend Platz für die Papierdarstellung bietet.
-            '.TableLayoutPanel_Paper.SetRowSpan(.Panel_Paper, 3)
-            '.TableLayoutPanel_Paper.SetColumnSpan(.Panel_Paper, 2)
+            .Add(FRM.ComboBox_DIN)
+            .Add(FRM.ComboBox_DPI)
+            .Add(FRM.ComboBox_DataColumn)
 
-            For Each CON As Panel In ConList_Panel
-                With CON
-                    .BorderStyle = BorderStyle.FixedSingle
-                    .Dock = DockStyle.Fill
-                    .Margin = New Padding(3)
-                    .Padding = New Padding(3)
-                    .BackColor = Color.AliceBlue
-                End With
-            Next
+            .Add(FRM.TabPage_Card)
+            .Add(FRM.TabPage_Paper)
+            .Add(FRM.TabPage_Row)
+            .Add(FRM.TabPage_Files)
+            .Add(FRM.TabPage_Table)
 
-            With .PictureBox_Paper
-                .BorderStyle = BorderStyle.FixedSingle
-                .Dock = DockStyle.None
-                .Location = New Point(0, 0)
-                .SizeMode = PictureBoxSizeMode.AutoSize
-                .Margin = New Padding(3)
-                .Padding = New Padding(3)
-                .BackColor = Color.WhiteSmoke
-            End With
+            .Add(FRM.StatusStrip_Main)
+            .Add(FRM.MenuStrip_Main)
 
-            Dim ConList_DataGridView As New List(Of DataGridView) From {
-        .DGV_CSV,
-        .DGV_Search,
-        .DGV_Table}
-            For Each CON As DataGridView In ConList_DataGridView
-                With CON
-                    .Dock = DockStyle.Fill
-                    .Font = MyFont
-                    .AutoResizeColumnHeadersHeight()
-                    .DefaultCellStyle.Font = MyFont
-                    .MultiSelect = False
-                    .AllowUserToAddRows = False
-                    .AllowUserToDeleteRows = False
-                    .AllowUserToOrderColumns = True
-                    .AllowUserToResizeColumns = True
-                    .AllowUserToResizeRows = True
-                    .Margin = New Padding(3, 3, 3, 3)
-                    .Padding = New Padding(0)
-                    .DefaultCellStyle.BackColor = Color.White
-                    .ScrollBars = ScrollBars.Both
-                    .AutoSize = True
+            .Add(FRM.TabControl_Main)
+            .Add(FRM.BindingNavigator_CSV)
+            .Add(FRM.ListBox_Tabellen)
+            .Add(FRM.PictureBox_Paper)
 
-                    .AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
-                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+            .Add(FRM.Panel_Search)
+            .Add(FRM.Panel_Daten_CSV)
+            .Add(FRM.Panel_Paper)
 
-                    .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-                    .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
-                End With
-            Next
+            .Add(FRM.DGV_CSV)
+            .Add(FRM.DGV_Search)
+            .Add(FRM.DGV_Table)
 
-            Dim ConList_GroupBox As New List(Of GroupBox) From {
-        .GroupBox_Shema,
-        .GroupBox_Separator_Row,
-        .GroupBox_Separator_Column,
-        .GroupBox_Paper_Border,
-        .GroupBox_Row_Border,
-        .GroupBox_Row_Line,
-        .GroupBox_Card}
-            For Each CON As GroupBox In ConList_GroupBox
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Fill
-                    .AutoSize = True
-                    .Margin = New Padding(3, 3, 21, 3)
-                    .Padding = New Padding(3)
-                End With
-            Next
+            .Add(FRM.GroupBox_Shema)
+            .Add(FRM.GroupBox_Separator_Row)
+            .Add(FRM.GroupBox_Separator_Column)
+            .Add(FRM.GroupBox_Paper_Border)
+            .Add(FRM.GroupBox_Row_Border)
+            .Add(FRM.GroupBox_Row_Line)
+            .Add(FRM.GroupBox_Card)
 
-            Dim ConList_CheckBox As New List(Of CheckBox) From {
-                .CheckBox_QRCode,
-                .CheckBox_AutoFont}
-            For Each CON As CheckBox In ConList_CheckBox
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Left
-                    .Appearance = Appearance.Normal
-                    .Text = ""
-                    .AutoSize = True
-                    .Margin = New Padding(0)
-                    .Padding = New Padding(0)
-                End With
-            Next
+            .Add(FRM.CheckBox_QRCode)
+            .Add(FRM.CheckBox_AutoFont)
 
-            Dim ConList_TableLayoutPanel As New List(Of TableLayoutPanel) From {
-        .TableLayoutPanel_Shema,
-        .TableLayoutPanel_Paper,
-        .TableLayoutPanel_Paper_Border,
-        .TableLayoutPanel_Separator,
-        .TableLayoutPanel_Files,
-        .TableLayoutPanel_Card,
-        .TableLayoutPanel_Row,
-        .TableLayoutPanel_Row_Line,
-        .TableLayoutPanel_Row_Border}
-            For Each CON As TableLayoutPanel In ConList_TableLayoutPanel
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Fill
-                    .AutoSize = True
-                    .AutoSizeMode = AutoSizeMode.GrowAndShrink
-                    .BorderStyle = BorderStyle.None
-                    .CellBorderStyle = TableLayoutPanelCellBorderStyle.None
-                    .Margin = New Padding(0)
-                    .Padding = New Padding(0)
-                    .Location = New Point(20, 20)
-                End With
-            Next
-
-            Dim ConList_TextBox As New List(Of TextBox) From {
-        .TextBox_Shema,
-        .TextBox_Import,
-        .TextBox_Export}
-            For Each CON As TextBox In ConList_TextBox
-                With CON
-                    .Font = MyFont
-                    .BorderStyle = BorderStyle.FixedSingle
-                    .Dock = DockStyle.Top
-                    .AutoSize = True
-                    .Margin = New Padding(3)
-                    .Padding = New Padding(3)
-                    .TextAlign = HorizontalAlignment.Left
-                End With
-            Next
-
-            Dim ConList_NumericUpDown_Decimal As New List(Of NumericUpDown) From {
-        .NumericUpDown_Separator_Spalte_Wert,
-        .NumericUpDown_Separator_Zeile_Wert,
-        .NumericUpDown_Paper_Border_Left,
-        .NumericUpDown_Paper_Border_Top,
-        .NumericUpDown_Paper_Border_Right,
-        .NumericUpDown_Paper_Border_Bottom,
-        .NumericUpDown_Card_Border_Left,
-        .NumericUpDown_Card_Border_Top,
-        .NumericUpDown_Card_Border_Right,
-        .NumericUpDown_Card_Border_Bottom}
-            For Each CON As NumericUpDown In ConList_NumericUpDown_Decimal
-                With CON
-                    .Font = MyFont
-                    .BorderStyle = BorderStyle.FixedSingle
-                    .Dock = DockStyle.Top
-                    .AutoSize = True
-                    .Margin = New Padding(3)
-                    .Padding = New Padding(3)
-                    .TextAlign = HorizontalAlignment.Right
-                    .Minimum = 0
-                    .Maximum = 9999
-                    .Increment = 0.1
-                    .DecimalPlaces = 1
-                End With
-            Next
-
-            Dim ConList_NumericUpDown_Anzahl As New List(Of NumericUpDown) From {
-        .NumericUpDown_Separator_Column_Count,
-        .NumericUpDown_Separator_Row_Anzahl}
-            For Each CON As NumericUpDown In ConList_NumericUpDown_Anzahl
-                With CON
-                    .Font = MyFont
-                    .BorderStyle = BorderStyle.FixedSingle
-                    .Dock = DockStyle.Top
-                    .AutoSize = True
-                    .Margin = New Padding(3)
-                    .Padding = New Padding(3)
-                    .TextAlign = HorizontalAlignment.Right
-                    .Minimum = 1
-                    .Increment = 1
-                    .Maximum = 12
-                    .DecimalPlaces = 0
-                End With
-            Next
-
-            Dim ConList_Label_Spalten As New List(Of Label) From {
-        .Label_Separator_Row_Count,
-        .Label_Separator_Row_Value}
-            For Each CON As Label In ConList_Label_Spalten
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Top
-                    .AutoSize = True
-                    .Margin = New Padding(0)
-                    .Padding = New Padding(0)
-                    .TextAlign = ContentAlignment.BottomCenter
-                End With
-            Next
-
-            Dim ConList_Label_Zeilen As New List(Of Label) From {
-        .Label_Shema,
-        .Label_Import,
-        .Label_Export,
-        .Label_DPI,
-        .Label_DIN,
-        .Label_Paper_Height,
-        .Label_Paper_Height_Unit,
-        .Label_Paper_Width,
-        .Label_Paper_Width_Unit,
-        .Label_Separator_Row_Count,
-        .Label_Separator_Row_Value,
-        .Label_Separator_Column_Count,
-        .Label_Separator_Column_Value,
-        .Label_Paper_Border_Left,
-        .Label_Paper_Border_Top,
-        .Label_Paper_Border_Right,
-        .Label_Paper_Border_Bottom,
-        .Label_Paper_Border_Right_Unit, .Label_Paper_Border_Top_Unit, .Label_Paper_Border_Bottom_Unit,
-        .Label_Paper_Border_Left_Unit, .Label12, .Label13, .Label14, .Label6,
-        .Label8, .Label9, .Label10, .Label11}
-            For Each CON As Label In ConList_Label_Zeilen
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Top
-                    .AutoSize = True
-                    .Margin = New Padding(0, 3, 0, 3)
-                    .Padding = New Padding(0)
-                    .TextAlign = ContentAlignment.MiddleLeft
-                End With
-            Next
-
-            Dim ConList_Label_Value As New List(Of Label) From {
-        .Label_Paper_Height_Value,
-        .Label_Paper_Width_Value}
-            For Each CON As Label In ConList_Label_Value
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Fill
-                    .AutoSize = True
-                    .Margin = New Padding(0, 3, 0, 3)
-                    .Padding = New Padding(0)
-                    .TextAlign = ContentAlignment.MiddleRight
-                End With
-            Next
-
-            Dim ConList_ComboBox As New List(Of ComboBox) From {
-                .ComboBox_DIN,
-                .ComboBox_DPI,
-                .ComboBox_DataColumn}
-            For Each CON As ComboBox In ConList_ComboBox
-                With CON
-                    .Font = MyFont
-                    .Dock = DockStyle.Left
-                    .Margin = New Padding(3)
-                    .Padding = New Padding(0)
-                    Select Case CON.Name
-                        Case "CB_DPI"
-                            .Items.AddRange(New Object() {72, 96, 150, 300, 600})
-                        Case "CB_DIN"
-                            .DataSource = DS.Tables("PaperDIN")
-                            .DisplayMember = "DIN"
-                            .ValueMember = "DIN"
-                            If DS.Tables("Shema").Rows.Count > 0 Then
-                                .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
-                            End If
-                    End Select
-                End With
-            Next
-
-            Dim ConList_TabPage As New List(Of TabPage) From {
-        .TabPage_Card,
-        .TabPage_Files,
-        .TabPage_Paper,
-        .TabPage_Table}
-            For Each CON As TabPage In ConList_TabPage
-                With CON
-                    .Font = MyFont
-                    .BackColor = Color.Transparent
-                End With
-            Next
-
-            .Main_TabControl.ResumeLayout()
+            .Add(FRM.TableLayoutPanel_Shema)
+            .Add(FRM.TableLayoutPanel_Paper)
+            .Add(FRM.TableLayoutPanel_Paper_Border)
+            .Add(FRM.TableLayoutPanel_Separator)
+            .Add(FRM.TableLayoutPanel_Files)
+            .Add(FRM.TableLayoutPanel_Card)
+            .Add(FRM.TableLayoutPanel_Row)
+            .Add(FRM.TableLayoutPanel_Row_Line)
+            .Add(FRM.TableLayoutPanel_Row_Border)
 
         End With
+
+        SetDefault()
+
+    End Sub
+
+    Private Sub SetDefault()
+
+        Dim OBJ As Object
+
+        For Each CON As Control In ControlsListGesamt
+
+            OBJ = CON
+
+            With OBJ
+                .Font = MyFont
+                .AutoSize = True
+                .Margin = New Padding(0)
+                '.Padding = New Padding(0)
+
+                Select Case .GetType.Name
+
+                    Case "TextBox"
+                        .BorderStyle = BorderStyle.FixedSingle
+                        .Dock = DockStyle.Top
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(3)
+                        .TextAlign = HorizontalAlignment.Left
+
+                    Case "SplitContainer"
+                        .BackColor = Color.AliceBlue
+                        .Dock = DockStyle.Fill
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(3)
+                        .SplitterWidth = 12
+
+                    Case "NumericUpDown"
+                        .BorderStyle = BorderStyle.FixedSingle
+                        .Dock = DockStyle.Top
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(3)
+                        .TextAlign = HorizontalAlignment.Right
+
+                        Select Case OBJ.name
+                            Case "NumericUpDown_Separator_Column_Count", "NumericUpDown_Separator_Row_Count"
+                                .Minimum = 1
+                                .Increment = 1
+                                .DecimalPlaces = 0
+                                .Maximum = 12
+                            Case Else
+                                .Minimum = 0
+                                .Increment = 0.1
+                                .DecimalPlaces = 1
+                                .Maximum = 9999
+                        End Select
+
+                    Case "Label"
+                        .Dock = DockStyle.Top
+                        Select Case OBJ.name
+                            Case "Label_Paper_Height_Unit", "Label_Paper_Width_Unit", "Label_Paper_Border_Right_Unit",
+                                     "Label_Paper_Border_Top_Unit", "Label_Paper_Border_Bottom_Unit", "Label_Paper_Border_Left_Unit"
+                                .TextAlign = ContentAlignment.MiddleLeft
+                            Case "Label_Separator_Row_Count", "Label_Separator_Row_Value"
+                                .TextAlign = ContentAlignment.BottomCenter
+                            Case "Label_Paper_Height_Value", "Label_Paper_Width_Value"
+                                .Dock = DockStyle.Fill
+                                .TextAlign = ContentAlignment.MiddleRight
+                            Case Else
+                                .TextAlign = ContentAlignment.MiddleRight
+                        End Select
+
+                    Case "ComboBox"
+                        .Dock = DockStyle.Left
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(0)
+                        Select Case .Name
+                            Case "ComboBox_DPI"
+                                .Items.AddRange(New Object() {72, 96, 150, 300, 600})
+                            Case "ComboBox_DIN"
+                                .DataSource = DS.Tables("PaperDIN")
+                                .DisplayMember = "DIN"
+                                .ValueMember = "DIN"
+                                If DS.Tables("Shema").Rows.Count > 0 Then
+                                    .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
+                                End If
+                            Case "ComboBox_DataColumn"
+                                .dock = DockStyle.Fill
+                        End Select
+
+                    Case "TabPage"
+                        .BackColor = Color.Transparent
+                        Select Case .name
+                            Case "TabPage_Files"
+                                .AutoScroll = False
+                            Case Else
+                                .AutoScroll = True
+                        End Select
+
+'noch nicht benutzt
+                    Case "ToolStripStatusLabel"
+                        .BackColor = Color.Yellow
+
+                    Case "MenuStrip"
+                        .BackColor = Color.Transparent
+                        .RenderMode = ToolStripRenderMode.System
+
+                    Case "StatusStrip"
+                        .BackColor = Color.Transparent
+                        .Dock = DockStyle.Bottom
+                        .Margin = New Padding(0)
+                        .Padding = New Padding(0)
+                        .RenderMode = ToolStripRenderMode.System
+
+                    Case "TabControl"
+                        .BackColor = Color.Transparent
+                        .Dock = DockStyle.Fill
+
+                    Case "BindingNavigator"
+                        .BackColor = Color.Transparent
+                        .Dock = DockStyle.Top
+                        .RenderMode = ToolStripRenderMode.System
+
+                    Case "ListBox"
+                        .BackColor = SystemColors.Control
+                        .Dock = DockStyle.Left
+
+                    Case "PictureBox"
+
+                        .BorderStyle = BorderStyle.FixedSingle
+                        .Dock = DockStyle.None
+                        .Location = New Point(0, 0)
+                        .SizeMode = PictureBoxSizeMode.AutoSize
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(3)
+                        .BackColor = Color.WhiteSmoke
+
+                    Case "Panel"
+                        .BackColor = Color.AliceBlue
+                        .BorderStyle = BorderStyle.FixedSingle
+                        .Dock = DockStyle.Fill
+                        .Margin = New Padding(3)
+                        .Padding = New Padding(3)
+
+                    Case "DataGridView"
+                        .BackgroundColor = Color.Yellow
+                        Select Case CON.Name
+                            Case "DGV_CSV"
+                                .Dock = DockStyle.Fill
+                            Case Else
+                                .Dock = DockStyle.Top
+                        End Select
+                        .AutoResizeColumnHeadersHeight()
+                        .DefaultCellStyle.Font = MyFont
+                        .MultiSelect = False
+                        .AllowUserToAddRows = False
+                        .AllowUserToDeleteRows = False
+                        .AllowUserToOrderColumns = True
+                        .AllowUserToResizeColumns = True
+                        .AllowUserToResizeRows = True
+                        .Margin = New Padding(6)
+                        .Padding = New Padding(6)
+                        .DefaultCellStyle.BackColor = Color.White
+                        .ScrollBars = ScrollBars.Both
+                        .AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+                        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                        .BorderStyle = BorderStyle.Fixed3D
+                        .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+                        .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
+
+                    Case "GroupBox"
+                        .Dock = DockStyle.Top
+                        .Margin = New Padding(3, 3, 21, 3)
+                        .Padding = New Padding(3)
+
+                    Case "CheckBox"
+                        .Dock = DockStyle.Left
+                        .Appearance = Appearance.Normal
+                        .Text = ""
+                        .Margin = New Padding(0)
+                        .Padding = New Padding(0)
+
+                    Case "TableLayoutPanel"
+                        .Dock = DockStyle.Fill
+                        .AutoSizeMode = AutoSizeMode.GrowAndShrink
+                        .BorderStyle = BorderStyle.None
+                        .CellBorderStyle = TableLayoutPanelCellBorderStyle.None
+                        .Margin = New Padding(0)
+                        .Padding = New Padding(0)
+                        .Location = New Point(20, 20)
+                        Select Case .name
+                            Case "TableLayoutPanel_Files"
+                                .backcolor = Color.Red
+                                .SetColumnSpan(FRM.Panel_Search, 2)
+                                .SetColumnSpan(FRM.Panel_Daten_CSV, 2)
+                        End Select
+
+                    Case Else
+                        MessageBox.Show("Der Objecttyp ist nicht gepflegt.", "Konfig fehlt!" & .GetType.Name, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End Select
+            End With
+        Next
 
     End Sub
 
