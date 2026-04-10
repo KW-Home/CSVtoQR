@@ -24,8 +24,8 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_Separator_Row_Count = New System.Windows.Forms.Label()
         Me.Label_Separator_Row_Value = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator = New System.Windows.Forms.TableLayoutPanel()
@@ -63,6 +63,18 @@ Partial Class Form1
         Me.Button_Import = New System.Windows.Forms.Button()
         Me.Button_Export = New System.Windows.Forms.Button()
         Me.Button_Search_Refresh = New System.Windows.Forms.Button()
+        Me.Panel_Daten_CSV = New System.Windows.Forms.Panel()
+        Me.DGV_CSV = New System.Windows.Forms.DataGridView()
+        Me.BindingNavigator_CSV = New System.Windows.Forms.BindingNavigator(Me.components)
+        Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
+        Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
+        Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
+        Me.BindingNavigatorSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.BindingNavigatorPositionItem = New System.Windows.Forms.ToolStripTextBox()
+        Me.BindingNavigatorSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BindingNavigatorMoveNextItem = New System.Windows.Forms.ToolStripButton()
+        Me.BindingNavigatorMoveLastItem = New System.Windows.Forms.ToolStripButton()
+        Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.TabPage_Files = New System.Windows.Forms.TabPage()
         Me.TabControl_Main = New System.Windows.Forms.TabControl()
         Me.TabPage_Paper = New System.Windows.Forms.TabPage()
@@ -145,12 +157,6 @@ Partial Class Form1
         Me.ToolStripSeparator05 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripSeparator04 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripMenuItem_Wiederholen = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HilfeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InhaltToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.IndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Suchen = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator06 = New System.Windows.Forms.ToolStripSeparator()
-        Me.InfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Rückgängig = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Beenden = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator03 = New System.Windows.Forms.ToolStripSeparator()
@@ -159,8 +165,8 @@ Partial Class Form1
         Me.ToolStripSeparator01 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripMenuItem_Datei = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_XML_New = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Öffnen = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Safe = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem_XML_Open = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem_XML_Safe = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Print = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Seitenansicht = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Bearbeiten = New System.Windows.Forms.ToolStripMenuItem()
@@ -176,18 +182,6 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.SplitContainer_Main = New System.Windows.Forms.SplitContainer()
-        Me.BindingNavigator_CSV = New System.Windows.Forms.BindingNavigator(Me.components)
-        Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
-        Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
-        Me.BindingNavigatorSeparator = New System.Windows.Forms.ToolStripSeparator()
-        Me.BindingNavigatorPositionItem = New System.Windows.Forms.ToolStripTextBox()
-        Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
-        Me.BindingNavigatorSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.BindingNavigatorMoveNextItem = New System.Windows.Forms.ToolStripButton()
-        Me.BindingNavigatorMoveLastItem = New System.Windows.Forms.ToolStripButton()
-        Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.DGV_CSV = New System.Windows.Forms.DataGridView()
-        Me.Panel_Daten_CSV = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel_Separator.SuspendLayout()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Column_Value, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -201,6 +195,10 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.SuspendLayout()
         Me.Panel_Search.SuspendLayout()
         CType(Me.DGV_Search, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel_Daten_CSV.SuspendLayout()
+        CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BindingNavigator_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.BindingNavigator_CSV.SuspendLayout()
         Me.TabPage_Files.SuspendLayout()
         Me.TabControl_Main.SuspendLayout()
         Me.TabPage_Paper.SuspendLayout()
@@ -240,10 +238,6 @@ Partial Class Form1
         Me.SplitContainer_Main.Panel1.SuspendLayout()
         Me.SplitContainer_Main.Panel2.SuspendLayout()
         Me.SplitContainer_Main.SuspendLayout()
-        CType(Me.BindingNavigator_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.BindingNavigator_CSV.SuspendLayout()
-        CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel_Daten_CSV.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row_Count
@@ -588,8 +582,8 @@ Partial Class Form1
         '
         'DGV_Search
         '
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -666,6 +660,121 @@ Partial Class Form1
         Me.Button_Search_Refresh.Size = New System.Drawing.Size(38, 38)
         Me.Button_Search_Refresh.TabIndex = 48
         Me.Button_Search_Refresh.UseVisualStyleBackColor = True
+        '
+        'Panel_Daten_CSV
+        '
+        Me.Panel_Daten_CSV.AutoScroll = True
+        Me.TableLayoutPanel_Files.SetColumnSpan(Me.Panel_Daten_CSV, 2)
+        Me.Panel_Daten_CSV.Controls.Add(Me.DGV_CSV)
+        Me.Panel_Daten_CSV.Controls.Add(Me.BindingNavigator_CSV)
+        Me.Panel_Daten_CSV.Location = New System.Drawing.Point(3, 135)
+        Me.Panel_Daten_CSV.Name = "Panel_Daten_CSV"
+        Me.TableLayoutPanel_Files.SetRowSpan(Me.Panel_Daten_CSV, 2)
+        Me.Panel_Daten_CSV.Size = New System.Drawing.Size(263, 97)
+        Me.Panel_Daten_CSV.TabIndex = 49
+        '
+        'DGV_CSV
+        '
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
+        Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
+        Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGV_CSV.GridColor = System.Drawing.Color.DarkGray
+        Me.DGV_CSV.Location = New System.Drawing.Point(30, 43)
+        Me.DGV_CSV.MultiSelect = False
+        Me.DGV_CSV.Name = "DGV_CSV"
+        Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.DGV_CSV.Size = New System.Drawing.Size(153, 39)
+        Me.DGV_CSV.TabIndex = 44
+        '
+        'BindingNavigator_CSV
+        '
+        Me.BindingNavigator_CSV.AddNewItem = Nothing
+        Me.BindingNavigator_CSV.BackColor = System.Drawing.Color.Transparent
+        Me.BindingNavigator_CSV.CountItem = Me.BindingNavigatorCountItem
+        Me.BindingNavigator_CSV.DeleteItem = Nothing
+        Me.BindingNavigator_CSV.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BindingNavigator_CSV.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.BindingNavigator_CSV.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
+        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(0, 0)
+        Me.BindingNavigator_CSV.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
+        Me.BindingNavigator_CSV.MoveLastItem = Me.BindingNavigatorMoveLastItem
+        Me.BindingNavigator_CSV.MoveNextItem = Me.BindingNavigatorMoveNextItem
+        Me.BindingNavigator_CSV.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
+        Me.BindingNavigator_CSV.Name = "BindingNavigator_CSV"
+        Me.BindingNavigator_CSV.PositionItem = Me.BindingNavigatorPositionItem
+        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(263, 25)
+        Me.BindingNavigator_CSV.TabIndex = 45
+        Me.BindingNavigator_CSV.Text = "BindingNavigator1"
+        '
+        'BindingNavigatorCountItem
+        '
+        Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
+        Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(59, 22)
+        Me.BindingNavigatorCountItem.Text = "von {0}"
+        Me.BindingNavigatorCountItem.ToolTipText = "Die Gesamtanzahl der Elemente."
+        '
+        'BindingNavigatorMoveFirstItem
+        '
+        Me.BindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BindingNavigatorMoveFirstItem.Image = CType(resources.GetObject("BindingNavigatorMoveFirstItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorMoveFirstItem.Name = "BindingNavigatorMoveFirstItem"
+        Me.BindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(23, 22)
+        Me.BindingNavigatorMoveFirstItem.Text = "Erste verschieben"
+        '
+        'BindingNavigatorMovePreviousItem
+        '
+        Me.BindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BindingNavigatorMovePreviousItem.Image = CType(resources.GetObject("BindingNavigatorMovePreviousItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorMovePreviousItem.Name = "BindingNavigatorMovePreviousItem"
+        Me.BindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(23, 22)
+        Me.BindingNavigatorMovePreviousItem.Text = "Vorherige verschieben"
+        '
+        'BindingNavigatorSeparator
+        '
+        Me.BindingNavigatorSeparator.Name = "BindingNavigatorSeparator"
+        Me.BindingNavigatorSeparator.Size = New System.Drawing.Size(6, 25)
+        '
+        'BindingNavigatorPositionItem
+        '
+        Me.BindingNavigatorPositionItem.AccessibleName = "Position"
+        Me.BindingNavigatorPositionItem.AutoSize = False
+        Me.BindingNavigatorPositionItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.BindingNavigatorPositionItem.Name = "BindingNavigatorPositionItem"
+        Me.BindingNavigatorPositionItem.Size = New System.Drawing.Size(50, 23)
+        Me.BindingNavigatorPositionItem.Text = "0"
+        Me.BindingNavigatorPositionItem.ToolTipText = "Aktuelle Position"
+        '
+        'BindingNavigatorSeparator1
+        '
+        Me.BindingNavigatorSeparator1.Name = "BindingNavigatorSeparator1"
+        Me.BindingNavigatorSeparator1.Size = New System.Drawing.Size(6, 25)
+        '
+        'BindingNavigatorMoveNextItem
+        '
+        Me.BindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BindingNavigatorMoveNextItem.Image = CType(resources.GetObject("BindingNavigatorMoveNextItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorMoveNextItem.Name = "BindingNavigatorMoveNextItem"
+        Me.BindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(23, 22)
+        Me.BindingNavigatorMoveNextItem.Text = "Nächste verschieben"
+        '
+        'BindingNavigatorMoveLastItem
+        '
+        Me.BindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BindingNavigatorMoveLastItem.Image = CType(resources.GetObject("BindingNavigatorMoveLastItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorMoveLastItem.Name = "BindingNavigatorMoveLastItem"
+        Me.BindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(23, 22)
+        Me.BindingNavigatorMoveLastItem.Text = "Letzte verschieben"
+        '
+        'BindingNavigatorSeparator2
+        '
+        Me.BindingNavigatorSeparator2.Name = "BindingNavigatorSeparator2"
+        Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 25)
         '
         'TabPage_Files
         '
@@ -1567,7 +1676,7 @@ Partial Class Form1
         'ToolStripMenuItem_Optionen
         '
         Me.ToolStripMenuItem_Optionen.Name = "ToolStripMenuItem_Optionen"
-        Me.ToolStripMenuItem_Optionen.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem_Optionen.Size = New System.Drawing.Size(125, 22)
         Me.ToolStripMenuItem_Optionen.Text = "&Optionen"
         '
         'ToolStripMenuItem_Font
@@ -1580,14 +1689,14 @@ Partial Class Form1
         '
         Me.ToolStripMenuItem_Anpassen.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Font})
         Me.ToolStripMenuItem_Anpassen.Name = "ToolStripMenuItem_Anpassen"
-        Me.ToolStripMenuItem_Anpassen.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem_Anpassen.Size = New System.Drawing.Size(125, 22)
         Me.ToolStripMenuItem_Anpassen.Text = "&Anpassen"
         '
         'ToolStripMenuItem_Extras
         '
         Me.ToolStripMenuItem_Extras.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Anpassen, Me.ToolStripMenuItem_Optionen})
         Me.ToolStripMenuItem_Extras.Name = "ToolStripMenuItem_Extras"
-        Me.ToolStripMenuItem_Extras.Size = New System.Drawing.Size(49, 20)
+        Me.ToolStripMenuItem_Extras.Size = New System.Drawing.Size(50, 20)
         Me.ToolStripMenuItem_Extras.Text = "E&xtras"
         '
         'AlleauswählenToolStripMenuItem
@@ -1613,42 +1722,6 @@ Partial Class Form1
         Me.ToolStripMenuItem_Wiederholen.Size = New System.Drawing.Size(191, 22)
         Me.ToolStripMenuItem_Wiederholen.Text = "Wiede&rholen"
         '
-        'HilfeToolStripMenuItem
-        '
-        Me.HilfeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InhaltToolStripMenuItem, Me.IndexToolStripMenuItem, Me.ToolStripMenuItem_Suchen, Me.ToolStripSeparator06, Me.InfoToolStripMenuItem})
-        Me.HilfeToolStripMenuItem.Name = "HilfeToolStripMenuItem"
-        Me.HilfeToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.HilfeToolStripMenuItem.Text = "&Hilfe"
-        '
-        'InhaltToolStripMenuItem
-        '
-        Me.InhaltToolStripMenuItem.Name = "InhaltToolStripMenuItem"
-        Me.InhaltToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
-        Me.InhaltToolStripMenuItem.Text = "I&nhalt"
-        '
-        'IndexToolStripMenuItem
-        '
-        Me.IndexToolStripMenuItem.Name = "IndexToolStripMenuItem"
-        Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
-        Me.IndexToolStripMenuItem.Text = "&Index"
-        '
-        'ToolStripMenuItem_Suchen
-        '
-        Me.ToolStripMenuItem_Suchen.Name = "ToolStripMenuItem_Suchen"
-        Me.ToolStripMenuItem_Suchen.Size = New System.Drawing.Size(113, 22)
-        Me.ToolStripMenuItem_Suchen.Text = "&Suchen"
-        '
-        'ToolStripSeparator06
-        '
-        Me.ToolStripSeparator06.Name = "ToolStripSeparator06"
-        Me.ToolStripSeparator06.Size = New System.Drawing.Size(110, 6)
-        '
-        'InfoToolStripMenuItem
-        '
-        Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
-        Me.InfoToolStripMenuItem.Text = "Inf&o..."
-        '
         'ToolStripMenuItem_Rückgängig
         '
         Me.ToolStripMenuItem_Rückgängig.Name = "ToolStripMenuItem_Rückgängig"
@@ -1659,33 +1732,33 @@ Partial Class Form1
         'ToolStripMenuItem_Beenden
         '
         Me.ToolStripMenuItem_Beenden.Name = "ToolStripMenuItem_Beenden"
-        Me.ToolStripMenuItem_Beenden.Size = New System.Drawing.Size(168, 22)
+        Me.ToolStripMenuItem_Beenden.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem_Beenden.Text = "&Beenden"
         '
         'ToolStripSeparator03
         '
         Me.ToolStripSeparator03.Name = "ToolStripSeparator03"
-        Me.ToolStripSeparator03.Size = New System.Drawing.Size(165, 6)
+        Me.ToolStripSeparator03.Size = New System.Drawing.Size(177, 6)
         '
         'ToolStripSeparator02
         '
         Me.ToolStripSeparator02.Name = "ToolStripSeparator02"
-        Me.ToolStripSeparator02.Size = New System.Drawing.Size(165, 6)
+        Me.ToolStripSeparator02.Size = New System.Drawing.Size(177, 6)
         '
         'ToolStripMenuItem_XML_SaveAs
         '
         Me.ToolStripMenuItem_XML_SaveAs.Name = "ToolStripMenuItem_XML_SaveAs"
-        Me.ToolStripMenuItem_XML_SaveAs.Size = New System.Drawing.Size(168, 22)
+        Me.ToolStripMenuItem_XML_SaveAs.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem_XML_SaveAs.Text = "Speichern &unter"
         '
         'ToolStripSeparator01
         '
         Me.ToolStripSeparator01.Name = "ToolStripSeparator01"
-        Me.ToolStripSeparator01.Size = New System.Drawing.Size(165, 6)
+        Me.ToolStripSeparator01.Size = New System.Drawing.Size(177, 6)
         '
         'ToolStripMenuItem_Datei
         '
-        Me.ToolStripMenuItem_Datei.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_XML_New, Me.ToolStripMenuItem_Öffnen, Me.ToolStripSeparator01, Me.ToolStripMenuItem_Safe, Me.ToolStripMenuItem_XML_SaveAs, Me.ToolStripSeparator02, Me.ToolStripMenuItem_Print, Me.ToolStripMenuItem_Seitenansicht, Me.ToolStripSeparator03, Me.ToolStripMenuItem_Beenden})
+        Me.ToolStripMenuItem_Datei.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_XML_New, Me.ToolStripMenuItem_XML_Open, Me.ToolStripSeparator01, Me.ToolStripMenuItem_XML_Safe, Me.ToolStripMenuItem_XML_SaveAs, Me.ToolStripSeparator02, Me.ToolStripMenuItem_Print, Me.ToolStripMenuItem_Seitenansicht, Me.ToolStripSeparator03, Me.ToolStripMenuItem_Beenden})
         Me.ToolStripMenuItem_Datei.Name = "ToolStripMenuItem_Datei"
         Me.ToolStripMenuItem_Datei.Size = New System.Drawing.Size(46, 20)
         Me.ToolStripMenuItem_Datei.Text = "&Datei"
@@ -1696,26 +1769,26 @@ Partial Class Form1
         Me.ToolStripMenuItem_XML_New.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_XML_New.Name = "ToolStripMenuItem_XML_New"
         Me.ToolStripMenuItem_XML_New.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_XML_New.Size = New System.Drawing.Size(168, 22)
+        Me.ToolStripMenuItem_XML_New.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem_XML_New.Text = "&Neu"
         '
-        'ToolStripMenuItem_Öffnen
+        'ToolStripMenuItem_XML_Open
         '
-        Me.ToolStripMenuItem_Öffnen.Image = CType(resources.GetObject("ToolStripMenuItem_Öffnen.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem_Öffnen.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripMenuItem_Öffnen.Name = "ToolStripMenuItem_Öffnen"
-        Me.ToolStripMenuItem_Öffnen.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_Öffnen.Size = New System.Drawing.Size(168, 22)
-        Me.ToolStripMenuItem_Öffnen.Text = "Ö&ffnen"
+        Me.ToolStripMenuItem_XML_Open.Image = CType(resources.GetObject("ToolStripMenuItem_XML_Open.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem_XML_Open.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripMenuItem_XML_Open.Name = "ToolStripMenuItem_XML_Open"
+        Me.ToolStripMenuItem_XML_Open.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.ToolStripMenuItem_XML_Open.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem_XML_Open.Text = "Ö&ffnen"
         '
-        'ToolStripMenuItem_Safe
+        'ToolStripMenuItem_XML_Safe
         '
-        Me.ToolStripMenuItem_Safe.Image = CType(resources.GetObject("ToolStripMenuItem_Safe.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem_Safe.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripMenuItem_Safe.Name = "ToolStripMenuItem_Safe"
-        Me.ToolStripMenuItem_Safe.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_Safe.Size = New System.Drawing.Size(168, 22)
-        Me.ToolStripMenuItem_Safe.Text = "&Speichern"
+        Me.ToolStripMenuItem_XML_Safe.Image = CType(resources.GetObject("ToolStripMenuItem_XML_Safe.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem_XML_Safe.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripMenuItem_XML_Safe.Name = "ToolStripMenuItem_XML_Safe"
+        Me.ToolStripMenuItem_XML_Safe.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.ToolStripMenuItem_XML_Safe.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem_XML_Safe.Text = "&Speichern"
         '
         'ToolStripMenuItem_Print
         '
@@ -1723,7 +1796,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_Print.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_Print.Name = "ToolStripMenuItem_Print"
         Me.ToolStripMenuItem_Print.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_Print.Size = New System.Drawing.Size(168, 22)
+        Me.ToolStripMenuItem_Print.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem_Print.Text = "&Drucken"
         '
         'ToolStripMenuItem_Seitenansicht
@@ -1731,7 +1804,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_Seitenansicht.Image = CType(resources.GetObject("ToolStripMenuItem_Seitenansicht.Image"), System.Drawing.Image)
         Me.ToolStripMenuItem_Seitenansicht.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_Seitenansicht.Name = "ToolStripMenuItem_Seitenansicht"
-        Me.ToolStripMenuItem_Seitenansicht.Size = New System.Drawing.Size(168, 22)
+        Me.ToolStripMenuItem_Seitenansicht.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem_Seitenansicht.Text = "&Seitenansicht"
         '
         'ToolStripMenuItem_Bearbeiten
@@ -1771,11 +1844,11 @@ Partial Class Form1
         'MenuStrip_Main
         '
         Me.MenuStrip_Main.BackColor = System.Drawing.Color.Transparent
-        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem_Bearbeiten, Me.ToolStripMenuItem_Extras, Me.HilfeToolStripMenuItem})
+        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem_Bearbeiten, Me.ToolStripMenuItem_Extras})
         Me.MenuStrip_Main.Location = New System.Drawing.Point(6, 6)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(862, 24)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(588, 24)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -1805,9 +1878,9 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 519)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 572)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(862, 22)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(588, 22)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -1831,121 +1904,6 @@ Partial Class Form1
         Me.SplitContainer_Main.SplitterDistance = 382
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
-        '
-        'BindingNavigator_CSV
-        '
-        Me.BindingNavigator_CSV.AddNewItem = Nothing
-        Me.BindingNavigator_CSV.BackColor = System.Drawing.Color.Transparent
-        Me.BindingNavigator_CSV.CountItem = Me.BindingNavigatorCountItem
-        Me.BindingNavigator_CSV.DeleteItem = Nothing
-        Me.BindingNavigator_CSV.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BindingNavigator_CSV.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.BindingNavigator_CSV.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
-        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(0, 0)
-        Me.BindingNavigator_CSV.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
-        Me.BindingNavigator_CSV.MoveLastItem = Me.BindingNavigatorMoveLastItem
-        Me.BindingNavigator_CSV.MoveNextItem = Me.BindingNavigatorMoveNextItem
-        Me.BindingNavigator_CSV.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
-        Me.BindingNavigator_CSV.Name = "BindingNavigator_CSV"
-        Me.BindingNavigator_CSV.PositionItem = Me.BindingNavigatorPositionItem
-        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(263, 25)
-        Me.BindingNavigator_CSV.TabIndex = 45
-        Me.BindingNavigator_CSV.Text = "BindingNavigator1"
-        '
-        'BindingNavigatorMoveFirstItem
-        '
-        Me.BindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorMoveFirstItem.Image = CType(resources.GetObject("BindingNavigatorMoveFirstItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorMoveFirstItem.Name = "BindingNavigatorMoveFirstItem"
-        Me.BindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorMoveFirstItem.Text = "Erste verschieben"
-        '
-        'BindingNavigatorMovePreviousItem
-        '
-        Me.BindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorMovePreviousItem.Image = CType(resources.GetObject("BindingNavigatorMovePreviousItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorMovePreviousItem.Name = "BindingNavigatorMovePreviousItem"
-        Me.BindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorMovePreviousItem.Text = "Vorherige verschieben"
-        '
-        'BindingNavigatorSeparator
-        '
-        Me.BindingNavigatorSeparator.Name = "BindingNavigatorSeparator"
-        Me.BindingNavigatorSeparator.Size = New System.Drawing.Size(6, 25)
-        '
-        'BindingNavigatorPositionItem
-        '
-        Me.BindingNavigatorPositionItem.AccessibleName = "Position"
-        Me.BindingNavigatorPositionItem.AutoSize = False
-        Me.BindingNavigatorPositionItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.BindingNavigatorPositionItem.Name = "BindingNavigatorPositionItem"
-        Me.BindingNavigatorPositionItem.Size = New System.Drawing.Size(50, 23)
-        Me.BindingNavigatorPositionItem.Text = "0"
-        Me.BindingNavigatorPositionItem.ToolTipText = "Aktuelle Position"
-        '
-        'BindingNavigatorCountItem
-        '
-        Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
-        Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(59, 22)
-        Me.BindingNavigatorCountItem.Text = "von {0}"
-        Me.BindingNavigatorCountItem.ToolTipText = "Die Gesamtanzahl der Elemente."
-        '
-        'BindingNavigatorSeparator1
-        '
-        Me.BindingNavigatorSeparator1.Name = "BindingNavigatorSeparator1"
-        Me.BindingNavigatorSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
-        'BindingNavigatorMoveNextItem
-        '
-        Me.BindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorMoveNextItem.Image = CType(resources.GetObject("BindingNavigatorMoveNextItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorMoveNextItem.Name = "BindingNavigatorMoveNextItem"
-        Me.BindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorMoveNextItem.Text = "Nächste verschieben"
-        '
-        'BindingNavigatorMoveLastItem
-        '
-        Me.BindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorMoveLastItem.Image = CType(resources.GetObject("BindingNavigatorMoveLastItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorMoveLastItem.Name = "BindingNavigatorMoveLastItem"
-        Me.BindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorMoveLastItem.Text = "Letzte verschieben"
-        '
-        'BindingNavigatorSeparator2
-        '
-        Me.BindingNavigatorSeparator2.Name = "BindingNavigatorSeparator2"
-        Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 25)
-        '
-        'DGV_CSV
-        '
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
-        Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
-        Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
-        Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV_CSV.GridColor = System.Drawing.Color.DarkGray
-        Me.DGV_CSV.Location = New System.Drawing.Point(30, 43)
-        Me.DGV_CSV.MultiSelect = False
-        Me.DGV_CSV.Name = "DGV_CSV"
-        Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGV_CSV.Size = New System.Drawing.Size(153, 39)
-        Me.DGV_CSV.TabIndex = 44
-        '
-        'Panel_Daten_CSV
-        '
-        Me.Panel_Daten_CSV.AutoScroll = True
-        Me.TableLayoutPanel_Files.SetColumnSpan(Me.Panel_Daten_CSV, 2)
-        Me.Panel_Daten_CSV.Controls.Add(Me.DGV_CSV)
-        Me.Panel_Daten_CSV.Controls.Add(Me.BindingNavigator_CSV)
-        Me.Panel_Daten_CSV.Location = New System.Drawing.Point(3, 135)
-        Me.Panel_Daten_CSV.Name = "Panel_Daten_CSV"
-        Me.TableLayoutPanel_Files.SetRowSpan(Me.Panel_Daten_CSV, 2)
-        Me.Panel_Daten_CSV.Size = New System.Drawing.Size(263, 97)
-        Me.Panel_Daten_CSV.TabIndex = 49
         '
         'Form1
         '
@@ -1981,6 +1939,12 @@ Partial Class Form1
         Me.TableLayoutPanel_Files.PerformLayout()
         Me.Panel_Search.ResumeLayout(False)
         CType(Me.DGV_Search, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel_Daten_CSV.ResumeLayout(False)
+        Me.Panel_Daten_CSV.PerformLayout()
+        CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BindingNavigator_CSV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.BindingNavigator_CSV.ResumeLayout(False)
+        Me.BindingNavigator_CSV.PerformLayout()
         Me.TabPage_Files.ResumeLayout(False)
         Me.TabPage_Files.PerformLayout()
         Me.TabControl_Main.ResumeLayout(False)
@@ -2035,12 +1999,6 @@ Partial Class Form1
         Me.SplitContainer_Main.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer_Main, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer_Main.ResumeLayout(False)
-        CType(Me.BindingNavigator_CSV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.BindingNavigator_CSV.ResumeLayout(False)
-        Me.BindingNavigator_CSV.PerformLayout()
-        CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel_Daten_CSV.ResumeLayout(False)
-        Me.Panel_Daten_CSV.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2095,12 +2053,6 @@ Partial Class Form1
     Friend WithEvents AusschneidenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator04 As ToolStripSeparator
     Friend WithEvents ToolStripMenuItem_Wiederholen As ToolStripMenuItem
-    Friend WithEvents HilfeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InhaltToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents IndexToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem_Suchen As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator06 As ToolStripSeparator
-    Friend WithEvents InfoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem_Rückgängig As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem_Beenden As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator03 As ToolStripSeparator
@@ -2108,9 +2060,9 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem_Print As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator02 As ToolStripSeparator
     Friend WithEvents ToolStripMenuItem_XML_SaveAs As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem_Safe As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem_XML_Safe As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator01 As ToolStripSeparator
-    Friend WithEvents ToolStripMenuItem_Öffnen As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem_XML_Open As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem_XML_New As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem_Datei As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem_Bearbeiten As ToolStripMenuItem
