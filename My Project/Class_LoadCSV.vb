@@ -3,7 +3,7 @@ Imports System.IO
 
 Public Class Class_ImportCSV
 
-    Public Function Load_CSV(ByRef DS As DataSet, ByRef CLDS As Class_DS, ByVal FilePath As String) As DataTable
+    Public Function Load_CSV(ByRef DS As DataSet, ByRef CL_DS As Class_DS, ByVal FilePath As String) As DataTable
 
         If File.Exists(FilePath) = True Then
 
@@ -35,7 +35,7 @@ Public Class Class_ImportCSV
                 DT.Columns("ID").ReadOnly = True
 
                 ' Spaltennamen in die Tabelle der Suchspalten übernehmen
-                CLDS.Search_Columns_NEW(DS, DT)
+                CL_DS.Search_Columns_NEW(DS, DT)
 
             End If
 

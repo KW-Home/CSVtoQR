@@ -76,6 +76,7 @@
     <Compile Include="Class_Default.vb" />
     <Compile Include="Class_DS.vb" />
     <Compile Include="Class_Paint.vb" />
+    <Compile Include="Class_XML.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>

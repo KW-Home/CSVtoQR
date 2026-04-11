@@ -266,7 +266,7 @@
                             Case "DGV_CSV"
                                 .Dock = DockStyle.Fill
                             Case Else
-                                .Dock = DockStyle.Top
+                                .Dock = DockStyle.Fill
                         End Select
                         .AutoResizeColumnHeadersHeight()
                         .DefaultCellStyle.Font = MyFont

@@ -7,12 +7,13 @@ Public Class Form1
     Private DS As New DataSet
 
     Private MyFont As Font
-    Private MySavePath As String
+    'Private MySavePath As String
 
     Private CL_CSV As New Class_ImportCSV
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
+    Private CL_XML As New Class_XML
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
@@ -44,7 +45,7 @@ Public Class Form1
             If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
-            Me.TextBox_Import.Text = value
+            TextBox_Import.Text = value
         End Set
     End Property
 
@@ -58,7 +59,7 @@ Public Class Form1
             If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
             If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
             DS.Tables("Shema").Rows(0).Item("Export") = value
-            Me.TextBox_Export.Text = value
+            TextBox_Export.Text = value
         End Set
     End Property
 
@@ -66,9 +67,17 @@ Public Class Form1
 
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
+        MySettings_Load()
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'lädt die Einstellungen, die im Designer unter "My.Settings" definiert wurden   
-        MySettings_Load()
+
+        'Initialisiert die Standardwerte und -einstellungen für die Anwendung
+        CL_Default = New Class_Default(Me, DS)
+
 
         'lädt die Daten aus dem DataSet in die Steuerelemente
         DataSetRead()
@@ -77,14 +86,6 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        'Initialisiert die Standardwerte und -einstellungen für die Anwendung
-        CL_Default = New Class_Default(Me, DS)
-
-    End Sub
-
     Private Sub MySettings_Load()
 
         With My.Settings
@@ -93,17 +94,22 @@ Public Class Form1
             Me.Font = .MyFont
             MyFont = .MyFont
 
-            If System.IO.File.Exists(.MySavePath) Then
+            If System.IO.File.Exists(.MySavePath) = True Then
                 DS = New DataSet
-                DS.ReadXml(.MySavePath)
+                CL_XML.DataSetFile = .MySavePath
+                CL_XML.ReadXML(DS)
+
+                ImportFile = DS.Tables("Shema")(0)("Import")
+                ExportFile = DS.Tables("Shema")(0)("Export")
+
+                ListBox_Tabellen.Items.Clear()
+                ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
+
+                ToolStripStatusLabel_SaveFile.Text = .MySavePath
+
             Else
                 DS = New Class_DS().Get_DS
             End If
-
-            ListBox_Tabellen.Items.Clear()
-            ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
-
-            ToolStripStatusLabel_SaveFile.Text = .MySavePath
 
         End With
 
@@ -114,8 +120,8 @@ Public Class Form1
 
         With My.Settings
             .MySize = Me.Size
-            .MyFont = Me.Font
-            .MySavePath = ToolStripStatusLabel_SaveFile.Text
+            .MyFont = MyFont
+            .MySavePath = CL_XML.DataSetFile
             .Save()
         End With
 
@@ -132,13 +138,12 @@ Public Class Form1
 
         DGV_Search_Formatting()
 
-        With ComboBox_DataColumn
-            .DataSource = Nothing
-            .DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
-        End With
-
-        TextBox_Import.Text = Value
-        IsModified = True
+        If DT_CSV IsNot Nothing Then
+            With ComboBox_DataColumn
+                .DataSource = Nothing
+                .DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
+            End With
+        End If
 
     End Sub
 
@@ -149,98 +154,6 @@ Public Class Form1
         If tb Is Nothing Then Return
         If tb.CanSelect Then
             tb.SelectAll()
-        End If
-
-    End Sub
-
-    Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Beenden.Click
-
-        Me.Close()
-
-    End Sub
-
-    Private Sub TSMI_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
-
-        DS = New Class_DS().Get_DS
-
-        If System.IO.File.Exists(MySavePath) = False Then
-            MySavePath = My.Computer.FileSystem.SpecialDirectories.MyDocuments & "\DS.xml"
-        End If
-
-        SaveFileDialog_XML()
-
-        Dim SFD As New SaveFileDialog With {
-            .Title = "Die Datei " & MySavePath & " existiert nicht.",
-            .InitialDirectory = System.IO.Path.GetDirectoryName(MySavePath),
-            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-        }
-
-        If SFD.ShowDialog = DialogResult.OK Then
-            MySavePath = SFD.FileName
-            DS.WriteXml(MySavePath, XmlWriteMode.WriteSchema)
-            My.Settings.MySavePath = MySavePath
-            My.Settings.Save()
-            ToolStripStatusLabel_SaveFile.Text = MySavePath
-        End If
-
-    End Sub
-
-    Private Sub TSMI_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click, ToolStripMenuItem_XML_Safe.Click
-
-        Select Case sender.name
-            Case "ToolStripMenuItem_Safe"
-                If System.IO.File.Exists(MySavePath) Then
-                    DS.WriteXml(MySavePath, XmlWriteMode.WriteSchema)
-                    IsModified = False
-                Else
-                    SaveFileDialog_XML()
-                    IsModified = False
-                End If
-            Case ToolStripMenuItem_XML_SaveAs.Name
-                SaveFileDialog_XML()
-                IsModified = False
-        End Select
-
-    End Sub
-
-    Private Sub OpenFileDialog_XML()
-
-        Dim OFD As New OpenFileDialog
-        With OFD
-            .Title = "Datei Speichern (" & MySavePath & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(MySavePath)
-            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-        End With
-
-        If OFD.ShowDialog = DialogResult.OK Then
-            DS = New DataSet
-            DS.ReadXml(OFD.FileName)
-            My.Settings.MySavePath = OFD.FileName
-            My.Settings.Save()
-            DataSetRead()
-            ToolStripStatusLabel_SaveFile.Text = My.Settings.MySavePath
-        End If
-
-    End Sub
-
-    Private Sub SaveFileDialog_XML()
-
-        Dim SFD As New SaveFileDialog
-        With SFD
-            .CheckPathExists = True
-            .Title = "Die Datei Speichern (" & MySavePath & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(MySavePath)
-            .FileName = TextBox_Shema.Text
-            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-        End With
-
-        If SFD.ShowDialog = DialogResult.OK Then
-            MySavePath = SFD.FileName
-            DS.WriteXml(MySavePath, XmlWriteMode.WriteSchema)
-            My.Settings.MySavePath = MySavePath
-            My.Settings.Save()
-            ToolStripStatusLabel_SaveFile.Text = MySavePath
-            IsModified = False
         End If
 
     End Sub
@@ -266,8 +179,8 @@ Public Class Form1
 
             With .Rows(0)
                 TextBox_Shema.Text = .Item("Shema").ToString
-                TextBox_Import.Text = ImportFile_Value
-                TextBox_Export.Text = ExportFile_Value
+                ImportFile = .Item("Import").ToString
+                ExportFile = .Item("Export").ToString
                 ComboBox_DPI.Text = .Item("DPI")
                 ComboBox_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Height_Value.Text = .Item("PaperHeight").ToString
@@ -279,19 +192,6 @@ Public Class Form1
             End With
         End With
 
-        ReadToNumericUpDown_BorderPaper()
-        ReadToNumericUpDown_BorderCard()
-
-        If Not IsNothing(DS.Tables("Search")) Then
-            With DS.Tables("Search")
-                If .Rows.Count = 0 Then Exit Sub
-                DGV_Search.DataSource = DS.Tables("Search")
-            End With
-        End If
-
-    End Sub
-    Private Sub ReadToNumericUpDown_BorderPaper()
-
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
             Select Case DR("Border")
                 Case "Left" : NumericUpDown_Paper_Border_Left.Value = DR("Value")
@@ -300,9 +200,6 @@ Public Class Form1
                 Case "Bottom" : NumericUpDown_Paper_Border_Bottom.Value = DR("Value")
             End Select
         Next
-
-    End Sub
-    Private Sub ReadToNumericUpDown_BorderCard()
 
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Card'")
             Select Case DR("Border")
@@ -313,77 +210,56 @@ Public Class Form1
             End Select
         Next
 
-    End Sub
-    Private Sub DataSetWrite()
+        Dim ID As Integer = 0
+        For Each DR As DataRow In DS.Tables("Border").Select($"[Area] Like 'Zeile({ID})'")
+            Select Case DR("Border")
+                Case "Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
+                Case "Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
+                Case "Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
+                Case "Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
+            End Select
+        Next
 
-        If IsNothing(DS) Then DS = CL_DS.Get_DS()
-        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
-
-        Dim DT As DataTable = DS.Tables("Shema")
-        Dim DR As DataRow = DT.NewRow
-        With DT
-            With DR
-
-                .Item("Shema") = TextBox_Shema.Text
-                .Item("Import") = ImportFile_Value
-                .Item("Export") = ExportFile_Value
-                .Item("DIN") = ComboBox_DIN.Text
-                .Item("DPI") = ComboBox_DPI.Text
-
-                If IsNumeric(Label_Paper_Height_Value.Text) = True Then .Item("PaperHeight") = Label_Paper_Height_Value.Text
-                If IsNumeric(Label_Paper_Width_Value.Text) = True Then .Item("PaperWidth") = Label_Paper_Width_Value.Text
-
-                If IsNumeric(NumericUpDown_Paper_Border_Left.Value) = True Then .Item("BorderLeft") = NumericUpDown_Paper_Border_Left.Value
-                If IsNumeric(NumericUpDown_Paper_Border_Top.Value) = True Then .Item("BorderTop") = NumericUpDown_Paper_Border_Top.Value
-                If IsNumeric(NumericUpDown_Paper_Border_Right.Value) = True Then .Item("BorderRight") = NumericUpDown_Paper_Border_Right.Value
-                If IsNumeric(NumericUpDown_Paper_Border_Bottom.Value) = True Then .Item("BorderBottom") = NumericUpDown_Paper_Border_Bottom.Value
-
-                If IsNumeric(NumericUpDown_Separator_Column_Count.Value) = True Then .Item("SeparatorSpalteAnzahl") = NumericUpDown_Separator_Column_Count.Value
-                If IsNumeric(NumericUpDown_Separator_Column_Value.Value) = True Then .Item("SeparatorSpalteWert") = NumericUpDown_Separator_Column_Value.Value
-                If IsNumeric(NumericUpDown_Separator_Row_Count.Value) = True Then .Item("SeparatorZeileAnzahl") = NumericUpDown_Separator_Row_Count.Value
-                If IsNumeric(NumericUpDown_Separator_Row_Value.Value) = True Then .Item("SeparatorZeileWert") = NumericUpDown_Separator_Row_Value.Value
-
+        If Not IsNothing(DS.Tables("Search")) Then
+            With DS.Tables("Search")
+                If .Rows.Count = 0 Then Exit Sub
+                DGV_Search.DataSource = DS.Tables("Search")
             End With
-
-            If .Rows.Count > 0 Then .Rows.Clear()
-            .Rows.Add(DR)
-
-        End With
-
-        IsModified = True
+        End If
 
     End Sub
-
     Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_Import.Click
 
-        Dim Path As String = TextBox_Import.Text
+        Dim Path As String = CL_XML.DataSetFile
         Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
 
         If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
             OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
             OFD.FileName = System.IO.Path.GetFileName(Path)
         End If
-        If OFD.ShowDialog = DialogResult.OK Then ImportFile = OFD.FileName
+        If OFD.ShowDialog = DialogResult.OK Then
+            ImportFile = OFD.FileName
+        End If
 
     End Sub
-
     Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_Export.Click
 
         Dim SFD As New SaveFileDialog With {.Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
-        If SFD.ShowDialog = DialogResult.OK Then ExportFile = SFD.FileName
+        If SFD.ShowDialog = DialogResult.OK Then
+            SFD.FileName = System.IO.Path.ChangeExtension(SFD.FileName, "pdf")
+            SFD.InitialDirectory = System.IO.Path.GetDirectoryName(SFD.FileName)
+            ExportFile = SFD.FileName
+        End If
 
     End Sub
-
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         If IsModified = True Then
-            Dim Result As DialogResult = MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !",
-                                                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+            Dim Result As DialogResult = MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             Select Case Result
                 Case DialogResult.Yes
+                    CL_XML.SaveXML(DS)
                     MySettings_Save()
-                    On Error Resume Next
-                    DS.WriteXml(MySavePath, XmlWriteMode.WriteSchema)
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -394,10 +270,12 @@ Public Class Form1
         End If
 
     End Sub
+    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged,
+        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
+        NumericUpDown_Separator_Column_Count.ValueChanged
 
-
-    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Column_Count.ValueChanged
         If sender.canselect = False Then Return
+        If sender.canfocus = False Then Return
         IsModified = True
 
         Dim ObjName As String = sender.tag
@@ -406,7 +284,6 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-
     Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
@@ -420,7 +297,6 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-
     Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
@@ -431,27 +307,34 @@ Public Class Form1
         Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
         DR(0)("Value") = sender.value
 
-        'PaperPaint(Nothing, Nothing)
-
     End Sub
 
-
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged,
-        TextBox_Import.TextChanged, TextBox_Export.TextChanged
+    Private Sub NumericUpDown_Border_CardZeile_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_CardRow_Border_Top.ValueChanged, NumericUpDown_CardRow_Border_Right.ValueChanged, NumericUpDown_CardRow_Border_Left.ValueChanged, NumericUpDown_CardRow_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
 
-        Dim ObjName As String = sender.tag
-        'ObjName = ObjName.Replace("TextBox_", "")
+        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
+        Dim DT As DataTable = DS.Tables("Border")
+        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
+        DR(0)("Value") = sender.value
+
+    End Sub
+    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged,
+        TextBox_Import.TextChanged, TextBox_Export.TextChanged
+
+        If sender.canselect = False Then Return
+        If sender.canfocus = False Then Return
 
         If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
         If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
 
+        Dim ObjName As String = sender.tag
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
 
-    End Sub
+        IsModified = True
 
+    End Sub
     Private Sub CSVSearch()
 
         DGV_Search.EndEdit()
@@ -493,7 +376,6 @@ Public Class Form1
         End Try
 
     End Sub
-
     Private Sub Button_SearchAdd_Click(sender As Object, e As EventArgs) Handles Button_Search_Add.Click
 
         If DGV_CSV.Columns(DGV_CSV.CurrentCell.ColumnIndex).Name = "ID" Then Return
@@ -592,20 +474,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripMenuItem_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
-
-        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
-        If FD.ShowDialog = DialogResult.OK Then
-
-            My.Settings.MyFont = FD.Font
-            My.Settings.Save()
-
-            CL_Default = New Class_Default(Me, DS)
-
-        End If
-
-    End Sub
-
     Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
@@ -660,5 +528,87 @@ Public Class Form1
         End Select
 
     End Sub
+
+#Region "ToolStripMenu"
+
+    Private Sub ToolStripMenuItem_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
+
+        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
+        If FD.ShowDialog = DialogResult.OK Then
+            MyFont = FD.Font
+            My.Settings.MyFont = MyFont
+            My.Settings.Save()
+            CL_Default = New Class_Default(Me, DS)
+        End If
+
+    End Sub
+    Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
+
+        DS = New Class_DS().Get_DS
+
+        SaveFileDialog_XML()
+
+        Dim SFD As New SaveFileDialog With {
+            .Title = "Die Datei " & CL_XML.DataSetFile & " existiert nicht.",
+            .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile),
+            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
+        }
+
+        If SFD.ShowDialog = DialogResult.OK Then
+            CL_XML.DataSetFile = SFD.FileName
+            CL_XML.SaveXML(DS)
+        End If
+
+    End Sub
+
+    Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click, ToolStripMenuItem_XML_Safe.Click
+
+        Select Case sender.name
+            Case ToolStripMenuItem_XML_Safe.Name
+                If System.IO.File.Exists(CL_XML.DataSetFile) Then
+                    CL_XML.SaveXML(DS)
+                Else
+                    SaveFileDialog_XML()
+                End If
+            Case ToolStripMenuItem_XML_SaveAs.Name
+                SaveFileDialog_XML()
+        End Select
+
+    End Sub
+
+    Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Beenden.Click
+
+        Me.Close()
+
+    End Sub
+
+#End Region
+#Region "Save XML"
+    Private Sub SaveFileDialog_XML()
+
+        Dim SFD As New SaveFileDialog
+        With SFD
+            .CheckPathExists = True
+            .Title = "Die Datei Speichern (" & CL_XML.DataSetFile & ")"
+            .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile)
+            .FileName = TextBox_Shema.Text
+            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
+        End With
+
+        If SFD.ShowDialog = DialogResult.OK Then
+            CL_XML.DataSetFile = SFD.FileName
+            CL_XML.SaveXML(DS)
+        End If
+
+    End Sub
+    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click
+
+        CL_XML.OpenFileDialog_XML(DS)
+        DataSetRead()
+
+    End Sub
+
+
+#End Region
 
 End Class
