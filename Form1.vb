@@ -99,6 +99,10 @@ Public Class Form1
                 CL_XML.DataSetFile = .MySavePath
                 CL_XML.ReadXML(DS)
 
+
+                'ToDo: Fehler nach Pull 
+                'System.NullReferenceException: "Der Objektverweis wurde nicht auf eine Objektinstanz festgelegt."
+
                 ImportFile = DS.Tables("Shema")(0)("Import")
                 ExportFile = DS.Tables("Shema")(0)("Export")
 
