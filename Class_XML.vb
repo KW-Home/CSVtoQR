@@ -1,5 +1,7 @@
 ﻿Public Class Class_XML
 
+    Private ReadOnly CL_DS As New Class_DS
+
     Private DataSetFile_Value As String
     Public Property DataSetFile() As String
         Get
@@ -38,6 +40,9 @@
     End Sub
 
     Public Sub ReadXML(ByRef DS As DataSet)
+
+        If IsNothing(DS) = True Then DS = CL_DS.Get_DS(DS)
+
         If System.IO.File.Exists(DataSetFile_Value) Then
             DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
             'Form1.ToolStripStatusLabel_SaveFile.Text = DataSetFile_Value

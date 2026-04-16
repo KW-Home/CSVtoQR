@@ -10,18 +10,20 @@ Public Class Class_DS
         AutoWordWrap
     End Enum
 
-    Public Function Get_DS() As DataSet
+    Public Function Get_DS(DS As DataSet) As DataSet
 
-        Dim DS As New DataSet With {.DataSetName = "DataSetSystem"}
+        If DS Is Nothing Then DS = New DataSet With {.DataSetName = "DataSetSystem"}
         With DS.Tables
-            .Add(DT_Shema)
-            .Add(DT_Card)
-            .Add(DT_CardZeile)
-            .Add(DT_PaperDIN)
-            .Add(DT_Search)
-            .Add(DT_Search_Columns)
-            .Add(DT_Search_Operator)
-            .Add(DT_Border)
+            DS = NewRow_Shema(DS)
+            If .Contains("Card") = False Then .Add(DT_Card)
+            If .Contains("CardZeile") = False Then .Add(DT_CardZeile)
+            If .Contains("PaperDIN") = False Then .Add(DT_PaperDIN)
+            If .Contains("Search") = False Then .Add(DT_Search)
+            If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
+            If .Contains("Search_Operator") = False Then .Add(DT_Search_Operator)
+
+            DS = NewRow_Border(DS)
+
         End With
 
         Return DS
@@ -53,28 +55,32 @@ Public Class Class_DS
     ''' <summary>
     ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
     ''' </summary>
-    Public Sub Shema_NewRow(ByRef DS As DataSet)
+    Public Function NewRow_Shema(ByRef DS As DataSet) As DataSet
 
-        If IsNothing(DS) Then DS = Get_DS()
+        If DS.Tables.Contains("Shema") = False Then DS.Tables.Add(DT_Shema)
 
         Dim DT As DataTable = DS.Tables("Shema")
-        Dim DR As DataRow = DT.NewRow
-        With DR
-            .Item("Shema") = "Standard"
-            .Item("Import") = String.Empty
-            .Item("Export") = String.Empty
-            .Item("DIN") = "A4"
-            .Item("DPI") = 96
-            .Item("PaperHeight") = 297
-            .Item("PaperWidth") = 210
-            .Item("SeparatorSpalteAnzahl") = 1
-            .Item("SeparatorSpalteWert") = 0
-            .Item("SeparatorZeileAnzahl") = 1
-            .Item("SeparatorZeileWert") = 0
-        End With
-        DT.Rows.Add(DR)
+        If DT.Rows.Count = 0 Then
+            Dim DR As DataRow = DT.NewRow
+            With DR
+                .Item("Shema") = "Standard"
+                .Item("Import") = String.Empty
+                .Item("Export") = String.Empty
+                .Item("DIN") = "A4"
+                .Item("DPI") = 96
+                .Item("PaperHeight") = 297
+                .Item("PaperWidth") = 210
+                .Item("SeparatorSpalteAnzahl") = 1
+                .Item("SeparatorSpalteWert") = 0
+                .Item("SeparatorZeileAnzahl") = 1
+                .Item("SeparatorZeileWert") = 0
+            End With
+            DS.Tables("Shema").Rows.Add(DR)
+        End If
 
-    End Sub
+        Return DS
+
+    End Function
 
     Private Function DT_CardZeile() As DataTable
 
@@ -120,31 +126,47 @@ Public Class Class_DS
 
         Dim DT As New DataTable With {.TableName = "Border"}
         With DT
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "Area", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Border", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Value", .DataType = GetType(Double)})
-            .PrimaryKey = New DataColumn() { .Columns("Area"), .Columns("Border")}
+            .PrimaryKey = New DataColumn() { .Columns("ID"), .Columns("Area"), .Columns("Border")}
         End With
-
-        DT.Rows.Add("Paper", "Bottom", 0)
-        DT.Rows.Add("Paper", "Left", 0)
-        DT.Rows.Add("Paper", "Right", 0)
-        DT.Rows.Add("Paper", "Top", 0)
-
-        DT.Rows.Add("Card", "Bottom", 0)
-        DT.Rows.Add("Card", "Left", 0)
-        DT.Rows.Add("Card", "Right", 0)
-        DT.Rows.Add("Card", "Top", 0)
-
-        DT.Rows.Add("Zeile(0)", "Bottom", 0)
-        DT.Rows.Add("Zeile(0)", "Left", 0)
-        DT.Rows.Add("Zeile(0)", "Right", 0)
-        DT.Rows.Add("Zeile(0)", "Top", 0)
-
         Return DT
 
     End Function
+    ''' <summary>
+    ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
+    ''' </summary>
+    Public Function NewRow_Border(ByRef DS As DataSet) As DataSet
 
+        If IsNothing(DS.Tables("Border")) = True Then DS.Tables.Add(DT_Border)
+
+        Dim DT As DataTable = DS.Tables("Border")
+        If DT.Rows.Count = 0 Then
+
+            'ID, Area, Border, Value
+
+            DT.Rows.Add(0, "Paper", "Bottom", 0)
+            DT.Rows.Add(0, "Paper", "Left", 0)
+            DT.Rows.Add(0, "Paper", "Right", 0)
+            DT.Rows.Add(0, "Paper", "Top", 0)
+
+            DT.Rows.Add(0, "Card", "Bottom", 0)
+            DT.Rows.Add(0, "Card", "Left", 0)
+            DT.Rows.Add(0, "Card", "Right", 0)
+            DT.Rows.Add(0, "Card", "Top", 0)
+
+            DT.Rows.Add(0, "Zeile", "Bottom", 0)
+            DT.Rows.Add(0, "Zeile", "Left", 0)
+            DT.Rows.Add(0, "Zeile", "Right", 0)
+            DT.Rows.Add(0, "Zeile", "Top", 0)
+
+        End If
+
+        Return DS
+
+    End Function
     Private Function DT_Search() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search"}

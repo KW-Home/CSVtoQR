@@ -41,8 +41,7 @@ Public Class Form1
         End Get
         Set(ByVal value As String)
             ImportFile_Value = value
-            If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
-            If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
+            DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
             TextBox_Import.Text = value
@@ -56,8 +55,8 @@ Public Class Form1
         End Get
         Set(ByVal value As String)
             ExportFile_Value = value
-            If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
-            If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
+            If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
+            If DS.Tables("Shema").Rows.Count = 0 Then DS = CL_DS.NewRow_Shema(DS)
             DS.Tables("Shema").Rows(0).Item("Export") = value
             TextBox_Export.Text = value
         End Set
@@ -94,25 +93,30 @@ Public Class Form1
             Me.Font = .MyFont
             MyFont = .MyFont
 
+
             If System.IO.File.Exists(.MySavePath) = True Then
-                DS = New DataSet
+
+                If IsNothing(DS) = True Then CL_DS.Get_DS(DS)
+                DS = CL_DS.NewRow_Shema(DS)
+                'DS = New DataSet
                 CL_XML.DataSetFile = .MySavePath
                 CL_XML.ReadXML(DS)
-
 
                 'ToDo: Fehler nach Pull 
                 'System.NullReferenceException: "Der Objektverweis wurde nicht auf eine Objektinstanz festgelegt."
 
-                ImportFile = DS.Tables("Shema")(0)("Import")
-                ExportFile = DS.Tables("Shema")(0)("Export")
+                Dim DT As DataTable = DS.Tables("Shema")
+                If DT.Rows.Count > 0 Then
+                    ImportFile = DT(0)("Import").ToString()
+                    ExportFile = DT(0)("Export").ToString()
+                Else
+                    DS = CL_DS.Get_DS(DS)
+                End If
 
                 ListBox_Tabellen.Items.Clear()
                 ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
-
                 ToolStripStatusLabel_SaveFile.Text = .MySavePath
 
-            Else
-                DS = New Class_DS().Get_DS
             End If
 
         End With
@@ -171,11 +175,11 @@ Public Class Form1
 
     Private Sub DataSetRead()
 
-        If IsNothing(DS) Then DS = CL_DS.Get_DS()
+        If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
         With DS.Tables("Shema")
             If .Rows.Count = 0 Then
-                CL_DS.Shema_NewRow(DS)
+                DS = CL_DS.NewRow_Shema(DS)
                 IsModified = True
             Else
                 ImportFile = .Rows(0).Item("Import").ToString
@@ -330,8 +334,7 @@ Public Class Form1
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
 
-        If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS()
-        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
+        DS = CL_DS.Get_DS(DS)
 
         Dim ObjName As String = sender.tag
         DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
@@ -482,9 +485,7 @@ Public Class Form1
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
-        If DS Is Nothing Then CL_DS.Get_DS()
-        If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.Shema_NewRow(DS)
-
+        DS = CL_DS.NewRow_Shema(DS)
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -548,7 +549,7 @@ Public Class Form1
     End Sub
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
-        DS = New Class_DS().Get_DS
+        DS = CL_DS.Get_DS(DS)
 
         SaveFileDialog_XML()
 

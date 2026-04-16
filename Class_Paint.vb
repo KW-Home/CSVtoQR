@@ -1,10 +1,10 @@
 ﻿Public Class Class_Paint
 
-    Private ReadOnly CL_DS As Class_DS
+    Private ReadOnly CL_DS As New Class_DS
 
     Public Sub Ivalidate_Paper(ByRef FRM As Form1, ByRef DS As DataSet)
 
-        If IsNothing(DS) Then DS = CL_DS.Get_DS()
+        DS = CL_DS.Get_DS(DS)
 
         Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
         Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
@@ -13,6 +13,7 @@
         Dim PBT As Single = 0
         Dim PBR As Single = 0
         Dim PBB As Single = 0
+
         'PictureBox_Paper.Invalidate()
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
             Select Case DR("Border")
