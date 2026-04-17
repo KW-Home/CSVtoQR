@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Security.Cryptography
+Imports CSVtoQR.Class_DS
 
 Public Class Form1
 
@@ -147,7 +148,7 @@ Public Class Form1
         DGV_Search_Formatting()
 
         If DT_CSV IsNot Nothing Then
-            With ComboBox_DataColumn
+            With ComboBox_CardRow_DataColumn
                 .DataSource = Nothing
                 .DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
             End With
@@ -189,14 +190,30 @@ Public Class Form1
                 TextBox_Shema.Text = .Item("Shema").ToString
                 ImportFile = .Item("Import").ToString
                 ExportFile = .Item("Export").ToString
-                ComboBox_DPI.Text = .Item("DPI")
-                ComboBox_DIN.Text = .Item("DIN").ToString
+                ComboBox_Paper_DPI.Text = .Item("DPI")
+                ComboBox_Paper_DIN.Text = .Item("DIN").ToString
                 Label_Paper_Height_Value.Text = .Item("PaperHeight").ToString
                 Label_Paper_Width_Value.Text = .Item("PaperWidth")
                 NumericUpDown_Separator_Column_Count.Value = .Item("SeparatorSpalteAnzahl")
                 NumericUpDown_Separator_Column_Value.Value = .Item("SeparatorSpalteWert")
                 NumericUpDown_Separator_Row_Count.Value = .Item("SeparatorZeileAnzahl")
                 NumericUpDown_Separator_Row_Value.Value = .Item("SeparatorZeileWert")
+            End With
+        End With
+
+        With DS.Tables("Card")
+            With .Rows(0)
+                'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
+                'Label_CardSizeWidth.Text = .Item("PaperWidth")
+            End With
+        End With
+
+        With DS.Tables("CardRow")
+            With .Rows(0)
+                'ID, QRCode, DataColumn, LinePos, Font, FontColor, AutoFont
+
+                'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
+                'Label_CardSizeWidth.Text = .Item("PaperWidth")
             End With
         End With
 
@@ -219,15 +236,16 @@ Public Class Form1
         Next
 
         Dim ID As Integer = 0
-        For Each DR As DataRow In DS.Tables("Border").Select($"[Area] Like 'Zeile({ID})'")
+        For Each DR As DataRow In DS.Tables("Border").Select($"[ID] = {ID} AND [Area] Like 'CardRow'")
             Select Case DR("Border")
-                Case "Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
-                Case "Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
-                Case "Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
-                Case "Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
+                Case "Left" : NumericUpDown_CardRow_Border_Left.Value = DR("Value")
+                Case "Top" : NumericUpDown_CardRow_Border_Top.Value = DR("Value")
+                Case "Right" : NumericUpDown_CardRow_Border_Right.Value = DR("Value")
+                Case "Bottom" : NumericUpDown_CardRow_Border_Bottom.Value = DR("Value")
             End Select
         Next
 
+        DGV_Search.DataSource = Nothing
         If Not IsNothing(DS.Tables("Search")) Then
             With DS.Tables("Search")
                 If .Rows.Count = 0 Then Exit Sub
@@ -317,14 +335,14 @@ Public Class Form1
 
     End Sub
 
-    Private Sub NumericUpDown_Border_CardZeile_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_CardRow_Border_Top.ValueChanged, NumericUpDown_CardRow_Border_Right.ValueChanged, NumericUpDown_CardRow_Border_Left.ValueChanged, NumericUpDown_CardRow_Border_Bottom.ValueChanged
+    Private Sub NumericUpDown_Border_CardRow_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_CardRow_Border_Top.ValueChanged, NumericUpDown_CardRow_Border_Right.ValueChanged, NumericUpDown_CardRow_Border_Left.ValueChanged, NumericUpDown_CardRow_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
 
         Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
-        Dim DT As DataTable = DS.Tables("Border")
-        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
+        Dim DR() As DataRow = DS.Tables("Border").Select($"[ID] = 0 AND [Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
+
         DR(0)("Value") = sender.value
 
     End Sub
@@ -432,7 +450,9 @@ Public Class Form1
             .DisplayMember = "Column",
             .ValueMember = "Column",
             .ValueType = GetType(String),
-            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+            .FlatStyle = FlatStyle.Flat}
+
         If DGV_Search.Columns.ToString.Contains("Search_Column") Then
             DGV_Search.Columns.Remove("Search_Column")
         End If
@@ -447,7 +467,8 @@ Public Class Form1
             .DisplayMember = "Operator",
             .ValueMember = "Operator",
             .ValueType = GetType(String),
-            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
+            .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+            .FlatStyle = FlatStyle.Flat}
         If DGV_Search.Columns.ToString.Contains("Search_Operator") Then
             DGV_Search.Columns.Remove("Search_Operator")
         End If
@@ -490,25 +511,25 @@ Public Class Form1
 
     End Sub
 
-    Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_DIN.SelectedIndexChanged
+    Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DIN.SelectedIndexChanged
 
-        If ComboBox_DIN.SelectedIndex = -1 Then Return
-        If ComboBox_DIN.CanFocus = False Then Return
+        If ComboBox_Paper_DIN.SelectedIndex = -1 Then Return
+        If ComboBox_Paper_DIN.CanFocus = False Then Return
 
-        DS.Tables("Shema").Rows(0)("DIN") = CType(ComboBox_DIN.Text, String)
+        DS.Tables("Shema").Rows(0)("DIN") = CType(ComboBox_Paper_DIN.Text, String)
 
-        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_DIN.SelectedItem("PaperHeight"), Integer)
-        Label_Paper_Height_Value.Text = ComboBox_DIN.SelectedItem("PaperHeight").ToString
+        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_Paper_DIN.SelectedItem("PaperHeight"), Integer)
+        Label_Paper_Height_Value.Text = ComboBox_Paper_DIN.SelectedItem("PaperHeight").ToString
 
-        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_DIN.SelectedItem("PaperWidth"), Integer)
-        Label_Paper_Width_Value.Text = ComboBox_DIN.SelectedItem("PaperWidth").ToString
+        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_Paper_DIN.SelectedItem("PaperWidth"), Integer)
+        Label_Paper_Width_Value.Text = ComboBox_Paper_DIN.SelectedItem("PaperWidth").ToString
 
         IsModified = True
 
     End Sub
 
-    Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_DPI.SelectedIndexChanged
-        DS.Tables("Shema").Rows(0)("DPI") = CType(ComboBox_DPI.Text, Integer)
+    Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DPI.SelectedIndexChanged
+        DS.Tables("Shema").Rows(0)("DPI") = CType(ComboBox_Paper_DPI.Text, Integer)
     End Sub
 
     Private Sub DGV_Search_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_Search.DataError
@@ -516,11 +537,15 @@ Public Class Form1
     End Sub
 
     Private Sub DGV_Search_DataSourceChanged(sender As Object, e As EventArgs) Handles DGV_Search.DataSourceChanged
+
         CSVSearch()
+
     End Sub
 
     Private Sub Button_Search_Refresh_Click(sender As Object, e As EventArgs) Handles Button_Search_Refresh.Click
+
         CSVSearch()
+
     End Sub
 
     Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl_Main.SelectedIndexChanged
@@ -549,20 +574,20 @@ Public Class Form1
     End Sub
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
-        DS = CL_DS.Get_DS(DS)
+        'DS = CL_DS.Get_DS(Nothing)
 
         SaveFileDialog_XML()
 
-        Dim SFD As New SaveFileDialog With {
-            .Title = "Die Datei " & CL_XML.DataSetFile & " existiert nicht.",
-            .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile),
-            .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-        }
+        'Dim SFD As New SaveFileDialog With {
+        '    .Title = "Die Datei " & CL_XML.DataSetFile & " existiert nicht.",
+        '    .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile),
+        '    .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
+        '}
 
-        If SFD.ShowDialog = DialogResult.OK Then
-            CL_XML.DataSetFile = SFD.FileName
-            CL_XML.SaveXML(DS)
-        End If
+        'If SFD.ShowDialog = DialogResult.OK Then
+        '    CL_XML.DataSetFile = SFD.FileName
+        '    CL_XML.SaveXML(DS)
+        'End If
 
     End Sub
 
@@ -601,8 +626,13 @@ Public Class Form1
         End With
 
         If SFD.ShowDialog = DialogResult.OK Then
+            DS = CL_DS.Get_DS(Nothing)
+
             CL_XML.DataSetFile = SFD.FileName
             CL_XML.SaveXML(DS)
+
+            DataSetRead()
+
         End If
 
     End Sub
@@ -612,7 +642,6 @@ Public Class Form1
         DataSetRead()
 
     End Sub
-
 
 #End Region
 

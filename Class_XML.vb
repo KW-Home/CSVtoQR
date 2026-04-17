@@ -1,4 +1,6 @@
-﻿Public Class Class_XML
+﻿Imports System.IO
+
+Public Class Class_XML
 
     Private ReadOnly CL_DS As New Class_DS
 
@@ -16,8 +18,9 @@
 
     Public Sub SaveXML(ByRef DS As DataSet)
 
-        DS.WriteXml(DataSetFile_Value, XmlWriteMode.WriteSchema)
+        'DS.WriteXml(DataSetFile_Value, XmlWriteMode.WriteSchema)
         DS.WriteXmlSchema(Replace(DataSetFile_Value, ".xml", ".xsd"))
+        DS.WriteXml(DataSetFile_Value, XmlWriteMode.IgnoreSchema)
         Form1.ToolStripStatusLabel_SaveFile.Text = DataSetFile_Value
 
     End Sub
@@ -41,11 +44,13 @@
 
     Public Sub ReadXML(ByRef DS As DataSet)
 
-        If IsNothing(DS) = True Then DS = CL_DS.Get_DS(DS)
-
         If System.IO.File.Exists(DataSetFile_Value) Then
+            DS.Clear()
+            'DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
+
+            DS.ReadXmlSchema(Replace(DataSetFile_Value, "xml", "xsd", 1, -1, CompareMethod.Text))
             DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
-            'Form1.ToolStripStatusLabel_SaveFile.Text = DataSetFile_Value
+
         End If
     End Sub
 

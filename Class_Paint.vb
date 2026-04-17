@@ -28,15 +28,15 @@
             Dim P(2) As Pen
             P(0) = New Pen(Color.Red, 1)
             P(1) = New Pen(Color.Green, 1)
-            .PictureBox_Paper.Size = New Size(CInt(PW), CInt(PH))
-            .PictureBox_Paper.Image = New Bitmap(CInt(PW), CInt(PH))
+            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
             PW -= PBL
             PW -= PBR
             PH -= PBT
             PH -= PBB
 
             Try
-                Using g As Graphics = Graphics.FromImage(.PictureBox_Paper.Image)
+                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
