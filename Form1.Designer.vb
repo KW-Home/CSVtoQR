@@ -24,8 +24,8 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_Separator_Row_Count = New System.Windows.Forms.Label()
         Me.Label_Separator_Row_Value = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator = New System.Windows.Forms.TableLayoutPanel()
@@ -597,8 +597,8 @@ Partial Class Form1
         '
         'DGV_Search
         '
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle17
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -626,8 +626,8 @@ Partial Class Form1
         '
         'DGV_CSV
         '
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle18
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -773,13 +773,13 @@ Partial Class Form1
         Me.TabPage_Files.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_Files.Name = "TabPage_Files"
         Me.TabPage_Files.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Files.Size = New System.Drawing.Size(630, 588)
+        Me.TabPage_Files.Size = New System.Drawing.Size(232, 247)
         Me.TabPage_Files.TabIndex = 5
         Me.TabPage_Files.Text = "Daten"
         '
         'TabControl_Main
         '
-        Me.TabControl_Main.Appearance = System.Windows.Forms.TabAppearance.Buttons
+        Me.TabControl_Main.Appearance = System.Windows.Forms.TabAppearance.FlatButtons
         Me.TabControl_Main.Controls.Add(Me.TabPage_Paper)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Card)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Row)
@@ -787,18 +787,19 @@ Partial Class Form1
         Me.TabControl_Main.Controls.Add(Me.TabPage_Table)
         Me.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl_Main.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl_Main.Multiline = True
         Me.TabControl_Main.Name = "TabControl_Main"
         Me.TabControl_Main.SelectedIndex = 0
-        Me.TabControl_Main.Size = New System.Drawing.Size(638, 617)
+        Me.TabControl_Main.Size = New System.Drawing.Size(240, 276)
         Me.TabControl_Main.TabIndex = 6
         '
         'TabPage_Paper
         '
         Me.TabPage_Paper.Controls.Add(Me.TableLayoutPanel_Paper)
-        Me.TabPage_Paper.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage_Paper.Location = New System.Drawing.Point(4, 49)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(630, 588)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(232, 223)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -813,14 +814,13 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Shema, 0, 0)
         Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(8, 6)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
-        Me.TableLayoutPanel_Paper.RowCount = 5
+        Me.TableLayoutPanel_Paper.RowCount = 4
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(282, 520)
+        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(191, 520)
         Me.TableLayoutPanel_Paper.TabIndex = 45
         '
         'GroupBox_Separator_Column
@@ -1082,7 +1082,7 @@ Partial Class Form1
         Me.TabPage_Card.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_Card.Name = "TabPage_Card"
         Me.TabPage_Card.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Card.Size = New System.Drawing.Size(630, 588)
+        Me.TabPage_Card.Size = New System.Drawing.Size(232, 247)
         Me.TabPage_Card.TabIndex = 6
         Me.TabPage_Card.Text = "Karte"
         Me.TabPage_Card.UseVisualStyleBackColor = True
@@ -1414,7 +1414,7 @@ Partial Class Form1
         Me.TabPage_Row.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_Row.Name = "TabPage_Row"
         Me.TabPage_Row.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Row.Size = New System.Drawing.Size(630, 588)
+        Me.TabPage_Row.Size = New System.Drawing.Size(232, 247)
         Me.TabPage_Row.TabIndex = 7
         Me.TabPage_Row.Text = "Zeile"
         Me.TabPage_Row.UseVisualStyleBackColor = True
@@ -1768,10 +1768,10 @@ Partial Class Form1
         '
         Me.TabPage_Table.Controls.Add(Me.DGV_Table)
         Me.TabPage_Table.Controls.Add(Me.ListBox_Tabellen)
-        Me.TabPage_Table.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage_Table.Location = New System.Drawing.Point(4, 49)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(630, 588)
+        Me.TabPage_Table.Size = New System.Drawing.Size(232, 223)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
@@ -1989,7 +1989,7 @@ Partial Class Form1
         Me.MenuStrip_Main.Location = New System.Drawing.Point(6, 6)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(588, 24)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(477, 24)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -2015,9 +2015,9 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 572)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 320)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(588, 22)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(477, 22)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -2037,8 +2037,8 @@ Partial Class Form1
         'SplitContainer_Main.Panel2
         '
         Me.SplitContainer_Main.Panel2.Controls.Add(Me.Panel_Preview)
-        Me.SplitContainer_Main.Size = New System.Drawing.Size(833, 617)
-        Me.SplitContainer_Main.SplitterDistance = 638
+        Me.SplitContainer_Main.Size = New System.Drawing.Size(449, 276)
+        Me.SplitContainer_Main.SplitterDistance = 240
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
         '

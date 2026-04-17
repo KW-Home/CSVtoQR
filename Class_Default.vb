@@ -101,6 +101,12 @@
             .Add(FRM.MenuStrip_Main)
 
             .Add(FRM.TabControl_Main)
+            .Add(FRM.TabPage_Paper)
+            .Add(FRM.TabPage_Card)
+            .Add(FRM.TabPage_Row)
+            .Add(FRM.TabPage_Files)
+            .Add(FRM.TabPage_Table)
+
             .Add(FRM.BindingNavigator_CSV)
             .Add(FRM.ListBox_Tabellen)
             .Add(FRM.ListBox_CardRow_List)
@@ -280,17 +286,7 @@
                     Case "TabPage"
 
                         .BackColor = Color.Transparent
-                        Select Case .name
-
-                            Case FRM.TabPage_Files.Name
-
-                                .AutoScroll = False
-
-                            Case Else
-
-                                .AutoScroll = True
-
-                        End Select
+                        .AutoScroll = False
 
 'noch nicht benutzt
                     Case "ToolStripStatusLabel"
@@ -411,8 +407,13 @@
                         .Margin = New Padding(0)
                         .Padding = New Padding(0)
                         .Location = New Point(20, 20)
+                        .AutoScroll = False
+
                         Select Case .Name
 
+                            Case FRM.TableLayoutPanel_Paper.Name
+                                .AutoScroll = True
+                                '.Dock = DockStyle.Left
                             Case FRM.TableLayoutPanel_Files.Name
 
                                 .backcolor = SystemColors.Control
