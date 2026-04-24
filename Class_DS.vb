@@ -20,9 +20,7 @@ Public Class Class_DS
             DS = NewRow_Shema(DS)
             DS = NewRow_Card(DS)
             DS = NewRow_CardRow(DS)
-            DS = NewRow_PaperDIN(DS)
             DS = NewRow_Search_Operator(DS)
-
             DS = NewRow_Border(0, "Paper", DS)
             DS = NewRow_Border(0, "Card", DS)
             DS = NewRow_Border(0, "CardRow", DS)

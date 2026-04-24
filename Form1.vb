@@ -157,7 +157,7 @@ Public Class Form1
     End Sub
 
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
-    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Shema.Enter, TextBox_Import.Enter, TextBox_Export.Enter
+    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_Import.Enter, TextBox_Export.Enter
 
         Dim tb As TextBox = TryCast(sender, TextBox)
         If tb Is Nothing Then Return
@@ -187,7 +187,7 @@ Public Class Form1
             End If
 
             With .Rows(0)
-                TextBox_Shema.Text = .Item("Shema").ToString
+                TextBox_Paper_Shema.Text = .Item("Shema").ToString
                 ImportFile = .Item("Import").ToString
                 ExportFile = .Item("Export").ToString
                 ComboBox_Paper_DPI.Text = .Item("DPI")
@@ -310,7 +310,8 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-    Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
+    Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged,
+        NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
         IsModified = True
@@ -346,7 +347,7 @@ Public Class Form1
         DR(0)("Value") = sender.value
 
     End Sub
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Shema.TextChanged,
+    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged,
         TextBox_Import.TextChanged, TextBox_Export.TextChanged
 
         If sender.canselect = False Then Return
@@ -621,7 +622,7 @@ Public Class Form1
             .CheckPathExists = True
             .Title = "Die Datei Speichern (" & CL_XML.DataSetFile & ")"
             .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile)
-            .FileName = TextBox_Shema.Text
+            .FileName = TextBox_Paper_Shema.Text
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
 
