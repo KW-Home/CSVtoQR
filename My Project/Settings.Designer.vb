@@ -56,18 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\")>  _
-        Public Property MySavePath() As String
-            Get
-                Return CType(Me("MySavePath"),String)
-            End Get
-            Set
-                Me("MySavePath") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("100, 100")>  _
         Public Property MyLocation() As Global.System.Drawing.Point
             Get

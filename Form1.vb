@@ -14,11 +14,11 @@ Public Class Form1
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
-    Private CL_XML As New Class_XML
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
-    Private WithEvents DTSearch As DataTable
+
+    Private WithEvents CL_XML As New Class_XML
 
     Private IsModified_Value As Boolean
     Public Property IsModified() As Boolean
@@ -95,12 +95,12 @@ Public Class Form1
             MyFont = .MyFont
 
 
-            If System.IO.File.Exists(.MySavePath) = True Then
+            If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
                 If IsNothing(DS) = True Then CL_DS.Get_DS(DS)
                 DS = CL_DS.NewRow_Shema(DS)
                 'DS = New DataSet
-                CL_XML.DataSetFile = .MySavePath
+                CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
 
                 'ToDo: Fehler nach Pull 
@@ -114,15 +114,12 @@ Public Class Form1
                     DS = CL_DS.Get_DS(DS)
                 End If
 
-                ListBox_Tabellen.Items.Clear()
-                ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
-                ToolStripStatusLabel_SaveFile.Text = CL_XML.DataSetFile
-                TextBox_DataSet.Text = CL_XML.DataSetFile
-
             Else
+
                 ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
                 DS = CL_DS.Get_DS(DS)
                 TextBox_DataSet.Text = "Kein gültiger Pfad."
+
             End If
 
         End With
@@ -133,10 +130,13 @@ Public Class Form1
         Me.WindowState = FormWindowState.Normal
 
         With My.Settings
+
             .MySize = Me.Size
             .MyFont = MyFont
-            .MySavePath = CL_XML.DataSetFile
+            .MySpliter = SplitContainer_Main.SplitterDistance
+
             .Save()
+
         End With
 
     End Sub
@@ -264,9 +264,13 @@ Public Class Form1
         Dim Path As String = CL_XML.DataSetFile
         Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
 
-        If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
-            OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
-            OFD.FileName = System.IO.Path.GetFileName(Path)
+        If IsNothing(Path) = False Then
+
+            If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
+                OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
+                OFD.FileName = System.IO.Path.GetFileName(Path)
+            End If
+
         End If
         If OFD.ShowDialog = DialogResult.OK Then
             ImportFile = OFD.FileName
@@ -289,8 +293,17 @@ Public Class Form1
             Dim Result As DialogResult = MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
             Select Case Result
                 Case DialogResult.Yes
+
+                    If IsNothing(CL_XML.DataSetFile) = True Then
+                        If SaveFileDialog_XML() = DialogResult.Cancel Then
+                            e.Cancel = True
+                            Return
+                        End If
+                    End If
+
                     CL_XML.SaveXML(DS)
                     MySettings_Save()
+
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -580,20 +593,7 @@ Public Class Form1
     End Sub
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
-        'DS = CL_DS.Get_DS(Nothing)
-
         SaveFileDialog_XML()
-
-        'Dim SFD As New SaveFileDialog With {
-        '    .Title = "Die Datei " & CL_XML.DataSetFile & " existiert nicht.",
-        '    .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile),
-        '    .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
-        '}
-
-        'If SFD.ShowDialog = DialogResult.OK Then
-        '    CL_XML.DataSetFile = SFD.FileName
-        '    CL_XML.SaveXML(DS)
-        'End If
 
     End Sub
 
@@ -620,7 +620,7 @@ Public Class Form1
 
 #End Region
 #Region "Save XML"
-    Private Sub SaveFileDialog_XML()
+    Private Function SaveFileDialog_XML() As DialogResult
 
         Dim SFD As New SaveFileDialog
         With SFD
@@ -641,18 +641,23 @@ Public Class Form1
 
         End If
 
-    End Sub
-    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click
+        Return DialogResult
+
+    End Function
+    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_DataSet.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
 
+        ListBox_Tabellen.Items.Clear()
+        ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
+
     End Sub
+    Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
-    Private Sub Button_DataSet_Click(sender As Object, e As EventArgs) Handles Button_DataSet.Click
-
-        CL_XML.OpenFileDialog_XML(DS)
-        DataSetRead()
+        TextBox_DataSet.Text = e
+        ToolStripStatusLabel_SaveFile.Text = e
+        IsModified = False
 
     End Sub
 

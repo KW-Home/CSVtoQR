@@ -24,8 +24,8 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_Separator_Row_Count = New System.Windows.Forms.Label()
         Me.Label_Separator_Row_Value = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator_Column = New System.Windows.Forms.TableLayoutPanel()
@@ -197,6 +197,8 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.SplitContainer_Main = New System.Windows.Forms.SplitContainer()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Label_Card_Size_Width_Unit = New System.Windows.Forms.Label()
+        Me.Label_Card_Size_Hight_Unit = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator_Column.SuspendLayout()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Column_Value, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -600,8 +602,8 @@ Partial Class Form1
         '
         'DGV_Search
         '
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -630,8 +632,8 @@ Partial Class Form1
         '
         'DGV_CSV
         '
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -1196,16 +1198,19 @@ Partial Class Form1
         Me.GroupBox_Card_Size.Controls.Add(Me.TableLayoutPanel_Card_Size)
         Me.GroupBox_Card_Size.Location = New System.Drawing.Point(3, 208)
         Me.GroupBox_Card_Size.Name = "GroupBox_Card_Size"
-        Me.GroupBox_Card_Size.Size = New System.Drawing.Size(163, 79)
+        Me.GroupBox_Card_Size.Size = New System.Drawing.Size(103, 70)
         Me.GroupBox_Card_Size.TabIndex = 4
         Me.GroupBox_Card_Size.TabStop = False
         Me.GroupBox_Card_Size.Text = "Größe"
         '
         'TableLayoutPanel_Card_Size
         '
-        Me.TableLayoutPanel_Card_Size.ColumnCount = 2
+        Me.TableLayoutPanel_Card_Size.ColumnCount = 3
         Me.TableLayoutPanel_Card_Size.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Card_Size.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Card_Size.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Card_Size.Controls.Add(Me.Label_Card_Size_Width_Unit, 2, 1)
+        Me.TableLayoutPanel_Card_Size.Controls.Add(Me.Label_Card_Size_Hight_Unit, 2, 0)
         Me.TableLayoutPanel_Card_Size.Controls.Add(Me.Label_Card_Size_Hight, 0, 0)
         Me.TableLayoutPanel_Card_Size.Controls.Add(Me.Label_Card_Size_Hight_Value, 1, 0)
         Me.TableLayoutPanel_Card_Size.Controls.Add(Me.Label_Card_Size_Width, 0, 1)
@@ -1215,8 +1220,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Card_Size.RowCount = 2
         Me.TableLayoutPanel_Card_Size.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card_Size.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Card_Size.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Card_Size.Size = New System.Drawing.Size(156, 43)
+        Me.TableLayoutPanel_Card_Size.Size = New System.Drawing.Size(95, 43)
         Me.TableLayoutPanel_Card_Size.TabIndex = 0
         '
         'Label_Card_Size_Hight
@@ -2079,7 +2083,7 @@ Partial Class Form1
         Me.MenuStrip_Main.Location = New System.Drawing.Point(6, 6)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(588, 24)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(1031, 24)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -2107,7 +2111,7 @@ Partial Class Form1
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
         Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 572)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(588, 22)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(1031, 22)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -2132,6 +2136,28 @@ Partial Class Form1
         Me.SplitContainer_Main.SplitterDistance = Global.CSVtoQR.My.MySettings.Default.MySpliter
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
+        '
+        'Label_Card_Size_Width_Unit
+        '
+        Me.Label_Card_Size_Width_Unit.AutoSize = True
+        Me.Label_Card_Size_Width_Unit.Location = New System.Drawing.Point(59, 17)
+        Me.Label_Card_Size_Width_Unit.Name = "Label_Card_Size_Width_Unit"
+        Me.Label_Card_Size_Width_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Card_Size_Width_Unit.TabIndex = 51
+        Me.Label_Card_Size_Width_Unit.Text = "mm"
+        Me.Label_Card_Size_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Card_Size_Width_Unit.UseCompatibleTextRendering = True
+        '
+        'Label_Card_Size_Hight_Unit
+        '
+        Me.Label_Card_Size_Hight_Unit.AutoSize = True
+        Me.Label_Card_Size_Hight_Unit.Location = New System.Drawing.Point(59, 0)
+        Me.Label_Card_Size_Hight_Unit.Name = "Label_Card_Size_Hight_Unit"
+        Me.Label_Card_Size_Hight_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Card_Size_Hight_Unit.TabIndex = 52
+        Me.Label_Card_Size_Hight_Unit.Text = "mm"
+        Me.Label_Card_Size_Hight_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Card_Size_Hight_Unit.UseCompatibleTextRendering = True
         '
         'Form1
         '
@@ -2412,4 +2438,6 @@ Partial Class Form1
     Friend WithEvents TextBox_DataSet As TextBox
     Friend WithEvents Label_DataSet As Label
     Friend WithEvents GroupBox_Path As GroupBox
+    Friend WithEvents Label_Card_Size_Width_Unit As Label
+    Friend WithEvents Label_Card_Size_Hight_Unit As Label
 End Class

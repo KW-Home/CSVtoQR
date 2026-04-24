@@ -161,6 +161,10 @@
             .Add(FRM.GroupBox_Card_Size)
             .Add(FRM.TableLayoutPanel_Card_Font)
             .Add(FRM.TableLayoutPanel_Card_Border)
+
+            .Add(FRM.Label_Card_Size_Hight_Unit)
+            .Add(FRM.Label_Card_Size_Width_Unit)
+
         End With
     End Sub
     Private Sub Default_Fill_TabPage_CardRow()
@@ -280,38 +284,19 @@
 
             Select Case .Name
 
-                'Case FRM.Label_Paper_Height_Unit.Name,
-                '     FRM.Label_Paper_Width_Unit.Name,
-                '     FRM.Label_Paper_Border_Right_Unit.Name,
-                '     FRM.Label_Paper_Border_Top_Unit.Name,
-                '     FRM.Label_Paper_Border_Bottom_Unit.Name,
-                '     FRM.Label_Paper_Border_Left_Unit.Name,
-                '     FRM.Label_Separator_Row_Value_Unit.Name,
-                '     FRM.Label_Separator_Column_Value_Unit.Name,
-                '     FRM.Label_CardRow_Border_Left_Unit.Name,
-                '     FRM.Label_CardRow_Border_Right_Unit.Name,
-                '     FRM.Label_CardRow_Border_Top_Unit.Name,
-                '     FRM.Label_CardRow_Border_Bottom_Unit.Name,
-                '     FRM.Label_Import.Name,
-                '     FRM.Label_Export.Name,
-                '     FRM.Label_DataSet.Name
-
-                '    .TextAlign = ContentAlignment.MiddleLeft
-
-                'Case FRM.Label_Separator_Row_Count.Name, FRM.Label_Separator_Row_Value.Name
-
-                '    .TextAlign = ContentAlignment.BottomCenter
-
-                Case FRM.Label_Paper_Height_Value.Name, FRM.Label_Paper_Width_Value.Name
+                Case FRM.Label_Paper_Height_Value.Name,
+                     FRM.Label_Paper_Width_Value.Name,
+                     FRM.Label_Card_Size_Hight_Value.Name,
+                     FRM.Label_Card_Size_Width_Value.Name
 
                     .TextAlign = ContentAlignment.MiddleRight
 
                 Case Else
 
-                    .Dock = DockStyle.Fill
                     .TextAlign = ContentAlignment.MiddleLeft
 
             End Select
+
         End With
     End Sub
     Private Sub Default_ComboBox(ByRef OBJ As ComboBox)

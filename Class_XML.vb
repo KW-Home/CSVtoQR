@@ -4,24 +4,27 @@ Public Class Class_XML
 
     Private ReadOnly CL_DS As New Class_DS
 
+    Public Event Changetext(sender, e)
+
     Private DataSetFile_Value As String
     Public Property DataSetFile() As String
         Get
             Return DataSetFile_Value
         End Get
         Set(ByVal value As String)
-            DataSetFile_Value = value
-            My.Settings.MySavePath = value
-            My.Settings.Save()
+            If DataSetFile_Value <> value Then
+                DataSetFile_Value = value
+                RaiseEvent Changetext(Me, value)
+            End If
         End Set
     End Property
 
     Public Sub SaveXML(ByRef DS As DataSet)
 
-        'DS.WriteXml(DataSetFile_Value, XmlWriteMode.WriteSchema)
-        DS.WriteXmlSchema(Replace(DataSetFile_Value, ".xml", ".xsd"))
-        DS.WriteXml(DataSetFile_Value, XmlWriteMode.IgnoreSchema)
-        Form1.ToolStripStatusLabel_SaveFile.Text = DataSetFile_Value
+        If IsNothing(DataSetFile_Value) = True Then
+            DS.WriteXml(DataSetFile_Value, XmlWriteMode.IgnoreSchema)
+            DS.WriteXmlSchema(Replace(DataSetFile_Value, ".xml", ".xsd"))
+        End If
 
     End Sub
 
@@ -46,11 +49,8 @@ Public Class Class_XML
 
         If System.IO.File.Exists(DataSetFile_Value) Then
             DS.Clear()
-            'DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
-
             DS.ReadXmlSchema(Replace(DataSetFile_Value, "xml", "xsd", 1, -1, CompareMethod.Text))
             DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
-
         End If
     End Sub
 
