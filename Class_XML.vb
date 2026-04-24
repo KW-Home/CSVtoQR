@@ -21,9 +21,11 @@ Public Class Class_XML
 
     Public Sub SaveXML(ByRef DS As DataSet)
 
-        If IsNothing(DataSetFile_Value) = True Then
+        If IsNothing(DataSetFile_Value) = False Then
             DS.WriteXml(DataSetFile_Value, XmlWriteMode.IgnoreSchema)
             DS.WriteXmlSchema(Replace(DataSetFile_Value, ".xml", ".xsd"))
+        Else
+            MessageBox.Show("Kein Pfad vorhanden")
         End If
 
     End Sub

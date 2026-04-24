@@ -45,7 +45,7 @@ Public Class Form1
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
-            TextBox_Import.Text = value
+            TextBox_General_Import_Directory.Text = value
         End Set
     End Property
 
@@ -162,7 +162,7 @@ Public Class Form1
     End Sub
 
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
-    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_Import.Enter, TextBox_Export.Enter
+    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_General_Import_Directory.Enter, TextBox_Export.Enter
 
         Dim tb As TextBox = TryCast(sender, TextBox)
         If tb Is Nothing Then Return
@@ -188,6 +188,7 @@ Public Class Form1
                 DS = CL_DS.NewRow_Shema(DS)
                 IsModified = True
             Else
+                Debug.Print("XXXX " & .Rows(0).Item("Import").ToString())
                 ImportFile = .Rows(0).Item("Import").ToString
             End If
 
@@ -259,7 +260,7 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_Import.Click
+    Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_General_Import.Click
 
         Dim Path As String = CL_XML.DataSetFile
         Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
@@ -366,7 +367,7 @@ Public Class Form1
 
     End Sub
     Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged,
-        TextBox_Import.TextChanged, TextBox_Export.TextChanged
+        TextBox_General_Import_Directory.TextChanged, TextBox_Export.TextChanged
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return

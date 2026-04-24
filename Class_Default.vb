@@ -65,9 +65,19 @@
             .Add(FRM.GroupBox_Path)
             .Add(FRM.TableLayoutPanel_Path)
 
-            .Add(FRM.Label_Import)
-            .Add(FRM.TextBox_Import)
-            .Add(FRM.Button_Import)
+            .Add(FRM.Label_General_Import_Directory)
+            .Add(FRM.TextBox_General_Import_Directory)
+
+            .Add(FRM.GroupBox_General_Import)
+            .Add(FRM.TableLayoutPanel_General_Import)
+
+            .Add(FRM.Label_General_Import_Directory)
+            .Add(FRM.TextBox_General_Import_Directory)
+
+            .Add(FRM.Label_General_Import_Filename)
+            .Add(FRM.TextBox_General_Import_Filename)
+
+            .Add(FRM.Button_General_Import)
 
             .Add(FRM.Label_Export)
             .Add(FRM.TextBox_Export)
@@ -465,6 +475,8 @@
                     .AutoScroll = True
                 Case FRM.TableLayoutPanel_Paper.Name
                     .AutoScroll = True
+                Case FRM.TableLayoutPanel_General_Import.Name
+                    .SetRowSpan(FRM.Button_General_Import, 2)
             End Select
 
         End With
