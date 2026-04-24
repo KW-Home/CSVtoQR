@@ -156,6 +156,7 @@
     <None Include="Werkbank\Bonus\Images\Refresh\Refresh Arrow Green.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Werkbank\Bonus\Images\Database\DatabaseSchema_32x.png" />
     <Content Include="Werkbank\DataSet\DataSetNeu.xml" />
     <Content Include="Werkbank\DataSet\Standard.xml" />
   </ItemGroup>

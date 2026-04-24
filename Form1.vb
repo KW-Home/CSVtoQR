@@ -116,8 +116,13 @@ Public Class Form1
 
                 ListBox_Tabellen.Items.Clear()
                 ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
-                ToolStripStatusLabel_SaveFile.Text = .MySavePath
+                ToolStripStatusLabel_SaveFile.Text = CL_XML.DataSetFile
+                TextBox_DataSet.Text = CL_XML.DataSetFile
 
+            Else
+                ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
+                DS = CL_DS.Get_DS(DS)
+                TextBox_DataSet.Text = "Kein gültiger Pfad."
             End If
 
         End With
@@ -552,7 +557,7 @@ Public Class Form1
     Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl_Main.SelectedIndexChanged
 
         Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
-            Case "TabPage_Files", "TabPage_Table"
+            Case "TabPage_Files", "TabPage_Data", "TabPage_Table"
                 SplitContainer_Main.Panel2Collapsed = True
             Case Else
                 SplitContainer_Main.Panel2Collapsed = False
@@ -638,6 +643,13 @@ Public Class Form1
 
     End Sub
     Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click
+
+        CL_XML.OpenFileDialog_XML(DS)
+        DataSetRead()
+
+    End Sub
+
+    Private Sub Button_DataSet_Click(sender As Object, e As EventArgs) Handles Button_DataSet.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()

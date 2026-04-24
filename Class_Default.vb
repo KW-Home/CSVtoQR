@@ -11,10 +11,11 @@
         DS = _DS
 
         Default_Fill_Formular()
+        Default_Fill_TabPage_General()
         Default_Fill_TabPage_Paper()
         Default_Fill_TabPage_Card()
         Default_Fill_TabPage_CardRow()
-        Default_Fill_TabPage_Files()
+        Default_Fill_TabPage_Data()
         Default_Fill_TabPage_Table()
 
         SetDefault()
@@ -56,7 +57,29 @@
         Next
 
     End Sub
+    Private Sub Default_Fill_TabPage_General()
 
+        With ControlsListGesamt
+
+            .Add(FRM.TabPage_General)
+            .Add(FRM.GroupBox_Path)
+            .Add(FRM.TableLayoutPanel_Path)
+
+            .Add(FRM.Label_Import)
+            .Add(FRM.TextBox_Import)
+            .Add(FRM.Button_Import)
+
+            .Add(FRM.Label_Export)
+            .Add(FRM.TextBox_Export)
+            .Add(FRM.Button_Export)
+
+            .Add(FRM.Label_DataSet)
+            .Add(FRM.TextBox_DataSet)
+            .Add(FRM.Button_DataSet)
+
+        End With
+
+    End Sub
     Private Sub Default_Fill_TabPage_Paper()
         With ControlsListGesamt
 
@@ -175,15 +198,11 @@
 
         End With
     End Sub
-    Private Sub Default_Fill_TabPage_Files()
+    Private Sub Default_Fill_TabPage_Data()
         With ControlsListGesamt
-            .Add(FRM.TabPage_Files)
-            .Add(FRM.TableLayoutPanel_Files)
+            .Add(FRM.TabPage_Data)
+            .Add(FRM.TableLayoutPanel_Data)
             .Add(FRM.BindingNavigator_CSV)
-            .Add(FRM.TextBox_Import)
-            .Add(FRM.TextBox_Export)
-            .Add(FRM.Label_Import)
-            .Add(FRM.Label_Export)
             .Add(FRM.Button_Search_Refresh)
             .Add(FRM.Button_Search_Add)
             .Add(FRM.Button_Search_Delete)
@@ -255,37 +274,42 @@
     End Sub
     Private Sub Default_Label(ByRef OBJ As Label)
         With OBJ
-            .Dock = DockStyle.Top
+
+            .Dock = DockStyle.Fill
+            .UseCompatibleTextRendering = True
+
             Select Case .Name
 
-                Case FRM.Label_Paper_Height_Unit.Name,
-                     FRM.Label_Paper_Width_Unit.Name,
-                     FRM.Label_Paper_Border_Right_Unit.Name,
-                     FRM.Label_Paper_Border_Top_Unit.Name,
-                     FRM.Label_Paper_Border_Bottom_Unit.Name,
-                     FRM.Label_Paper_Border_Left_Unit.Name,
-                     FRM.Label_Separator_Row_Value_Unit.Name,
-                     FRM.Label_Separator_Column_Value_Unit.Name,
-                     FRM.Label_CardRow_Border_Left_Unit.Name,
-                     FRM.Label_CardRow_Border_Right_Unit.Name,
-                     FRM.Label_CardRow_Border_Top_Unit.Name,
-                     FRM.Label_CardRow_Border_Bottom_Unit.Name
+                'Case FRM.Label_Paper_Height_Unit.Name,
+                '     FRM.Label_Paper_Width_Unit.Name,
+                '     FRM.Label_Paper_Border_Right_Unit.Name,
+                '     FRM.Label_Paper_Border_Top_Unit.Name,
+                '     FRM.Label_Paper_Border_Bottom_Unit.Name,
+                '     FRM.Label_Paper_Border_Left_Unit.Name,
+                '     FRM.Label_Separator_Row_Value_Unit.Name,
+                '     FRM.Label_Separator_Column_Value_Unit.Name,
+                '     FRM.Label_CardRow_Border_Left_Unit.Name,
+                '     FRM.Label_CardRow_Border_Right_Unit.Name,
+                '     FRM.Label_CardRow_Border_Top_Unit.Name,
+                '     FRM.Label_CardRow_Border_Bottom_Unit.Name,
+                '     FRM.Label_Import.Name,
+                '     FRM.Label_Export.Name,
+                '     FRM.Label_DataSet.Name
 
-                    .TextAlign = ContentAlignment.MiddleLeft
+                '    .TextAlign = ContentAlignment.MiddleLeft
 
-                Case FRM.Label_Separator_Row_Count.Name, FRM.Label_Separator_Row_Value.Name
+                'Case FRM.Label_Separator_Row_Count.Name, FRM.Label_Separator_Row_Value.Name
 
-                    .TextAlign = ContentAlignment.BottomCenter
+                '    .TextAlign = ContentAlignment.BottomCenter
 
                 Case FRM.Label_Paper_Height_Value.Name, FRM.Label_Paper_Width_Value.Name
 
-                    .Dock = DockStyle.Fill
                     .TextAlign = ContentAlignment.MiddleRight
 
                 Case Else
 
                     .Dock = DockStyle.Fill
-                    .TextAlign = ContentAlignment.MiddleCenter
+                    .TextAlign = ContentAlignment.MiddleLeft
 
             End Select
         End With
@@ -313,7 +337,7 @@
     Private Sub Default_TabPage(ByRef OBJ As TabPage)
         With OBJ
             .BackColor = Color.Transparent
-            .AutoScroll = True
+            .AutoScroll = False
         End With
     End Sub
     Private Sub Default_ToolStripStatusLabel(ByRef OBJ As ToolStripStatusLabel)
@@ -403,13 +427,14 @@
             .BorderStyle = BorderStyle.Fixed3D
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
             .AlternatingRowsDefaultCellStyle.BackColor = Color.AntiqueWhite
+            .AutoSize = False
+
             Select Case .Name
                 Case FRM.DGV_CSV.Name, FRM.DGV_Table.Name
                     .Dock = DockStyle.Fill
                 Case Else
                     .Dock = DockStyle.Top
-                    .AutoSize = False
-                    .Height = FRM.DGV_Search.ColumnHeadersHeight * 6
+                    .Height = FRM.DGV_Search.ColumnHeadersHeight * 4
             End Select
         End With
     End Sub
@@ -431,6 +456,7 @@
     End Sub
     Private Sub Default_TableLayoutPanel(ByRef OBJ As TableLayoutPanel)
         With OBJ
+
             .Dock = DockStyle.Fill
             .AutoSizeMode = AutoSizeMode.GrowAndShrink
             .BorderStyle = BorderStyle.None
@@ -439,25 +465,23 @@
             .Padding = New Padding(0)
             .Location = New Point(20, 20)
             .AutoScroll = False
+            .BackColor = SystemColors.Control
+
             Select Case .Name
-                Case FRM.TableLayoutPanel_Paper.Name,
-                     FRM.TableLayoutPanel_Card.Name,
-                     FRM.TableLayoutPanel_CardRow.Name
-
-                    .AutoScroll = False
-
-                Case FRM.TableLayoutPanel_Files.Name
-
-                    .BackColor = SystemColors.Control
+                Case FRM.TableLayoutPanel_Data.Name
                     .SetColumnSpan(FRM.DGV_Search, 2)
                     .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
                     .SetColumnSpan(FRM.DGV_CSV, 2)
-
                 Case FRM.TableLayoutPanel_CardRow_List.Name
-
                     .SetColumnSpan(FRM.ListBox_CardRow_List, 3)
-
+                Case FRM.TableLayoutPanel_CardRow.Name
+                    .AutoScroll = True
+                Case FRM.TableLayoutPanel_Card.Name
+                    .AutoScroll = True
+                Case FRM.TableLayoutPanel_Paper.Name
+                    .AutoScroll = True
             End Select
+
         End With
     End Sub
     Private Sub Default_Button(ByRef OBJ As Button)
@@ -467,6 +491,7 @@
             .Margin = New Padding(0)
             .Padding = New Padding(0)
             .Location = New Point(0, 0)
+            .UseCompatibleTextRendering = True
         End With
     End Sub
 

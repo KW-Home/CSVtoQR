@@ -101,6 +101,18 @@ Namespace My
                 Me("MyFont") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property MySpliter() As Integer
+            Get
+                Return CType(Me("MySpliter"),Integer)
+            End Get
+            Set
+                Me("MySpliter") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
