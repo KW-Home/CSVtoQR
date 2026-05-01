@@ -3,7 +3,7 @@ Imports System.IO
 
 Public Class Class_CSV
 
-    Public Function Load_CSV(ByRef DS As DataSet, ByRef CL_DS As Class_DS, ByVal FilePath As String) As DataTable
+    Public Function GET_CSV(ByRef DS As DataSet, ByRef CL_DS As Class_DS, ByVal FilePath As String) As DataTable
 
         If File.Exists(FilePath) = True Then
 

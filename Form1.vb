@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net.WebRequestMethods
 Imports System.Reflection
 Imports System.Security.Cryptography
 Imports CSVtoQR.Class_DS
@@ -45,7 +46,9 @@ Public Class Form1
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
-            TextBox_General_Import_Directory.Text = value
+
+            SET_Changetext_CSV(value)
+
         End Set
     End Property
 
@@ -59,7 +62,9 @@ Public Class Form1
             If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
             If DS.Tables("Shema").Rows.Count = 0 Then DS = CL_DS.NewRow_Shema(DS)
             DS.Tables("Shema").Rows(0).Item("Export") = value
-            TextBox_General_Export_Directory.Text = value
+
+            SET_Changetext_PDF(value)
+
         End Set
     End Property
 
@@ -143,7 +148,7 @@ Public Class Form1
 
     Private Sub Load_CSV(ByVal Value As String)
 
-        DT_CSV = CL_CSV.Load_CSV(DS, CL_DS, Value)
+        DT_CSV = CL_CSV.GET_CSV(DS, CL_DS, Value)
         DV_CSV = New DataView(DT_CSV)
 
         BindingSource_CSV.DataSource = DV_CSV
@@ -157,17 +162,6 @@ Public Class Form1
                 .DataSource = Nothing
                 .DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
             End With
-        End If
-
-    End Sub
-
-    ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
-    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_General_Import_Directory.Enter, TextBox_General_Export_Directory.Enter
-
-        Dim tb As TextBox = TryCast(sender, TextBox)
-        If tb Is Nothing Then Return
-        If tb.CanSelect Then
-            tb.SelectAll()
         End If
 
     End Sub
@@ -188,7 +182,6 @@ Public Class Form1
                 DS = CL_DS.NewRow_Shema(DS)
                 IsModified = True
             Else
-                Debug.Print("XXXX " & .Rows(0).Item("Import").ToString())
                 ImportFile = .Rows(0).Item("Import").ToString
             End If
 
@@ -280,11 +273,11 @@ Public Class Form1
     End Sub
     Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_General_Export.Click
 
-        Dim SFD As New SaveFileDialog With {.Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
-        If SFD.ShowDialog = DialogResult.OK Then
-            SFD.FileName = System.IO.Path.ChangeExtension(SFD.FileName, "pdf")
-            SFD.InitialDirectory = System.IO.Path.GetDirectoryName(SFD.FileName)
-            ExportFile = SFD.FileName
+        Dim FBD As New FolderBrowserDialog
+        'With { .Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
+
+        If FBD.ShowDialog = DialogResult.OK Then
+            ExportFile = FBD.SelectedPath
         End If
 
     End Sub
@@ -366,18 +359,44 @@ Public Class Form1
         DR(0)("Value") = sender.value
 
     End Sub
-    Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged,
-        TextBox_General_Import_Directory.TextChanged, TextBox_General_Export_Directory.TextChanged
+    Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
+
+        If sender.canselect = False Then Return
+        If sender.canfocus = False Then Return
+        DS = CL_DS.Get_DS(DS)
+        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Shema") = TextBox_Paper_Shema.Text, Boolean)
+        DS.Tables("Shema").Rows(0).Item("Shema") = TextBox_Paper_Shema.Text
+
+    End Sub
+    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs) Handles TextBox_General_Import_Directory.TextChanged, TextBox_General_Import_Filename.TextChanged
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
 
+        Dim File As String
+        File = TextBox_General_Import_Directory.Text
+        If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
+        File &= "\" & TextBox_General_Import_Filename.Text
+        If My.Computer.FileSystem.FileExists(File) = False Then Return
+
         DS = CL_DS.Get_DS(DS)
+        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Import") = File, Boolean)
+        DS.Tables("Shema").Rows(0).Item("Import") = File
 
-        Dim ObjName As String = sender.tag
-        DS.Tables("Shema").Rows(0).Item(ObjName) = sender.Text
+    End Sub
+    Private Sub TextBox_General_Export_TextChanged(sender As Object, e As EventArgs) Handles TextBox_General_Export_Directory.TextChanged, TextBox_General_Export_Filename.TextChanged
 
-        IsModified = True
+        If sender.canselect = False Then Return
+        If sender.canfocus = False Then Return
+
+        Dim File As String
+        File = TextBox_General_Export_Directory.Text
+        If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
+        File &= "\" & TextBox_General_Export_Filename.Text
+
+        DS = CL_DS.Get_DS(DS)
+        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Export") = File, Boolean)
+        DS.Tables("Shema").Rows(0).Item("Export") = File
 
     End Sub
     Private Sub CSVSearch()
@@ -645,6 +664,11 @@ Public Class Form1
     End Sub
     Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
+        SET_Changetext_XML(sender, e)
+
+    End Sub
+    Private Sub SET_Changetext_XML(sender As Object, e As Object)
+
         Dim FI As New FileInfo(e)
 
         With FI
@@ -656,7 +680,30 @@ Public Class Form1
         IsModified = False
 
     End Sub
+    Private Sub SET_Changetext_CSV(File As String)
 
+        If My.Computer.FileSystem.FileExists(File) = False Then Return
+
+        Dim FI As New FileInfo(File)
+        With FI
+            TextBox_General_Import_Directory.Text = .Directory.ToString
+            TextBox_General_Import_Filename.Text = .Name.ToString
+        End With
+
+        IsModified = False
+
+    End Sub
+    Private Sub SET_Changetext_PDF(File As String)
+
+        If File.Length = 0 Then Return
+
+        Dim FI As New FileInfo(File)
+        TextBox_General_Export_Directory.Text = FI.Directory.ToString
+        TextBox_General_Export_Filename.Text = FI.Name.ToString
+
+        IsModified = False
+
+    End Sub
     Private Sub Button_General_Font_Click(sender As Object, e As EventArgs) Handles Button_General_Font.Click
 
         Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
