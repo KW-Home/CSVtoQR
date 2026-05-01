@@ -39,8 +39,8 @@
                     Case "ToolStripStatusLabel" : Default_ToolStripStatusLabel(OBJ)
                     Case "MenuStrip" : Default_MenuStrip(OBJ)
                     Case "StatusStrip" : Default_StatusStrip(OBJ)
-                    Case "TabControl" : Default_TabControl(OBJ)
                     Case "TabPage" : Default_TabPage(OBJ)
+                    Case "TabControl" : Default_TabControl(OBJ)
                     Case "BindingNavigator" : Default_BindingNavigator(OBJ)
                     Case "ListBox" : Default_ListBox(OBJ)
                     Case "PictureBox" : Default_PictureBox(OBJ)
@@ -62,30 +62,49 @@
         With ControlsListGesamt
 
             .Add(FRM.TabPage_General)
-            .Add(FRM.GroupBox_Path)
-            .Add(FRM.TableLayoutPanel_Path)
 
-            .Add(FRM.Label_General_Import_Directory)
-            .Add(FRM.TextBox_General_Import_Directory)
+            .Add(FRM.GroupBox_General_DataSet)
+            .Add(FRM.TableLayoutPanel_General_DataSet)
+            .Add(FRM.Label_General_DataSet_Directory)
+            .Add(FRM.TextBox_General_DataSet_Directory)
+            .Add(FRM.Label_General_DataSet_Filname)
+            .Add(FRM.TextBox_General_DataSet_Filename)
+            .Add(FRM.Button_General_DataSet)
 
             .Add(FRM.GroupBox_General_Import)
             .Add(FRM.TableLayoutPanel_General_Import)
-
             .Add(FRM.Label_General_Import_Directory)
             .Add(FRM.TextBox_General_Import_Directory)
-
-            .Add(FRM.Label_General_Import_Filename)
+            .Add(FRM.Label_General_Import_Filname)
             .Add(FRM.TextBox_General_Import_Filename)
-
             .Add(FRM.Button_General_Import)
 
-            .Add(FRM.Label_Export)
-            .Add(FRM.TextBox_Export)
-            .Add(FRM.Button_Export)
+            .Add(FRM.GroupBox_General_Export)
+            .Add(FRM.TableLayoutPanel_General_Export)
+            .Add(FRM.Label_General_Export_Directory)
+            .Add(FRM.TextBox_General_Export_Directory)
+            .Add(FRM.Label_General_Export_Filname)
+            .Add(FRM.TextBox_General_Export_Filename)
+            .Add(FRM.Button_General_Export)
 
-            .Add(FRM.Label_DataSet)
-            .Add(FRM.TextBox_DataSet)
-            .Add(FRM.Button_DataSet)
+            .Add(FRM.GroupBox_General_Font)
+            .Add(FRM.TableLayoutPanel_General_Font)
+            .Add(FRM.Label_General_Font_Name)
+            .Add(FRM.Label_General_Font_Name_Value)
+
+            .Add(FRM.Label_General_Font_Size)
+            .Add(FRM.Label_General_Font_Size_Value)
+
+            .Add(FRM.Label_General_Font_Style)
+            .Add(FRM.Label_General_Font_Style_Value)
+
+            '.Add(FRM.)
+            '.Add(FRM.)
+            '.Add(FRM.)
+
+
+            .Add(FRM.Button_General_Font)
+
 
         End With
 
@@ -214,6 +233,7 @@
     End Sub
     Private Sub Default_Fill_TabPage_Data()
         With ControlsListGesamt
+            .Add(FRM.GroupBox_Data)
             .Add(FRM.TabPage_Data)
             .Add(FRM.TableLayoutPanel_Data)
             .Add(FRM.BindingNavigator_CSV)
@@ -228,6 +248,8 @@
         With ControlsListGesamt
             .Add(FRM.TabPage_Table)
             .Add(FRM.DGV_Table)
+            .Add(FRM.GroupBox_Table)
+            .Add(FRM.TableLayoutPanel_Table)
         End With
     End Sub
     Private Sub Default_Fill_Formular()
@@ -318,7 +340,7 @@
                 Case FRM.ComboBox_Paper_DPI.Name
                     .Items.AddRange(New Object() {72, 96, 150, 300, 600})
                 Case FRM.ComboBox_Paper_DIN.Name
-                    .DataSource = DS.Tables("PaperDIN")
+                    .DataSource = New Class_DS().PaperDIN
                     .DisplayMember = "DIN"
                     .ValueMember = "DIN"
                     If DS.Tables("Shema").Rows.Count > 0 Then
@@ -357,8 +379,13 @@
     End Sub
     Private Sub Default_TabControl(ByRef OBJ As TabControl)
         With OBJ
-            .BackColor = Color.Transparent
+            .BackColor = Color.Red
             .Dock = DockStyle.Fill
+            .Appearance = TabAppearance.Buttons
+
+            .Margin = New Padding(0)
+            .Padding = New Point(3, 9)
+
         End With
     End Sub
     Private Sub Default_BindingNavigator(ByRef OBJ As BindingNavigator)
@@ -374,7 +401,7 @@
             .IntegralHeight = False
             Select Case .Name
                 Case FRM.ListBox_Tabellen.Name
-                    .Dock = DockStyle.Left
+                    .Dock = DockStyle.Fill
                 Case FRM.ListBox_CardRow_List.Name
                     .Dock = DockStyle.Fill
                     .AutoSize = False
@@ -434,11 +461,29 @@
         End With
     End Sub
     Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
+
         With OBJ
-            .Dock = DockStyle.Top
-            .Margin = New Padding(3, 3, 21, 3)
+
+            .Margin = New Padding(0)
             .Padding = New Padding(3)
+
+            Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
+
+            .Font = nF
+            .BackColor = Color.Transparent
+
+            Select Case .Name
+                Case FRM.GroupBox_Table.Name,
+                     FRM.GroupBox_Data.Name
+
+                    .Dock = DockStyle.Fill
+
+                Case Else
+                    .Dock = DockStyle.Top
+            End Select
+
         End With
+
     End Sub
     Private Sub Default_CheckBox(ByRef OBJ As CheckBox)
         With OBJ
@@ -458,7 +503,7 @@
             .CellBorderStyle = TableLayoutPanelCellBorderStyle.None
             .Margin = New Padding(0)
             .Padding = New Padding(0)
-            .Location = New Point(20, 20)
+            .Location = New Point(0, 0)
             .AutoScroll = False
             .BackColor = SystemColors.Control
 
@@ -475,8 +520,14 @@
                     .AutoScroll = True
                 Case FRM.TableLayoutPanel_Paper.Name
                     .AutoScroll = True
+                Case FRM.TableLayoutPanel_General_DataSet.Name
+                    .SetRowSpan(FRM.Button_General_DataSet, 2)
                 Case FRM.TableLayoutPanel_General_Import.Name
                     .SetRowSpan(FRM.Button_General_Import, 2)
+                Case FRM.TableLayoutPanel_General_Export.Name
+                    .SetRowSpan(FRM.Button_General_Export, 2)
+                Case FRM.TableLayoutPanel_General_Font.Name
+                    .SetRowSpan(FRM.Button_General_Font, 3)
             End Select
 
         End With

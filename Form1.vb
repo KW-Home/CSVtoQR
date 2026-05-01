@@ -59,7 +59,7 @@ Public Class Form1
             If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
             If DS.Tables("Shema").Rows.Count = 0 Then DS = CL_DS.NewRow_Shema(DS)
             DS.Tables("Shema").Rows(0).Item("Export") = value
-            TextBox_Export.Text = value
+            TextBox_General_Export_Directory.Text = value
         End Set
     End Property
 
@@ -68,6 +68,7 @@ Public Class Form1
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
         MySettings_Load()
+        GET_General_Fonts(MyFont)
 
     End Sub
 
@@ -118,7 +119,7 @@ Public Class Form1
 
                 ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
                 DS = CL_DS.Get_DS(DS)
-                TextBox_DataSet.Text = "Kein gültiger Pfad."
+                TextBox_General_DataSet_Directory.Text = "Kein gültiger Pfad."
 
             End If
 
@@ -162,7 +163,7 @@ Public Class Form1
     End Sub
 
     ' Hilfsmethode: selektiert gesamten Text einer TextBox beim Fokussieren (Enter-Ereignis)
-    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_General_Import_Directory.Enter, TextBox_Export.Enter
+    Private Sub TextBox_SelectAll(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.Enter, TextBox_General_Import_Directory.Enter, TextBox_General_Export_Directory.Enter
 
         Dim tb As TextBox = TryCast(sender, TextBox)
         If tb Is Nothing Then Return
@@ -278,7 +279,7 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_Export.Click
+    Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_General_Export.Click
 
         Dim SFD As New SaveFileDialog With {.Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
         If SFD.ShowDialog = DialogResult.OK Then
@@ -367,7 +368,7 @@ Public Class Form1
 
     End Sub
     Private Sub TextBox_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged,
-        TextBox_General_Import_Directory.TextChanged, TextBox_Export.TextChanged
+        TextBox_General_Import_Directory.TextChanged, TextBox_General_Export_Directory.TextChanged
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
@@ -581,17 +582,6 @@ Public Class Form1
 
 #Region "ToolStripMenu"
 
-    Private Sub ToolStripMenuItem_Font_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Font.Click
-
-        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
-        If FD.ShowDialog = DialogResult.OK Then
-            MyFont = FD.Font
-            My.Settings.MyFont = MyFont
-            My.Settings.Save()
-            CL_Default = New Class_Default(Me, DS)
-        End If
-
-    End Sub
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
         SaveFileDialog_XML()
@@ -645,7 +635,7 @@ Public Class Form1
         Return DialogResult
 
     End Function
-    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_DataSet.Click
+    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_General_DataSet.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
@@ -656,12 +646,34 @@ Public Class Form1
     End Sub
     Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
-        TextBox_DataSet.Text = e
+        TextBox_General_DataSet_Directory.Text = e
         ToolStripStatusLabel_SaveFile.Text = e
         IsModified = False
 
     End Sub
 
+    Private Sub Button_General_Font_Click(sender As Object, e As EventArgs) Handles Button_General_Font.Click
+
+        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
+        If FD.ShowDialog = DialogResult.OK Then
+            MyFont = FD.Font
+            My.Settings.MyFont = MyFont
+            My.Settings.Save()
+            CL_Default = New Class_Default(Me, DS)
+
+            GET_General_Fonts(MyFont)
+
+        End If
+
+    End Sub
+    Private Sub GET_General_Fonts(font As Font)
+        With font
+            Label_General_Font_Name_Value.Text = .Name.ToString
+            Label_General_Font_Size_Value.Text = .Size.ToString
+            Label_General_Font_Style_Value.Text = .Style.ToString
+        End With
+
+    End Sub
 #End Region
 
 End Class

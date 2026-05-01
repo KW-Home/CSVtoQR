@@ -24,8 +24,8 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label_Separator_Row_Count = New System.Windows.Forms.Label()
         Me.Label_Separator_Row_Value = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator_Column = New System.Windows.Forms.TableLayoutPanel()
@@ -51,8 +51,8 @@ Partial Class Form1
         Me.NumericUpDown_Paper_Border_Right = New System.Windows.Forms.NumericUpDown()
         Me.FontDialog_Main = New System.Windows.Forms.FontDialog()
         Me.TextBox_General_Import_Directory = New System.Windows.Forms.TextBox()
-        Me.Label_Export = New System.Windows.Forms.Label()
-        Me.TextBox_Export = New System.Windows.Forms.TextBox()
+        Me.Label_General_Export_Directory = New System.Windows.Forms.Label()
+        Me.TextBox_General_Export_Directory = New System.Windows.Forms.TextBox()
         Me.ImageList_Main = New System.Windows.Forms.ImageList(Me.components)
         Me.TableLayoutPanel_Data = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_Search_Delete = New System.Windows.Forms.Button()
@@ -71,15 +71,36 @@ Partial Class Form1
         Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.Button_Search_Refresh = New System.Windows.Forms.Button()
         Me.TabPage_Data = New System.Windows.Forms.TabPage()
+        Me.GroupBox_Data = New System.Windows.Forms.GroupBox()
         Me.TabControl_Main = New System.Windows.Forms.TabControl()
         Me.TabPage_General = New System.Windows.Forms.TabPage()
-        Me.GroupBox_Path = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel_Path = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button_DataSet = New System.Windows.Forms.Button()
-        Me.TextBox_DataSet = New System.Windows.Forms.TextBox()
-        Me.Label_DataSet = New System.Windows.Forms.Label()
+        Me.GroupBox_General_Font = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_General_Font = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button_General_Font = New System.Windows.Forms.Button()
+        Me.Label_General_Font_Name = New System.Windows.Forms.Label()
+        Me.Label_General_Font_Size = New System.Windows.Forms.Label()
+        Me.Label_General_Font_Style = New System.Windows.Forms.Label()
+        Me.Label_General_Font_Name_Value = New System.Windows.Forms.Label()
+        Me.Label_General_Font_Size_Value = New System.Windows.Forms.Label()
+        Me.Label_General_Font_Style_Value = New System.Windows.Forms.Label()
+        Me.GroupBox_General_Export = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_General_Export = New System.Windows.Forms.TableLayoutPanel()
+        Me.TextBox_General_Export_Filename = New System.Windows.Forms.TextBox()
+        Me.Label_General_Export_Filname = New System.Windows.Forms.Label()
+        Me.Button_General_Export = New System.Windows.Forms.Button()
+        Me.GroupBox_General_Import = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_General_Import = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_General_Import = New System.Windows.Forms.Button()
-        Me.Button_Export = New System.Windows.Forms.Button()
+        Me.Label_General_Import_Directory = New System.Windows.Forms.Label()
+        Me.Label_General_Import_Filname = New System.Windows.Forms.Label()
+        Me.TextBox_General_Import_Filename = New System.Windows.Forms.TextBox()
+        Me.GroupBox_General_DataSet = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_General_DataSet = New System.Windows.Forms.TableLayoutPanel()
+        Me.TextBox_General_DataSet_Filename = New System.Windows.Forms.TextBox()
+        Me.Label_General_DataSet_Filname = New System.Windows.Forms.Label()
+        Me.Button_General_DataSet = New System.Windows.Forms.Button()
+        Me.TextBox_General_DataSet_Directory = New System.Windows.Forms.TextBox()
+        Me.Label_General_DataSet_Directory = New System.Windows.Forms.Label()
         Me.TabPage_Paper = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_Paper = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox_Separator_Column = New System.Windows.Forms.GroupBox()
@@ -105,6 +126,8 @@ Partial Class Form1
         Me.TableLayoutPanel_Card = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox_Card_Size = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel_Card_Size = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label_Card_Size_Width_Unit = New System.Windows.Forms.Label()
+        Me.Label_Card_Size_Hight_Unit = New System.Windows.Forms.Label()
         Me.Label_Card_Size_Hight = New System.Windows.Forms.Label()
         Me.Label_Card_Size_Hight_Value = New System.Windows.Forms.Label()
         Me.Label_Card_Size_Width = New System.Windows.Forms.Label()
@@ -161,14 +184,12 @@ Partial Class Form1
         Me.Button_CardRow_List_Add = New System.Windows.Forms.Button()
         Me.Button_CardRow_List_Delete = New System.Windows.Forms.Button()
         Me.TabPage_Table = New System.Windows.Forms.TabPage()
-        Me.DGV_Table = New System.Windows.Forms.DataGridView()
+        Me.GroupBox_Table = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_Table = New System.Windows.Forms.TableLayoutPanel()
         Me.ListBox_Tabellen = New System.Windows.Forms.ListBox()
+        Me.DGV_Table = New System.Windows.Forms.DataGridView()
         Me.Panel_Preview = New System.Windows.Forms.Panel()
         Me.PictureBox_Preview = New System.Windows.Forms.PictureBox()
-        Me.ToolStripMenuItem_Optionen = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Font = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Anpassen = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem_Extras = New System.Windows.Forms.ToolStripMenuItem()
         Me.AlleauswählenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator05 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripSeparator04 = New System.Windows.Forms.ToolStripSeparator()
@@ -196,17 +217,6 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.SplitContainer_Main = New System.Windows.Forms.SplitContainer()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Label_Card_Size_Width_Unit = New System.Windows.Forms.Label()
-        Me.Label_Card_Size_Hight_Unit = New System.Windows.Forms.Label()
-        Me.GroupBox_General_Import = New System.Windows.Forms.GroupBox()
-        Me.GroupBox_General_Export = New System.Windows.Forms.GroupBox()
-        Me.GroupBox_General_DataSet = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel_General_Import = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel_General_Export = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel_General_DataSet = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_General_Import_Filename = New System.Windows.Forms.TextBox()
-        Me.Label_General_Import_Directory = New System.Windows.Forms.Label()
-        Me.Label_General_Import_Filename = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_Separator_Column.SuspendLayout()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Column_Value, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -223,10 +233,17 @@ Partial Class Form1
         CType(Me.BindingNavigator_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BindingNavigator_CSV.SuspendLayout()
         Me.TabPage_Data.SuspendLayout()
+        Me.GroupBox_Data.SuspendLayout()
         Me.TabControl_Main.SuspendLayout()
         Me.TabPage_General.SuspendLayout()
-        Me.GroupBox_Path.SuspendLayout()
-        Me.TableLayoutPanel_Path.SuspendLayout()
+        Me.GroupBox_General_Font.SuspendLayout()
+        Me.TableLayoutPanel_General_Font.SuspendLayout()
+        Me.GroupBox_General_Export.SuspendLayout()
+        Me.TableLayoutPanel_General_Export.SuspendLayout()
+        Me.GroupBox_General_Import.SuspendLayout()
+        Me.TableLayoutPanel_General_Import.SuspendLayout()
+        Me.GroupBox_General_DataSet.SuspendLayout()
+        Me.TableLayoutPanel_General_DataSet.SuspendLayout()
         Me.TabPage_Paper.SuspendLayout()
         Me.TableLayoutPanel_Paper.SuspendLayout()
         Me.GroupBox_Separator_Column.SuspendLayout()
@@ -261,6 +278,8 @@ Partial Class Form1
         Me.GroupBox_CardRow_List.SuspendLayout()
         Me.TableLayoutPanel_CardRow_List.SuspendLayout()
         Me.TabPage_Table.SuspendLayout()
+        Me.GroupBox_Table.SuspendLayout()
+        Me.TableLayoutPanel_Table.SuspendLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel_Preview.SuspendLayout()
         CType(Me.PictureBox_Preview, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -271,10 +290,6 @@ Partial Class Form1
         Me.SplitContainer_Main.Panel2.SuspendLayout()
         Me.SplitContainer_Main.SuspendLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox_General_Import.SuspendLayout()
-        Me.GroupBox_General_Export.SuspendLayout()
-        Me.GroupBox_General_DataSet.SuspendLayout()
-        Me.TableLayoutPanel_General_Import.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row_Count
@@ -311,6 +326,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Separator_Column.Controls.Add(Me.Label_Separator_Column_Value, 0, 1)
         Me.TableLayoutPanel_Separator_Column.Controls.Add(Me.NumericUpDown_Separator_Column_Count, 1, 0)
         Me.TableLayoutPanel_Separator_Column.Controls.Add(Me.NumericUpDown_Separator_Column_Value, 1, 1)
+        Me.TableLayoutPanel_Separator_Column.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_Separator_Column.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Separator_Column.Name = "TableLayoutPanel_Separator_Column"
         Me.TableLayoutPanel_Separator_Column.RowCount = 2
@@ -322,7 +338,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Separator_Column.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Separator_Column.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Separator_Column.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Separator_Column.Size = New System.Drawing.Size(170, 62)
+        Me.TableLayoutPanel_Separator_Column.Size = New System.Drawing.Size(348, 64)
         Me.TableLayoutPanel_Separator_Column.TabIndex = 0
         Me.TableLayoutPanel_Separator_Column.Tag = "Decimal"
         '
@@ -395,9 +411,10 @@ Partial Class Form1
         '
         Me.GroupBox_Separator_Row.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.GroupBox_Separator_Row.Controls.Add(Me.TableLayoutPanel_Separator_Column)
-        Me.GroupBox_Separator_Row.Location = New System.Drawing.Point(3, 400)
+        Me.GroupBox_Separator_Row.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Separator_Row.Location = New System.Drawing.Point(3, 381)
         Me.GroupBox_Separator_Row.Name = "GroupBox_Separator_Row"
-        Me.GroupBox_Separator_Row.Size = New System.Drawing.Size(179, 83)
+        Me.GroupBox_Separator_Row.Size = New System.Drawing.Size(354, 83)
         Me.GroupBox_Separator_Row.TabIndex = 3
         Me.GroupBox_Separator_Row.TabStop = False
         Me.GroupBox_Separator_Row.Text = "Separatoren Spalte"
@@ -525,33 +542,33 @@ Partial Class Form1
         '
         'TextBox_General_Import_Directory
         '
-        Me.TextBox_General_Import_Directory.Location = New System.Drawing.Point(68, 9)
-        Me.TextBox_General_Import_Directory.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.TextBox_General_Import_Directory.Location = New System.Drawing.Point(65, 0)
+        Me.TextBox_General_Import_Directory.Margin = New System.Windows.Forms.Padding(0)
         Me.TextBox_General_Import_Directory.Name = "TextBox_General_Import_Directory"
         Me.TextBox_General_Import_Directory.Size = New System.Drawing.Size(76, 20)
         Me.TextBox_General_Import_Directory.TabIndex = 0
         Me.TextBox_General_Import_Directory.Tag = "Import"
         '
-        'Label_Export
+        'Label_General_Export_Directory
         '
-        Me.Label_Export.AutoSize = True
-        Me.Label_Export.Location = New System.Drawing.Point(3, 9)
-        Me.Label_Export.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.Label_Export.Name = "Label_Export"
-        Me.Label_Export.Size = New System.Drawing.Size(37, 17)
-        Me.Label_Export.TabIndex = 5
-        Me.Label_Export.Text = "Export"
-        Me.Label_Export.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Export.UseCompatibleTextRendering = True
+        Me.Label_General_Export_Directory.AutoSize = True
+        Me.Label_General_Export_Directory.Location = New System.Drawing.Point(3, 9)
+        Me.Label_General_Export_Directory.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_Export_Directory.Name = "Label_General_Export_Directory"
+        Me.Label_General_Export_Directory.Size = New System.Drawing.Size(39, 17)
+        Me.Label_General_Export_Directory.TabIndex = 5
+        Me.Label_General_Export_Directory.Text = "Ordner"
+        Me.Label_General_Export_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_Export_Directory.UseCompatibleTextRendering = True
         '
-        'TextBox_Export
+        'TextBox_General_Export_Directory
         '
-        Me.TextBox_Export.Location = New System.Drawing.Point(54, 9)
-        Me.TextBox_Export.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.TextBox_Export.Name = "TextBox_Export"
-        Me.TextBox_Export.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_Export.TabIndex = 1
-        Me.TextBox_Export.Tag = "Export"
+        Me.TextBox_General_Export_Directory.Location = New System.Drawing.Point(65, 0)
+        Me.TextBox_General_Export_Directory.Margin = New System.Windows.Forms.Padding(0)
+        Me.TextBox_General_Export_Directory.Name = "TextBox_General_Export_Directory"
+        Me.TextBox_General_Export_Directory.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox_General_Export_Directory.TabIndex = 1
+        Me.TextBox_General_Export_Directory.Tag = "Export"
         '
         'ImageList_Main
         '
@@ -563,10 +580,12 @@ Partial Class Form1
         Me.ImageList_Main.Images.SetKeyName(3, "ZoomOut")
         Me.ImageList_Main.Images.SetKeyName(4, "Refresh_Arrow_Green")
         Me.ImageList_Main.Images.SetKeyName(5, "DatabaseSchema")
+        Me.ImageList_Main.Images.SetKeyName(6, "Font")
         '
         'TableLayoutPanel_Data
         '
         Me.TableLayoutPanel_Data.AutoSize = True
+        Me.TableLayoutPanel_Data.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel_Data.ColumnCount = 3
         Me.TableLayoutPanel_Data.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Data.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -577,7 +596,8 @@ Partial Class Form1
         Me.TableLayoutPanel_Data.Controls.Add(Me.DGV_CSV, 0, 2)
         Me.TableLayoutPanel_Data.Controls.Add(Me.BindingNavigator_CSV, 0, 1)
         Me.TableLayoutPanel_Data.Controls.Add(Me.Button_Search_Refresh, 2, 1)
-        Me.TableLayoutPanel_Data.Location = New System.Drawing.Point(6, 6)
+        Me.TableLayoutPanel_Data.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Data.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Data.Name = "TableLayoutPanel_Data"
         Me.TableLayoutPanel_Data.RowCount = 3
         Me.TableLayoutPanel_Data.RowStyles.Add(New System.Windows.Forms.RowStyle())
@@ -585,7 +605,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Data.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Data.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Data.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Data.Size = New System.Drawing.Size(291, 149)
+        Me.TableLayoutPanel_Data.Size = New System.Drawing.Size(354, 491)
         Me.TableLayoutPanel_Data.TabIndex = 0
         '
         'Button_Search_Delete
@@ -594,7 +614,7 @@ Partial Class Form1
         Me.Button_Search_Delete.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Search_Delete.ImageKey = "ZoomOut"
         Me.Button_Search_Delete.ImageList = Me.ImageList_Main
-        Me.Button_Search_Delete.Location = New System.Drawing.Point(250, 3)
+        Me.Button_Search_Delete.Location = New System.Drawing.Point(313, 3)
         Me.Button_Search_Delete.Name = "Button_Search_Delete"
         Me.Button_Search_Delete.Size = New System.Drawing.Size(38, 38)
         Me.Button_Search_Delete.TabIndex = 46
@@ -602,8 +622,8 @@ Partial Class Form1
         '
         'DGV_Search
         '
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.White
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -624,7 +644,7 @@ Partial Class Form1
         Me.Button_Search_Add.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Search_Add.ImageKey = "ZoomIn"
         Me.Button_Search_Add.ImageList = Me.ImageList_Main
-        Me.Button_Search_Add.Location = New System.Drawing.Point(250, 91)
+        Me.Button_Search_Add.Location = New System.Drawing.Point(313, 91)
         Me.Button_Search_Add.Name = "Button_Search_Add"
         Me.Button_Search_Add.Size = New System.Drawing.Size(38, 38)
         Me.Button_Search_Add.TabIndex = 47
@@ -632,8 +652,8 @@ Partial Class Form1
         '
         'DGV_CSV
         '
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -742,7 +762,7 @@ Partial Class Form1
         Me.Button_Search_Refresh.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Search_Refresh.ImageKey = "Refresh_Arrow_Green"
         Me.Button_Search_Refresh.ImageList = Me.ImageList_Main
-        Me.Button_Search_Refresh.Location = New System.Drawing.Point(250, 47)
+        Me.Button_Search_Refresh.Location = New System.Drawing.Point(313, 47)
         Me.Button_Search_Refresh.Name = "Button_Search_Refresh"
         Me.Button_Search_Refresh.Size = New System.Drawing.Size(38, 38)
         Me.Button_Search_Refresh.TabIndex = 48
@@ -751,13 +771,25 @@ Partial Class Form1
         'TabPage_Data
         '
         Me.TabPage_Data.BackColor = System.Drawing.Color.Transparent
-        Me.TabPage_Data.Controls.Add(Me.TableLayoutPanel_Data)
+        Me.TabPage_Data.Controls.Add(Me.GroupBox_Data)
         Me.TabPage_Data.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Data.Name = "TabPage_Data"
         Me.TabPage_Data.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Data.Size = New System.Drawing.Size(284, 167)
+        Me.TabPage_Data.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_Data.TabIndex = 5
         Me.TabPage_Data.Text = "Daten"
+        '
+        'GroupBox_Data
+        '
+        Me.GroupBox_Data.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox_Data.Controls.Add(Me.TableLayoutPanel_Data)
+        Me.GroupBox_Data.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox_Data.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox_Data.Name = "GroupBox_Data"
+        Me.GroupBox_Data.Size = New System.Drawing.Size(360, 510)
+        Me.GroupBox_Data.TabIndex = 1
+        Me.GroupBox_Data.TabStop = False
+        Me.GroupBox_Data.Text = "Daten aus dem Import"
         '
         'TabControl_Main
         '
@@ -767,92 +799,239 @@ Partial Class Form1
         Me.TabControl_Main.Controls.Add(Me.TabPage_CardRow)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Data)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Table)
+        Me.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl_Main.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl_Main.Margin = New System.Windows.Forms.Padding(29)
         Me.TabControl_Main.Multiline = True
         Me.TabControl_Main.Name = "TabControl_Main"
+        Me.TabControl_Main.Padding = New System.Drawing.Point(0, 0)
         Me.TabControl_Main.SelectedIndex = 0
-        Me.TabControl_Main.Size = New System.Drawing.Size(297, 487)
+        Me.TabControl_Main.Size = New System.Drawing.Size(374, 542)
         Me.TabControl_Main.TabIndex = 5
         '
         'TabPage_General
         '
-        Me.TabPage_General.Controls.Add(Me.GroupBox_General_DataSet)
+        Me.TabPage_General.AutoScroll = True
+        Me.TabPage_General.Controls.Add(Me.GroupBox_General_Font)
         Me.TabPage_General.Controls.Add(Me.GroupBox_General_Export)
         Me.TabPage_General.Controls.Add(Me.GroupBox_General_Import)
-        Me.TabPage_General.Controls.Add(Me.GroupBox_Path)
+        Me.TabPage_General.Controls.Add(Me.GroupBox_General_DataSet)
         Me.TabPage_General.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_General.Name = "TabPage_General"
         Me.TabPage_General.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_General.Size = New System.Drawing.Size(289, 461)
+        Me.TabPage_General.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_General.TabIndex = 8
         Me.TabPage_General.Text = "Allgemein"
         Me.TabPage_General.UseVisualStyleBackColor = True
         '
-        'GroupBox_Path
+        'GroupBox_General_Font
         '
-        Me.GroupBox_Path.Controls.Add(Me.TableLayoutPanel_Path)
-        Me.GroupBox_Path.Location = New System.Drawing.Point(6, 6)
-        Me.GroupBox_Path.Name = "GroupBox_Path"
-        Me.GroupBox_Path.Size = New System.Drawing.Size(218, 163)
-        Me.GroupBox_Path.TabIndex = 1
-        Me.GroupBox_Path.TabStop = False
-        Me.GroupBox_Path.Text = "Datenpfade"
+        Me.GroupBox_General_Font.Controls.Add(Me.TableLayoutPanel_General_Font)
+        Me.GroupBox_General_Font.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_General_Font.Location = New System.Drawing.Point(3, 274)
+        Me.GroupBox_General_Font.Margin = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Font.Name = "GroupBox_General_Font"
+        Me.GroupBox_General_Font.Padding = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Font.Size = New System.Drawing.Size(360, 65)
+        Me.GroupBox_General_Font.TabIndex = 4
+        Me.GroupBox_General_Font.TabStop = False
+        Me.GroupBox_General_Font.Text = "Schriftart"
         '
-        'TableLayoutPanel_Path
+        'TableLayoutPanel_General_Font
         '
-        Me.TableLayoutPanel_Path.AutoSize = True
-        Me.TableLayoutPanel_Path.ColumnCount = 3
-        Me.TableLayoutPanel_Path.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Path.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_Path.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Path.Controls.Add(Me.Button_DataSet, 2, 2)
-        Me.TableLayoutPanel_Path.Controls.Add(Me.TextBox_DataSet, 1, 2)
-        Me.TableLayoutPanel_Path.Controls.Add(Me.Label_DataSet, 0, 2)
-        Me.TableLayoutPanel_Path.Controls.Add(Me.Button_Export, 2, 1)
-        Me.TableLayoutPanel_Path.Controls.Add(Me.Label_Export, 0, 1)
-        Me.TableLayoutPanel_Path.Controls.Add(Me.TextBox_Export, 1, 1)
-        Me.TableLayoutPanel_Path.Location = New System.Drawing.Point(6, 19)
-        Me.TableLayoutPanel_Path.Name = "TableLayoutPanel_Path"
-        Me.TableLayoutPanel_Path.RowCount = 3
-        Me.TableLayoutPanel_Path.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Path.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Path.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Path.Size = New System.Drawing.Size(199, 132)
-        Me.TableLayoutPanel_Path.TabIndex = 0
+        Me.TableLayoutPanel_General_Font.AutoSize = True
+        Me.TableLayoutPanel_General_Font.ColumnCount = 3
+        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Button_General_Font, 2, 0)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Name, 0, 0)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Size, 0, 1)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Style, 0, 2)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Name_Value, 1, 0)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Size_Value, 1, 1)
+        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Style_Value, 1, 2)
+        Me.TableLayoutPanel_General_Font.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_General_Font.Location = New System.Drawing.Point(0, 13)
+        Me.TableLayoutPanel_General_Font.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel_General_Font.Name = "TableLayoutPanel_General_Font"
+        Me.TableLayoutPanel_General_Font.RowCount = 3
+        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_General_Font.Size = New System.Drawing.Size(360, 52)
+        Me.TableLayoutPanel_General_Font.TabIndex = 0
         '
-        'Button_DataSet
+        'Button_General_Font
         '
-        Me.Button_DataSet.AutoSize = True
-        Me.Button_DataSet.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_DataSet.ImageKey = "DatabaseSchema"
-        Me.Button_DataSet.ImageList = Me.ImageList_Main
-        Me.Button_DataSet.Location = New System.Drawing.Point(158, 47)
-        Me.Button_DataSet.Name = "Button_DataSet"
-        Me.Button_DataSet.Size = New System.Drawing.Size(38, 38)
-        Me.Button_DataSet.TabIndex = 10
-        Me.Button_DataSet.Text = "..."
-        Me.Button_DataSet.UseVisualStyleBackColor = True
+        Me.Button_General_Font.AutoSize = True
+        Me.Button_General_Font.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_General_Font.ImageKey = "Font"
+        Me.Button_General_Font.ImageList = Me.ImageList_Main
+        Me.Button_General_Font.Location = New System.Drawing.Point(319, 3)
+        Me.Button_General_Font.Name = "Button_General_Font"
+        Me.TableLayoutPanel_General_Font.SetRowSpan(Me.Button_General_Font, 3)
+        Me.Button_General_Font.Size = New System.Drawing.Size(38, 38)
+        Me.Button_General_Font.TabIndex = 8
+        Me.Button_General_Font.UseVisualStyleBackColor = True
         '
-        'TextBox_DataSet
+        'Label_General_Font_Name
         '
-        Me.TextBox_DataSet.Location = New System.Drawing.Point(54, 53)
-        Me.TextBox_DataSet.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.TextBox_DataSet.Name = "TextBox_DataSet"
-        Me.TextBox_DataSet.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_DataSet.TabIndex = 9
-        Me.TextBox_DataSet.Tag = "Export"
+        Me.Label_General_Font_Name.AutoSize = True
+        Me.Label_General_Font_Name.Location = New System.Drawing.Point(3, 0)
+        Me.Label_General_Font_Name.Name = "Label_General_Font_Name"
+        Me.Label_General_Font_Name.Size = New System.Drawing.Size(35, 13)
+        Me.Label_General_Font_Name.TabIndex = 9
+        Me.Label_General_Font_Name.Text = "Name"
         '
-        'Label_DataSet
+        'Label_General_Font_Size
         '
-        Me.Label_DataSet.AutoSize = True
-        Me.Label_DataSet.Location = New System.Drawing.Point(3, 53)
-        Me.Label_DataSet.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.Label_DataSet.Name = "Label_DataSet"
-        Me.Label_DataSet.Size = New System.Drawing.Size(45, 17)
-        Me.Label_DataSet.TabIndex = 8
-        Me.Label_DataSet.Text = "DataSet"
-        Me.Label_DataSet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_DataSet.UseCompatibleTextRendering = True
+        Me.Label_General_Font_Size.AutoSize = True
+        Me.Label_General_Font_Size.Location = New System.Drawing.Point(3, 13)
+        Me.Label_General_Font_Size.Name = "Label_General_Font_Size"
+        Me.Label_General_Font_Size.Size = New System.Drawing.Size(27, 13)
+        Me.Label_General_Font_Size.TabIndex = 10
+        Me.Label_General_Font_Size.Text = "Size"
+        '
+        'Label_General_Font_Style
+        '
+        Me.Label_General_Font_Style.AutoSize = True
+        Me.Label_General_Font_Style.Location = New System.Drawing.Point(3, 26)
+        Me.Label_General_Font_Style.Name = "Label_General_Font_Style"
+        Me.Label_General_Font_Style.Size = New System.Drawing.Size(30, 13)
+        Me.Label_General_Font_Style.TabIndex = 11
+        Me.Label_General_Font_Style.Text = "Style"
+        '
+        'Label_General_Font_Name_Value
+        '
+        Me.Label_General_Font_Name_Value.AutoSize = True
+        Me.Label_General_Font_Name_Value.Location = New System.Drawing.Point(44, 0)
+        Me.Label_General_Font_Name_Value.Name = "Label_General_Font_Name_Value"
+        Me.Label_General_Font_Name_Value.Size = New System.Drawing.Size(39, 13)
+        Me.Label_General_Font_Name_Value.TabIndex = 13
+        Me.Label_General_Font_Name_Value.Text = "Label5"
+        '
+        'Label_General_Font_Size_Value
+        '
+        Me.Label_General_Font_Size_Value.AutoSize = True
+        Me.Label_General_Font_Size_Value.Location = New System.Drawing.Point(44, 13)
+        Me.Label_General_Font_Size_Value.Name = "Label_General_Font_Size_Value"
+        Me.Label_General_Font_Size_Value.Size = New System.Drawing.Size(39, 13)
+        Me.Label_General_Font_Size_Value.TabIndex = 14
+        Me.Label_General_Font_Size_Value.Text = "Label6"
+        '
+        'Label_General_Font_Style_Value
+        '
+        Me.Label_General_Font_Style_Value.AutoSize = True
+        Me.Label_General_Font_Style_Value.Location = New System.Drawing.Point(44, 26)
+        Me.Label_General_Font_Style_Value.Name = "Label_General_Font_Style_Value"
+        Me.Label_General_Font_Style_Value.Size = New System.Drawing.Size(39, 13)
+        Me.Label_General_Font_Style_Value.TabIndex = 15
+        Me.Label_General_Font_Style_Value.Text = "Label7"
+        '
+        'GroupBox_General_Export
+        '
+        Me.GroupBox_General_Export.Controls.Add(Me.TableLayoutPanel_General_Export)
+        Me.GroupBox_General_Export.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_General_Export.Location = New System.Drawing.Point(3, 190)
+        Me.GroupBox_General_Export.Margin = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Export.Name = "GroupBox_General_Export"
+        Me.GroupBox_General_Export.Padding = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Export.Size = New System.Drawing.Size(360, 84)
+        Me.GroupBox_General_Export.TabIndex = 3
+        Me.GroupBox_General_Export.TabStop = False
+        Me.GroupBox_General_Export.Text = "Export"
+        '
+        'TableLayoutPanel_General_Export
+        '
+        Me.TableLayoutPanel_General_Export.ColumnCount = 3
+        Me.TableLayoutPanel_General_Export.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Export.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_General_Export.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Export.Controls.Add(Me.TextBox_General_Export_Filename, 1, 1)
+        Me.TableLayoutPanel_General_Export.Controls.Add(Me.Label_General_Export_Filname, 0, 1)
+        Me.TableLayoutPanel_General_Export.Controls.Add(Me.Label_General_Export_Directory, 0, 0)
+        Me.TableLayoutPanel_General_Export.Controls.Add(Me.TextBox_General_Export_Directory, 1, 0)
+        Me.TableLayoutPanel_General_Export.Controls.Add(Me.Button_General_Export, 2, 0)
+        Me.TableLayoutPanel_General_Export.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_General_Export.Location = New System.Drawing.Point(0, 13)
+        Me.TableLayoutPanel_General_Export.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel_General_Export.Name = "TableLayoutPanel_General_Export"
+        Me.TableLayoutPanel_General_Export.RowCount = 2
+        Me.TableLayoutPanel_General_Export.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Export.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Export.Size = New System.Drawing.Size(360, 71)
+        Me.TableLayoutPanel_General_Export.TabIndex = 0
+        '
+        'TextBox_General_Export_Filename
+        '
+        Me.TextBox_General_Export_Filename.Location = New System.Drawing.Point(65, 35)
+        Me.TextBox_General_Export_Filename.Margin = New System.Windows.Forms.Padding(0)
+        Me.TextBox_General_Export_Filename.Name = "TextBox_General_Export_Filename"
+        Me.TextBox_General_Export_Filename.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox_General_Export_Filename.TabIndex = 13
+        '
+        'Label_General_Export_Filname
+        '
+        Me.Label_General_Export_Filname.AutoSize = True
+        Me.Label_General_Export_Filname.Location = New System.Drawing.Point(3, 44)
+        Me.Label_General_Export_Filname.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_Export_Filname.Name = "Label_General_Export_Filname"
+        Me.Label_General_Export_Filname.Size = New System.Drawing.Size(59, 17)
+        Me.Label_General_Export_Filname.TabIndex = 12
+        Me.Label_General_Export_Filname.Text = "Dateiname"
+        Me.Label_General_Export_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_Export_Filname.UseCompatibleTextRendering = True
+        '
+        'Button_General_Export
+        '
+        Me.Button_General_Export.AutoSize = True
+        Me.Button_General_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_General_Export.ImageKey = "File_Printer"
+        Me.Button_General_Export.ImageList = Me.ImageList_Main
+        Me.Button_General_Export.Location = New System.Drawing.Point(319, 3)
+        Me.Button_General_Export.Name = "Button_General_Export"
+        Me.TableLayoutPanel_General_Export.SetRowSpan(Me.Button_General_Export, 2)
+        Me.Button_General_Export.Size = New System.Drawing.Size(38, 38)
+        Me.Button_General_Export.TabIndex = 7
+        Me.Button_General_Export.UseVisualStyleBackColor = True
+        '
+        'GroupBox_General_Import
+        '
+        Me.GroupBox_General_Import.Controls.Add(Me.TableLayoutPanel_General_Import)
+        Me.GroupBox_General_Import.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_General_Import.Location = New System.Drawing.Point(3, 83)
+        Me.GroupBox_General_Import.Margin = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Import.Name = "GroupBox_General_Import"
+        Me.GroupBox_General_Import.Padding = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_Import.Size = New System.Drawing.Size(360, 107)
+        Me.GroupBox_General_Import.TabIndex = 2
+        Me.GroupBox_General_Import.TabStop = False
+        Me.GroupBox_General_Import.Text = "CSV Import"
+        '
+        'TableLayoutPanel_General_Import
+        '
+        Me.TableLayoutPanel_General_Import.AutoSize = True
+        Me.TableLayoutPanel_General_Import.ColumnCount = 3
+        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Button_General_Import, 2, 0)
+        Me.TableLayoutPanel_General_Import.Controls.Add(Me.TextBox_General_Import_Directory, 1, 0)
+        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Label_General_Import_Directory, 0, 0)
+        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Label_General_Import_Filname, 0, 1)
+        Me.TableLayoutPanel_General_Import.Controls.Add(Me.TextBox_General_Import_Filename, 1, 1)
+        Me.TableLayoutPanel_General_Import.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_General_Import.Location = New System.Drawing.Point(0, 13)
+        Me.TableLayoutPanel_General_Import.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel_General_Import.Name = "TableLayoutPanel_General_Import"
+        Me.TableLayoutPanel_General_Import.RowCount = 2
+        Me.TableLayoutPanel_General_Import.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Import.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_Import.Size = New System.Drawing.Size(360, 94)
+        Me.TableLayoutPanel_General_Import.TabIndex = 0
         '
         'Button_General_Import
         '
@@ -860,26 +1039,135 @@ Partial Class Form1
         Me.Button_General_Import.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_General_Import.ImageKey = "Import"
         Me.Button_General_Import.ImageList = Me.ImageList_Main
-        Me.Button_General_Import.Location = New System.Drawing.Point(160, 3)
+        Me.Button_General_Import.Location = New System.Drawing.Point(319, 3)
         Me.Button_General_Import.Name = "Button_General_Import"
         Me.TableLayoutPanel_General_Import.SetRowSpan(Me.Button_General_Import, 2)
         Me.Button_General_Import.Size = New System.Drawing.Size(38, 38)
         Me.Button_General_Import.TabIndex = 6
-        Me.Button_General_Import.Text = "..."
         Me.Button_General_Import.UseVisualStyleBackColor = True
         '
-        'Button_Export
+        'Label_General_Import_Directory
         '
-        Me.Button_Export.AutoSize = True
-        Me.Button_Export.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_Export.ImageKey = "File_Printer"
-        Me.Button_Export.ImageList = Me.ImageList_Main
-        Me.Button_Export.Location = New System.Drawing.Point(158, 3)
-        Me.Button_Export.Name = "Button_Export"
-        Me.Button_Export.Size = New System.Drawing.Size(38, 38)
-        Me.Button_Export.TabIndex = 7
-        Me.Button_Export.Text = "..."
-        Me.Button_Export.UseVisualStyleBackColor = True
+        Me.Label_General_Import_Directory.AutoSize = True
+        Me.Label_General_Import_Directory.Location = New System.Drawing.Point(3, 9)
+        Me.Label_General_Import_Directory.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_Import_Directory.Name = "Label_General_Import_Directory"
+        Me.Label_General_Import_Directory.Size = New System.Drawing.Size(39, 17)
+        Me.Label_General_Import_Directory.TabIndex = 3
+        Me.Label_General_Import_Directory.Text = "Ordner"
+        Me.Label_General_Import_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_Import_Directory.UseCompatibleTextRendering = True
+        '
+        'Label_General_Import_Filname
+        '
+        Me.Label_General_Import_Filname.AutoSize = True
+        Me.Label_General_Import_Filname.Location = New System.Drawing.Point(3, 44)
+        Me.Label_General_Import_Filname.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_Import_Filname.Name = "Label_General_Import_Filname"
+        Me.Label_General_Import_Filname.Size = New System.Drawing.Size(59, 17)
+        Me.Label_General_Import_Filname.TabIndex = 8
+        Me.Label_General_Import_Filname.Text = "Dateiname"
+        Me.Label_General_Import_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_Import_Filname.UseCompatibleTextRendering = True
+        '
+        'TextBox_General_Import_Filename
+        '
+        Me.TextBox_General_Import_Filename.Location = New System.Drawing.Point(65, 35)
+        Me.TextBox_General_Import_Filename.Margin = New System.Windows.Forms.Padding(0)
+        Me.TextBox_General_Import_Filename.Name = "TextBox_General_Import_Filename"
+        Me.TextBox_General_Import_Filename.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox_General_Import_Filename.TabIndex = 7
+        '
+        'GroupBox_General_DataSet
+        '
+        Me.GroupBox_General_DataSet.Controls.Add(Me.TableLayoutPanel_General_DataSet)
+        Me.GroupBox_General_DataSet.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_General_DataSet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox_General_DataSet.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox_General_DataSet.Margin = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_DataSet.Name = "GroupBox_General_DataSet"
+        Me.GroupBox_General_DataSet.Padding = New System.Windows.Forms.Padding(0)
+        Me.GroupBox_General_DataSet.Size = New System.Drawing.Size(360, 80)
+        Me.GroupBox_General_DataSet.TabIndex = 1
+        Me.GroupBox_General_DataSet.TabStop = False
+        Me.GroupBox_General_DataSet.Text = "Datenpfade"
+        '
+        'TableLayoutPanel_General_DataSet
+        '
+        Me.TableLayoutPanel_General_DataSet.ColumnCount = 3
+        Me.TableLayoutPanel_General_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_General_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_General_DataSet.Controls.Add(Me.TextBox_General_DataSet_Filename, 1, 1)
+        Me.TableLayoutPanel_General_DataSet.Controls.Add(Me.Label_General_DataSet_Filname, 0, 1)
+        Me.TableLayoutPanel_General_DataSet.Controls.Add(Me.Button_General_DataSet, 2, 0)
+        Me.TableLayoutPanel_General_DataSet.Controls.Add(Me.TextBox_General_DataSet_Directory, 1, 0)
+        Me.TableLayoutPanel_General_DataSet.Controls.Add(Me.Label_General_DataSet_Directory, 0, 0)
+        Me.TableLayoutPanel_General_DataSet.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_General_DataSet.Location = New System.Drawing.Point(0, 13)
+        Me.TableLayoutPanel_General_DataSet.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel_General_DataSet.Name = "TableLayoutPanel_General_DataSet"
+        Me.TableLayoutPanel_General_DataSet.RowCount = 2
+        Me.TableLayoutPanel_General_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General_DataSet.Size = New System.Drawing.Size(360, 67)
+        Me.TableLayoutPanel_General_DataSet.TabIndex = 0
+        '
+        'TextBox_General_DataSet_Filename
+        '
+        Me.TextBox_General_DataSet_Filename.Location = New System.Drawing.Point(67, 35)
+        Me.TextBox_General_DataSet_Filename.Margin = New System.Windows.Forms.Padding(0)
+        Me.TextBox_General_DataSet_Filename.Name = "TextBox_General_DataSet_Filename"
+        Me.TextBox_General_DataSet_Filename.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox_General_DataSet_Filename.TabIndex = 12
+        '
+        'Label_General_DataSet_Filname
+        '
+        Me.Label_General_DataSet_Filname.AutoSize = True
+        Me.Label_General_DataSet_Filname.Location = New System.Drawing.Point(3, 44)
+        Me.Label_General_DataSet_Filname.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_DataSet_Filname.Name = "Label_General_DataSet_Filname"
+        Me.Label_General_DataSet_Filname.Size = New System.Drawing.Size(61, 17)
+        Me.Label_General_DataSet_Filname.TabIndex = 11
+        Me.Label_General_DataSet_Filname.Text = "Dateiname"
+        Me.Label_General_DataSet_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_DataSet_Filname.UseCompatibleTextRendering = True
+        '
+        'Button_General_DataSet
+        '
+        Me.Button_General_DataSet.AutoSize = True
+        Me.Button_General_DataSet.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_General_DataSet.ImageKey = "DatabaseSchema"
+        Me.Button_General_DataSet.ImageList = Me.ImageList_Main
+        Me.Button_General_DataSet.Location = New System.Drawing.Point(319, 3)
+        Me.Button_General_DataSet.Name = "Button_General_DataSet"
+        Me.TableLayoutPanel_General_DataSet.SetRowSpan(Me.Button_General_DataSet, 2)
+        Me.Button_General_DataSet.Size = New System.Drawing.Size(38, 38)
+        Me.Button_General_DataSet.TabIndex = 10
+        Me.Button_General_DataSet.UseVisualStyleBackColor = True
+        '
+        'TextBox_General_DataSet_Directory
+        '
+        Me.TextBox_General_DataSet_Directory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.TextBox_General_DataSet_Directory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
+        Me.TextBox_General_DataSet_Directory.Location = New System.Drawing.Point(67, 0)
+        Me.TextBox_General_DataSet_Directory.Margin = New System.Windows.Forms.Padding(0)
+        Me.TextBox_General_DataSet_Directory.Name = "TextBox_General_DataSet_Directory"
+        Me.TextBox_General_DataSet_Directory.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox_General_DataSet_Directory.TabIndex = 9
+        Me.TextBox_General_DataSet_Directory.Tag = "Export"
+        '
+        'Label_General_DataSet_Directory
+        '
+        Me.Label_General_DataSet_Directory.AutoSize = True
+        Me.Label_General_DataSet_Directory.Location = New System.Drawing.Point(3, 9)
+        Me.Label_General_DataSet_Directory.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
+        Me.Label_General_DataSet_Directory.Name = "Label_General_DataSet_Directory"
+        Me.Label_General_DataSet_Directory.Size = New System.Drawing.Size(47, 17)
+        Me.Label_General_DataSet_Directory.TabIndex = 8
+        Me.Label_General_DataSet_Directory.Text = "DataSet"
+        Me.Label_General_DataSet_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_General_DataSet_Directory.UseCompatibleTextRendering = True
         '
         'TabPage_Paper
         '
@@ -888,7 +1176,7 @@ Partial Class Form1
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Paper.Name = "TabPage_Paper"
         Me.TabPage_Paper.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Paper.Size = New System.Drawing.Size(289, 461)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -902,7 +1190,8 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Paper_Border, 0, 1)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Separator_Row, 0, 3)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Paper_Shema, 0, 0)
-        Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(8, 6)
+        Me.TableLayoutPanel_Paper.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
         Me.TableLayoutPanel_Paper.RowCount = 4
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
@@ -910,15 +1199,16 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(191, 498)
+        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(360, 510)
         Me.TableLayoutPanel_Paper.TabIndex = 45
         '
         'GroupBox_Separator_Column
         '
         Me.GroupBox_Separator_Column.Controls.Add(Me.TableLayoutPanel_Separator_Row)
-        Me.GroupBox_Separator_Column.Location = New System.Drawing.Point(3, 298)
+        Me.GroupBox_Separator_Column.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Separator_Column.Location = New System.Drawing.Point(3, 279)
         Me.GroupBox_Separator_Column.Name = "GroupBox_Separator_Column"
-        Me.GroupBox_Separator_Column.Size = New System.Drawing.Size(179, 96)
+        Me.GroupBox_Separator_Column.Size = New System.Drawing.Size(354, 96)
         Me.GroupBox_Separator_Column.TabIndex = 29
         Me.GroupBox_Separator_Column.TabStop = False
         Me.GroupBox_Separator_Column.Text = "Separator Zeile"
@@ -934,12 +1224,13 @@ Partial Class Form1
         Me.TableLayoutPanel_Separator_Row.Controls.Add(Me.NumericUpDown_Separator_Row_Count, 1, 0)
         Me.TableLayoutPanel_Separator_Row.Controls.Add(Me.NumericUpDown_Separator_Row_Value, 1, 1)
         Me.TableLayoutPanel_Separator_Row.Controls.Add(Me.Label_Separator_Row_Value_Unit, 2, 1)
-        Me.TableLayoutPanel_Separator_Row.Location = New System.Drawing.Point(9, 19)
+        Me.TableLayoutPanel_Separator_Row.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Separator_Row.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Separator_Row.Name = "TableLayoutPanel_Separator_Row"
         Me.TableLayoutPanel_Separator_Row.RowCount = 2
         Me.TableLayoutPanel_Separator_Row.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Separator_Row.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Separator_Row.Size = New System.Drawing.Size(164, 62)
+        Me.TableLayoutPanel_Separator_Row.Size = New System.Drawing.Size(348, 77)
         Me.TableLayoutPanel_Separator_Row.TabIndex = 0
         '
         'Label_Separator_Row_Value_Unit
@@ -956,9 +1247,10 @@ Partial Class Form1
         'GroupBox_Paper_Border
         '
         Me.GroupBox_Paper_Border.Controls.Add(Me.TableLayoutPanel_Paper_Border)
-        Me.GroupBox_Paper_Border.Location = New System.Drawing.Point(3, 161)
+        Me.GroupBox_Paper_Border.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Paper_Border.Location = New System.Drawing.Point(3, 142)
         Me.GroupBox_Paper_Border.Name = "GroupBox_Paper_Border"
-        Me.GroupBox_Paper_Border.Size = New System.Drawing.Size(178, 131)
+        Me.GroupBox_Paper_Border.Size = New System.Drawing.Size(354, 131)
         Me.GroupBox_Paper_Border.TabIndex = 47
         Me.GroupBox_Paper_Border.TabStop = False
         Me.GroupBox_Paper_Border.Text = "Rahmen"
@@ -982,14 +1274,15 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper_Border.Controls.Add(Me.NumericUpDown_Paper_Border_Bottom, 1, 3)
         Me.TableLayoutPanel_Paper_Border.Controls.Add(Me.Label_Paper_Border_Bottom, 0, 3)
         Me.TableLayoutPanel_Paper_Border.Controls.Add(Me.Label_Paper_Border_Left_Unit, 2, 0)
-        Me.TableLayoutPanel_Paper_Border.Location = New System.Drawing.Point(6, 19)
+        Me.TableLayoutPanel_Paper_Border.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Paper_Border.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Paper_Border.Name = "TableLayoutPanel_Paper_Border"
         Me.TableLayoutPanel_Paper_Border.RowCount = 4
         Me.TableLayoutPanel_Paper_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Border.Size = New System.Drawing.Size(157, 104)
+        Me.TableLayoutPanel_Paper_Border.Size = New System.Drawing.Size(348, 112)
         Me.TableLayoutPanel_Paper_Border.TabIndex = 46
         '
         'Label_Paper_Border_Right_Unit
@@ -1039,9 +1332,10 @@ Partial Class Form1
         '
         Me.GroupBox_Paper_Shema.AutoSize = True
         Me.GroupBox_Paper_Shema.Controls.Add(Me.TableLayoutPanel_Paper_Shema)
+        Me.GroupBox_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox_Paper_Shema.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox_Paper_Shema.Name = "GroupBox_Paper_Shema"
-        Me.GroupBox_Paper_Shema.Size = New System.Drawing.Size(163, 152)
+        Me.GroupBox_Paper_Shema.Size = New System.Drawing.Size(354, 133)
         Me.GroupBox_Paper_Shema.TabIndex = 0
         Me.GroupBox_Paper_Shema.TabStop = False
         Me.GroupBox_Paper_Shema.Text = "Shema"
@@ -1066,7 +1360,8 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_DPI, 0, 1)
         Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_DIN, 0, 2)
         Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.ComboBox_Paper_DIN, 1, 2)
-        Me.TableLayoutPanel_Paper_Shema.Location = New System.Drawing.Point(9, 19)
+        Me.TableLayoutPanel_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Paper_Shema.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel_Paper_Shema.Name = "TableLayoutPanel_Paper_Shema"
         Me.TableLayoutPanel_Paper_Shema.RowCount = 5
         Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
@@ -1077,7 +1372,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper_Shema.Size = New System.Drawing.Size(148, 114)
+        Me.TableLayoutPanel_Paper_Shema.Size = New System.Drawing.Size(348, 114)
         Me.TableLayoutPanel_Paper_Shema.TabIndex = 0
         '
         'Label_Paper_Width_Unit
@@ -1150,7 +1445,7 @@ Partial Class Form1
         Me.TextBox_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Top
         Me.TextBox_Paper_Shema.Location = New System.Drawing.Point(43, 3)
         Me.TextBox_Paper_Shema.Name = "TextBox_Paper_Shema"
-        Me.TextBox_Paper_Shema.Size = New System.Drawing.Size(102, 20)
+        Me.TextBox_Paper_Shema.Size = New System.Drawing.Size(302, 20)
         Me.TextBox_Paper_Shema.TabIndex = 0
         Me.TextBox_Paper_Shema.Tag = "Shema"
         '
@@ -1173,7 +1468,7 @@ Partial Class Form1
         Me.TabPage_Card.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Card.Name = "TabPage_Card"
         Me.TabPage_Card.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Card.Size = New System.Drawing.Size(289, 461)
+        Me.TabPage_Card.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_Card.TabIndex = 6
         Me.TabPage_Card.Text = "Karte"
         Me.TabPage_Card.UseVisualStyleBackColor = True
@@ -1185,13 +1480,14 @@ Partial Class Form1
         Me.TableLayoutPanel_Card.Controls.Add(Me.GroupBox_Card_Size, 0, 2)
         Me.TableLayoutPanel_Card.Controls.Add(Me.GroupBox_Card_Border, 0, 1)
         Me.TableLayoutPanel_Card.Controls.Add(Me.GroupBox_Card_Font, 0, 0)
-        Me.TableLayoutPanel_Card.Location = New System.Drawing.Point(6, 6)
+        Me.TableLayoutPanel_Card.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Card.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel_Card.Name = "TableLayoutPanel_Card"
         Me.TableLayoutPanel_Card.RowCount = 3
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(171, 293)
+        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(360, 510)
         Me.TableLayoutPanel_Card.TabIndex = 3
         '
         'GroupBox_Card_Size
@@ -1223,6 +1519,28 @@ Partial Class Form1
         Me.TableLayoutPanel_Card_Size.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card_Size.Size = New System.Drawing.Size(95, 43)
         Me.TableLayoutPanel_Card_Size.TabIndex = 0
+        '
+        'Label_Card_Size_Width_Unit
+        '
+        Me.Label_Card_Size_Width_Unit.AutoSize = True
+        Me.Label_Card_Size_Width_Unit.Location = New System.Drawing.Point(59, 17)
+        Me.Label_Card_Size_Width_Unit.Name = "Label_Card_Size_Width_Unit"
+        Me.Label_Card_Size_Width_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Card_Size_Width_Unit.TabIndex = 51
+        Me.Label_Card_Size_Width_Unit.Text = "mm"
+        Me.Label_Card_Size_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Card_Size_Width_Unit.UseCompatibleTextRendering = True
+        '
+        'Label_Card_Size_Hight_Unit
+        '
+        Me.Label_Card_Size_Hight_Unit.AutoSize = True
+        Me.Label_Card_Size_Hight_Unit.Location = New System.Drawing.Point(59, 0)
+        Me.Label_Card_Size_Hight_Unit.Name = "Label_Card_Size_Hight_Unit"
+        Me.Label_Card_Size_Hight_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Card_Size_Hight_Unit.TabIndex = 52
+        Me.Label_Card_Size_Hight_Unit.Text = "mm"
+        Me.Label_Card_Size_Hight_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Card_Size_Hight_Unit.UseCompatibleTextRendering = True
         '
         'Label_Card_Size_Hight
         '
@@ -1508,7 +1826,7 @@ Partial Class Form1
         Me.TabPage_CardRow.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_CardRow.Name = "TabPage_CardRow"
         Me.TabPage_CardRow.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_CardRow.Size = New System.Drawing.Size(284, 410)
+        Me.TabPage_CardRow.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_CardRow.TabIndex = 7
         Me.TabPage_CardRow.Text = "Zeile"
         Me.TabPage_CardRow.UseVisualStyleBackColor = True
@@ -1521,13 +1839,14 @@ Partial Class Form1
         Me.TableLayoutPanel_CardRow.Controls.Add(Me.GroupBox_CardRow_Border, 0, 2)
         Me.TableLayoutPanel_CardRow.Controls.Add(Me.GroupBox_CardRow_Line, 0, 1)
         Me.TableLayoutPanel_CardRow.Controls.Add(Me.GroupBox_CardRow_List, 0, 0)
-        Me.TableLayoutPanel_CardRow.Location = New System.Drawing.Point(6, 9)
+        Me.TableLayoutPanel_CardRow.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_CardRow.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel_CardRow.Name = "TableLayoutPanel_CardRow"
         Me.TableLayoutPanel_CardRow.RowCount = 3
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(213, 390)
+        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(360, 510)
         Me.TableLayoutPanel_CardRow.TabIndex = 5
         '
         'GroupBox_CardRow_Border
@@ -1861,34 +2180,59 @@ Partial Class Form1
         '
         'TabPage_Table
         '
-        Me.TabPage_Table.Controls.Add(Me.DGV_Table)
-        Me.TabPage_Table.Controls.Add(Me.ListBox_Tabellen)
+        Me.TabPage_Table.Controls.Add(Me.GroupBox_Table)
         Me.TabPage_Table.Location = New System.Drawing.Point(4, 22)
         Me.TabPage_Table.Name = "TabPage_Table"
         Me.TabPage_Table.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Table.Size = New System.Drawing.Size(284, 522)
+        Me.TabPage_Table.Size = New System.Drawing.Size(366, 516)
         Me.TabPage_Table.TabIndex = 4
         Me.TabPage_Table.Text = "Tabellen"
         Me.TabPage_Table.UseVisualStyleBackColor = True
         '
-        'DGV_Table
+        'GroupBox_Table
         '
-        Me.DGV_Table.AllowUserToAddRows = False
-        Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV_Table.Location = New System.Drawing.Point(121, 40)
-        Me.DGV_Table.Name = "DGV_Table"
-        Me.DGV_Table.Size = New System.Drawing.Size(125, 65)
-        Me.DGV_Table.TabIndex = 0
+        Me.GroupBox_Table.Controls.Add(Me.TableLayoutPanel_Table)
+        Me.GroupBox_Table.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox_Table.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox_Table.Name = "GroupBox_Table"
+        Me.GroupBox_Table.Size = New System.Drawing.Size(360, 510)
+        Me.GroupBox_Table.TabIndex = 4
+        Me.GroupBox_Table.TabStop = False
+        Me.GroupBox_Table.Text = "System Tabellen"
+        '
+        'TableLayoutPanel_Table
+        '
+        Me.TableLayoutPanel_Table.ColumnCount = 2
+        Me.TableLayoutPanel_Table.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Table.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_Table.Controls.Add(Me.ListBox_Tabellen, 0, 0)
+        Me.TableLayoutPanel_Table.Controls.Add(Me.DGV_Table, 1, 0)
+        Me.TableLayoutPanel_Table.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Table.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel_Table.Name = "TableLayoutPanel_Table"
+        Me.TableLayoutPanel_Table.RowCount = 1
+        Me.TableLayoutPanel_Table.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Table.Size = New System.Drawing.Size(354, 491)
+        Me.TableLayoutPanel_Table.TabIndex = 3
         '
         'ListBox_Tabellen
         '
         Me.ListBox_Tabellen.BackColor = System.Drawing.SystemColors.Control
         Me.ListBox_Tabellen.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.ListBox_Tabellen.FormattingEnabled = True
-        Me.ListBox_Tabellen.Location = New System.Drawing.Point(19, 40)
+        Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 3)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
         Me.ListBox_Tabellen.Size = New System.Drawing.Size(75, 65)
         Me.ListBox_Tabellen.TabIndex = 2
+        '
+        'DGV_Table
+        '
+        Me.DGV_Table.AllowUserToAddRows = False
+        Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGV_Table.Location = New System.Drawing.Point(84, 3)
+        Me.DGV_Table.Name = "DGV_Table"
+        Me.DGV_Table.Size = New System.Drawing.Size(125, 65)
+        Me.DGV_Table.TabIndex = 0
         '
         'Panel_Preview
         '
@@ -1908,32 +2252,6 @@ Partial Class Form1
         Me.PictureBox_Preview.Size = New System.Drawing.Size(68, 53)
         Me.PictureBox_Preview.TabIndex = 45
         Me.PictureBox_Preview.TabStop = False
-        '
-        'ToolStripMenuItem_Optionen
-        '
-        Me.ToolStripMenuItem_Optionen.Name = "ToolStripMenuItem_Optionen"
-        Me.ToolStripMenuItem_Optionen.Size = New System.Drawing.Size(125, 22)
-        Me.ToolStripMenuItem_Optionen.Text = "&Optionen"
-        '
-        'ToolStripMenuItem_Font
-        '
-        Me.ToolStripMenuItem_Font.Name = "ToolStripMenuItem_Font"
-        Me.ToolStripMenuItem_Font.Size = New System.Drawing.Size(122, 22)
-        Me.ToolStripMenuItem_Font.Text = "Schriftart"
-        '
-        'ToolStripMenuItem_Anpassen
-        '
-        Me.ToolStripMenuItem_Anpassen.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Font})
-        Me.ToolStripMenuItem_Anpassen.Name = "ToolStripMenuItem_Anpassen"
-        Me.ToolStripMenuItem_Anpassen.Size = New System.Drawing.Size(125, 22)
-        Me.ToolStripMenuItem_Anpassen.Text = "&Anpassen"
-        '
-        'ToolStripMenuItem_Extras
-        '
-        Me.ToolStripMenuItem_Extras.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Anpassen, Me.ToolStripMenuItem_Optionen})
-        Me.ToolStripMenuItem_Extras.Name = "ToolStripMenuItem_Extras"
-        Me.ToolStripMenuItem_Extras.Size = New System.Drawing.Size(49, 20)
-        Me.ToolStripMenuItem_Extras.Text = "E&xtras"
         '
         'AlleauswählenToolStripMenuItem
         '
@@ -2080,11 +2398,11 @@ Partial Class Form1
         'MenuStrip_Main
         '
         Me.MenuStrip_Main.BackColor = System.Drawing.Color.Transparent
-        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem_Bearbeiten, Me.ToolStripMenuItem_Extras})
+        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem_Bearbeiten})
         Me.MenuStrip_Main.Location = New System.Drawing.Point(6, 6)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(704, 24)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(588, 24)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -2110,9 +2428,9 @@ Partial Class Form1
         'StatusStrip_Main
         '
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 663)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 572)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(704, 22)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(588, 22)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -2121,8 +2439,9 @@ Partial Class Form1
         '
         Me.SplitContainer_Main.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.SplitContainer_Main.DataBindings.Add(New System.Windows.Forms.Binding("SplitterDistance", Global.CSVtoQR.My.MySettings.Default, "MySpliter", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.SplitContainer_Main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer_Main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainer_Main.Location = New System.Drawing.Point(12, 43)
+        Me.SplitContainer_Main.Location = New System.Drawing.Point(6, 30)
         Me.SplitContainer_Main.Name = "SplitContainer_Main"
         '
         'SplitContainer_Main.Panel1
@@ -2133,139 +2452,10 @@ Partial Class Form1
         'SplitContainer_Main.Panel2
         '
         Me.SplitContainer_Main.Panel2.Controls.Add(Me.Panel_Preview)
-        Me.SplitContainer_Main.Size = New System.Drawing.Size(564, 604)
+        Me.SplitContainer_Main.Size = New System.Drawing.Size(588, 542)
         Me.SplitContainer_Main.SplitterDistance = Global.CSVtoQR.My.MySettings.Default.MySpliter
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
-        '
-        'Label_Card_Size_Width_Unit
-        '
-        Me.Label_Card_Size_Width_Unit.AutoSize = True
-        Me.Label_Card_Size_Width_Unit.Location = New System.Drawing.Point(59, 17)
-        Me.Label_Card_Size_Width_Unit.Name = "Label_Card_Size_Width_Unit"
-        Me.Label_Card_Size_Width_Unit.Size = New System.Drawing.Size(23, 17)
-        Me.Label_Card_Size_Width_Unit.TabIndex = 51
-        Me.Label_Card_Size_Width_Unit.Text = "mm"
-        Me.Label_Card_Size_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Card_Size_Width_Unit.UseCompatibleTextRendering = True
-        '
-        'Label_Card_Size_Hight_Unit
-        '
-        Me.Label_Card_Size_Hight_Unit.AutoSize = True
-        Me.Label_Card_Size_Hight_Unit.Location = New System.Drawing.Point(59, 0)
-        Me.Label_Card_Size_Hight_Unit.Name = "Label_Card_Size_Hight_Unit"
-        Me.Label_Card_Size_Hight_Unit.Size = New System.Drawing.Size(23, 17)
-        Me.Label_Card_Size_Hight_Unit.TabIndex = 52
-        Me.Label_Card_Size_Hight_Unit.Text = "mm"
-        Me.Label_Card_Size_Hight_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Card_Size_Hight_Unit.UseCompatibleTextRendering = True
-        '
-        'GroupBox_General_Import
-        '
-        Me.GroupBox_General_Import.Controls.Add(Me.TableLayoutPanel_General_Import)
-        Me.GroupBox_General_Import.Location = New System.Drawing.Point(15, 175)
-        Me.GroupBox_General_Import.Name = "GroupBox_General_Import"
-        Me.GroupBox_General_Import.Size = New System.Drawing.Size(230, 107)
-        Me.GroupBox_General_Import.TabIndex = 2
-        Me.GroupBox_General_Import.TabStop = False
-        Me.GroupBox_General_Import.Text = "CSV Import"
-        '
-        'GroupBox_General_Export
-        '
-        Me.GroupBox_General_Export.Controls.Add(Me.TableLayoutPanel_General_Export)
-        Me.GroupBox_General_Export.Location = New System.Drawing.Point(34, 316)
-        Me.GroupBox_General_Export.Name = "GroupBox_General_Export"
-        Me.GroupBox_General_Export.Size = New System.Drawing.Size(179, 52)
-        Me.GroupBox_General_Export.TabIndex = 3
-        Me.GroupBox_General_Export.TabStop = False
-        Me.GroupBox_General_Export.Text = "Export"
-        '
-        'GroupBox_General_DataSet
-        '
-        Me.GroupBox_General_DataSet.Controls.Add(Me.TableLayoutPanel_General_DataSet)
-        Me.GroupBox_General_DataSet.Location = New System.Drawing.Point(34, 374)
-        Me.GroupBox_General_DataSet.Name = "GroupBox_General_DataSet"
-        Me.GroupBox_General_DataSet.Size = New System.Drawing.Size(193, 70)
-        Me.GroupBox_General_DataSet.TabIndex = 4
-        Me.GroupBox_General_DataSet.TabStop = False
-        Me.GroupBox_General_DataSet.Text = "DataSet"
-        '
-        'TableLayoutPanel_General_Import
-        '
-        Me.TableLayoutPanel_General_Import.AutoSize = True
-        Me.TableLayoutPanel_General_Import.ColumnCount = 3
-        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_General_Import.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Button_General_Import, 2, 0)
-        Me.TableLayoutPanel_General_Import.Controls.Add(Me.TextBox_General_Import_Directory, 1, 0)
-        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Label_General_Import_Directory, 0, 0)
-        Me.TableLayoutPanel_General_Import.Controls.Add(Me.Label_General_Import_Filename, 0, 1)
-        Me.TableLayoutPanel_General_Import.Controls.Add(Me.TextBox_General_Import_Filename, 1, 1)
-        Me.TableLayoutPanel_General_Import.Location = New System.Drawing.Point(11, 21)
-        Me.TableLayoutPanel_General_Import.Name = "TableLayoutPanel_General_Import"
-        Me.TableLayoutPanel_General_Import.RowCount = 2
-        Me.TableLayoutPanel_General_Import.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General_Import.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General_Import.Size = New System.Drawing.Size(201, 73)
-        Me.TableLayoutPanel_General_Import.TabIndex = 0
-        '
-        'TableLayoutPanel_General_Export
-        '
-        Me.TableLayoutPanel_General_Export.ColumnCount = 2
-        Me.TableLayoutPanel_General_Export.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_Export.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_Export.Location = New System.Drawing.Point(24, 26)
-        Me.TableLayoutPanel_General_Export.Name = "TableLayoutPanel_General_Export"
-        Me.TableLayoutPanel_General_Export.RowCount = 2
-        Me.TableLayoutPanel_General_Export.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_Export.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_Export.Size = New System.Drawing.Size(133, 16)
-        Me.TableLayoutPanel_General_Export.TabIndex = 0
-        '
-        'TableLayoutPanel_General_DataSet
-        '
-        Me.TableLayoutPanel_General_DataSet.ColumnCount = 2
-        Me.TableLayoutPanel_General_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_DataSet.Location = New System.Drawing.Point(23, 27)
-        Me.TableLayoutPanel_General_DataSet.Name = "TableLayoutPanel_General_DataSet"
-        Me.TableLayoutPanel_General_DataSet.RowCount = 2
-        Me.TableLayoutPanel_General_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel_General_DataSet.Size = New System.Drawing.Size(152, 30)
-        Me.TableLayoutPanel_General_DataSet.TabIndex = 0
-        '
-        'TextBox_General_Import_Filename
-        '
-        Me.TextBox_General_Import_Filename.Location = New System.Drawing.Point(68, 41)
-        Me.TextBox_General_Import_Filename.Name = "TextBox_General_Import_Filename"
-        Me.TextBox_General_Import_Filename.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox_General_Import_Filename.TabIndex = 7
-        '
-        'Label_General_Import_Directory
-        '
-        Me.Label_General_Import_Directory.AutoSize = True
-        Me.Label_General_Import_Directory.Location = New System.Drawing.Point(3, 9)
-        Me.Label_General_Import_Directory.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.Label_General_Import_Directory.Name = "Label_General_Import_Directory"
-        Me.Label_General_Import_Directory.Size = New System.Drawing.Size(39, 17)
-        Me.Label_General_Import_Directory.TabIndex = 3
-        Me.Label_General_Import_Directory.Text = "Ordner"
-        Me.Label_General_Import_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_General_Import_Directory.UseCompatibleTextRendering = True
-        '
-        'Label_General_Import_Filename
-        '
-        Me.Label_General_Import_Filename.AutoSize = True
-        Me.Label_General_Import_Filename.Location = New System.Drawing.Point(3, 47)
-        Me.Label_General_Import_Filename.Margin = New System.Windows.Forms.Padding(3, 9, 3, 9)
-        Me.Label_General_Import_Filename.Name = "Label_General_Import_Filename"
-        Me.Label_General_Import_Filename.Size = New System.Drawing.Size(59, 17)
-        Me.Label_General_Import_Filename.TabIndex = 8
-        Me.Label_General_Import_Filename.Text = "Dateiname"
-        Me.Label_General_Import_Filename.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_General_Import_Filename.UseCompatibleTextRendering = True
         '
         'Form1
         '
@@ -2303,13 +2493,24 @@ Partial Class Form1
         Me.BindingNavigator_CSV.ResumeLayout(False)
         Me.BindingNavigator_CSV.PerformLayout()
         Me.TabPage_Data.ResumeLayout(False)
-        Me.TabPage_Data.PerformLayout()
+        Me.GroupBox_Data.ResumeLayout(False)
+        Me.GroupBox_Data.PerformLayout()
         Me.TabControl_Main.ResumeLayout(False)
         Me.TabPage_General.ResumeLayout(False)
-        Me.GroupBox_Path.ResumeLayout(False)
-        Me.GroupBox_Path.PerformLayout()
-        Me.TableLayoutPanel_Path.ResumeLayout(False)
-        Me.TableLayoutPanel_Path.PerformLayout()
+        Me.GroupBox_General_Font.ResumeLayout(False)
+        Me.GroupBox_General_Font.PerformLayout()
+        Me.TableLayoutPanel_General_Font.ResumeLayout(False)
+        Me.TableLayoutPanel_General_Font.PerformLayout()
+        Me.GroupBox_General_Export.ResumeLayout(False)
+        Me.TableLayoutPanel_General_Export.ResumeLayout(False)
+        Me.TableLayoutPanel_General_Export.PerformLayout()
+        Me.GroupBox_General_Import.ResumeLayout(False)
+        Me.GroupBox_General_Import.PerformLayout()
+        Me.TableLayoutPanel_General_Import.ResumeLayout(False)
+        Me.TableLayoutPanel_General_Import.PerformLayout()
+        Me.GroupBox_General_DataSet.ResumeLayout(False)
+        Me.TableLayoutPanel_General_DataSet.ResumeLayout(False)
+        Me.TableLayoutPanel_General_DataSet.PerformLayout()
         Me.TabPage_Paper.ResumeLayout(False)
         Me.TableLayoutPanel_Paper.ResumeLayout(False)
         Me.TableLayoutPanel_Paper.PerformLayout()
@@ -2359,6 +2560,8 @@ Partial Class Form1
         Me.GroupBox_CardRow_List.ResumeLayout(False)
         Me.TableLayoutPanel_CardRow_List.ResumeLayout(False)
         Me.TabPage_Table.ResumeLayout(False)
+        Me.GroupBox_Table.ResumeLayout(False)
+        Me.TableLayoutPanel_Table.ResumeLayout(False)
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel_Preview.ResumeLayout(False)
         CType(Me.PictureBox_Preview, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2371,12 +2574,6 @@ Partial Class Form1
         CType(Me.SplitContainer_Main, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer_Main.ResumeLayout(False)
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox_General_Import.ResumeLayout(False)
-        Me.GroupBox_General_Import.PerformLayout()
-        Me.GroupBox_General_Export.ResumeLayout(False)
-        Me.GroupBox_General_DataSet.ResumeLayout(False)
-        Me.TableLayoutPanel_General_Import.ResumeLayout(False)
-        Me.TableLayoutPanel_General_Import.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2402,11 +2599,11 @@ Partial Class Form1
     Friend WithEvents Label_Paper_Border_Right As Label
     Friend WithEvents FontDialog_Main As FontDialog
     Friend WithEvents TextBox_General_Import_Directory As TextBox
-    Friend WithEvents Label_Export As Label
-    Friend WithEvents TextBox_Export As TextBox
+    Friend WithEvents Label_General_Export_Directory As Label
+    Friend WithEvents TextBox_General_Export_Directory As TextBox
     Friend WithEvents Button_General_Import As Button
     Friend WithEvents ImageList_Main As ImageList
-    Friend WithEvents Button_Export As Button
+    Friend WithEvents Button_General_Export As Button
     Friend WithEvents TableLayoutPanel_Data As TableLayoutPanel
     Friend WithEvents Button_Search_Add As Button
     Friend WithEvents Button_Search_Delete As Button
@@ -2419,10 +2616,6 @@ Partial Class Form1
     Friend WithEvents TabPage_Table As TabPage
     Friend WithEvents DGV_Table As DataGridView
     Friend WithEvents ListBox_Tabellen As ListBox
-    Friend WithEvents ToolStripMenuItem_Optionen As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem_Font As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem_Anpassen As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem_Extras As ToolStripMenuItem
     Friend WithEvents AlleauswählenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator05 As ToolStripSeparator
     Friend WithEvents EinfügenToolStripMenuItem As ToolStripMenuItem
@@ -2546,20 +2739,34 @@ Partial Class Form1
     Friend WithEvents Button_CardRow_List_Add As Button
     Friend WithEvents Button_CardRow_List_Delete As Button
     Friend WithEvents TabPage_General As TabPage
-    Friend WithEvents TableLayoutPanel_Path As TableLayoutPanel
-    Friend WithEvents Button_DataSet As Button
-    Friend WithEvents TextBox_DataSet As TextBox
-    Friend WithEvents Label_DataSet As Label
-    Friend WithEvents GroupBox_Path As GroupBox
+    Friend WithEvents TableLayoutPanel_General_DataSet As TableLayoutPanel
+    Friend WithEvents Button_General_DataSet As Button
+    Friend WithEvents TextBox_General_DataSet_Directory As TextBox
+    Friend WithEvents Label_General_DataSet_Directory As Label
     Friend WithEvents Label_Card_Size_Width_Unit As Label
     Friend WithEvents Label_Card_Size_Hight_Unit As Label
     Friend WithEvents GroupBox_General_DataSet As GroupBox
-    Friend WithEvents TableLayoutPanel_General_DataSet As TableLayoutPanel
     Friend WithEvents GroupBox_General_Export As GroupBox
     Friend WithEvents TableLayoutPanel_General_Export As TableLayoutPanel
     Friend WithEvents GroupBox_General_Import As GroupBox
     Friend WithEvents TableLayoutPanel_General_Import As TableLayoutPanel
     Friend WithEvents TextBox_General_Import_Filename As TextBox
     Friend WithEvents Label_General_Import_Directory As Label
-    Friend WithEvents Label_General_Import_Filename As Label
+    Friend WithEvents Label_General_Import_Filname As Label
+    Friend WithEvents GroupBox_Table As GroupBox
+    Friend WithEvents TableLayoutPanel_Table As TableLayoutPanel
+    Friend WithEvents TextBox_General_DataSet_Filename As TextBox
+    Friend WithEvents Label_General_DataSet_Filname As Label
+    Friend WithEvents Label_General_Export_Filname As Label
+    Friend WithEvents TextBox_General_Export_Filename As TextBox
+    Friend WithEvents GroupBox_Data As GroupBox
+    Friend WithEvents GroupBox_General_Font As GroupBox
+    Friend WithEvents TableLayoutPanel_General_Font As TableLayoutPanel
+    Friend WithEvents Button_General_Font As Button
+    Friend WithEvents Label_General_Font_Name As Label
+    Friend WithEvents Label_General_Font_Size As Label
+    Friend WithEvents Label_General_Font_Style As Label
+    Friend WithEvents Label_General_Font_Name_Value As Label
+    Friend WithEvents Label_General_Font_Size_Value As Label
+    Friend WithEvents Label_General_Font_Style_Value As Label
 End Class

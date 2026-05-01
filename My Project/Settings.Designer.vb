@@ -92,7 +92,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("374")>  _
         Public Property MySpliter() As Integer
             Get
                 Return CType(Me("MySpliter"),Integer)

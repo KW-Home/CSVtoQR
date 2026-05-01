@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Werkbank\Bonus\Images\Database\DatabaseSchema_32x.png" />
+    <None Include="Werkbank\Bonus\Images\Font\Font_64x.png" />
     <Content Include="Werkbank\DataSet\DataSetNeu.xml" />
     <Content Include="Werkbank\DataSet\Standard.xml" />
   </ItemGroup>

@@ -261,7 +261,7 @@ Public Class Class_DS
         Return DS
 
     End Function
-    Public Function DT_PaperDIN() As DataTable
+    Private Function DT_PaperDIN() As DataTable
 
         Dim DT As New DataTable With {.TableName = "PaperDIN"}
         With DT
@@ -275,11 +275,9 @@ Public Class Class_DS
 
     End Function
 
-    Public Function NewRow_PaperDIN(ByRef DS As DataSet) As DataSet
+    Public Function PaperDIN() As DataTable
 
-        If DS.Tables.Contains("PaperDIN") = False Then DS.Tables.Add(DT_PaperDIN)
-
-        Dim DT As DataTable = DS.Tables("PaperDIN")
+        Dim DT As DataTable = DT_PaperDIN()
         If DT.Rows.Count = 0 Then
             With DT
                 .Rows.Add("A0", 841, 1189)
@@ -324,7 +322,7 @@ Public Class Class_DS
             End With
         End If
 
-        Return DS
+        Return DT
 
     End Function
 
