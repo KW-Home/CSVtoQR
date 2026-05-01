@@ -10,7 +10,7 @@ Public Class Form1
     Private MyFont As Font
     'Private MySavePath As String
 
-    Private CL_CSV As New Class_ImportCSV
+    Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
