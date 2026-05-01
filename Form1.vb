@@ -91,10 +91,10 @@ Public Class Form1
 
         With My.Settings
 
-            Me.Size = .MySize
-            Me.Font = .MyFont
             MyFont = .MyFont
 
+            Me.Font = MyFont
+            Me.Size = .MySize
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
@@ -116,11 +116,10 @@ Public Class Form1
                 End If
 
             Else
-
-                ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
                 DS = CL_DS.Get_DS(DS)
                 TextBox_General_DataSet_Directory.Text = "Kein gültiger Pfad."
-
+                TextBox_General_DataSet_Filename.Text = "Kein gültiger Name."
+                ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
             End If
 
         End With
@@ -646,8 +645,14 @@ Public Class Form1
     End Sub
     Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
-        TextBox_General_DataSet_Directory.Text = e
-        ToolStripStatusLabel_SaveFile.Text = e
+        Dim FI As New FileInfo(e)
+
+        With FI
+            TextBox_General_DataSet_Directory.Text = .Directory.ToString
+            TextBox_General_DataSet_Filename.Text = .Name.ToString
+            ToolStripStatusLabel_SaveFile.Text = .FullName
+        End With
+
         IsModified = False
 
     End Sub
