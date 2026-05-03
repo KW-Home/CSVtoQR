@@ -10,14 +10,7 @@
         FRM = _FRM
         DS = _DS
 
-        Default_Fill_Formular()
-        Default_Fill_TabPage_General()
-        Default_Fill_TabPage_Paper()
-        Default_Fill_TabPage_Card()
-        Default_Fill_TabPage_CardRow()
-        Default_Fill_TabPage_Data()
-        Default_Fill_TabPage_Table()
-
+        Default_Fill()
         SetDefault()
 
     End Sub
@@ -57,12 +50,19 @@
         Next
 
     End Sub
-    Private Sub Default_Fill_TabPage_General()
-
+    Private Sub Default_Fill()
         With ControlsListGesamt
-
+#Region "Formular"
+            .Add(FRM.MenuStrip_Main)
+            .Add(FRM.SplitContainer_Main)
+            .Add(FRM.TabControl_Main)
+            .Add(FRM.StatusStrip_Main)
+            .Add(FRM.ListBox_Tabellen)
+            .Add(FRM.PictureBox_Preview)
+            .Add(FRM.Panel_Preview)
+#End Region
+#Region "TabPage_General"
             .Add(FRM.TabPage_General)
-
             .Add(FRM.GroupBox_General_DataSet)
             .Add(FRM.TableLayoutPanel_General_DataSet)
             .Add(FRM.Label_General_DataSet_Directory)
@@ -70,7 +70,6 @@
             .Add(FRM.Label_General_DataSet_Filname)
             .Add(FRM.TextBox_General_DataSet_Filename)
             .Add(FRM.Button_General_DataSet)
-
             .Add(FRM.GroupBox_General_Import)
             .Add(FRM.TableLayoutPanel_General_Import)
             .Add(FRM.Label_General_Import_Directory)
@@ -78,7 +77,6 @@
             .Add(FRM.Label_General_Import_Filname)
             .Add(FRM.TextBox_General_Import_Filename)
             .Add(FRM.Button_General_Import)
-
             .Add(FRM.GroupBox_General_Export)
             .Add(FRM.TableLayoutPanel_General_Export)
             .Add(FRM.Label_General_Export_Directory)
@@ -86,38 +84,21 @@
             .Add(FRM.Label_General_Export_Filname)
             .Add(FRM.TextBox_General_Export_Filename)
             .Add(FRM.Button_General_Export)
-
             .Add(FRM.GroupBox_General_Font)
             .Add(FRM.TableLayoutPanel_General_Font)
             .Add(FRM.Label_General_Font_Name)
             .Add(FRM.Label_General_Font_Name_Value)
-
             .Add(FRM.Label_General_Font_Size)
             .Add(FRM.Label_General_Font_Size_Value)
-
             .Add(FRM.Label_General_Font_Style)
             .Add(FRM.Label_General_Font_Style_Value)
-
-            '.Add(FRM.)
-            '.Add(FRM.)
-            '.Add(FRM.)
-
-
             .Add(FRM.Button_General_Font)
-
-
-        End With
-
-    End Sub
-    Private Sub Default_Fill_TabPage_Paper()
-        With ControlsListGesamt
-
+#End Region
+#Region "TabPage_Paper"
             .Add(FRM.TabPage_Paper)
-
             .Add(FRM.GroupBox_Paper_Shema)
             .Add(FRM.Label_Paper_Shema)
             .Add(FRM.TextBox_Paper_Shema)
-
             .Add(FRM.Label_Paper_DPI)
             .Add(FRM.Label_Paper_DIN)
             .Add(FRM.Label_Paper_Height)
@@ -128,12 +109,9 @@
             .Add(FRM.Label_Paper_Width_Value)
             .Add(FRM.ComboBox_Paper_DIN)
             .Add(FRM.ComboBox_Paper_DPI)
-
             .Add(FRM.TableLayoutPanel_Paper_Shema)
             .Add(FRM.TableLayoutPanel_Paper)
             .Add(FRM.TableLayoutPanel_Paper_Border)
-
-
             .Add(FRM.GroupBox_Paper_Border)
             .Add(FRM.Label_Paper_Border_Left)
             .Add(FRM.Label_Paper_Border_Top)
@@ -147,7 +125,6 @@
             .Add(FRM.NumericUpDown_Paper_Border_Top)
             .Add(FRM.NumericUpDown_Paper_Border_Right)
             .Add(FRM.NumericUpDown_Paper_Border_Bottom)
-
             .Add(FRM.GroupBox_Separator_Row)
             .Add(FRM.TableLayoutPanel_Separator_Row)
             .Add(FRM.NumericUpDown_Separator_Row_Value)
@@ -155,7 +132,6 @@
             .Add(FRM.Label_Separator_Row_Count)
             .Add(FRM.Label_Separator_Row_Value)
             .Add(FRM.Label_Separator_Row_Value_Unit)
-
             .Add(FRM.GroupBox_Separator_Column)
             .Add(FRM.TableLayoutPanel_Separator_Column)
             .Add(FRM.NumericUpDown_Separator_Column_Value)
@@ -163,14 +139,9 @@
             .Add(FRM.Label_Separator_Column_Count)
             .Add(FRM.Label_Separator_Column_Value)
             .Add(FRM.Label_Separator_Column_Value_Unit)
-
-        End With
-    End Sub
-    Private Sub Default_Fill_TabPage_Card()
-        With ControlsListGesamt
-
+#End Region
+#Region "TabPage_Card"
             .Add(FRM.TabPage_Card)
-
             .Add(FRM.NumericUpDown_Card_Border_Left)
             .Add(FRM.NumericUpDown_Card_Border_Top)
             .Add(FRM.NumericUpDown_Card_Border_Right)
@@ -190,14 +161,10 @@
             .Add(FRM.GroupBox_Card_Size)
             .Add(FRM.TableLayoutPanel_Card_Font)
             .Add(FRM.TableLayoutPanel_Card_Border)
-
             .Add(FRM.Label_Card_Size_Hight_Unit)
             .Add(FRM.Label_Card_Size_Width_Unit)
-
-        End With
-    End Sub
-    Private Sub Default_Fill_TabPage_CardRow()
-        With ControlsListGesamt
+#End Region
+#Region "CardRow"
             .Add(FRM.TabPage_CardRow)
             .Add(FRM.ListBox_CardRow_List)
             .Add(FRM.NumericUpDown_CardRow_Border_Bottom)
@@ -228,11 +195,8 @@
             .Add(FRM.Button_CardRow_List_Delete)
             .Add(FRM.TableLayoutPanel_CardRow_Line)
             .Add(FRM.TableLayoutPanel_CardRow_Border)
-
-        End With
-    End Sub
-    Private Sub Default_Fill_TabPage_Data()
-        With ControlsListGesamt
+#End Region
+#Region "TabPage_Data"
             .Add(FRM.GroupBox_Data)
             .Add(FRM.TabPage_Data)
             .Add(FRM.TableLayoutPanel_Data)
@@ -242,30 +206,15 @@
             .Add(FRM.Button_Search_Delete)
             .Add(FRM.DGV_CSV)
             .Add(FRM.DGV_Search)
-        End With
-    End Sub
-    Private Sub Default_Fill_TabPage_Table()
-        With ControlsListGesamt
+#End Region
+#Region "TabPage_Table"
             .Add(FRM.TabPage_Table)
             .Add(FRM.DGV_Table)
             .Add(FRM.GroupBox_Table)
             .Add(FRM.TableLayoutPanel_Table)
+#End Region
         End With
     End Sub
-    Private Sub Default_Fill_Formular()
-        With ControlsListGesamt
-            .Add(FRM.MenuStrip_Main)
-            .Add(FRM.SplitContainer_Main)
-            .Add(FRM.TabControl_Main)
-            .Add(FRM.StatusStrip_Main)
-            .Add(FRM.ListBox_Tabellen)
-            .Add(FRM.PictureBox_Preview)
-            .Add(FRM.Panel_Preview)
-        End With
-    End Sub
-
-#Region "Default Einstellungen für Controls"
-
     Private Sub Default_TextBox(ByRef OBJ As TextBox)
         With OBJ
             .Dock = DockStyle.Top
@@ -291,10 +240,9 @@
             .Margin = New Padding(3)
             .Padding = New Padding(3)
             .TextAlign = HorizontalAlignment.Right
-            Select Case .Name
-                Case FRM.NumericUpDown_Separator_Column_Count.Name,
-                     FRM.NumericUpDown_Separator_Row_Count.Name
 
+            Select Case .Name
+                Case FRM.NumericUpDown_Separator_Column_Count.Name, FRM.NumericUpDown_Separator_Row_Count.Name
                     .Minimum = 1
                     .Increment = 1
                     .DecimalPlaces = 0
@@ -315,27 +263,26 @@
             .UseCompatibleTextRendering = True
 
             Select Case .Name
-
-                Case FRM.Label_Paper_Height_Value.Name,
-                     FRM.Label_Paper_Width_Value.Name,
-                     FRM.Label_Card_Size_Hight_Value.Name,
-                     FRM.Label_Card_Size_Width_Value.Name
-
+                Case FRM.Label_Paper_Height_Value.Name, FRM.Label_Paper_Width_Value.Name, FRM.Label_Card_Size_Hight_Value.Name, FRM.Label_Card_Size_Width_Value.Name
                     .TextAlign = ContentAlignment.MiddleRight
-
                 Case Else
-
                     .TextAlign = ContentAlignment.MiddleLeft
-
             End Select
 
         End With
     End Sub
     Private Sub Default_ComboBox(ByRef OBJ As ComboBox)
         With OBJ
-            .Dock = DockStyle.Left
             .Margin = New Padding(3)
             .Padding = New Padding(0)
+
+            Select Case .Name
+                Case FRM.ComboBox_CardRow_DataColumn.Name
+                    .Dock = DockStyle.Fill
+                Case Else
+                    .Dock = DockStyle.Left
+            End Select
+
             Select Case .Name
                 Case FRM.ComboBox_Paper_DPI.Name
                     .Items.AddRange(New Object() {72, 96, 150, 300, 600})
@@ -346,8 +293,6 @@
                     If DS.Tables("Shema").Rows.Count > 0 Then
                         .SelectedValue = DS.Tables("Shema").Rows(0).Item("DIN").ToString
                     End If
-                Case FRM.ComboBox_CardRow_DataColumn.Name
-                    .Dock = DockStyle.Fill
             End Select
         End With
     End Sub
@@ -382,10 +327,8 @@
             .BackColor = Color.Red
             .Dock = DockStyle.Fill
             .Appearance = TabAppearance.Buttons
-
             .Margin = New Padding(0)
             .Padding = New Point(3, 9)
-
         End With
     End Sub
     Private Sub Default_BindingNavigator(ByRef OBJ As BindingNavigator)
@@ -397,16 +340,16 @@
     End Sub
     Private Sub Default_ListBox(ByRef OBJ As ListBox)
         With OBJ
+            .Dock = DockStyle.Fill
             .BackColor = SystemColors.Control
             .IntegralHeight = False
+
             Select Case .Name
-                Case FRM.ListBox_Tabellen.Name
-                    .Dock = DockStyle.Fill
                 Case FRM.ListBox_CardRow_List.Name
-                    .Dock = DockStyle.Fill
                     .AutoSize = False
                     .Height = MyFont.Size * 12
             End Select
+
         End With
     End Sub
     Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
@@ -458,26 +401,23 @@
                     .Dock = DockStyle.Top
                     .Height = FRM.DGV_Search.ColumnHeadersHeight * 4
             End Select
+
         End With
     End Sub
     Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
 
         With OBJ
-
             .Margin = New Padding(0)
             .Padding = New Padding(3)
 
             Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
-
             .Font = nF
             .BackColor = Color.Transparent
 
             Select Case .Name
                 Case FRM.GroupBox_Table.Name,
                      FRM.GroupBox_Data.Name
-
                     .Dock = DockStyle.Fill
-
                 Case Else
                     .Dock = DockStyle.Top
             End Select
@@ -504,7 +444,6 @@
             .Margin = New Padding(0)
             .Padding = New Padding(0)
             .Location = New Point(0, 0)
-            .AutoScroll = False
             .BackColor = SystemColors.Control
 
             Select Case .Name
@@ -514,12 +453,6 @@
                     .SetColumnSpan(FRM.DGV_CSV, 2)
                 Case FRM.TableLayoutPanel_CardRow_List.Name
                     .SetColumnSpan(FRM.ListBox_CardRow_List, 3)
-                Case FRM.TableLayoutPanel_CardRow.Name
-                    .AutoScroll = True
-                Case FRM.TableLayoutPanel_Card.Name
-                    .AutoScroll = True
-                Case FRM.TableLayoutPanel_Paper.Name
-                    .AutoScroll = True
                 Case FRM.TableLayoutPanel_General_DataSet.Name
                     .SetRowSpan(FRM.Button_General_DataSet, 2)
                 Case FRM.TableLayoutPanel_General_Import.Name
@@ -528,6 +461,13 @@
                     .SetRowSpan(FRM.Button_General_Export, 2)
                 Case FRM.TableLayoutPanel_General_Font.Name
                     .SetRowSpan(FRM.Button_General_Font, 3)
+            End Select
+
+            Select Case .Name
+                Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
+                    .AutoScroll = True
+                Case Else
+                    .AutoScroll = False
             End Select
 
         End With
@@ -542,7 +482,5 @@
             .UseCompatibleTextRendering = True
         End With
     End Sub
-
-#End Region
 
 End Class
