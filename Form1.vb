@@ -94,6 +94,8 @@ Public Class Form1
     End Sub
     Private Sub MySettings_Load()
 
+
+
         With My.Settings
 
             MyFont = .MyFont
@@ -103,7 +105,7 @@ Public Class Form1
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
-                If IsNothing(DS) = True Then CL_DS.Get_DS(DS)
+                DS = CL_DS.Get_DS(DS)
                 DS = CL_DS.NewRow_Shema(DS)
                 'DS = New DataSet
                 CL_XML.DataSetFile = CL_XML.DataSetFile
@@ -208,12 +210,17 @@ Public Class Form1
         End With
 
         With DS.Tables("CardRow")
-            With .Rows(0)
-                'ID, QRCode, DataColumn, LinePos, Font, FontColor, AutoFont
+            If .Rows.Count > 0 Then
 
-                'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
-                'Label_CardSizeWidth.Text = .Item("PaperWidth")
-            End With
+                With .Rows(0)
+                    'ID, QRCode, DataColumn, LinePos, Font, FontColor, AutoFont
+
+                    'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
+                    'Label_CardSizeWidth.Text = .Item("PaperWidth")
+                End With
+
+            End If
+
         End With
 
         For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
@@ -724,6 +731,31 @@ Public Class Form1
             Label_General_Font_Size_Value.Text = .Size.ToString
             Label_General_Font_Style_Value.Text = .Style.ToString
         End With
+
+    End Sub
+
+    Private Sub Button_CardRow_List_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_List_Add.Click
+
+        Dim DTCR As DataTable
+        DTCR = DS.Tables("CardRow")
+        Dim DR As DataRow = DTCR.NewRow
+        With DR
+            .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
+            .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
+            .Item("LinePos") = NumericUpDown_CardRow_LinePos.Value
+            .Item("Font") = String.Empty
+            .Item("FontColor") = String.Empty
+            .Item("AutoFont") = False
+        End With
+        DS.Tables("CardRow").Rows.Add(DR)
+
+
+        With ListBox_CardRow_List
+            .DataSource = Nothing
+            .DataSource = DTCR
+            .DisplayMember = "DataColumn"
+        End With
+
 
     End Sub
 #End Region

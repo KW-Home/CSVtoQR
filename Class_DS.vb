@@ -139,19 +139,19 @@ Public Class Class_DS
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
 
-        Dim DT As DataTable = DS.Tables("CardRow")
-        If DT.Rows.Count = 0 Then
-            Dim DR As DataRow = DT.NewRow
-            With DR
-                .Item("QRCode") = False
-                .Item("DataColumn") = String.Empty
-                .Item("LinePos") = 0
-                .Item("Font") = String.Empty
-                .Item("FontColor") = String.Empty
-                .Item("AutoFont") = False
-            End With
-            DS.Tables("CardRow").Rows.Add(DR)
-        End If
+        'Dim DT As DataTable = DS.Tables("CardRow")
+        'Dim DR As DataRow = DT.NewRow
+        'If DT.Rows.Count = 0 Then
+        '    With DR
+        '        .Item("QRCode") = False
+        '        .Item("DataColumn") = String.Empty
+        '        .Item("LinePos") = 0
+        '        .Item("Font") = String.Empty
+        '        .Item("FontColor") = String.Empty
+        '        .Item("AutoFont") = False
+        '    End With
+        '    DS.Tables("CardRow").Rows.Add(DR)
+        'End If
 
         Return DS
 
