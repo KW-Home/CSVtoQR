@@ -124,10 +124,10 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
             .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Integer)})
+            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Integer)})
+            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
         End With
 
@@ -138,20 +138,6 @@ Public Class Class_DS
     Public Function NewRow_CardRow(ByRef DS As DataSet) As DataSet
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
-
-        'Dim DT As DataTable = DS.Tables("CardRow")
-        'Dim DR As DataRow = DT.NewRow
-        'If DT.Rows.Count = 0 Then
-        '    With DR
-        '        .Item("QRCode") = False
-        '        .Item("DataColumn") = String.Empty
-        '        .Item("LinePos") = 0
-        '        .Item("Font") = String.Empty
-        '        .Item("FontColor") = String.Empty
-        '        .Item("AutoFont") = False
-        '    End With
-        '    DS.Tables("CardRow").Rows.Add(DR)
-        'End If
 
         Return DS
 

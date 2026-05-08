@@ -199,6 +199,8 @@
             .Add(FRM.FlowLayoutPanel_CardRow)
             .Add(FRM.Button_CardRow_Up)
             .Add(FRM.Button_CardRow_Down)
+            .Add(FRM.Label_CardRow_LinePos_Value)
+
 #End Region
 #Region "TabPage_Data"
             .Add(FRM.GroupBox_Data)
@@ -252,10 +254,10 @@
     Private Sub Default_NumericUpDown(ByRef OBJ As NumericUpDown)
         With OBJ
             .BorderStyle = BorderStyle.FixedSingle
-            .Dock = DockStyle.Top
             .Margin = New Padding(3)
             .Padding = New Padding(3)
             .TextAlign = HorizontalAlignment.Right
+            .Dock = DockStyle.Top
 
             Select Case .Name
                 Case FRM.NumericUpDown_Separator_Column_Count.Name, FRM.NumericUpDown_Separator_Row_Count.Name
@@ -490,12 +492,21 @@
     End Sub
     Private Sub Default_Button(ByRef OBJ As Button)
         With OBJ
+
             .Dock = DockStyle.Top
             .AutoSizeMode = AutoSizeMode.GrowAndShrink
             .Margin = New Padding(0)
             .Padding = New Padding(0)
             .Location = New Point(0, 0)
             .UseCompatibleTextRendering = True
+
+            Select Case .Name
+                Case FRM.Button_CardRow_List_Add.Name, FRM.Button_CardRow_Down.Name, FRM.Button_CardRow_Up.Name, FRM.Button_CardRow_List_Delete.Name
+                    .Enabled = False
+                Case Else
+                    .Enabled = True
+            End Select
+
         End With
     End Sub
 

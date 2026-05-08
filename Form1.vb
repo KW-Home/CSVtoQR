@@ -18,8 +18,7 @@ Public Class Form1
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
-
-    '    Private DT_CR As DataTable
+    Private DV_CardRow As DataView
 
     Private WithEvents CL_XML As New Class_XML
 
@@ -49,7 +48,7 @@ Public Class Form1
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
             SET_Changetext_CSV(value)
-            CardRow_View()
+            Set_CardRow_DataBinding()
         End Set
     End Property
 
@@ -756,22 +755,26 @@ Public Class Form1
         With DR
             .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
             .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
-            .Item("LinePos") = NumericUpDown_CardRow_LinePos.Value
+            '.Item("LinePos") = Label_CardRow_LinePos_Value.Text
             .Item("Font") = String.Empty
             .Item("FontColor") = String.Empty
             .Item("AutoFont") = False
         End With
         DS.Tables("CardRow").Rows.Add(DR)
 
-        'CardRow_View()
+        CardRow_Sort("", 0)
+        Set_CardRow_DataBinding()
 
     End Sub
-    Private Sub CardRow_View()
+    Private Sub Set_CardRow_DataBinding()
+
+        DV_CardRow = New DataView(DS.Tables("CardRow")) With {.Sort = "LinePos Asc"}
 
         With ListBox_CardRow_List
             .DataSource = Nothing
-            .DataSource = DS.Tables("CardRow")
+            .DataSource = DV_CardRow
             .DisplayMember = "DataColumn"
+            .ValueMember = "ID"
         End With
 
     End Sub
@@ -782,26 +785,105 @@ Public Class Form1
             If .SelectedItems.Count = 0 Then Return
             Dim ID As Integer = .SelectedItem("ID")
             DS.Tables("CardRow").Rows.Find(ID)?.Delete()
-        End With
-
-    End Sub
-
-    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
-
-        With ListBox_CardRow_List
             .ClearSelected()
         End With
-
 
     End Sub
 
     Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow_List.SelectedIndexChanged
 
         With ListBox_CardRow_List
+
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
-            Button_CardRow_List_Delete.Enabled = .SelectedIndex > -1
+
+            If .SelectedIndex = -1 Then
+                Button_CardRow_Down.Enabled = False
+                Button_CardRow_Up.Enabled = False
+                Button_CardRow_List_Delete.Enabled = False
+            Else
+                Button_CardRow_List_Delete.Enabled = True
+
+                If .SelectedIndex > 0 Then
+                    Button_CardRow_Up.Enabled = True
+                Else
+                    Button_CardRow_Up.Enabled = False
+                End If
+                If .SelectedIndex < .Items.Count - 1 Then
+                    Button_CardRow_Down.Enabled = True
+                Else
+                    Button_CardRow_Down.Enabled = False
+                End If
+            End If
+
         End With
+
+    End Sub
+
+    Private Sub Button_CardRow_Up_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Up.Click
+
+        CardRow_Sort("Up", ListBox_CardRow_List.SelectedItem("ID"))
+
+    End Sub
+    Private Sub Button_CardRow_Down_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Down.Click
+
+        CardRow_Sort("Down", ListBox_CardRow_List.SelectedItem("ID"))
+
+    End Sub
+    Private Sub CardRow_Sort(UpDown As String, ID As Integer)
+
+        Dim DT = DS.Tables("CardRow")
+
+        If ID > 0 Then
+            Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+            'Dim I As Double = DR("LinePos")
+            Select Case UpDown
+                Case "Up"
+                    DR("LinePos") = CType(DR("LinePos") - 1, Double)
+                Case "Down"
+                    DR("LinePos") = CType(DR("LinePos") + 1, Double)
+                Case Else
+            End Select
+        End If
+
+        'Set_CardRow_DataBinding()
+
+        Dim I As Integer = 1
+        For Each DR In DV_CardRow
+            DR("LinePos") = I
+            I += 1
+        Next
+
+        For Each Wert In ListBox_CardRow_List.Items
+            If Wert("ID") = ID Then ListBox_CardRow_List.SelectedItem = Wert
+        Next
+
+
+    End Sub
+    Private Sub ListBox_CardRow_List_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow_List.SelectedValueChanged
+
+        With ListBox_CardRow_List
+            If .CanSelect = False Then Return
+            If .CanFocus = False Then Return
+            If .SelectedItems.Count = 0 Then Return
+
+            CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
+            ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
+
+            If IsDBNull(.SelectedItem("LinePos")) = False Then Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
+
+            'NumericUpDown_CardRow_LinePos.Value = .SelectedItem("Font")
+            'NumericUpDown_CardRow_LinePos.Value = .SelectedItem("FontColor")
+            CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
+
+        End With
+
+
+    End Sub
+
+    Private Sub ComboBox_CardRow_DataColumn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.SelectedIndexChanged
+
+        Button_CardRow_List_Add.Enabled = ComboBox_CardRow_DataColumn.SelectedIndex > -1
 
     End Sub
 
