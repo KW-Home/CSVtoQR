@@ -19,6 +19,8 @@ Public Class Form1
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
 
+    '    Private DT_CR As DataTable
+
     Private WithEvents CL_XML As New Class_XML
 
     Private IsModified_Value As Boolean
@@ -46,9 +48,8 @@ Public Class Form1
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
-
             SET_Changetext_CSV(value)
-
+            CardRow_View()
         End Set
     End Property
 
@@ -58,12 +59,27 @@ Public Class Form1
             Return ExportFile_Value
         End Get
         Set(ByVal value As String)
-            ExportFile_Value = value
+            Dim finalPath As String = If(value, String.Empty)
+
+            If String.IsNullOrWhiteSpace(finalPath) Then
+                ExportFile_Value = String.Empty
+            Else
+                If finalPath.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) = False Then
+                    Try
+                        finalPath = System.IO.Path.ChangeExtension(finalPath, ".pdf")
+                    Catch
+                        finalPath &= ".pdf"
+                    End Try
+                End If
+
+                ExportFile_Value = finalPath
+            End If
+
             If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
             If DS.Tables("Shema").Rows.Count = 0 Then DS = CL_DS.NewRow_Shema(DS)
-            DS.Tables("Shema").Rows(0).Item("Export") = value
+            DS.Tables("Shema").Rows(0).Item("Export") = ExportFile_Value
 
-            SET_Changetext_PDF(value)
+            SET_Changetext_PDF(ExportFile_Value)
 
         End Set
     End Property
@@ -736,9 +752,7 @@ Public Class Form1
 
     Private Sub Button_CardRow_List_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_List_Add.Click
 
-        Dim DTCR As DataTable
-        DTCR = DS.Tables("CardRow")
-        Dim DR As DataRow = DTCR.NewRow
+        Dim DR As DataRow = DS.Tables("CardRow").NewRow
         With DR
             .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
             .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
@@ -749,15 +763,48 @@ Public Class Form1
         End With
         DS.Tables("CardRow").Rows.Add(DR)
 
+        'CardRow_View()
+
+    End Sub
+    Private Sub CardRow_View()
 
         With ListBox_CardRow_List
             .DataSource = Nothing
-            .DataSource = DTCR
+            .DataSource = DS.Tables("CardRow")
             .DisplayMember = "DataColumn"
+        End With
+
+    End Sub
+
+    Private Sub Button_CardRow_List_Delete_Click(sender As Object, e As EventArgs) Handles Button_CardRow_List_Delete.Click
+
+        With ListBox_CardRow_List
+            If .SelectedItems.Count = 0 Then Return
+            Dim ID As Integer = .SelectedItem("ID")
+            DS.Tables("CardRow").Rows.Find(ID)?.Delete()
+        End With
+
+    End Sub
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+
+        With ListBox_CardRow_List
+            .ClearSelected()
         End With
 
 
     End Sub
+
+    Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow_List.SelectedIndexChanged
+
+        With ListBox_CardRow_List
+            If .CanSelect = False Then Return
+            If .CanFocus = False Then Return
+            Button_CardRow_List_Delete.Enabled = .SelectedIndex > -1
+        End With
+
+    End Sub
+
 #End Region
 
 End Class

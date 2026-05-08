@@ -231,6 +231,9 @@
             .SplitterWidth = 12
             .Margin = New Padding(3)
             .Padding = New Padding(3)
+
+            .Panel1MinSize = 300
+
         End With
     End Sub
     Private Sub Default_NumericUpDown(ByRef OBJ As NumericUpDown)
