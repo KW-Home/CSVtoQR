@@ -159,6 +159,8 @@
   <ItemGroup>
     <None Include="Werkbank\Bonus\Images\Database\DatabaseSchema_32x.png" />
     <None Include="Werkbank\Bonus\Images\Font\Font_64x.png" />
+    <None Include="Werkbank\Bonus\Images\Arrows\Green\Down Arrow Short Green.png" />
+    <None Include="Werkbank\Bonus\Images\Arrows\Green\Up Arrow Short Green.png" />
     <Content Include="Werkbank\DataSet\DataSetNeu.xml" />
     <Content Include="Werkbank\DataSet\Standard.xml" />
   </ItemGroup>

@@ -43,6 +43,7 @@
                     Case "CheckBox" : Default_CheckBox(OBJ)
                     Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
                     Case "Button" : Default_Button(OBJ)
+                    Case "FlowLayoutPanel" : Default_FlowLayoutPanel(OBJ)
                     Case Else
                         MessageBox.Show("Der Objecttyp ist nicht festgelegt.", "Konfig fehlt!" & .GetType.Name, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End Select
@@ -195,6 +196,9 @@
             .Add(FRM.Button_CardRow_List_Delete)
             .Add(FRM.TableLayoutPanel_CardRow_Line)
             .Add(FRM.TableLayoutPanel_CardRow_Border)
+            .Add(FRM.FlowLayoutPanel_CardRow)
+            .Add(FRM.Button_CardRow_Up)
+            .Add(FRM.Button_CardRow_Down)
 #End Region
 #Region "TabPage_Data"
             .Add(FRM.GroupBox_Data)
@@ -213,6 +217,15 @@
             .Add(FRM.GroupBox_Table)
             .Add(FRM.TableLayoutPanel_Table)
 #End Region
+        End With
+    End Sub
+    Private Sub Default_FlowLayoutPanel(ByRef OBJ As FlowLayoutPanel)
+        With OBJ
+            .FlowDirection = FlowDirection.TopDown
+            .Dock = DockStyle.Fill
+            .AutoSize = True
+            .Margin = New Padding(0)
+            .Padding = New Padding(0)
         End With
     End Sub
     Private Sub Default_TextBox(ByRef OBJ As TextBox)
