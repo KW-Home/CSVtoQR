@@ -20,7 +20,9 @@ Public Class Class_DS
             DS = NewRow_Shema(DS)
             DS = NewRow_Card(DS)
             DS = NewRow_CardRow(DS)
-            DS = NewRow_Search_Operator(DS)
+
+            'DS = NewRow_Search_Operator(DS)
+
             DS = NewRow_Border(0, "Paper", DS)
             DS = NewRow_Border(0, "Card", DS)
             DS = NewRow_Border(0, "CardRow", DS)
@@ -217,7 +219,7 @@ Public Class Class_DS
         Return DT
 
     End Function
-    Private Function DT_Search_Operator() As DataTable
+    Public Function DT_Search_Operator() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search_Operator"}
         With DT
@@ -225,16 +227,15 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Left", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Right", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("Operator")}
-        End With
-        Return DT
+            '    End With
 
-    End Function
-    Public Function NewRow_Search_Operator(ByRef DS As DataSet) As DataSet
+            'End Function
+            'Public Function NewRow_Search_Operator(ByRef DS As DataSet) As DataSet
 
-        If DS.Tables.Contains("Search_Operator") = False Then DS.Tables.Add(DT_Search_Operator)
+            '    If DS.Tables.Contains("Search_Operator") = False Then DS.Tables.Add(DT_Search_Operator)
 
-        Dim DT As DataTable = DS.Tables("Search_Operator")
-        With DT
+            '    Dim DT As DataTable = DS.Tables("Search_Operator")
+            '    With DT
             If .Rows.Count = 0 Then
                 .Rows.Add("Enthält", "LIKE '*", "*'")
                 .Rows.Add("Gleich", "= '", "'")
@@ -244,7 +245,8 @@ Public Class Class_DS
             End If
         End With
 
-        Return DS
+        Return DT
+        'Return DS
 
     End Function
     Private Function DT_PaperDIN() As DataTable

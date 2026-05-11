@@ -447,6 +447,8 @@ Public Class Form1
             FilterValue = Wert("Search_Value").ToString()
 
             DT = DS.Tables("Search_Operator")
+            DT = CL_DS.DT_Search_Operator
+
             DR = DT.Select($"[Operator] = '{FilterOperator}' ")
 
             If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
@@ -497,9 +499,7 @@ Public Class Form1
             .ValueType = GetType(Integer),
             .ReadOnly = True,
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
-        If DGV_Search.Columns.ToString.Contains("ID") Then
-            DGV_Search.Columns.Remove("ID")
-        End If
+        If DGV_Search.Columns.ToString.Contains("ID") Then DGV_Search.Columns.Remove("ID")
         DGV_Search.Columns.Insert(0, Search_ID)
 
         '1. Erstelle die ComboBox-Spalte für die Spaltennamen
@@ -513,10 +513,7 @@ Public Class Form1
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
             .FlatStyle = FlatStyle.Flat}
-
-        If DGV_Search.Columns.ToString.Contains("Search_Column") Then
-            DGV_Search.Columns.Remove("Search_Column")
-        End If
+        If DGV_Search.Columns.ToString.Contains("Search_Column") Then DGV_Search.Columns.Remove("Search_Column")
         DGV_Search.Columns.Insert(1, Search_Column)
 
         '2. Erstelle die ComboBox-Spalte für die Operatoren
@@ -524,15 +521,13 @@ Public Class Form1
             .Name = "Search_Operator",
             .HeaderText = "Operator",
             .DataPropertyName = "Search_Operator",
-            .DataSource = DS.Tables("Search_Operator"),
+            .DataSource = CL_DS.DT_Search_Operator,
             .DisplayMember = "Operator",
             .ValueMember = "Operator",
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
             .FlatStyle = FlatStyle.Flat}
-        If DGV_Search.Columns.ToString.Contains("Search_Operator") Then
-            DGV_Search.Columns.Remove("Search_Operator")
-        End If
+        If DGV_Search.Columns.ToString.Contains("Search_Operator") Then DGV_Search.Columns.Remove("Search_Operator")
         DGV_Search.Columns.Insert(2, Search_Operator)
 
         '3. Erstelle die TextBox-Spalte für die Werte
@@ -542,9 +537,7 @@ Public Class Form1
             .DataPropertyName = "Search_Value",
             .ValueType = GetType(String),
             .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells}
-        If DGV_Search.Columns.ToString.Contains("Search_Value") Then
-            DGV_Search.Columns.Remove("Search_Value")
-        End If
+        If DGV_Search.Columns.ToString.Contains("Search_Value") Then DGV_Search.Columns.Remove("Search_Value")
         DGV_Search.Columns.Insert(3, Search_Value)
 
     End Sub
