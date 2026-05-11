@@ -64,13 +64,13 @@
 #End Region
 #Region "TabPage_General"
             .Add(FRM.TabPage_General)
-            .Add(FRM.GroupBox_General_DataSet)
-            .Add(FRM.TableLayoutPanel_General_DataSet)
-            .Add(FRM.Label_General_DataSet_Directory)
-            .Add(FRM.TextBox_General_DataSet_Directory)
-            .Add(FRM.Label_General_DataSet_Filname)
-            .Add(FRM.TextBox_General_DataSet_Filename)
-            .Add(FRM.Button_General_DataSet)
+            .Add(FRM.GroupBox_General_XML)
+            .Add(FRM.TableLayoutPanel_General_XML)
+            .Add(FRM.Label_General_XML_Directory)
+            .Add(FRM.TextBox_General_XML_Directory)
+            .Add(FRM.Label_General_XML_Filname)
+            .Add(FRM.TextBox_General_XML_Filename)
+            .Add(FRM.Button_General_XML_Open)
             .Add(FRM.GroupBox_General_Import)
             .Add(FRM.TableLayoutPanel_General_Import)
             .Add(FRM.Label_General_Import_Directory)
@@ -167,7 +167,7 @@
 #End Region
 #Region "CardRow"
             .Add(FRM.TabPage_CardRow)
-            .Add(FRM.ListBox_CardRow_List)
+            .Add(FRM.ListBox_CardRow)
             .Add(FRM.NumericUpDown_CardRow_Border_Bottom)
             .Add(FRM.NumericUpDown_CardRow_Border_Left)
             .Add(FRM.NumericUpDown_CardRow_Border_Right)
@@ -192,8 +192,8 @@
             .Add(FRM.CheckBox_CardRow_AutoFont)
             .Add(FRM.TableLayoutPanel_CardRow)
             .Add(FRM.TableLayoutPanel_CardRow_List)
-            .Add(FRM.Button_CardRow_List_Add)
-            .Add(FRM.Button_CardRow_List_Delete)
+            .Add(FRM.Button_CardRow_Add)
+            .Add(FRM.Button_CardRow_Delete)
             .Add(FRM.TableLayoutPanel_CardRow_Line)
             .Add(FRM.TableLayoutPanel_CardRow_Border)
             .Add(FRM.FlowLayoutPanel_CardRow)
@@ -363,7 +363,7 @@
             .IntegralHeight = False
 
             Select Case .Name
-                Case FRM.ListBox_CardRow_List.Name
+                Case FRM.ListBox_CardRow.Name
                     .AutoSize = False
                     .Height = MyFont.Size * 12
             End Select
@@ -470,9 +470,9 @@
                     .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
                     .SetColumnSpan(FRM.DGV_CSV, 2)
                 Case FRM.TableLayoutPanel_CardRow_List.Name
-                    .SetColumnSpan(FRM.ListBox_CardRow_List, 3)
-                Case FRM.TableLayoutPanel_General_DataSet.Name
-                    .SetRowSpan(FRM.Button_General_DataSet, 2)
+                    .SetColumnSpan(FRM.ListBox_CardRow, 3)
+                Case FRM.TableLayoutPanel_General_XML.Name
+                    .SetRowSpan(FRM.Button_General_XML_Open, 2)
                 Case FRM.TableLayoutPanel_General_Import.Name
                     .SetRowSpan(FRM.Button_General_Import, 2)
                 Case FRM.TableLayoutPanel_General_Export.Name
@@ -501,7 +501,7 @@
             .UseCompatibleTextRendering = True
 
             Select Case .Name
-                Case FRM.Button_CardRow_List_Add.Name, FRM.Button_CardRow_Down.Name, FRM.Button_CardRow_Up.Name, FRM.Button_CardRow_List_Delete.Name
+                Case FRM.Button_CardRow_Add.Name, FRM.Button_CardRow_Down.Name, FRM.Button_CardRow_Up.Name, FRM.Button_CardRow_Delete.Name
                     .Enabled = False
                 Case Else
                     .Enabled = True

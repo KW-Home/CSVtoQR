@@ -139,8 +139,8 @@ Public Class Form1
 
             Else
                 DS = CL_DS.Get_DS(DS)
-                TextBox_General_DataSet_Directory.Text = "Kein gültiger Pfad."
-                TextBox_General_DataSet_Filename.Text = "Kein gültiger Name."
+                TextBox_General_XML_Directory.Text = "Kein gültiger Pfad."
+                TextBox_General_XML_Filename.Text = "Kein gültiger Name."
                 ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
             End If
 
@@ -217,52 +217,20 @@ Public Class Form1
             End With
         End With
 
-        With DS.Tables("Card")
-            With .Rows(0)
-                'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
-                'Label_CardSizeWidth.Text = .Item("PaperWidth")
-            End With
-        End With
-
-        With DS.Tables("CardRow")
-            If .Rows.Count > 0 Then
-
-                With .Rows(0)
-                    'ID, QRCode, DataColumn, LinePos, Font, FontColor, AutoFont
-
-                    'Label_CardSizeHeight.Text = .Item("PaperHeight").ToString
-                    'Label_CardSizeWidth.Text = .Item("PaperWidth")
-                End With
-
-            End If
-
-        End With
-
-        For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
-            Select Case DR("Border")
-                Case "Left" : NumericUpDown_Paper_Border_Left.Value = DR("Value")
-                Case "Top" : NumericUpDown_Paper_Border_Top.Value = DR("Value")
-                Case "Right" : NumericUpDown_Paper_Border_Right.Value = DR("Value")
-                Case "Bottom" : NumericUpDown_Paper_Border_Bottom.Value = DR("Value")
-            End Select
-        Next
-
-        For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Card'")
-            Select Case DR("Border")
-                Case "Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
-                Case "Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
-                Case "Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
-                Case "Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
-            End Select
-        Next
-
-        Dim ID As Integer = 0
-        For Each DR As DataRow In DS.Tables("Border").Select($"[ID] = {ID} AND [Area] Like 'CardRow'")
-            Select Case DR("Border")
-                Case "Left" : NumericUpDown_CardRow_Border_Left.Value = DR("Value")
-                Case "Top" : NumericUpDown_CardRow_Border_Top.Value = DR("Value")
-                Case "Right" : NumericUpDown_CardRow_Border_Right.Value = DR("Value")
-                Case "Bottom" : NumericUpDown_CardRow_Border_Bottom.Value = DR("Value")
+        For Each DR As DataRow In DS.Tables("Border").Rows
+            Select Case DR("Area") & "|" & DR("Border")
+                Case "Paper|Left" : NumericUpDown_Paper_Border_Left.Value = DR("Value")
+                Case "Paper|Top" : NumericUpDown_Paper_Border_Top.Value = DR("Value")
+                Case "Paper|Right" : NumericUpDown_Paper_Border_Right.Value = DR("Value")
+                Case "Paper|Bottom" : NumericUpDown_Paper_Border_Bottom.Value = DR("Value")
+                Case "Card|Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
+                Case "Card|Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
+                Case "Card|Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
+                Case "Card|Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
+                Case "CardRow|Left" : NumericUpDown_CardRow_Border_Left.Value = DR("Value")
+                Case "CardRow|Top" : NumericUpDown_CardRow_Border_Top.Value = DR("Value")
+                Case "CardRow|Right" : NumericUpDown_CardRow_Border_Right.Value = DR("Value")
+                Case "CardRow|Bottom" : NumericUpDown_CardRow_Border_Bottom.Value = DR("Value")
             End Select
         Next
 
@@ -668,7 +636,7 @@ Public Class Form1
         Return DialogResult
 
     End Function
-    Private Sub ToolStripMenuItem_XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_General_DataSet.Click
+    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_General_XML_Open.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
@@ -687,8 +655,8 @@ Public Class Form1
         Dim FI As New FileInfo(e)
 
         With FI
-            TextBox_General_DataSet_Directory.Text = .Directory.ToString
-            TextBox_General_DataSet_Filename.Text = .Name.ToString
+            TextBox_General_XML_Directory.Text = .Directory.ToString
+            TextBox_General_XML_Filename.Text = .Name.ToString
             ToolStripStatusLabel_SaveFile.Text = .FullName
         End With
 
@@ -739,23 +707,23 @@ Public Class Form1
             Label_General_Font_Size_Value.Text = .Size.ToString
             Label_General_Font_Style_Value.Text = .Style.ToString
         End With
-
     End Sub
 
-    Private Sub Button_CardRow_List_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_List_Add.Click
+    Private Sub Button_CardRow_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Add.Click
 
         Dim DR As DataRow = DS.Tables("CardRow").NewRow
         With DR
             .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
             .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
-            '.Item("LinePos") = Label_CardRow_LinePos_Value.Text
+            .Item("LinePos") = Label_CardRow_LinePos_Value.Text
             .Item("Font") = String.Empty
             .Item("FontColor") = String.Empty
             .Item("AutoFont") = False
         End With
         DS.Tables("CardRow").Rows.Add(DR)
 
-        CardRow_Sort("", 0)
+        CardRow_Sort(sender, e)
+
         Set_CardRow_DataBinding()
 
     End Sub
@@ -763,18 +731,19 @@ Public Class Form1
 
         DV_CardRow = New DataView(DS.Tables("CardRow")) With {.Sort = "LinePos Asc"}
 
-        With ListBox_CardRow_List
+        With ListBox_CardRow
             .DataSource = Nothing
             .DataSource = DV_CardRow
             .DisplayMember = "DataColumn"
             .ValueMember = "ID"
+            .Sorted = True
         End With
 
     End Sub
 
-    Private Sub Button_CardRow_List_Delete_Click(sender As Object, e As EventArgs) Handles Button_CardRow_List_Delete.Click
+    Private Sub Button_CardRow_List_Delete_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Delete.Click
 
-        With ListBox_CardRow_List
+        With ListBox_CardRow
             If .SelectedItems.Count = 0 Then Return
             Dim ID As Integer = .SelectedItem("ID")
             DS.Tables("CardRow").Rows.Find(ID)?.Delete()
@@ -783,9 +752,9 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow_List.SelectedIndexChanged
+    Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedIndexChanged
 
-        With ListBox_CardRow_List
+        With ListBox_CardRow
 
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
@@ -793,9 +762,9 @@ Public Class Form1
             If .SelectedIndex = -1 Then
                 Button_CardRow_Down.Enabled = False
                 Button_CardRow_Up.Enabled = False
-                Button_CardRow_List_Delete.Enabled = False
+                Button_CardRow_Delete.Enabled = False
             Else
-                Button_CardRow_List_Delete.Enabled = True
+                Button_CardRow_Delete.Enabled = True
 
                 If .SelectedIndex > 0 Then
                     Button_CardRow_Up.Enabled = True
@@ -813,49 +782,44 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button_CardRow_Up_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Up.Click
+    Private Sub Button_CardRow_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Up.Click, Button_CardRow_Down.Click
 
-        CardRow_Sort("Up", ListBox_CardRow_List.SelectedItem("ID"))
-
-    End Sub
-    Private Sub Button_CardRow_Down_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Down.Click
-
-        CardRow_Sort("Down", ListBox_CardRow_List.SelectedItem("ID"))
+        CardRow_Sort(sender, e)
+        Set_CardRow_DataBinding()
 
     End Sub
-    Private Sub CardRow_Sort(UpDown As String, ID As Integer)
+    Private Sub CardRow_Sort(sender As Object, e As EventArgs)
+
+        If ListBox_CardRow.SelectedItems.Count = 0 Then Return
+
+        Dim ID As Integer
+        ID = ListBox_CardRow.SelectedItems(0)("ID")
 
         Dim DT = DS.Tables("CardRow")
-
-        If ID > 0 Then
-            Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-            'Dim I As Double = DR("LinePos")
-            Select Case UpDown
-                Case "Up"
-                    DR("LinePos") = CType(DR("LinePos") - 1, Double)
-                Case "Down"
-                    DR("LinePos") = CType(DR("LinePos") + 1, Double)
-                Case Else
-            End Select
-        End If
-
-        'Set_CardRow_DataBinding()
+        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+        Select Case sender.Name
+            Case Button_CardRow_Up.Name
+                DR("LinePos") = CType(DR("LinePos") - 0.5, Double)
+            Case Button_CardRow_Down.Name
+                DR("LinePos") = CType(DR("LinePos") + 0.5, Double)
+        End Select
 
         Dim I As Integer = 1
-        For Each DR In DV_CardRow
+        For Each DR In DT.Rows
             DR("LinePos") = I
             I += 1
         Next
 
-        For Each Wert In ListBox_CardRow_List.Items
-            If Wert("ID") = ID Then ListBox_CardRow_List.SelectedItem = Wert
-        Next
-
+        'For Each Wert In ListBox_CardRow.Items
+        '    If Wert("ID") = ID Then
+        '        ListBox_CardRow.SelectedItem = Wert
+        '    End If
+        'Next
 
     End Sub
-    Private Sub ListBox_CardRow_List_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow_List.SelectedValueChanged
+    Private Sub ListBox_CardRow_List_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedValueChanged
 
-        With ListBox_CardRow_List
+        With ListBox_CardRow
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
             If .SelectedItems.Count = 0 Then Return
@@ -876,7 +840,7 @@ Public Class Form1
 
     Private Sub ComboBox_CardRow_DataColumn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.SelectedIndexChanged
 
-        Button_CardRow_List_Add.Enabled = ComboBox_CardRow_DataColumn.SelectedIndex > -1
+        Button_CardRow_Add.Enabled = ComboBox_CardRow_DataColumn.SelectedIndex > -1
 
     End Sub
 
