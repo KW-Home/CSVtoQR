@@ -85,15 +85,6 @@
             .Add(FRM.Label_General_Export_Filname)
             .Add(FRM.TextBox_General_Export_Filename)
             .Add(FRM.Button_General_Export)
-            .Add(FRM.GroupBox_General_Font)
-            .Add(FRM.TableLayoutPanel_General_Font)
-            .Add(FRM.Label_General_Font_Name)
-            .Add(FRM.Label_General_Font_Name_Value)
-            .Add(FRM.Label_General_Font_Size)
-            .Add(FRM.Label_General_Font_Size_Value)
-            .Add(FRM.Label_General_Font_Style)
-            .Add(FRM.Label_General_Font_Style_Value)
-            .Add(FRM.Button_General_Font)
 #End Region
 #Region "TabPage_Paper"
             .Add(FRM.TabPage_Paper)
@@ -477,8 +468,6 @@
                     .SetRowSpan(FRM.Button_General_Import, 2)
                 Case FRM.TableLayoutPanel_General_Export.Name
                     .SetRowSpan(FRM.Button_General_Export, 2)
-                Case FRM.TableLayoutPanel_General_Font.Name
-                    .SetRowSpan(FRM.Button_General_Font, 3)
             End Select
 
             Select Case .Name

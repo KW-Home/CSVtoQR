@@ -73,15 +73,6 @@ Partial Class Form1
         Me.GroupBox_Data = New System.Windows.Forms.GroupBox()
         Me.TabControl_Main = New System.Windows.Forms.TabControl()
         Me.TabPage_General = New System.Windows.Forms.TabPage()
-        Me.GroupBox_General_Font = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel_General_Font = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button_General_Font = New System.Windows.Forms.Button()
-        Me.Label_General_Font_Name = New System.Windows.Forms.Label()
-        Me.Label_General_Font_Size = New System.Windows.Forms.Label()
-        Me.Label_General_Font_Style = New System.Windows.Forms.Label()
-        Me.Label_General_Font_Name_Value = New System.Windows.Forms.Label()
-        Me.Label_General_Font_Size_Value = New System.Windows.Forms.Label()
-        Me.Label_General_Font_Style_Value = New System.Windows.Forms.Label()
         Me.GroupBox_General_Export = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel_General_Export = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_General_Export_Filename = New System.Windows.Forms.TextBox()
@@ -199,6 +190,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Table = New System.Windows.Forms.TableLayoutPanel()
         Me.ListBox_Tabellen = New System.Windows.Forms.ListBox()
         Me.DGV_Table = New System.Windows.Forms.DataGridView()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Panel_Preview = New System.Windows.Forms.Panel()
         Me.PictureBox_Preview = New System.Windows.Forms.PictureBox()
         Me.AlleauswählenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -227,6 +219,7 @@ Partial Class Form1
         Me.ToolStripStatusLabel_SaveInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.SplitContainer_Main = New System.Windows.Forms.SplitContainer()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel_Separator_Column.SuspendLayout()
@@ -248,8 +241,6 @@ Partial Class Form1
         Me.GroupBox_Data.SuspendLayout()
         Me.TabControl_Main.SuspendLayout()
         Me.TabPage_General.SuspendLayout()
-        Me.GroupBox_General_Font.SuspendLayout()
-        Me.TableLayoutPanel_General_Font.SuspendLayout()
         Me.GroupBox_General_Export.SuspendLayout()
         Me.TableLayoutPanel_General_Export.SuspendLayout()
         Me.GroupBox_General_Import.SuspendLayout()
@@ -814,6 +805,7 @@ Partial Class Form1
         Me.TabControl_Main.Controls.Add(Me.TabPage_CardRow)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Data)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Table)
+        Me.TabControl_Main.Controls.Add(Me.TabPage1)
         Me.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl_Main.Location = New System.Drawing.Point(0, 0)
         Me.TabControl_Main.Margin = New System.Windows.Forms.Padding(29)
@@ -827,7 +819,6 @@ Partial Class Form1
         'TabPage_General
         '
         Me.TabPage_General.AutoScroll = True
-        Me.TabPage_General.Controls.Add(Me.GroupBox_General_Font)
         Me.TabPage_General.Controls.Add(Me.GroupBox_General_Export)
         Me.TabPage_General.Controls.Add(Me.GroupBox_General_Import)
         Me.TabPage_General.Controls.Add(Me.GroupBox_General_XML)
@@ -838,112 +829,6 @@ Partial Class Form1
         Me.TabPage_General.TabIndex = 8
         Me.TabPage_General.Text = "Allgemein"
         Me.TabPage_General.UseVisualStyleBackColor = True
-        '
-        'GroupBox_General_Font
-        '
-        Me.GroupBox_General_Font.Controls.Add(Me.TableLayoutPanel_General_Font)
-        Me.GroupBox_General_Font.Location = New System.Drawing.Point(9, 329)
-        Me.GroupBox_General_Font.Margin = New System.Windows.Forms.Padding(0)
-        Me.GroupBox_General_Font.Name = "GroupBox_General_Font"
-        Me.GroupBox_General_Font.Padding = New System.Windows.Forms.Padding(0)
-        Me.GroupBox_General_Font.Size = New System.Drawing.Size(217, 65)
-        Me.GroupBox_General_Font.TabIndex = 4
-        Me.GroupBox_General_Font.TabStop = False
-        Me.GroupBox_General_Font.Text = "Schriftart"
-        '
-        'TableLayoutPanel_General_Font
-        '
-        Me.TableLayoutPanel_General_Font.AutoSize = True
-        Me.TableLayoutPanel_General_Font.ColumnCount = 3
-        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_General_Font.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Button_General_Font, 2, 0)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Name, 0, 0)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Size, 0, 1)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Style, 0, 2)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Name_Value, 1, 0)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Size_Value, 1, 1)
-        Me.TableLayoutPanel_General_Font.Controls.Add(Me.Label_General_Font_Style_Value, 1, 2)
-        Me.TableLayoutPanel_General_Font.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel_General_Font.Location = New System.Drawing.Point(0, 13)
-        Me.TableLayoutPanel_General_Font.Margin = New System.Windows.Forms.Padding(0)
-        Me.TableLayoutPanel_General_Font.Name = "TableLayoutPanel_General_Font"
-        Me.TableLayoutPanel_General_Font.RowCount = 3
-        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_General_Font.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_General_Font.Size = New System.Drawing.Size(217, 52)
-        Me.TableLayoutPanel_General_Font.TabIndex = 0
-        '
-        'Button_General_Font
-        '
-        Me.Button_General_Font.AutoSize = True
-        Me.Button_General_Font.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_General_Font.ImageKey = "Font"
-        Me.Button_General_Font.ImageList = Me.ImageList_Main
-        Me.Button_General_Font.Location = New System.Drawing.Point(176, 3)
-        Me.Button_General_Font.Name = "Button_General_Font"
-        Me.TableLayoutPanel_General_Font.SetRowSpan(Me.Button_General_Font, 3)
-        Me.Button_General_Font.Size = New System.Drawing.Size(38, 38)
-        Me.Button_General_Font.TabIndex = 8
-        Me.Button_General_Font.UseVisualStyleBackColor = True
-        '
-        'Label_General_Font_Name
-        '
-        Me.Label_General_Font_Name.AutoSize = True
-        Me.Label_General_Font_Name.Location = New System.Drawing.Point(3, 0)
-        Me.Label_General_Font_Name.Name = "Label_General_Font_Name"
-        Me.Label_General_Font_Name.Size = New System.Drawing.Size(35, 13)
-        Me.Label_General_Font_Name.TabIndex = 9
-        Me.Label_General_Font_Name.Text = "Name"
-        '
-        'Label_General_Font_Size
-        '
-        Me.Label_General_Font_Size.AutoSize = True
-        Me.Label_General_Font_Size.Location = New System.Drawing.Point(3, 13)
-        Me.Label_General_Font_Size.Name = "Label_General_Font_Size"
-        Me.Label_General_Font_Size.Size = New System.Drawing.Size(27, 13)
-        Me.Label_General_Font_Size.TabIndex = 10
-        Me.Label_General_Font_Size.Text = "Size"
-        '
-        'Label_General_Font_Style
-        '
-        Me.Label_General_Font_Style.AutoSize = True
-        Me.Label_General_Font_Style.Location = New System.Drawing.Point(3, 26)
-        Me.Label_General_Font_Style.Name = "Label_General_Font_Style"
-        Me.Label_General_Font_Style.Size = New System.Drawing.Size(30, 13)
-        Me.Label_General_Font_Style.TabIndex = 11
-        Me.Label_General_Font_Style.Text = "Style"
-        '
-        'Label_General_Font_Name_Value
-        '
-        Me.Label_General_Font_Name_Value.AutoSize = True
-        Me.Label_General_Font_Name_Value.Location = New System.Drawing.Point(44, 0)
-        Me.Label_General_Font_Name_Value.Name = "Label_General_Font_Name_Value"
-        Me.Label_General_Font_Name_Value.Size = New System.Drawing.Size(39, 13)
-        Me.Label_General_Font_Name_Value.TabIndex = 13
-        Me.Label_General_Font_Name_Value.Text = "Label5"
-        '
-        'Label_General_Font_Size_Value
-        '
-        Me.Label_General_Font_Size_Value.AutoSize = True
-        Me.Label_General_Font_Size_Value.Location = New System.Drawing.Point(44, 13)
-        Me.Label_General_Font_Size_Value.Name = "Label_General_Font_Size_Value"
-        Me.Label_General_Font_Size_Value.Size = New System.Drawing.Size(39, 13)
-        Me.Label_General_Font_Size_Value.TabIndex = 14
-        Me.Label_General_Font_Size_Value.Text = "Label6"
-        '
-        'Label_General_Font_Style_Value
-        '
-        Me.Label_General_Font_Style_Value.AutoSize = True
-        Me.Label_General_Font_Style_Value.Location = New System.Drawing.Point(44, 26)
-        Me.Label_General_Font_Style_Value.Name = "Label_General_Font_Style_Value"
-        Me.Label_General_Font_Style_Value.Size = New System.Drawing.Size(39, 13)
-        Me.Label_General_Font_Style_Value.TabIndex = 15
-        Me.Label_General_Font_Style_Value.Text = "Label7"
         '
         'GroupBox_General_Export
         '
@@ -2408,6 +2293,17 @@ Partial Class Form1
         Me.DGV_Table.Size = New System.Drawing.Size(125, 65)
         Me.DGV_Table.TabIndex = 0
         '
+        'TabPage1
+        '
+        Me.TabPage1.AutoScroll = True
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(338, 516)
+        Me.TabPage1.TabIndex = 9
+        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
         'Panel_Preview
         '
         Me.Panel_Preview.AutoScroll = True
@@ -2583,7 +2479,7 @@ Partial Class Form1
         'TestToolStripMenuItem
         '
         Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
-        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
         Me.TestToolStripMenuItem.Text = "Test"
         '
         'ToolStripStatusLabel_SaveFile
@@ -2607,13 +2503,19 @@ Partial Class Form1
         '
         'StatusStrip_Main
         '
-        Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
+        Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile, Me.ToolStripStatusLabel1})
         Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 572)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.Size = New System.Drawing.Size(588, 22)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(120, 17)
+        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'SplitContainer_Main
         '
@@ -2677,10 +2579,6 @@ Partial Class Form1
         Me.GroupBox_Data.PerformLayout()
         Me.TabControl_Main.ResumeLayout(False)
         Me.TabPage_General.ResumeLayout(False)
-        Me.GroupBox_General_Font.ResumeLayout(False)
-        Me.GroupBox_General_Font.PerformLayout()
-        Me.TableLayoutPanel_General_Font.ResumeLayout(False)
-        Me.TableLayoutPanel_General_Font.PerformLayout()
         Me.GroupBox_General_Export.ResumeLayout(False)
         Me.TableLayoutPanel_General_Export.ResumeLayout(False)
         Me.TableLayoutPanel_General_Export.PerformLayout()
@@ -2944,15 +2842,6 @@ Partial Class Form1
     Friend WithEvents Label_General_Export_Filname As Label
     Friend WithEvents TextBox_General_Export_Filename As TextBox
     Friend WithEvents GroupBox_Data As GroupBox
-    Friend WithEvents GroupBox_General_Font As GroupBox
-    Friend WithEvents TableLayoutPanel_General_Font As TableLayoutPanel
-    Friend WithEvents Button_General_Font As Button
-    Friend WithEvents Label_General_Font_Name As Label
-    Friend WithEvents Label_General_Font_Size As Label
-    Friend WithEvents Label_General_Font_Style As Label
-    Friend WithEvents Label_General_Font_Name_Value As Label
-    Friend WithEvents Label_General_Font_Size_Value As Label
-    Friend WithEvents Label_General_Font_Style_Value As Label
     Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FlowLayoutPanel_CardRow As FlowLayoutPanel
     Friend WithEvents Button_CardRow_Up As Button
@@ -2967,4 +2856,6 @@ Partial Class Form1
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label_CardRow_LinePos_Value As Label
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 End Class

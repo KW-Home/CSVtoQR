@@ -9,7 +9,7 @@ Public Class Form1
     Private DS As New DataSet
 
     Private MyFont As Font
-    'Private MySavePath As String
+    Private WithEvents UC_Font As UserControl_Font
 
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
@@ -88,7 +88,6 @@ Public Class Form1
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
         MySettings_Load()
-        GET_General_Fonts(MyFont)
 
     End Sub
 
@@ -687,27 +686,6 @@ Public Class Form1
         IsModified = False
 
     End Sub
-    Private Sub Button_General_Font_Click(sender As Object, e As EventArgs) Handles Button_General_Font.Click
-
-        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
-        If FD.ShowDialog = DialogResult.OK Then
-            MyFont = FD.Font
-            My.Settings.MyFont = MyFont
-            My.Settings.Save()
-            CL_Default = New Class_Default(Me, DS)
-
-            GET_General_Fonts(MyFont)
-
-        End If
-
-    End Sub
-    Private Sub GET_General_Fonts(font As Font)
-        With font
-            Label_General_Font_Name_Value.Text = .Name.ToString
-            Label_General_Font_Size_Value.Text = .Size.ToString
-            Label_General_Font_Style_Value.Text = .Style.ToString
-        End With
-    End Sub
 
     Private Sub Button_CardRow_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Add.Click
 
@@ -841,6 +819,42 @@ Public Class Form1
     Private Sub ComboBox_CardRow_DataColumn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.SelectedIndexChanged
 
         Button_CardRow_Add.Enabled = ComboBox_CardRow_DataColumn.SelectedIndex > -1
+
+    End Sub
+
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+
+        If TabPage_General.Controls.ContainsKey("UC_Font_General") = True Then Return
+
+        Dim UCF = New UserControl_Font(MyFont)
+
+        With UCF
+            .Name = "UC_Font_General"
+            .Dock = DockStyle.Top
+            .Font = My.Settings.MyFont
+            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+        End With
+
+        TabPage_General.Controls.Add(UCF)
+
+
+    End Sub
+
+    Private Sub UC_Font_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Changed
+
+        If Sender.canselect = False Then Return
+        If Sender.canfocus = False Then Return
+
+        Select Case Sender.Name
+            Case "UC_Font_General"
+                My.Settings.MyFont = e
+                My.Settings.Save()
+                CL_Default = New Class_Default(Me, DS)
+                Debug.Print(Sender.name & vbTab & e.ToString)
+        End Select
+
+        Beep()
 
     End Sub
 
