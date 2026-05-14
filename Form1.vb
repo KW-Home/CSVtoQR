@@ -18,7 +18,6 @@ Public Class Form1
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
-    Private DV_CardRow As DataView
 
     Private WithEvents CL_XML As New Class_XML
 
@@ -48,7 +47,9 @@ Public Class Form1
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
             SET_Changetext_CSV(value)
+
             Set_CardRow_DataBinding()
+
         End Set
     End Property
 
@@ -96,6 +97,10 @@ Public Class Form1
         'lädt die Einstellungen, die im Designer unter "My.Settings" definiert wurden   
 
         'Initialisiert die Standardwerte und -einstellungen für die Anwendung
+        UserControl_Font_General_Load()
+        UserControl_Font_Card_Load()
+        UserControl_Font_CardRow_Load()
+
         CL_Default = New Class_Default(Me, DS)
 
 
@@ -694,7 +699,10 @@ Public Class Form1
             .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
             .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
             .Item("LinePos") = Label_CardRow_LinePos_Value.Text
-            .Item("Font") = String.Empty
+
+            'ToDo: Überprüfen, ob die Font-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird eine neue Font mit festen Werten erstellt, was möglicherweise nicht den Erwartungen entspricht.
+            .Item("Font") = New Class_FontConverter().FontToString(New Font("Arial", 12, FontStyle.Regular))
+
             .Item("FontColor") = String.Empty
             .Item("AutoFont") = False
         End With
@@ -702,19 +710,22 @@ Public Class Form1
 
         CardRow_Sort(sender, e)
 
-        Set_CardRow_DataBinding()
-
     End Sub
     Private Sub Set_CardRow_DataBinding()
 
-        DV_CardRow = New DataView(DS.Tables("CardRow")) With {.Sort = "LinePos Asc"}
+        Dim DR() As DataRow = DS.Tables("CardRow").Select("", "LinePos ASC")
+        If DR.Length = 0 Then Return
+        Dim DT As DataTable = DS.Tables("CardRow").Clone
+        For I = 0 To DR.Length - 1 Step 1
+            DT.ImportRow(DR(I))
+            DR(I)("LinePos") = I + 1
+        Next
 
         With ListBox_CardRow
             .DataSource = Nothing
-            .DataSource = DV_CardRow
+            .DataSource = DT
             .DisplayMember = "DataColumn"
             .ValueMember = "ID"
-            .Sorted = True
         End With
 
     End Sub
@@ -728,6 +739,9 @@ Public Class Form1
             .ClearSelected()
         End With
 
+        Set_CardRow_DataBinding()
+        ListBox_CardRow.ClearSelected()
+
     End Sub
 
     Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedIndexChanged
@@ -738,11 +752,41 @@ Public Class Form1
             If .CanFocus = False Then Return
 
             If .SelectedIndex = -1 Then
+
                 Button_CardRow_Down.Enabled = False
                 Button_CardRow_Up.Enabled = False
                 Button_CardRow_Delete.Enabled = False
+
+                With TableLayoutPanel_CardRow
+                    If .Controls.ContainsKey("UC_Font_CardRow") = True Then
+                        .Controls("UC_Font_CardRow").Enabled = False
+                    End If
+                End With
+
             Else
+
                 Button_CardRow_Delete.Enabled = True
+
+                With TableLayoutPanel_CardRow
+                    If .Controls.ContainsKey("UC_Font_CardRow") = True Then
+                        .Controls("UC_Font_CardRow").Enabled = True
+
+                        If IsNothing(ListBox_CardRow.SelectedItem("Font")) = False Then
+
+                            If ListBox_CardRow.SelectedItem("Font").ToString.Length = 0 Then Return
+
+
+                            Dim NFS As String = ListBox_CardRow.SelectedItem("Font")
+                            Dim cvt As New FontConverter
+                            Dim NF As Font = cvt.ConvertFromString(NFS)
+                            Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
+
+                            UC.GET_General_Fonts(NF)
+
+                        End If
+
+                    End If
+                End With
 
                 If .SelectedIndex > 0 Then
                     Button_CardRow_Up.Enabled = True
@@ -763,7 +807,6 @@ Public Class Form1
     Private Sub Button_CardRow_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Up.Click, Button_CardRow_Down.Click
 
         CardRow_Sort(sender, e)
-        Set_CardRow_DataBinding()
 
     End Sub
     Private Sub CardRow_Sort(sender As Object, e As EventArgs)
@@ -775,27 +818,24 @@ Public Class Form1
 
         Dim DT = DS.Tables("CardRow")
         Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+
         Select Case sender.Name
             Case Button_CardRow_Up.Name
-                DR("LinePos") = CType(DR("LinePos") - 0.5, Double)
+                DR("LinePos") = CType(DR("LinePos") - 1.5, Double)
             Case Button_CardRow_Down.Name
-                DR("LinePos") = CType(DR("LinePos") + 0.5, Double)
+                DR("LinePos") = CType(DR("LinePos") + 1.5, Double)
         End Select
 
-        Dim I As Integer = 1
-        For Each DR In DT.Rows
-            DR("LinePos") = I
-            I += 1
-        Next
+        Set_CardRow_DataBinding()
 
-        'For Each Wert In ListBox_CardRow.Items
-        '    If Wert("ID") = ID Then
-        '        ListBox_CardRow.SelectedItem = Wert
-        '    End If
-        'Next
+        For Each Row As DataRow In DS.Tables("CardRow").Rows
+            If ID = Row("ID") Then ListBox_CardRow.SelectedValue = Row("ID")
+        Next
 
     End Sub
     Private Sub ListBox_CardRow_List_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedValueChanged
+
+        If IsNothing(ListBox_CardRow.SelectedItem) Then Return
 
         With ListBox_CardRow
             If .CanSelect = False Then Return
@@ -806,9 +846,6 @@ Public Class Form1
             ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
 
             If IsDBNull(.SelectedItem("LinePos")) = False Then Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
-
-            'NumericUpDown_CardRow_LinePos.Value = .SelectedItem("Font")
-            'NumericUpDown_CardRow_LinePos.Value = .SelectedItem("FontColor")
             CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
 
         End With
@@ -823,24 +860,46 @@ Public Class Form1
     End Sub
 
 
-    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+    Private Sub UserControl_Font_General_Load()
 
         If TabPage_General.Controls.ContainsKey("UC_Font_General") = True Then Return
-
         Dim UCF = New UserControl_Font(MyFont)
-
         With UCF
             .Name = "UC_Font_General"
             .Dock = DockStyle.Top
             .Font = My.Settings.MyFont
             AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
         End With
-
         TabPage_General.Controls.Add(UCF)
 
+    End Sub
+    Private Sub UserControl_Font_Card_Load()
+
+        If TabPage_General.Controls.ContainsKey("UC_Font_Card") = True Then Return
+        Dim UCF = New UserControl_Font(MyFont)
+        With UCF
+            .Name = "UC_Font_Card"
+            .Dock = DockStyle.Fill
+            .Font = My.Settings.MyFont
+            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+        End With
+        TableLayoutPanel_Card.Controls.Add(UCF)
 
     End Sub
+    Private Sub UserControl_Font_CardRow_Load()
 
+        If TabPage_General.Controls.ContainsKey("UC_Font_CardRow") = True Then Return
+        Dim UCF = New UserControl_Font(MyFont)
+        With UCF
+            .Name = "UC_Font_CardRow"
+            .Dock = DockStyle.Fill
+            .Font = My.Settings.MyFont
+            .Enabled = False
+            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+        End With
+        TableLayoutPanel_CardRow.Controls.Add(UCF)
+
+    End Sub
     Private Sub UC_Font_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Changed
 
         If Sender.canselect = False Then Return
@@ -851,10 +910,21 @@ Public Class Form1
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
+            Case "UC_Font_Card"
+                CL_DS.NewRow_Card(DS)
+                DS.Tables("Card").Rows(0)("Font") = New Class_FontConverter().FontToString(e)
+            Case "UC_Font_CardRow"
+                CL_DS.NewRow_CardRow(DS)
+                Dim ID As Integer = ListBox_CardRow.SelectedValue
+                For Each Row As DataRow In DS.Tables("CardRow").Rows
+                    If ID = Row("ID") Then
+                        Row("Font") = New Class_FontConverter().FontToString(e)
+                    End If
+                Next
+            Case Else
                 Debug.Print(Sender.name & vbTab & e.ToString)
+                Beep()
         End Select
-
-        Beep()
 
     End Sub
 

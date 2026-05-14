@@ -1,4 +1,5 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Resources.ResXFileRef
+Imports System.Security.Cryptography
 Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
@@ -95,6 +96,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("ID")}
         End With
 
@@ -112,6 +114,7 @@ Public Class Class_DS
             With DR
                 .Item("CardSizeWidth") = 0
                 .Item("CardSizeHeight") = 0
+                .Item("Font") = String.Empty
             End With
             DS.Tables("Card").Rows.Add(DR)
         End If
