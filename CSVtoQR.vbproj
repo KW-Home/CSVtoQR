@@ -101,6 +101,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UserControl_Border.Designer.vb">
+      <DependentUpon>UserControl_Border.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl_Border.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl_Files.Designer.vb">
+      <DependentUpon>UserControl_Files.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl_Files.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControl_Font.Designer.vb">
       <DependentUpon>UserControl_Font.vb</DependentUpon>
     </Compile>
@@ -118,6 +130,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl_Border.resx">
+      <DependentUpon>UserControl_Border.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl_Files.resx">
+      <DependentUpon>UserControl_Files.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl_Font.resx">
       <DependentUpon>UserControl_Font.vb</DependentUpon>
