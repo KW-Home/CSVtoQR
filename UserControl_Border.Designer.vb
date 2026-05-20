@@ -66,17 +66,20 @@ Partial Class UserControl_Border
         Me.TableLayoutPanel_Border.Location = New System.Drawing.Point(8, 8)
         Me.TableLayoutPanel_Border.Name = "TableLayoutPanel_Border"
         Me.TableLayoutPanel_Border.RowCount = 5
-        Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Border.Size = New System.Drawing.Size(179, 124)
+        Me.TableLayoutPanel_Border.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Border.Size = New System.Drawing.Size(141, 124)
         Me.TableLayoutPanel_Border.TabIndex = 47
         '
         'Label_Right_Unit
         '
-        Me.Label_Right_Unit.Location = New System.Drawing.Point(127, 46)
+        Me.Label_Right_Unit.AutoSize = True
+        Me.Label_Right_Unit.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Right_Unit.Location = New System.Drawing.Point(118, 50)
+        Me.Label_Right_Unit.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Right_Unit.Name = "Label_Right_Unit"
         Me.Label_Right_Unit.Size = New System.Drawing.Size(23, 17)
         Me.Label_Right_Unit.TabIndex = 46
@@ -87,7 +90,9 @@ Partial Class UserControl_Border
         'Label_Top_Unit
         '
         Me.Label_Top_Unit.AutoSize = True
-        Me.Label_Top_Unit.Location = New System.Drawing.Point(127, 72)
+        Me.Label_Top_Unit.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Top_Unit.Location = New System.Drawing.Point(118, 76)
+        Me.Label_Top_Unit.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Top_Unit.Name = "Label_Top_Unit"
         Me.Label_Top_Unit.Size = New System.Drawing.Size(23, 17)
         Me.Label_Top_Unit.TabIndex = 46
@@ -98,7 +103,9 @@ Partial Class UserControl_Border
         'Label_Bottom_Unit
         '
         Me.Label_Bottom_Unit.AutoSize = True
-        Me.Label_Bottom_Unit.Location = New System.Drawing.Point(127, 98)
+        Me.Label_Bottom_Unit.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Bottom_Unit.Location = New System.Drawing.Point(118, 102)
+        Me.Label_Bottom_Unit.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Bottom_Unit.Name = "Label_Bottom_Unit"
         Me.Label_Bottom_Unit.Size = New System.Drawing.Size(23, 17)
         Me.Label_Bottom_Unit.TabIndex = 46
@@ -109,9 +116,11 @@ Partial Class UserControl_Border
         'Label_Left
         '
         Me.Label_Left.AutoSize = True
-        Me.Label_Left.Location = New System.Drawing.Point(3, 20)
+        Me.Label_Left.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Left.Location = New System.Drawing.Point(0, 24)
+        Me.Label_Left.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Left.Name = "Label_Left"
-        Me.Label_Left.Size = New System.Drawing.Size(31, 17)
+        Me.Label_Left.Size = New System.Drawing.Size(39, 17)
         Me.Label_Left.TabIndex = 1
         Me.Label_Left.Text = "Links"
         Me.Label_Left.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -120,7 +129,9 @@ Partial Class UserControl_Border
         'Label_Right
         '
         Me.Label_Right.AutoSize = True
-        Me.Label_Right.Location = New System.Drawing.Point(3, 46)
+        Me.Label_Right.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Right.Location = New System.Drawing.Point(0, 50)
+        Me.Label_Right.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Right.Name = "Label_Right"
         Me.Label_Right.Size = New System.Drawing.Size(39, 17)
         Me.Label_Right.TabIndex = 3
@@ -131,9 +142,11 @@ Partial Class UserControl_Border
         'Label_Top
         '
         Me.Label_Top.AutoSize = True
-        Me.Label_Top.Location = New System.Drawing.Point(3, 72)
+        Me.Label_Top.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Top.Location = New System.Drawing.Point(0, 76)
+        Me.Label_Top.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Top.Name = "Label_Top"
-        Me.Label_Top.Size = New System.Drawing.Size(32, 17)
+        Me.Label_Top.Size = New System.Drawing.Size(39, 17)
         Me.Label_Top.TabIndex = 5
         Me.Label_Top.Text = "Oben"
         Me.Label_Top.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -141,7 +154,8 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Left
         '
-        Me.NumericUpDown_Left.Location = New System.Drawing.Point(48, 23)
+        Me.NumericUpDown_Left.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Left.Location = New System.Drawing.Point(42, 23)
         Me.NumericUpDown_Left.Name = "NumericUpDown_Left"
         Me.NumericUpDown_Left.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Left.TabIndex = 1
@@ -149,7 +163,8 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Right
         '
-        Me.NumericUpDown_Right.Location = New System.Drawing.Point(48, 49)
+        Me.NumericUpDown_Right.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Right.Location = New System.Drawing.Point(42, 49)
         Me.NumericUpDown_Right.Name = "NumericUpDown_Right"
         Me.NumericUpDown_Right.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Right.TabIndex = 2
@@ -157,7 +172,8 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Top
         '
-        Me.NumericUpDown_Top.Location = New System.Drawing.Point(48, 75)
+        Me.NumericUpDown_Top.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Top.Location = New System.Drawing.Point(42, 75)
         Me.NumericUpDown_Top.Name = "NumericUpDown_Top"
         Me.NumericUpDown_Top.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Top.TabIndex = 3
@@ -165,7 +181,8 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Bottom
         '
-        Me.NumericUpDown_Bottom.Location = New System.Drawing.Point(48, 101)
+        Me.NumericUpDown_Bottom.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Bottom.Location = New System.Drawing.Point(42, 101)
         Me.NumericUpDown_Bottom.Name = "NumericUpDown_Bottom"
         Me.NumericUpDown_Bottom.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Bottom.TabIndex = 4
@@ -174,9 +191,11 @@ Partial Class UserControl_Border
         'Label_Bottom
         '
         Me.Label_Bottom.AutoSize = True
-        Me.Label_Bottom.Location = New System.Drawing.Point(3, 98)
+        Me.Label_Bottom.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Bottom.Location = New System.Drawing.Point(0, 102)
+        Me.Label_Bottom.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Bottom.Name = "Label_Bottom"
-        Me.Label_Bottom.Size = New System.Drawing.Size(34, 17)
+        Me.Label_Bottom.Size = New System.Drawing.Size(39, 17)
         Me.Label_Bottom.TabIndex = 7
         Me.Label_Bottom.Text = "Unten"
         Me.Label_Bottom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -185,7 +204,9 @@ Partial Class UserControl_Border
         'Label_Left_Unit
         '
         Me.Label_Left_Unit.AutoSize = True
-        Me.Label_Left_Unit.Location = New System.Drawing.Point(127, 20)
+        Me.Label_Left_Unit.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Left_Unit.Location = New System.Drawing.Point(118, 24)
+        Me.Label_Left_Unit.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
         Me.Label_Left_Unit.Name = "Label_Left_Unit"
         Me.Label_Left_Unit.Size = New System.Drawing.Size(23, 17)
         Me.Label_Left_Unit.TabIndex = 46
@@ -196,13 +217,16 @@ Partial Class UserControl_Border
         'Label_Header
         '
         Me.Label_Header.AutoSize = True
+        Me.Label_Header.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Label_Header.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.TableLayoutPanel_Border.SetColumnSpan(Me.Label_Header, 3)
-        Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label_Header.Location = New System.Drawing.Point(3, 0)
         Me.Label_Header.Name = "Label_Header"
-        Me.Label_Header.Size = New System.Drawing.Size(173, 20)
+        Me.Label_Header.Size = New System.Drawing.Size(135, 20)
         Me.Label_Header.TabIndex = 47
-        Me.Label_Header.Text = "Label1"
+        Me.Label_Header.Text = "Rahmen"
+        Me.Label_Header.UseCompatibleTextRendering = True
         '
         'UserControl_Border
         '

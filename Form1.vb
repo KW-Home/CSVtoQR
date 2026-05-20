@@ -77,7 +77,7 @@ Public Class Form1
             End If
 
             If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
-            If DS.Tables("Shema").Rows.Count = 0 Then DS = CL_DS.NewRow_Shema(DS)
+            If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.NewRow_Shema(DS)
             DS.Tables("Shema").Rows(0).Item("Export") = ExportFile_Value
 
             SET_Changetext_PDF(ExportFile_Value)
@@ -129,8 +129,8 @@ Public Class Form1
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
                 DS = CL_DS.Get_DS(DS)
-                DS = CL_DS.NewRow_Shema(DS)
-                'DS = New DataSet
+                CL_DS.NewRow_Shema(DS)
+
                 CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
 
@@ -201,46 +201,55 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
+        Dim DR As DataRow
 
-        With DS.Tables("Shema")
-            If .Rows.Count = 0 Then
-                DS = CL_DS.NewRow_Shema(DS)
-                IsModified = True
-            Else
-                ImportFile = .Rows(0).Item("Import").ToString
-            End If
+        'Shema auslesen und in die entsprechenden Steuerelemente einfügen
+        If DS.Tables("Shema").Rows.Count = 0 Then
+            CL_DS.NewRow_Shema(DS)
+            IsModified = True
+        End If
 
-            With .Rows(0)
-                TextBox_Paper_Shema.Text = .Item("Shema").ToString
-                ImportFile = .Item("Import").ToString
-                ExportFile = .Item("Export").ToString
-                ComboBox_Paper_DPI.Text = .Item("DPI")
-                ComboBox_Paper_DIN.Text = .Item("DIN").ToString
-                Label_Paper_Height_Value.Text = .Item("PaperHeight").ToString
-                Label_Paper_Width_Value.Text = .Item("PaperWidth")
-                NumericUpDown_Separator_Column_Count.Value = .Item("SeparatorSpalteAnzahl")
-                NumericUpDown_Separator_Column_Value.Value = .Item("SeparatorSpalteWert")
-                NumericUpDown_Separator_Row_Count.Value = .Item("SeparatorZeileAnzahl")
-                NumericUpDown_Separator_Row_Value.Value = .Item("SeparatorZeileWert")
-            End With
-        End With
+        DR = DS.Tables("Shema").Rows(0)
+        TextBox_Paper_Shema.Text = DR("Shema").ToString
+        ImportFile = DR("Import").ToString
+        ExportFile = DR("Export").ToString
+        ComboBox_Paper_DPI.Text = DR("DPI")
+        ComboBox_Paper_DIN.Text = DR("DIN").ToString
 
-        For Each DR As DataRow In DS.Tables("Border").Rows
-            Select Case DR("Area") & "|" & DR("Border")
-                Case "Paper|Left" : NumericUpDown_Paper_Border_Left.Value = DR("Value")
-                Case "Paper|Top" : NumericUpDown_Paper_Border_Top.Value = DR("Value")
-                Case "Paper|Right" : NumericUpDown_Paper_Border_Right.Value = DR("Value")
-                Case "Paper|Bottom" : NumericUpDown_Paper_Border_Bottom.Value = DR("Value")
-                Case "Card|Left" : NumericUpDown_Card_Border_Left.Value = DR("Value")
-                Case "Card|Top" : NumericUpDown_Card_Border_Top.Value = DR("Value")
-                Case "Card|Right" : NumericUpDown_Card_Border_Right.Value = DR("Value")
-                Case "Card|Bottom" : NumericUpDown_Card_Border_Bottom.Value = DR("Value")
-                Case "CardRow|Left" : NumericUpDown_CardRow_Border_Left.Value = DR("Value")
-                Case "CardRow|Top" : NumericUpDown_CardRow_Border_Top.Value = DR("Value")
-                Case "CardRow|Right" : NumericUpDown_CardRow_Border_Right.Value = DR("Value")
-                Case "CardRow|Bottom" : NumericUpDown_CardRow_Border_Bottom.Value = DR("Value")
-            End Select
-        Next
+        NumericUpDown_Paper_Border_Left.Value = DR("Left")
+        NumericUpDown_Paper_Border_Top.Value = DR("Top")
+        NumericUpDown_Paper_Border_Right.Value = DR("Right")
+        NumericUpDown_Paper_Border_Bottom.Value = DR("Bottom")
+
+        Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
+        Label_Paper_Width_Value.Text = DR("PaperWidth")
+        NumericUpDown_Separator_Column_Count.Value = DR("SeparatorSpalteAnzahl")
+        NumericUpDown_Separator_Column_Value.Value = DR("SeparatorSpalteWert")
+        NumericUpDown_Separator_Row_Count.Value = DR("SeparatorZeileAnzahl")
+        NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
+
+        'Card auslesen und in die entsprechenden Steuerelemente einfügen
+        If DS.Tables("Card").Rows.Count = 0 Then CL_DS.NewRow_Card(DS)
+        DR = DS.Tables("Card").Rows(0)
+        NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
+        NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
+        NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
+        NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
+
+        'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
+        If DS.Tables("CardRow").Rows.Count = 0 Then CL_DS.NewRow_Card(DS)
+        If ListBox_CardRow.SelectedIndex = -1 Then
+            NumericUpDown_CardRow_Border_Left.Value = 0
+            NumericUpDown_CardRow_Border_Top.Value = 0
+            NumericUpDown_CardRow_Border_Right.Value = 0
+            NumericUpDown_CardRow_Border_Bottom.Value = 0
+        Else
+            DR = DS.Tables("CardRow").Select($"[ID]={ListBox_CardRow.SelectedItem("ID")}")(0)
+            NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
+            NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
+            NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
+            NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
+        End If
 
         DGV_Search.DataSource = Nothing
         If Not IsNothing(DS.Tables("Search")) Then
@@ -324,12 +333,8 @@ Public Class Form1
         NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
+        DS.Tables("Shema")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
         IsModified = True
-
-        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
-        Dim DT As DataTable = DS.Tables("Border")
-        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
-        DR(0)("Value") = sender.value
 
         PaperPaint(Nothing, Nothing)
 
@@ -337,24 +342,19 @@ Public Class Form1
     Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
+        DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
         IsModified = True
-
-        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
-        Dim DT As DataTable = DS.Tables("Border")
-        Dim DR() As DataRow = DT.Select($"[Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
-        DR(0)("Value") = sender.value
 
     End Sub
 
     Private Sub NumericUpDown_Border_CardRow_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_CardRow_Border_Top.ValueChanged, NumericUpDown_CardRow_Border_Right.ValueChanged, NumericUpDown_CardRow_Border_Left.ValueChanged, NumericUpDown_CardRow_Border_Bottom.ValueChanged
 
         If sender.canselect = False Then Return
+        If ListBox_CardRow.SelectedIndex > -1 Then
+            Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
+            DS.Tables("CardRow").Select($"[ID]={ID}")(0)(sender.tag) = CDbl(sender.value)
+        End If
         IsModified = True
-
-        Dim SP() As String = Split(sender.tag, ";", -1, CompareMethod.Text)
-        Dim DR() As DataRow = DS.Tables("Border").Select($"[ID] = 0 AND [Area] Like '{SP(0)}' AND [Border] Like '{SP(1)}'")
-
-        DR(0)("Value") = sender.value
 
     End Sub
     Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
@@ -362,8 +362,8 @@ Public Class Form1
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
         DS = CL_DS.Get_DS(DS)
-        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Shema") = TextBox_Paper_Shema.Text, Boolean)
         DS.Tables("Shema").Rows(0).Item("Shema") = TextBox_Paper_Shema.Text
+        IsModified = True
 
     End Sub
     Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs) Handles TextBox_General_Import_Directory.TextChanged, TextBox_General_Import_Filename.TextChanged
@@ -536,7 +536,7 @@ Public Class Form1
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
-        DS = CL_DS.NewRow_Shema(DS)
+        CL_DS.NewRow_Shema(DS)
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -781,7 +781,6 @@ Public Class Form1
 
                             If ListBox_CardRow.SelectedItem("Font").ToString.Length = 0 Then Return
 
-
                             Dim NFS As String = ListBox_CardRow.SelectedItem("Font")
                             Dim cvt As New FontConverter
                             Dim NF As Font = cvt.ConvertFromString(NFS)
@@ -846,16 +845,26 @@ Public Class Form1
         With ListBox_CardRow
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
-            If .SelectedItems.Count = 0 Then Return
-
-            CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
-            ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
-
-            If IsDBNull(.SelectedItem("LinePos")) = False Then Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
-            CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
-
+            If .SelectedItems.Count = 0 Then
+                CheckBox_CardRow_QRCode.Checked = False
+                ComboBox_CardRow_DataColumn.Text = ""
+                Label_CardRow_LinePos_Value.Text = 0
+                CheckBox_CardRow_AutoFont.Checked = False
+                NumericUpDown_CardRow_Border_Left.Value = 0
+                NumericUpDown_CardRow_Border_Top.Value = 0
+                NumericUpDown_CardRow_Border_Right.Value = 0
+                NumericUpDown_CardRow_Border_Bottom.Value = 0
+            Else
+                CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
+                ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
+                Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
+                CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
+                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Left")))
+                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Top")))
+                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Right")))
+                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Bottom")))
+            End If
         End With
-
 
     End Sub
 
@@ -931,10 +940,6 @@ Public Class Form1
                 Debug.Print(Sender.name & vbTab & e.ToString)
                 Beep()
         End Select
-
-    End Sub
-
-    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
 
     End Sub
 

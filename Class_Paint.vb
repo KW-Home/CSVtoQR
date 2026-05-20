@@ -15,14 +15,11 @@
         Dim PBB As Single = 0
 
         'PictureBox_Paper.Invalidate()
-        For Each DR As DataRow In DS.Tables("Border").Select("[Area] Like 'Paper'")
-            Select Case DR("Border")
-                Case "Left" : PBL = DR("Value")
-                Case "Top" : PBT = DR("Value")
-                Case "Right" : PBR = DR("Value")
-                Case "Bottom" : PBB = DR("Value")
-            End Select
-        Next
+        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
+        PBL = DR("Left")
+        PBT = DR("Top")
+        PBR = DR("Right")
+        PBB = DR("Bottom")
 
         With FRM
             Dim P(2) As Pen
