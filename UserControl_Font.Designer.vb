@@ -41,7 +41,7 @@ Partial Class UserControl_Font
         Me.Button_Font.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button_Font.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Font.ImageKey = "Font"
-        Me.Button_Font.Location = New System.Drawing.Point(95, 20)
+        Me.Button_Font.Location = New System.Drawing.Point(127, 20)
         Me.Button_Font.Name = "Button_Font"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button_Font, 3)
         Me.Button_Font.Size = New System.Drawing.Size(40, 40)
@@ -92,9 +92,9 @@ Partial Class UserControl_Font
         Me.Label_Name_Value.Location = New System.Drawing.Point(45, 17)
         Me.Label_Name_Value.Name = "Label_Name_Value"
         Me.Label_Name_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.Label_Name_Value.Size = New System.Drawing.Size(44, 17)
+        Me.Label_Name_Value.Size = New System.Drawing.Size(76, 17)
         Me.Label_Name_Value.TabIndex = 13
-        Me.Label_Name_Value.Text = "Label5"
+        Me.Label_Name_Value.Text = "Name_Value"
         Me.Label_Name_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Name_Value.UseCompatibleTextRendering = True
         '
@@ -105,9 +105,9 @@ Partial Class UserControl_Font
         Me.Label_Size_Value.Location = New System.Drawing.Point(45, 34)
         Me.Label_Size_Value.Name = "Label_Size_Value"
         Me.Label_Size_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.Label_Size_Value.Size = New System.Drawing.Size(44, 17)
+        Me.Label_Size_Value.Size = New System.Drawing.Size(76, 17)
         Me.Label_Size_Value.TabIndex = 14
-        Me.Label_Size_Value.Text = "Label6"
+        Me.Label_Size_Value.Text = "Size_Value"
         Me.Label_Size_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Size_Value.UseCompatibleTextRendering = True
         '
@@ -118,9 +118,9 @@ Partial Class UserControl_Font
         Me.Label_Style_Value.Location = New System.Drawing.Point(45, 51)
         Me.Label_Style_Value.Name = "Label_Style_Value"
         Me.Label_Style_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.Label_Style_Value.Size = New System.Drawing.Size(44, 17)
+        Me.Label_Style_Value.Size = New System.Drawing.Size(76, 17)
         Me.Label_Style_Value.TabIndex = 15
-        Me.Label_Style_Value.Text = "Label7"
+        Me.Label_Style_Value.Text = "Style_Value"
         Me.Label_Style_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Style_Value.UseCompatibleTextRendering = True
         '
@@ -146,7 +146,7 @@ Partial Class UserControl_Font
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(138, 68)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(170, 68)
         Me.TableLayoutPanel1.TabIndex = 16
         '
         'Label_Header
@@ -158,7 +158,7 @@ Partial Class UserControl_Font
         Me.Label_Header.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
         Me.Label_Header.Location = New System.Drawing.Point(3, 0)
         Me.Label_Header.Name = "Label_Header"
-        Me.Label_Header.Size = New System.Drawing.Size(132, 17)
+        Me.Label_Header.Size = New System.Drawing.Size(164, 17)
         Me.Label_Header.TabIndex = 16
         Me.Label_Header.Text = "Schriftart"
         Me.Label_Header.UseCompatibleTextRendering = True
@@ -172,7 +172,7 @@ Partial Class UserControl_Font
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
         Me.Name = "UserControl_Font"
-        Me.Size = New System.Drawing.Size(141, 71)
+        Me.Size = New System.Drawing.Size(173, 71)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)

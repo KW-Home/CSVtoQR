@@ -15,6 +15,7 @@ Public Class Form1
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
+    Private CL_FF As New Class_Form1_Funktionen
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
@@ -80,6 +81,9 @@ Public Class Form1
             DS.Tables("Shema").Rows(0).Item("Export") = ExportFile_Value
 
             SET_Changetext_PDF(ExportFile_Value)
+
+            'MessageBox.Show($"ExportFile {vbNewLine}{CL_FF.Check_Path(ExportFile_Value)}", "ExportFile")
+
 
         End Set
     End Property
@@ -682,6 +686,8 @@ Public Class Form1
     End Sub
     Private Sub SET_Changetext_PDF(File As String)
 
+        'ToDo Ordner Überprüfen und erstellen fals nicht vorhanden
+        If System.IO.File.Exists(File) = True Then MessageBox.Show("Die Datei wurde nicht gefunden.", "Export in PDF")
         If File.Length = 0 Then Return
 
         Dim FI As New FileInfo(File)

@@ -133,6 +133,12 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean)})
+
+            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
+
             .PrimaryKey = New DataColumn() { .Columns("ID")}
         End With
 
@@ -143,6 +149,21 @@ Public Class Class_DS
     Public Function NewRow_CardRow(ByRef DS As DataSet) As DataSet
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
+
+        Dim DT = DS.Tables("CardRow")
+        If DT.Rows.Count = 0 Then
+            Dim DR As DataRow = DT.NewRow
+            DR("QRCode") = False
+            DR("DataColumn") = ""
+            DR("LinePos") = 0
+            DR("Font") = "Arial"
+            DR("FontColor") = ""
+            DR("AutoFont") = False
+            DR("Bottom") = 0
+            DR("Left") = 0
+            DR("Right") = 0
+            DR("Top") = 0
+        End If
 
         Return DS
 
