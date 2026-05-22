@@ -229,12 +229,19 @@ Public Class Form1
         NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
-        If DS.Tables("Card").Rows.Count = 0 Then CL_DS.NewRow_Card(DS)
-        DR = DS.Tables("Card").Rows(0)
-        NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
-        NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
-        NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
-        NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
+        If DS.Tables("Card").Rows.Count = 0 Then
+            CL_DS.NewRow_Card(DS)
+            NumericUpDown_Card_Border_Left.Value = 0
+            NumericUpDown_Card_Border_Top.Value = 0
+            NumericUpDown_Card_Border_Right.Value = 0
+            NumericUpDown_Card_Border_Bottom.Value = 0
+        Else
+            DR = DS.Tables("Card").Rows(0)
+            NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
+            NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
+            NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
+            NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
+        End If
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
         If DS.Tables("CardRow").Rows.Count = 0 Then CL_DS.NewRow_Card(DS)
@@ -343,17 +350,6 @@ Public Class Form1
 
         If sender.canselect = False Then Return
         DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
-        IsModified = True
-
-    End Sub
-
-    Private Sub NumericUpDown_Border_CardRow_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_CardRow_Border_Top.ValueChanged, NumericUpDown_CardRow_Border_Right.ValueChanged, NumericUpDown_CardRow_Border_Left.ValueChanged, NumericUpDown_CardRow_Border_Bottom.ValueChanged
-
-        If sender.canselect = False Then Return
-        If ListBox_CardRow.SelectedIndex > -1 Then
-            Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
-            DS.Tables("CardRow").Select($"[ID]={ID}")(0)(sender.tag) = CDbl(sender.value)
-        End If
         IsModified = True
 
     End Sub
@@ -700,27 +696,37 @@ Public Class Form1
 
     Private Sub Button_CardRow_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Add.Click
 
-        Dim DR As DataRow = DS.Tables("CardRow").NewRow
-        With DR
-            .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
-            .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
-            .Item("LinePos") = Label_CardRow_LinePos_Value.Text
+        Save_CardRow(-1)
+        Set_CardRow_DataBinding()
 
-            'ToDo: Überprüfen, ob die Font-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird eine neue Font mit festen Werten erstellt, was möglicherweise nicht den Erwartungen entspricht.
-            .Item("Font") = New Class_FontConverter().FontToString(New Font("Arial", 12, FontStyle.Regular))
+        'Dim DR As DataRow = DS.Tables("CardRow").NewRow
+        'With DR
+        '    .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
+        '    .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
+        '    .Item("LinePos") = Label_CardRow_LinePos_Value.Text
 
-            .Item("FontColor") = String.Empty
-            .Item("AutoFont") = False
-        End With
-        DS.Tables("CardRow").Rows.Add(DR)
+        '    'ToDo: Überprüfen, ob die Font-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird eine neue Font mit festen Werten erstellt, was möglicherweise nicht den Erwartungen entspricht.
+        '    .Item("Font") = New Class_FontConverter().FontToString(New Font("Arial", 12, FontStyle.Regular))
 
-        CardRow_Sort(sender, e)
+        '    'ToDo: Überprüfen, ob die FontColor-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird ein leerer String verwendet, was möglicherweise nicht den Erwartungen entspricht.
+        '    .Item("FontColor") = String.Empty
+
+        '    .Item("AutoFont") = False
+
+        'End With
+        'DS.Tables("CardRow").Rows.Add(DR)
+
+        'CardRow_Sort(sender, e)
 
     End Sub
     Private Sub Set_CardRow_DataBinding()
 
+        ListBox_CardRow.DataSource = Nothing
+
         Dim DR() As DataRow = DS.Tables("CardRow").Select("", "LinePos ASC")
+
         If DR.Length = 0 Then Return
+
         Dim DT As DataTable = DS.Tables("CardRow").Clone
         For I = 0 To DR.Length - 1 Step 1
             DT.ImportRow(DR(I))
@@ -728,11 +734,12 @@ Public Class Form1
         Next
 
         With ListBox_CardRow
-            .DataSource = Nothing
             .DataSource = DT
             .DisplayMember = "DataColumn"
             .ValueMember = "ID"
         End With
+
+        ListBox_CardRow.ClearSelected()
 
     End Sub
 
@@ -742,11 +749,9 @@ Public Class Form1
             If .SelectedItems.Count = 0 Then Return
             Dim ID As Integer = .SelectedItem("ID")
             DS.Tables("CardRow").Rows.Find(ID)?.Delete()
-            .ClearSelected()
         End With
 
         Set_CardRow_DataBinding()
-        ListBox_CardRow.ClearSelected()
 
     End Sub
 
@@ -940,6 +945,53 @@ Public Class Form1
                 Debug.Print(Sender.name & vbTab & e.ToString)
                 Beep()
         End Select
+
+    End Sub
+    Private Sub Save_CardRow(ID As Integer)
+
+        Dim DR As DataRow
+
+        If ID > -1 Then
+            DR = DS.Tables("CardRow").Rows.Find(ID)
+        Else
+            DR = DS.Tables("CardRow").NewRow
+            DS.Tables("CardRow").Rows.Add(DR)
+        End If
+
+        DR("Left") = NumericUpDown_CardRow_Border_Left.Value
+        DR("Top") = NumericUpDown_CardRow_Border_Top.Value
+        DR("Right") = NumericUpDown_CardRow_Border_Right.Value
+        DR("Bottom") = NumericUpDown_CardRow_Border_Bottom.Value
+        DR("QRCode") = CheckBox_CardRow_QRCode.Checked
+        DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
+        DR("LinePos") = Label_CardRow_LinePos_Value.Text
+        DR("Font") = New Class_FontConverter().FontToString(CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font).Font)
+        DR("FontColor") = String.Empty
+        DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
+
+    End Sub
+    Private Sub Button_CardRow_Save_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Save.Click
+
+        If sender.canselect = False Then Return
+
+        If ListBox_CardRow.SelectedIndex > -1 Then
+            Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
+            Save_CardRow(ID)
+        Else
+            Save_CardRow(-1)
+        End If
+
+        Set_CardRow_DataBinding()
+
+        IsModified = True
+
+    End Sub
+    Private Sub Button_CardRow_FontColor_Click(sender As Object, e As EventArgs) Handles Button_CardRow_FontColor.Click
+
+        Dim CD As New ColorDialog With {.Color = sender.ForeColor}
+        If CD.ShowDialog = DialogResult.OK Then
+            sender.ForeColor = CD.Color
+        End If
 
     End Sub
 

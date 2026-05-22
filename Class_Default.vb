@@ -208,8 +208,8 @@
     End Sub
     Private Sub Default_FlowLayoutPanel(ByRef OBJ As FlowLayoutPanel)
         With OBJ
-            .FlowDirection = FlowDirection.TopDown
-            .Dock = DockStyle.Fill
+            .FlowDirection = FlowDirection.LeftToRight
+            .Dock = DockStyle.Top
             .AutoSize = True
             .Margin = New Padding(0)
             .Padding = New Padding(0)

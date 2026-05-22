@@ -4,8 +4,6 @@ Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
 
-    'Private ReadOnly CLCF As New Class_ConvertFont
-
     Public Enum Auto_Font
         None
         AutoFontSize
@@ -21,8 +19,6 @@ Public Class Class_DS
             NewRow_Shema(DS)
             NewRow_Card(DS)
             NewRow_CardRow(DS)
-
-            'DS = NewRow_Border(0, "Paper", DS)
 
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
@@ -43,18 +39,14 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "DPI", .DataType = GetType(Integer), .DefaultValue = 96})
             .Columns.Add(New DataColumn With {.ColumnName = "DIN", .DataType = GetType(String), .DefaultValue = "A4"})
-
-            'Border
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileWert", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorSpalteAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorSpalteWert", .DataType = GetType(Double), .DefaultValue = 0})
-
             .Columns.Add(New DataColumn With {.ColumnName = "PaperHeight", .DataType = GetType(Double), .DefaultValue = 297})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperWidth", .DataType = GetType(Double), .DefaultValue = 210})
 
@@ -104,12 +96,10 @@ Public Class Class_DS
         With DT
 
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            'Border
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
@@ -126,22 +116,6 @@ Public Class Class_DS
 
         If DS.Tables.Contains("Card") = False Then DS.Tables.Add(DT_Card)
 
-        Dim DT As DataTable = DS.Tables("Card")
-        If DT.Rows.Count = 0 Then
-
-            Dim DR As DataRow = DT.NewRow
-            DR("Bottom") = 0
-            DR("Left") = 0
-            DR("Right") = 0
-            DR("Top") = 0
-            DR("CardSizeWidth") = 0
-            DR("CardSizeHeight") = 0
-            DR("Font") = String.Empty
-
-            DS.Tables("Card").Rows.Add(DR)
-
-        End If
-
     End Sub
     Private Function DT_CardRow() As DataTable
 
@@ -149,13 +123,10 @@ Public Class Class_DS
         With DT
 
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-
-            'Border
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-
             .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
             .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double)})
@@ -170,67 +141,11 @@ Public Class Class_DS
         Return DT
 
     End Function
-
     Public Sub NewRow_CardRow(ByRef DS As DataSet)
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
 
-        Dim DT = DS.Tables("CardRow")
-        If DT.Rows.Count = 0 Then
-
-            Dim DR As DataRow = DT.NewRow
-            DR("QRCode") = False
-            DR("DataColumn") = ""
-            DR("LinePos") = 0
-            DR("Font") = "Arial"
-            DR("FontColor") = ""
-            DR("AutoFont") = False
-            DR("Bottom") = 0
-            DR("Left") = 0
-            DR("Right") = 0
-            DR("Top") = 0
-
-            DT.Rows.Add(DR)
-
-        End If
-
     End Sub
-    'Private Function DT_Border() As DataTable
-
-    '    Dim DT As New DataTable With {.TableName = "Border"}
-    '    With DT
-    '        .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-    '        .Columns.Add(New DataColumn With {.ColumnName = "Area", .DataType = GetType(String)})
-    '        .Columns.Add(New DataColumn With {.ColumnName = "Border", .DataType = GetType(String)})
-    '        .Columns.Add(New DataColumn With {.ColumnName = "Value", .DataType = GetType(Double)})
-    '        .PrimaryKey = New DataColumn() { .Columns("ID"), .Columns("Area"), .Columns("Border")}
-    '    End With
-    '    Return DT
-
-    'End Function
-    '''' <summary>
-    '''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
-    '''' </summary>
-    'Public Function NewRow_Border(ID As String, Area As String, ByRef DS As DataSet) As DataSet
-
-    '    If IsNothing(DS.Tables("Border")) = True Then
-    '        DS.Tables.Add(DT_Border)
-    '    End If
-
-    '    Dim DT As DataTable = DS.Tables("Border")
-    '    Dim DR() As DataRow = DT.Select($"ID={ID} AND Area Like '{Area}'")
-
-    '    If DR.Count = 0 Then
-    '        'ID, Area, Border, Value
-    '        DT.Rows.Add(ID, Area, "Bottom", 0)
-    '        DT.Rows.Add(ID, Area, "Left", 0)
-    '        DT.Rows.Add(ID, Area, "Right", 0)
-    '        DT.Rows.Add(ID, Area, "Top", 0)
-    '    End If
-
-    '    Return DS
-
-    'End Function
     Private Function DT_Search() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search"}
@@ -258,7 +173,6 @@ Public Class Class_DS
         Next
 
     End Sub
-
     Private Function DT_Search_Columns() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search_Columns"}
@@ -278,15 +192,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Left", .DataType = GetType(String)})
             .Columns.Add(New DataColumn With {.ColumnName = "Operator_Right", .DataType = GetType(String)})
             .PrimaryKey = New DataColumn() { .Columns("Operator")}
-            '    End With
 
-            'End Function
-            'Public Function NewRow_Search_Operator(ByRef DS As DataSet) As DataSet
-
-            '    If DS.Tables.Contains("Search_Operator") = False Then DS.Tables.Add(DT_Search_Operator)
-
-            '    Dim DT As DataTable = DS.Tables("Search_Operator")
-            '    With DT
             If .Rows.Count = 0 Then
                 .Rows.Add("Enthält", "LIKE '*", "*'")
                 .Rows.Add("Gleich", "= '", "'")
