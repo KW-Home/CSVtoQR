@@ -4,6 +4,7 @@ Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
 
+    Private ReadOnly CL_F As Class_FontConverter
     Public Enum Auto_Font
         None
         AutoFontSize
@@ -16,10 +17,9 @@ Public Class Class_DS
 
         With DS.Tables
 
-            NewRow_Shema(DS)
-            NewRow_Card(DS)
-            NewRow_CardRow(DS)
-
+            GET_Shema(DS)
+            GET_Card(DS)
+            If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
 
@@ -61,7 +61,7 @@ Public Class Class_DS
     ''' <summary>
     ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
     ''' </summary>
-    Public Sub NewRow_Shema(ByRef DS As DataSet)
+    Private Sub GET_Shema(ByRef DS As DataSet)
 
         If DS.Tables.Contains("Shema") = False Then DS.Tables.Add(DT_Shema)
 
@@ -112,9 +112,31 @@ Public Class Class_DS
 
     End Function
 
-    Public Sub NewRow_Card(ByRef DS As DataSet)
+    Private Sub GET_Card(ByRef DS As DataSet)
 
         If DS.Tables.Contains("Card") = False Then DS.Tables.Add(DT_Card)
+
+        Dim DT As DataTable = DS.Tables("Card")
+        If DT.Rows.Count = 0 Then
+
+            Dim DR As DataRow = DT.NewRow
+
+            DR("Left") = 0.0
+            DR("Top") = 0.0
+            DR("Right") = 0.0
+            DR("Bottom") = 0.0
+            DR("Font") = "" ' CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+
+            'ToDo : Standardgröße der Karte abhängig von DIN-Format und Separatoren berechnen
+            'Die Maße sollten in mm angegeben werden, damit sie unabhängig von der Auflösung (DPI) sind und später in Pixel umgerechnet werden können.
+            'Wird schon berechnett in Class_Paint.Ivalidate_Paper, aber da wird die Karte ja nur gezeichnet, hier sollte sie schon in der Tabelle stehen
+
+            DR("CardSizeWidth") = 0
+            DR("CardSizeHeight") = 0
+
+            DS.Tables("Card").Rows.Add(DR)
+
+        End If
 
     End Sub
     Private Function DT_CardRow() As DataTable
@@ -122,30 +144,52 @@ Public Class Class_DS
         Dim DT As New DataTable With {.TableName = "CardRow"}
         With DT
 
+            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
+            .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean)})
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
-            .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double)})
             .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean)})
 
             .PrimaryKey = New DataColumn() { .Columns("ID")}
+
+            'Die Zeilen werden standardmäßig nach der Position auf der Karte sortiert, damit sie in der richtigen Reihenfolge angezeigt werden.
+            .DefaultView.Sort = "LinePos ASC, ID ASC"
 
         End With
 
         Return DT
 
     End Function
-    Public Sub NewRow_CardRow(ByRef DS As DataSet)
+    Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
 
-    End Sub
+        Dim nDR() As DataRow = DS.Tables("CardRow").Select($"[ID]={ID}")
+        If nDR.Length = 0 Then
+            Dim DR As DataRow = DS.Tables("CardRow").NewRow
+            DR("ID") = ID
+            DR("DataColumn") = String.Empty
+            DR("QRCode") = False
+            DR("LinePos") = 0.0
+            DR("FontColor") = Color.Black.ToArgb.ToString
+            DR("AutoFont") = False
+            DR("Left") = 0.0
+            DR("Top") = 0.0
+            DR("Right") = 0.0
+            DR("Bottom") = 0.0
+            DR("Font") = String.Empty ' CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+            DS.Tables("CardRow").Rows.Add(DR)
+        End If
+
+        Return DS.Tables("CardRow").Rows.Find(ID)
+
+    End Function
     Private Function DT_Search() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search"}

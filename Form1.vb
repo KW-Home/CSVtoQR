@@ -76,8 +76,9 @@ Public Class Form1
                 ExportFile_Value = finalPath
             End If
 
-            If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
-            If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.NewRow_Shema(DS)
+            'If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
+            'If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.GET_Shema(DS)
+
             DS.Tables("Shema").Rows(0).Item("Export") = ExportFile_Value
 
             SET_Changetext_PDF(ExportFile_Value)
@@ -93,7 +94,7 @@ Public Class Form1
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
         MySettings_Load()
-
+        DS = CL_DS.Get_DS(DS)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -129,7 +130,7 @@ Public Class Form1
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
                 DS = CL_DS.Get_DS(DS)
-                CL_DS.NewRow_Shema(DS)
+                'CL_DS.GET_Shema(DS)
 
                 CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
@@ -201,13 +202,10 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
+
         Dim DR As DataRow
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
-        If DS.Tables("Shema").Rows.Count = 0 Then
-            CL_DS.NewRow_Shema(DS)
-            IsModified = True
-        End If
 
         DR = DS.Tables("Shema").Rows(0)
         TextBox_Paper_Shema.Text = DR("Shema").ToString
@@ -215,12 +213,10 @@ Public Class Form1
         ExportFile = DR("Export").ToString
         ComboBox_Paper_DPI.Text = DR("DPI")
         ComboBox_Paper_DIN.Text = DR("DIN").ToString
-
         NumericUpDown_Paper_Border_Left.Value = DR("Left")
         NumericUpDown_Paper_Border_Top.Value = DR("Top")
         NumericUpDown_Paper_Border_Right.Value = DR("Right")
         NumericUpDown_Paper_Border_Bottom.Value = DR("Bottom")
-
         Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
         Label_Paper_Width_Value.Text = DR("PaperWidth")
         NumericUpDown_Separator_Column_Count.Value = DR("SeparatorSpalteAnzahl")
@@ -229,29 +225,30 @@ Public Class Form1
         NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
-        If DS.Tables("Card").Rows.Count = 0 Then
-            CL_DS.NewRow_Card(DS)
-            NumericUpDown_Card_Border_Left.Value = 0
-            NumericUpDown_Card_Border_Top.Value = 0
-            NumericUpDown_Card_Border_Right.Value = 0
-            NumericUpDown_Card_Border_Bottom.Value = 0
-        Else
-            DR = DS.Tables("Card").Rows(0)
-            NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
-            NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
-            NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
-            NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
-        End If
+        'If DS.Tables("Card").Rows.Count = 0 Then CL_DS.GET_Card(DS)
+        DR = DS.Tables("Card").Rows(0)
+        NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
+        NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
+        NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
+        NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
+        Label_Card_Size_Hight_Value.Text = 0
+        Label_Card_Size_Width_Value.Text = 0
+
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
-        If DS.Tables("CardRow").Rows.Count = 0 Then CL_DS.NewRow_Card(DS)
         If ListBox_CardRow.SelectedIndex = -1 Then
             NumericUpDown_CardRow_Border_Left.Value = 0
             NumericUpDown_CardRow_Border_Top.Value = 0
             NumericUpDown_CardRow_Border_Right.Value = 0
             NumericUpDown_CardRow_Border_Bottom.Value = 0
         Else
-            DR = DS.Tables("CardRow").Select($"[ID]={ListBox_CardRow.SelectedItem("ID")}")(0)
+
+            Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
+            If DS.Tables("CardRow").Rows.Count = 0 Then
+                CL_DS.GET_CardRow(DS, ID)
+            End If
+            DR = DS.Tables("CardRow").Select($"[ID]={ID}")(0)
+
             NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
             NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
             NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
@@ -532,7 +529,7 @@ Public Class Form1
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
-        CL_DS.NewRow_Shema(DS)
+        'CL_DS.GET_Shema(DS)
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -599,6 +596,7 @@ Public Class Form1
             Case ToolStripMenuItem_XML_Safe.Name
                 If System.IO.File.Exists(CL_XML.DataSetFile) Then
                     CL_XML.SaveXML(DS)
+                    IsModified = False
                 Else
                     SaveFileDialog_XML()
                 End If
@@ -634,6 +632,7 @@ Public Class Form1
             CL_XML.SaveXML(DS)
 
             DataSetRead()
+            IsModified = False
 
         End If
 
@@ -926,24 +925,30 @@ Public Class Form1
         If Sender.canfocus = False Then Return
 
         Select Case Sender.Name
+
             Case "UC_Font_General"
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
+
             Case "UC_Font_Card"
-                CL_DS.NewRow_Card(DS)
+                'CL_DS.GET_Card(DS)
                 DS.Tables("Card").Rows(0)("Font") = New Class_FontConverter().FontToString(e)
+
             Case "UC_Font_CardRow"
-                CL_DS.NewRow_CardRow(DS)
                 Dim ID As Integer = ListBox_CardRow.SelectedValue
+                CL_DS.GET_CardRow(DS, ID)
                 For Each Row As DataRow In DS.Tables("CardRow").Rows
                     If ID = Row("ID") Then
                         Row("Font") = New Class_FontConverter().FontToString(e)
                     End If
                 Next
+
             Case Else
+
                 Debug.Print(Sender.name & vbTab & e.ToString)
                 Beep()
+
         End Select
 
     End Sub
