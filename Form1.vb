@@ -1,6 +1,8 @@
-﻿Imports System.IO
+﻿Imports System.Drawing.Text
+Imports System.IO
 Imports System.Net.WebRequestMethods
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports CSVtoQR.Class_DS
 
@@ -753,60 +755,65 @@ Public Class Form1
         Set_CardRow_DataBinding()
 
     End Sub
+    'Private Sub ListBox_CardRow_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedValueChanged
+    '    CardRow_ListBox_SelectedValueChanged()
+    'End Sub
+    Private Sub ListBox_CardRow_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedIndexChanged
+        CardRow_ListBox_SelectedValueChanged()
+    End Sub
+    Private Sub CardRow_ListBox_SelectedValueChanged()
 
-    Private Sub ListBox_CardRow_List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedIndexChanged
+        Dim Check As Boolean = True
 
         With ListBox_CardRow
-
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
 
-            If .SelectedIndex = -1 Then
+            If IsNothing(.SelectedItem) = True Then Check = False
+            If .SelectedItems.Count = 0 Then Check = False
+            If .SelectedIndex = -1 Then Check = False
 
-                Button_CardRow_Down.Enabled = False
-                Button_CardRow_Up.Enabled = False
-                Button_CardRow_Delete.Enabled = False
+            If Check = True Then
+                CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
+                ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
+                Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
+                CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
+                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Left")))
+                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Top")))
+                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Right")))
+                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Bottom")))
+            End If
 
-                With TableLayoutPanel_CardRow
-                    If .Controls.ContainsKey("UC_Font_CardRow") = True Then
-                        .Controls("UC_Font_CardRow").Enabled = False
-                    End If
-                End With
 
-            Else
+            CheckBox_CardRow_QRCode.Enabled = Check
+            ComboBox_CardRow_DataColumn.Enabled = Check
+            Label_CardRow_LinePos_Value.Enabled = Check
+            CheckBox_CardRow_AutoFont.Enabled = Check
+            NumericUpDown_CardRow_Border_Left.Enabled = Check
+            NumericUpDown_CardRow_Border_Top.Enabled = Check
+            NumericUpDown_CardRow_Border_Right.Enabled = Check
+            NumericUpDown_CardRow_Border_Bottom.Enabled = Check
 
-                Button_CardRow_Delete.Enabled = True
+            Button_CardRow_Delete.Enabled = Check
+            Button_CardRow_Up.Enabled = CType(.SelectedIndex > 0, Boolean)
+            Button_CardRow_Down.Enabled = CType(.SelectedIndex < .Items.Count - 1, Boolean)
 
-                With TableLayoutPanel_CardRow
-                    If .Controls.ContainsKey("UC_Font_CardRow") = True Then
-                        .Controls("UC_Font_CardRow").Enabled = True
+        End With
 
-                        If IsNothing(ListBox_CardRow.SelectedItem("Font")) = False Then
+        With TableLayoutPanel_CardRow
 
-                            If ListBox_CardRow.SelectedItem("Font").ToString.Length = 0 Then Return
+            If .Controls.ContainsKey("UC_Font_CardRow") = False Then Return
 
-                            Dim NFS As String = ListBox_CardRow.SelectedItem("Font")
-                            Dim cvt As New FontConverter
-                            Dim NF As Font = cvt.ConvertFromString(NFS)
-                            Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
+            If Check = True Then
 
-                            UC.GET_General_Fonts(NF)
+                Dim SIF As String = ListBox_CardRow.SelectedItem("Font")
+                Dim FC As New FontConverter
+                Dim NF As Font = FC.ConvertFromString(SIF)
+                Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
 
-                        End If
+                UC.Enabled = Check
+                UC.GET_Fonts(NF)
 
-                    End If
-                End With
-
-                If .SelectedIndex > 0 Then
-                    Button_CardRow_Up.Enabled = True
-                Else
-                    Button_CardRow_Up.Enabled = False
-                End If
-                If .SelectedIndex < .Items.Count - 1 Then
-                    Button_CardRow_Down.Enabled = True
-                Else
-                    Button_CardRow_Down.Enabled = False
-                End If
             End If
 
         End With
@@ -838,39 +845,14 @@ Public Class Form1
         Set_CardRow_DataBinding()
 
         For Each Row As DataRow In DS.Tables("CardRow").Rows
-            If ID = Row("ID") Then ListBox_CardRow.SelectedValue = Row("ID")
+            If ID = Row("ID") Then
+                ListBox_CardRow.SelectedValue = Row("ID")
+                CardRow_ListBox_SelectedValueChanged()
+            End If
         Next
 
     End Sub
-    Private Sub ListBox_CardRow_List_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedValueChanged
 
-        If IsNothing(ListBox_CardRow.SelectedItem) Then Return
-
-        With ListBox_CardRow
-            If .CanSelect = False Then Return
-            If .CanFocus = False Then Return
-            If .SelectedItems.Count = 0 Then
-                CheckBox_CardRow_QRCode.Checked = False
-                ComboBox_CardRow_DataColumn.Text = ""
-                Label_CardRow_LinePos_Value.Text = 0
-                CheckBox_CardRow_AutoFont.Checked = False
-                NumericUpDown_CardRow_Border_Left.Value = 0
-                NumericUpDown_CardRow_Border_Top.Value = 0
-                NumericUpDown_CardRow_Border_Right.Value = 0
-                NumericUpDown_CardRow_Border_Bottom.Value = 0
-            Else
-                CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
-                ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
-                Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
-                CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
-                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Left")))
-                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Top")))
-                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Right")))
-                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Bottom")))
-            End If
-        End With
-
-    End Sub
 
     Private Sub ComboBox_CardRow_DataColumn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.SelectedIndexChanged
 
@@ -887,7 +869,7 @@ Public Class Form1
             .Name = "UC_Font_General"
             .Dock = DockStyle.Top
             .Font = My.Settings.MyFont
-            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+            AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
         TabPage_General.Controls.Add(UCF)
 
@@ -900,7 +882,7 @@ Public Class Form1
             .Name = "UC_Font_Card"
             .Dock = DockStyle.Fill
             .Font = My.Settings.MyFont
-            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+            AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
         TableLayoutPanel_Card.Controls.Add(UCF)
 
@@ -914,41 +896,30 @@ Public Class Form1
             .Dock = DockStyle.Fill
             .Font = My.Settings.MyFont
             .Enabled = False
-            AddHandler .Font_Changed, AddressOf UC_Font_Font_Changed
+            AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
         TableLayoutPanel_CardRow.Controls.Add(UCF)
 
     End Sub
-    Private Sub UC_Font_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Changed
+    Private Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Changed
 
         If Sender.canselect = False Then Return
         If Sender.canfocus = False Then Return
 
-        Select Case Sender.Name
+        Sender.GET_Fonts(e)
 
+        Select Case Sender.Name
             Case "UC_Font_General"
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
-
             Case "UC_Font_Card"
-                'CL_DS.GET_Card(DS)
                 DS.Tables("Card").Rows(0)("Font") = New Class_FontConverter().FontToString(e)
-
             Case "UC_Font_CardRow"
-                Dim ID As Integer = ListBox_CardRow.SelectedValue
-                CL_DS.GET_CardRow(DS, ID)
-                For Each Row As DataRow In DS.Tables("CardRow").Rows
-                    If ID = Row("ID") Then
-                        Row("Font") = New Class_FontConverter().FontToString(e)
-                    End If
-                Next
-
+                DS.Tables("CardRow").Rows.Find(ListBox_CardRow.SelectedValue)("Font") = New Class_FontConverter().FontToString(e)
             Case Else
-
                 Debug.Print(Sender.name & vbTab & e.ToString)
                 Beep()
-
         End Select
 
     End Sub

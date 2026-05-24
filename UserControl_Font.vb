@@ -5,7 +5,7 @@
     Sub New(_Font As Font)
 
         InitializeComponent()
-        GET_General_Fonts(_Font)
+        GET_Fonts(_Font)
 
     End Sub
 
@@ -14,13 +14,13 @@
         Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
 
         If FD.ShowDialog = DialogResult.OK Then
-            GET_General_Fonts(FD.Font)
+            GET_Fonts(FD.Font)
             RaiseEvent Font_Changed(Me, FD.Font)
         End If
 
     End Sub
 
-    Public Sub GET_General_Fonts(_Font As Font)
+    Public Sub GET_Fonts(_Font As Font)
 
         With _Font
             Label_Name_Value.Text = .Name

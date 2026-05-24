@@ -169,10 +169,11 @@ Public Class Class_DS
     Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
-
+        Dim DR As DataRow
         Dim nDR() As DataRow = DS.Tables("CardRow").Select($"[ID]={ID}")
-        If nDR.Length = 0 Then
-            Dim DR As DataRow = DS.Tables("CardRow").NewRow
+        If nDR.Count = 0 Then
+            DR = DS.Tables("CardRow").NewRow
+
             DR("ID") = ID
             DR("DataColumn") = String.Empty
             DR("QRCode") = False
@@ -184,10 +185,14 @@ Public Class Class_DS
             DR("Right") = 0.0
             DR("Bottom") = 0.0
             DR("Font") = String.Empty ' CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+
             DS.Tables("CardRow").Rows.Add(DR)
+
+        Else
+            DR = nDR(0)
         End If
 
-        Return DS.Tables("CardRow").Rows.Find(ID)
+        Return DR
 
     End Function
     Private Function DT_Search() As DataTable
