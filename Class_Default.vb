@@ -181,7 +181,7 @@
             .Add(FRM.Button_CardRow_Delete)
             .Add(FRM.TableLayoutPanel_CardRow_Line)
             .Add(FRM.TableLayoutPanel_CardRow_Border)
-            .Add(FRM.FlowLayoutPanel_CardRow)
+            .Add(FRM.FlowLayoutPanel_CardRow_Row)
             .Add(FRM.Button_CardRow_Up)
             .Add(FRM.Button_CardRow_Down)
             .Add(FRM.Label_CardRow_LinePos_Value)
@@ -342,6 +342,7 @@
         End With
     End Sub
     Private Sub Default_ListBox(ByRef OBJ As ListBox)
+
         With OBJ
             .Dock = DockStyle.Fill
             .BackColor = SystemColors.Control
@@ -349,11 +350,18 @@
 
             Select Case .Name
                 Case FRM.ListBox_CardRow.Name
-                    .AutoSize = False
-                    .Height = MyFont.Size * 12
+                    .AutoSize = True
+
+                    Dim H As Integer = MyFont.Height
+                    H *= FRM.ListBox_CardRow.Items.Count
+                    .Height = H + 6
+
+                Case FRM.ListBox_Tabellen.Name
+                    .AutoSize = True
             End Select
 
         End With
+
     End Sub
     Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
         With OBJ
@@ -418,8 +426,7 @@
             .BackColor = Color.Transparent
 
             Select Case .Name
-                Case FRM.GroupBox_Table.Name,
-                     FRM.GroupBox_Data.Name
+                Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
                     .Dock = DockStyle.Fill
                 Case Else
                     .Dock = DockStyle.Top

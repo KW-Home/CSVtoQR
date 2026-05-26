@@ -12,7 +12,7 @@
       <Value Profile="(Default)">Microsoft Sans Serif, 8.25pt</Value>
     </Setting>
     <Setting Name="MySpliter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">335</Value>
+      <Value Profile="(Default)">430</Value>
     </Setting>
   </Settings>
 </SettingsFile>

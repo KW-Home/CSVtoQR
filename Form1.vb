@@ -773,17 +773,35 @@ Public Class Form1
             If .SelectedItems.Count = 0 Then Check = False
             If .SelectedIndex = -1 Then Check = False
 
-            If Check = True Then
-                CheckBox_CardRow_QRCode.Checked = CType(.SelectedItem("QRCode"), Boolean)
-                ComboBox_CardRow_DataColumn.Text = .SelectedItem("DataColumn")
-                Label_CardRow_LinePos_Value.Text = .SelectedItem("LinePos")
-                CheckBox_CardRow_AutoFont.Checked = CType(.SelectedItem("AutoFont"), Boolean)
-                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Left")))
-                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Top")))
-                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Right")))
-                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(.SelectedItem("Top")), 0, CDbl(.SelectedItem("Bottom")))
-            End If
+            Dim ID As Integer = If(Check = True, .SelectedItem("ID"), Check = False)
+            Dim DR As DataRow
+            Dim UC As UserControl_Font
 
+            If Check = True Then
+
+                DR = DS.Tables("CardRow").Rows.Find(ID)
+
+                CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
+                ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
+                Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
+                CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
+                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Left")))
+                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Top")))
+                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Right")))
+                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Bottom")))
+
+
+                Dim FontString As String = DR("Font").ToString
+                Dim FontConverter As New Class_FontConverter
+                Dim nFont As Font = FontConverter.StringToFont(FontString)
+
+                If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
+
+                UC = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                UC.GET_Fonts(nFont)
+                UC.Enabled = Check
+
+            End If
 
             CheckBox_CardRow_QRCode.Enabled = Check
             ComboBox_CardRow_DataColumn.Enabled = Check
@@ -800,23 +818,23 @@ Public Class Form1
 
         End With
 
-        With TableLayoutPanel_CardRow
+        'With TableLayoutPanel_CardRow
 
-            If .Controls.ContainsKey("UC_Font_CardRow") = False Then Return
+        '    If .Controls.ContainsKey("UC_Font_CardRow") = False Then Return
 
-            If Check = True Then
+        '    If Check = True Then
 
-                Dim SIF As String = ListBox_CardRow.SelectedItem("Font")
-                Dim FC As New FontConverter
-                Dim NF As Font = FC.ConvertFromString(SIF)
-                Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
+        '        Dim SIF As String = dr("Font")
+        '        Dim FC As New FontConverter
+        '        Dim NF As Font = FC.ConvertFromString(SIF)
+        '        Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
 
-                UC.Enabled = Check
-                UC.GET_Fonts(NF)
+        '        UC.Enabled = Check
+        '        UC.GET_Fonts(NF)
 
-            End If
+        '    End If
 
-        End With
+        'End With
 
     End Sub
 

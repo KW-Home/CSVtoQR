@@ -36,7 +36,6 @@ Partial Class UserControl_Font
         '
         'Button_Font
         '
-        Me.Button_Font.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button_Font.BackgroundImage = Global.CSVtoQR.My.Resources.Resources.Font
         Me.Button_Font.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button_Font.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
