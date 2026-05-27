@@ -205,37 +205,35 @@ Public Class Form1
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
-        Dim DR As DataRow
+        Dim DR_Shema As DataRow
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
-
-        DR = DS.Tables("Shema").Rows(0)
-        TextBox_Paper_Shema.Text = DR("Shema").ToString
-        ImportFile = DR("Import").ToString
-        ExportFile = DR("Export").ToString
-        ComboBox_Paper_DPI.Text = DR("DPI")
-        ComboBox_Paper_DIN.Text = DR("DIN").ToString
-        NumericUpDown_Paper_Border_Left.Value = DR("Left")
-        NumericUpDown_Paper_Border_Top.Value = DR("Top")
-        NumericUpDown_Paper_Border_Right.Value = DR("Right")
-        NumericUpDown_Paper_Border_Bottom.Value = DR("Bottom")
-        Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
-        Label_Paper_Width_Value.Text = DR("PaperWidth")
-        NumericUpDown_Separator_Column_Count.Value = DR("SeparatorSpalteAnzahl")
-        NumericUpDown_Separator_Column_Value.Value = DR("SeparatorSpalteWert")
-        NumericUpDown_Separator_Row_Count.Value = DR("SeparatorZeileAnzahl")
-        NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
+        DR_Shema = DS.Tables("Shema").Rows(0)
+        TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
+        ImportFile = DR_Shema("Import").ToString
+        ExportFile = DR_Shema("Export").ToString
+        ComboBox_Paper_DPI.Text = DR_Shema("DPI")
+        ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
+        NumericUpDown_Paper_Border_Left.Value = DR_Shema("Left")
+        NumericUpDown_Paper_Border_Top.Value = DR_Shema("Top")
+        NumericUpDown_Paper_Border_Right.Value = DR_Shema("Right")
+        NumericUpDown_Paper_Border_Bottom.Value = DR_Shema("Bottom")
+        Label_Paper_Height_Value.Text = DR_Shema("PaperHeight").ToString
+        Label_Paper_Width_Value.Text = DR_Shema("PaperWidth")
+        NumericUpDown_Separator_Column_Count.Value = DR_Shema("SeparatorSpalteAnzahl")
+        NumericUpDown_Separator_Column_Value.Value = DR_Shema("SeparatorSpalteWert")
+        NumericUpDown_Separator_Row_Count.Value = DR_Shema("SeparatorZeileAnzahl")
+        NumericUpDown_Separator_Row_Value.Value = DR_Shema("SeparatorZeileWert")
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
-        'If DS.Tables("Card").Rows.Count = 0 Then CL_DS.GET_Card(DS)
-        DR = DS.Tables("Card").Rows(0)
-        NumericUpDown_Card_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
-        NumericUpDown_Card_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
-        NumericUpDown_Card_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
-        NumericUpDown_Card_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
-        Label_Card_Size_Hight_Value.Text = 0
-        Label_Card_Size_Width_Value.Text = 0
-
+        Dim DR_Card As DataRow
+        DR_Card = DS.Tables("Card").Rows(0)
+        NumericUpDown_Card_Border_Left.Value = CType(DR_Card("Left"), Decimal)
+        NumericUpDown_Card_Border_Top.Value = CType(DR_Card("Top"), Decimal)
+        NumericUpDown_Card_Border_Right.Value = CType(DR_Card("Right"), Decimal)
+        NumericUpDown_Card_Border_Bottom.Value = CType(DR_Card("Bottom"), Decimal)
+        Label_Card_Size_Hight_Value.Text = CType(DR_Card("CardSizeHeight"), Decimal)
+        Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
         If ListBox_CardRow.SelectedIndex = -1 Then
@@ -244,17 +242,17 @@ Public Class Form1
             NumericUpDown_CardRow_Border_Right.Value = 0
             NumericUpDown_CardRow_Border_Bottom.Value = 0
         Else
-
             Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
-            If DS.Tables("CardRow").Rows.Count = 0 Then
-                CL_DS.GET_CardRow(DS, ID)
+            If DS.Tables("CardRow").Rows.Count > 0 Then
+                Dim DR_CardRow As DataRow
+                DR_CardRow = DS.Tables("CardRow").Select($"[ID]={ID}")(0)
+                If IsNothing(DR_CardRow) = False Then
+                    NumericUpDown_CardRow_Border_Left.Value = CType(DR_CardRow("Left"), Decimal)
+                    NumericUpDown_CardRow_Border_Top.Value = CType(DR_CardRow("Top"), Decimal)
+                    NumericUpDown_CardRow_Border_Right.Value = CType(DR_CardRow("Right"), Decimal)
+                    NumericUpDown_CardRow_Border_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
+                End If
             End If
-            DR = DS.Tables("CardRow").Select($"[ID]={ID}")(0)
-
-            NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(DR("Left")), 0, CType(DR("Left"), Decimal))
-            NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CType(DR("Top"), Decimal))
-            NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Right")), 0, CType(DR("Right"), Decimal))
-            NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(DR("Bottom")), 0, CType(DR("Bottom"), Decimal))
         End If
 
         DGV_Search.DataSource = Nothing
@@ -531,7 +529,6 @@ Public Class Form1
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
-        'CL_DS.GET_Shema(DS)
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -541,13 +538,16 @@ Public Class Form1
         If ComboBox_Paper_DIN.SelectedIndex = -1 Then Return
         If ComboBox_Paper_DIN.CanFocus = False Then Return
 
-        DS.Tables("Shema").Rows(0)("DIN") = CType(ComboBox_Paper_DIN.Text, String)
+        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
 
-        DS.Tables("Shema").Rows(0)("PaperHeight") = CType(ComboBox_Paper_DIN.SelectedItem("PaperHeight"), Integer)
-        Label_Paper_Height_Value.Text = ComboBox_Paper_DIN.SelectedItem("PaperHeight").ToString
+        DR("DIN") = CType(ComboBox_Paper_DIN.Text, String)
+        DR("PaperHeight") = CType(ComboBox_Paper_DIN.SelectedItem("PaperHeight"), Integer)
+        DR("PaperWidth") = CType(ComboBox_Paper_DIN.SelectedItem("PaperWidth"), Integer)
 
-        DS.Tables("Shema").Rows(0)("PaperWidth") = CType(ComboBox_Paper_DIN.SelectedItem("PaperWidth"), Integer)
-        Label_Paper_Width_Value.Text = ComboBox_Paper_DIN.SelectedItem("PaperWidth").ToString
+        Label_Paper_Height_Value.Text = DR("PaperHeight")
+        Label_Paper_Width_Value.Text = DR("PaperWidth")
+
+        PaperPaint(Nothing, Nothing)
 
         IsModified = True
 
@@ -555,6 +555,9 @@ Public Class Form1
 
     Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DPI.SelectedIndexChanged
         DS.Tables("Shema").Rows(0)("DPI") = CType(ComboBox_Paper_DPI.Text, Integer)
+
+        PaperPaint(Nothing, Nothing)
+
     End Sub
 
     Private Sub DGV_Search_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_Search.DataError
@@ -592,19 +595,24 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click, ToolStripMenuItem_XML_Safe.Click
+    Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click, ToolStripMenuItem_XML_Safe.Click
 
-        Select Case sender.name
-            Case ToolStripMenuItem_XML_Safe.Name
-                If System.IO.File.Exists(CL_XML.DataSetFile) Then
-                    CL_XML.SaveXML(DS)
-                    IsModified = False
-                Else
-                    SaveFileDialog_XML()
-                End If
-            Case ToolStripMenuItem_XML_SaveAs.Name
-                SaveFileDialog_XML()
-        End Select
+        If System.IO.File.Exists(CL_XML.DataSetFile) Then
+            CL_XML.SaveXML(DS)
+            IsModified = False
+        Else
+            SaveFileDialog_XML()
+        End If
+
+    End Sub
+    Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
+
+        If System.IO.File.Exists(CL_XML.DataSetFile) Then
+            CL_XML.SaveXML(DS)
+            IsModified = False
+        Else
+            SaveFileDialog_XML()
+        End If
 
     End Sub
 
@@ -632,9 +640,9 @@ Public Class Form1
 
             CL_XML.DataSetFile = SFD.FileName
             CL_XML.SaveXML(DS)
+            IsModified = False
 
             DataSetRead()
-            IsModified = False
 
         End If
 
@@ -700,25 +708,6 @@ Public Class Form1
         Save_CardRow(-1)
         Set_CardRow_DataBinding()
 
-        'Dim DR As DataRow = DS.Tables("CardRow").NewRow
-        'With DR
-        '    .Item("QRCode") = CheckBox_CardRow_QRCode.Checked
-        '    .Item("DataColumn") = ComboBox_CardRow_DataColumn.SelectedItem.ToString
-        '    .Item("LinePos") = Label_CardRow_LinePos_Value.Text
-
-        '    'ToDo: Überprüfen, ob die Font-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird eine neue Font mit festen Werten erstellt, was möglicherweise nicht den Erwartungen entspricht.
-        '    .Item("Font") = New Class_FontConverter().FontToString(New Font("Arial", 12, FontStyle.Regular))
-
-        '    'ToDo: Überprüfen, ob die FontColor-Informationen korrekt in das DataRow-Objekt eingefügt werden. Aktuell wird ein leerer String verwendet, was möglicherweise nicht den Erwartungen entspricht.
-        '    .Item("FontColor") = String.Empty
-
-        '    .Item("AutoFont") = False
-
-        'End With
-        'DS.Tables("CardRow").Rows.Add(DR)
-
-        'CardRow_Sort(sender, e)
-
     End Sub
     Private Sub Set_CardRow_DataBinding()
 
@@ -755,9 +744,7 @@ Public Class Form1
         Set_CardRow_DataBinding()
 
     End Sub
-    'Private Sub ListBox_CardRow_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedValueChanged
-    '    CardRow_ListBox_SelectedValueChanged()
-    'End Sub
+
     Private Sub ListBox_CardRow_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_CardRow.SelectedIndexChanged
         CardRow_ListBox_SelectedValueChanged()
     End Sub
@@ -813,28 +800,21 @@ Public Class Form1
             NumericUpDown_CardRow_Border_Bottom.Enabled = Check
 
             Button_CardRow_Delete.Enabled = Check
-            Button_CardRow_Up.Enabled = CType(.SelectedIndex > 0, Boolean)
-            Button_CardRow_Down.Enabled = CType(.SelectedIndex < .Items.Count - 1, Boolean)
+            Button_CardRow_Add.Enabled = Check
+            Button_CardRow_Save.Enabled = Check
+
+            If Check = False Or .SelectedIndex = 0 Then
+                Button_CardRow_Up.Enabled = False
+            Else
+                Button_CardRow_Up.Enabled = True
+            End If
+            If Check = False Or .SelectedIndex = .Items.Count - 1 Then
+                Button_CardRow_Down.Enabled = False
+            Else
+                Button_CardRow_Down.Enabled = True
+            End If
 
         End With
-
-        'With TableLayoutPanel_CardRow
-
-        '    If .Controls.ContainsKey("UC_Font_CardRow") = False Then Return
-
-        '    If Check = True Then
-
-        '        Dim SIF As String = dr("Font")
-        '        Dim FC As New FontConverter
-        '        Dim NF As Font = FC.ConvertFromString(SIF)
-        '        Dim UC As UserControl_Font = CType(.Controls("UC_Font_CardRow"), UserControl_Font)
-
-        '        UC.Enabled = Check
-        '        UC.GET_Fonts(NF)
-
-        '    End If
-
-        'End With
 
     End Sub
 
@@ -934,7 +914,13 @@ Public Class Form1
             Case "UC_Font_Card"
                 DS.Tables("Card").Rows(0)("Font") = New Class_FontConverter().FontToString(e)
             Case "UC_Font_CardRow"
-                DS.Tables("CardRow").Rows.Find(ListBox_CardRow.SelectedValue)("Font") = New Class_FontConverter().FontToString(e)
+
+                Dim ID As Integer = ListBox_CardRow.SelectedValue
+                Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+                If IsNothing(DR) = False Then
+                    DR("Font") = New Class_FontConverter().FontToString(e)
+                End If
+
             Case Else
                 Debug.Print(Sender.name & vbTab & e.ToString)
                 Beep()
@@ -959,7 +945,10 @@ Public Class Form1
         DR("QRCode") = CheckBox_CardRow_QRCode.Checked
         DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
         DR("LinePos") = Label_CardRow_LinePos_Value.Text
-        DR("Font") = New Class_FontConverter().FontToString(CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font).Font)
+
+        Dim UC As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+        DR("Font") = New Class_FontConverter().FontToString(UC.Font)
+
         DR("FontColor") = String.Empty
         DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
 
@@ -988,6 +977,8 @@ Public Class Form1
         End If
 
     End Sub
+
+
 
 #End Region
 

@@ -21,6 +21,7 @@ Public Class Class_FontConverter
 
     ' Gibt alle Properties (Name=Value) in Debug-Ausgabe aus
     Public Function FontToString(font As Font) As String
+
         Dim props = GetFontProperties(font)
         Dim Fontstring As String = String.Empty
         For Each kvp In props
@@ -29,6 +30,7 @@ Public Class Class_FontConverter
         Next
 
         Return Fontstring
+
     End Function
 
     Public Function StringToFont(Fontstring As String) As Font

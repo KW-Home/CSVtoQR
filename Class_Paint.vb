@@ -8,6 +8,7 @@
 
         Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
         Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
+        Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
 
         Dim PBL As Single = 0
         Dim PBT As Single = 0
@@ -15,11 +16,16 @@
         Dim PBB As Single = 0
 
         'PictureBox_Paper.Invalidate()
-        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
-        PBL = DR("Left")
-        PBT = DR("Top")
-        PBR = DR("Right")
-        PBB = DR("Bottom")
+        Dim DR_Shema As DataRow = DS.Tables("Shema").Rows(0)
+        PBL = DR_Shema("Left")
+        PBT = DR_Shema("Top")
+        PBR = DR_Shema("Right")
+        PBB = DR_Shema("Bottom")
+
+        Dim SSA As Integer = CInt(DR_Shema("SeparatorSpalteAnzahl"))
+        Dim SSW As Single = CType(DR_Shema("SeparatorSpalteWert"), Single)
+        Dim SZA As Integer = CInt(DR_Shema("SeparatorZeileAnzahl"))
+        Dim SZW As Single = CType(DR_Shema("SeparatorZeileWert"), Single)
 
         With FRM
             Dim P(2) As Pen
@@ -39,19 +45,20 @@
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
                     g.DrawRectangle(P(0), PBL, PBT, PW, PH)
 
-                    Dim SSA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteAnzahl")
-                    Dim SSW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorSpalteWert")
                     Dim CW As Single
                     CW = (SSA - 1) * SSW
                     CW = PW - CW
                     CW /= SSA
 
-                    Dim SZA As Integer = DS.Tables("Shema").Rows(0).Item("SeparatorZeileAnzahl")
-                    Dim SZW As Single = DS.Tables("Shema").Rows(0).Item("SeparatorZeileWert")
                     Dim CH As Single
                     CH = (SZA - 1) * SZW
                     CH = PH - CH
                     CH /= SZA
+
+                    DR_Card("CardSizeWidth") = CW
+                    DR_Card("CardSizeHeight") = CH
+                    FRM.Label_Card_Size_Hight_Value.Text = CType(DR_Card("CardSizeHeight"), Decimal)
+                    FRM.Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
                     Dim CS As New SizeF(CW, CH)
                     Dim CP = New PointF(PBL, PBT)

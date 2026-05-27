@@ -4,7 +4,8 @@ Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
 
-    Private ReadOnly CL_F As Class_FontConverter
+    'Private CL_F As Class_FontConverter
+
     Public Enum Auto_Font
         None
         AutoFontSize
@@ -125,7 +126,9 @@ Public Class Class_DS
             DR("Top") = 0.0
             DR("Right") = 0.0
             DR("Bottom") = 0.0
-            DR("Font") = "" ' CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+
+            Dim CL_F As New Class_FontConverter
+            DR("Font") = CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
 
             'ToDo : Standardgröße der Karte abhängig von DIN-Format und Separatoren berechnen
             'Die Maße sollten in mm angegeben werden, damit sie unabhängig von der Auflösung (DPI) sind und später in Pixel umgerechnet werden können.

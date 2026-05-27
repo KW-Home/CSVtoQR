@@ -118,13 +118,10 @@
             .Add(FRM.NumericUpDown_Paper_Border_Right)
             .Add(FRM.NumericUpDown_Paper_Border_Bottom)
             .Add(FRM.GroupBox_Separator_Row)
-            .Add(FRM.TableLayoutPanel_Separator_Row)
             .Add(FRM.NumericUpDown_Separator_Row_Value)
             .Add(FRM.NumericUpDown_Separator_Row_Count)
-            .Add(FRM.Label_Separator_Row_Count)
             .Add(FRM.Label_Separator_Row_Value)
             .Add(FRM.Label_Separator_Row_Value_Unit)
-            .Add(FRM.GroupBox_Separator_Column)
             .Add(FRM.TableLayoutPanel_Separator_Column)
             .Add(FRM.NumericUpDown_Separator_Column_Value)
             .Add(FRM.NumericUpDown_Separator_Column_Count)
@@ -346,18 +343,14 @@
         With OBJ
             .Dock = DockStyle.Fill
             .BackColor = SystemColors.Control
-            .IntegralHeight = False
+            .IntegralHeight = True
+            .AutoSize = True
 
             Select Case .Name
                 Case FRM.ListBox_CardRow.Name
-                    .AutoSize = True
-
                     Dim H As Integer = MyFont.Height
                     H *= FRM.ListBox_CardRow.Items.Count
-                    .Height = H + 6
-
-                Case FRM.ListBox_Tabellen.Name
-                    .AutoSize = True
+                    .Height = H + 12
             End Select
 
         End With
