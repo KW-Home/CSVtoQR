@@ -97,6 +97,7 @@ Public Class Form1
         InitializeComponent()
         MySettings_Load()
         DS = CL_DS.Get_DS(DS)
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -104,6 +105,7 @@ Public Class Form1
         'lädt die Einstellungen, die im Designer unter "My.Settings" definiert wurden   
 
         'Initialisiert die Standardwerte und -einstellungen für die Anwendung
+
         UserControl_Font_General_Load()
         UserControl_Font_Card_Load()
         UserControl_Font_CardRow_Load()
@@ -120,8 +122,6 @@ Public Class Form1
     End Sub
     Private Sub MySettings_Load()
 
-
-
         With My.Settings
 
             MyFont = .MyFont
@@ -137,9 +137,6 @@ Public Class Form1
                 CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
 
-                'ToDo: Fehler nach Pull 
-                'System.NullReferenceException: "Der Objektverweis wurde nicht auf eine Objektinstanz festgelegt."
-
                 Dim DT As DataTable = DS.Tables("Shema")
                 If DT.Rows.Count > 0 Then
                     ImportFile = DT(0)("Import").ToString()
@@ -149,10 +146,12 @@ Public Class Form1
                 End If
 
             Else
+
                 DS = CL_DS.Get_DS(DS)
                 TextBox_General_XML_Directory.Text = "Kein gültiger Pfad."
                 TextBox_General_XML_Filename.Text = "Kein gültiger Name."
                 ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
+
             End If
 
         End With
@@ -349,6 +348,8 @@ Public Class Form1
         DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
         IsModified = True
 
+        PaperPaint(Nothing, Nothing)
+
     End Sub
     Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
 
@@ -454,9 +455,6 @@ Public Class Form1
     End Sub
 
     Private Sub DGV_Search_Formatting()
-
-        'ToDo: Überprüfen, ob die Spalten bereits existieren, um Duplikate zu vermeiden.
-        'Aktuell wird immer eine neue Spalte hinzugefügt, was zu mehreren "Search_Column" und "Search_Operator" Spalten führen kann.
 
         DGV_Search.Columns.Clear()
 
