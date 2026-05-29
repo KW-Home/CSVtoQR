@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Text
+﻿Imports System.ComponentModel
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Net.WebRequestMethods
 Imports System.Reflection
@@ -105,7 +106,6 @@ Public Class Form1
 
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
-        MySettings_Load()
         DS = CL_DS.Get_DS(DS)
 
     End Sub
@@ -116,12 +116,13 @@ Public Class Form1
 
         'Initialisiert die Standardwerte und -einstellungen für die Anwendung
 
+        MySettings_Load()
+
         UserControl_Font_General_Load()
         UserControl_Font_Card_Load()
         UserControl_Font_CardRow_Load()
 
         CL_Default = New Class_Default(Me, DS)
-
 
         'lädt die Daten aus dem DataSet in die Steuerelemente
         DataSetRead()
@@ -135,8 +136,8 @@ Public Class Form1
         With My.Settings
 
             MyFont = .MyFont
-
             Me.Font = MyFont
+
             Me.Size = .MySize
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
@@ -144,7 +145,7 @@ Public Class Form1
                 DS = CL_DS.Get_DS(DS)
 
                 'ToDo ???
-                CL_XML.DataSetFile = CL_XML.DataSetFile
+                'CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
 
                 Dim DT As DataTable = DS.Tables("Shema")
@@ -314,10 +315,7 @@ Public Class Form1
                             Return
                         End If
                     End If
-
                     CL_XML.SaveXML(DS)
-                    MySettings_Save()
-
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -326,6 +324,8 @@ Public Class Form1
         Else
             e.Cancel = False
         End If
+
+        MySettings_Save()
 
     End Sub
     Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged,
@@ -785,7 +785,6 @@ Public Class Form1
                 NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Right")))
                 NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Bottom")))
 
-
                 Dim FontString As String = DR("Font").ToString
                 Dim FontConverter As New Class_FontConverter
                 Dim nFont As Font = FontConverter.StringToFont(FontString)
@@ -793,7 +792,7 @@ Public Class Form1
                 If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
 
                 UC = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                UC.GET_Fonts(nFont)
+                UC.View_UCFont(nFont)
                 UC.Enabled = Check
 
             End If
@@ -912,53 +911,52 @@ Public Class Form1
         If Sender.canselect = False Then Return
         If Sender.canfocus = False Then Return
 
-        Sender.GET_Fonts(e)
+        Dim nFonString As String = New Class_FontConverter().FontToString(e)
 
         Select Case Sender.Name
+
             Case "UC_Font_General"
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
+
             Case "UC_Font_Card"
-                DS.Tables("Card").Rows(0)("Font") = New Class_FontConverter().FontToString(e)
+                DS.Tables("Card").Rows(0)("Font") = nFonString
+
             Case "UC_Font_CardRow"
 
                 Dim ID As Integer = ListBox_CardRow.SelectedValue
                 Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-                If IsNothing(DR) = False Then
-                    DR("Font") = New Class_FontConverter().FontToString(e)
-                End If
+                If IsNothing(DR) = False Then DR("Font") = nFonString
 
             Case Else
-                Debug.Print(Sender.name & vbTab & e.ToString)
+
                 Beep()
+
         End Select
+
+        Sender.View_UCFont(e)
+
+        IsModified = True
 
     End Sub
     Private Sub Save_CardRow(ID As Integer)
 
-        Dim DR As DataRow
+        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+        If IsNothing(DR) = False Then DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
 
-        If ID > -1 Then
-            DR = DS.Tables("CardRow").Rows.Find(ID)
-        Else
-            DR = DS.Tables("CardRow").NewRow
-            DS.Tables("CardRow").Rows.Add(DR)
-        End If
+        'DR("Left") = NumericUpDown_CardRow_Border_Left.Value
+        'DR("Top") = NumericUpDown_CardRow_Border_Top.Value
+        'DR("Right") = NumericUpDown_CardRow_Border_Right.Value
+        'DR("Bottom") = NumericUpDown_CardRow_Border_Bottom.Value
+        'DR("QRCode") = CheckBox_CardRow_QRCode.Checked
+        'DR("LinePos") = Label_CardRow_LinePos_Value.Text
 
-        DR("Left") = NumericUpDown_CardRow_Border_Left.Value
-        DR("Top") = NumericUpDown_CardRow_Border_Top.Value
-        DR("Right") = NumericUpDown_CardRow_Border_Right.Value
-        DR("Bottom") = NumericUpDown_CardRow_Border_Bottom.Value
-        DR("QRCode") = CheckBox_CardRow_QRCode.Checked
-        DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
-        DR("LinePos") = Label_CardRow_LinePos_Value.Text
+        'Dim UC As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+        'DR("Font") = New Class_FontConverter().FontToString(UC.Font)
 
-        Dim UC As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-        DR("Font") = New Class_FontConverter().FontToString(UC.Font)
-
-        DR("FontColor") = String.Empty
-        DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
+        'DR("FontColor") = String.Empty
+        'DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
 
     End Sub
     Private Sub Button_CardRow_Save_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Save.Click
@@ -985,8 +983,6 @@ Public Class Form1
         End If
 
     End Sub
-
-
 
 #End Region
 
