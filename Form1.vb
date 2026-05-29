@@ -39,13 +39,23 @@ Public Class Form1
         End Set
     End Property
 
-    Private ImportFile_Value As String
-    Public Property ImportFile() As String
+    'Private DataSetFile_Value As String
+    'Public Property DataSetFile() As String
+    '    Get
+    '        Return DataSetFile_Value
+    '    End Get
+    '    Set(ByVal value As String)
+    '        DataSetFile_Value = value
+    '    End Set
+    'End Property
+
+    Private FileCSV_Value As String
+    Public Property FileCSV() As String
         Get
-            Return ImportFile_Value
+            Return FileCSV_Value
         End Get
         Set(ByVal value As String)
-            ImportFile_Value = value
+            FileCSV_Value = value
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
@@ -56,16 +66,16 @@ Public Class Form1
         End Set
     End Property
 
-    Private ExportFile_Value As String
-    Property ExportFile() As String
+    Private FilePDF_Value As String
+    Property FilePDF() As String
         Get
-            Return ExportFile_Value
+            Return FilePDF_Value
         End Get
         Set(ByVal value As String)
             Dim finalPath As String = If(value, String.Empty)
 
             If String.IsNullOrWhiteSpace(finalPath) Then
-                ExportFile_Value = String.Empty
+                FilePDF_Value = String.Empty
             Else
                 If finalPath.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) = False Then
                     Try
@@ -75,17 +85,17 @@ Public Class Form1
                     End Try
                 End If
 
-                ExportFile_Value = finalPath
+                FilePDF_Value = finalPath
             End If
 
             'If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
             'If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.GET_Shema(DS)
 
-            DS.Tables("Shema").Rows(0).Item("Export") = ExportFile_Value
+            DS.Tables("Shema").Rows(0).Item("Export") = FilePDF_Value
 
-            SET_Changetext_PDF(ExportFile_Value)
+            SET_Changetext_PDF(FilePDF_Value)
 
-            'MessageBox.Show($"ExportFile {vbNewLine}{CL_FF.Check_Path(ExportFile_Value)}", "ExportFile")
+            'MessageBox.Show($"FilePDF {vbNewLine}{CL_FF.Check_Path(FilePDF_Value)}", "FilePDF")
 
 
         End Set
@@ -132,15 +142,15 @@ Public Class Form1
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
                 DS = CL_DS.Get_DS(DS)
-                'CL_DS.GET_Shema(DS)
 
+                'ToDo ???
                 CL_XML.DataSetFile = CL_XML.DataSetFile
                 CL_XML.ReadXML(DS)
 
                 Dim DT As DataTable = DS.Tables("Shema")
                 If DT.Rows.Count > 0 Then
-                    ImportFile = DT(0)("Import").ToString()
-                    ExportFile = DT(0)("Export").ToString()
+                    FileCSV = DT(0)("Import").ToString()
+                    FilePDF = DT(0)("Export").ToString()
                 Else
                     DS = CL_DS.Get_DS(DS)
                 End If
@@ -209,8 +219,8 @@ Public Class Form1
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
         DR_Shema = DS.Tables("Shema").Rows(0)
         TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
-        ImportFile = DR_Shema("Import").ToString
-        ExportFile = DR_Shema("Export").ToString
+        FileCSV = DR_Shema("Import").ToString
+        FilePDF = DR_Shema("Export").ToString
         ComboBox_Paper_DPI.Text = DR_Shema("DPI")
         ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
         NumericUpDown_Paper_Border_Left.Value = DR_Shema("Left")
@@ -277,7 +287,7 @@ Public Class Form1
 
         End If
         If OFD.ShowDialog = DialogResult.OK Then
-            ImportFile = OFD.FileName
+            FileCSV = OFD.FileName
         End If
 
     End Sub
@@ -287,7 +297,7 @@ Public Class Form1
         'With { .Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
 
         If FBD.ShowDialog = DialogResult.OK Then
-            ExportFile = FBD.SelectedPath
+            FilePDF = FBD.SelectedPath
         End If
 
     End Sub
