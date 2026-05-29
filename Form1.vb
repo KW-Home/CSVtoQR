@@ -12,7 +12,10 @@ Public Class Form1
     Private DS As New DataSet
 
     Private MyFont As Font
+
+    Private WithEvents CL_XML As New Class_XML
     Private WithEvents UC_Font As UserControl_Font
+    Private WithEvents UC_Border As UserControl_Border
 
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
@@ -22,8 +25,6 @@ Public Class Form1
 
     Private DT_CSV As DataTable
     Private DV_CSV As DataView
-
-    Private WithEvents CL_XML As New Class_XML
 
     Private IsModified_Value As Boolean
     Public Property IsModified() As Boolean
@@ -122,6 +123,10 @@ Public Class Form1
         UserControl_Font_Card_Load()
         UserControl_Font_CardRow_Load()
 
+        UserControl_Border_Paper_Load()
+        UserControl_Border_Card_Load()
+        UserControl_Border_CardRow_Load()
+
         CL_Default = New Class_Default(Me, DS)
 
         'lädt die Daten aus dem DataSet in die Steuerelemente
@@ -217,6 +222,10 @@ Public Class Form1
 
         Dim DR_Shema As DataRow
 
+        Dim UC_Paper_Border As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
+        Dim UC_Card_Border As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
+        Dim UC_CardRow_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
+
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
         DR_Shema = DS.Tables("Shema").Rows(0)
         TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
@@ -224,10 +233,13 @@ Public Class Form1
         FilePDF = DR_Shema("Export").ToString
         ComboBox_Paper_DPI.Text = DR_Shema("DPI")
         ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
-        NumericUpDown_Paper_Border_Left.Value = DR_Shema("Left")
-        NumericUpDown_Paper_Border_Top.Value = DR_Shema("Top")
-        NumericUpDown_Paper_Border_Right.Value = DR_Shema("Right")
-        NumericUpDown_Paper_Border_Bottom.Value = DR_Shema("Bottom")
+        With UC_Paper_Border
+            .NumericUpDown_Left.Value = CType(DR_Shema("Left"), Decimal)
+            .NumericUpDown_Top.Value = CType(DR_Shema("Top"), Decimal)
+            .NumericUpDown_Right.Value = CType(DR_Shema("Right"), Decimal)
+            .NumericUpDown_Bottom.Value = CType(DR_Shema("Bottom"), Decimal)
+        End With
+
         Label_Paper_Height_Value.Text = DR_Shema("PaperHeight").ToString
         Label_Paper_Width_Value.Text = DR_Shema("PaperWidth")
         NumericUpDown_Separator_Column_Count.Value = DR_Shema("SeparatorSpalteAnzahl")
@@ -238,29 +250,37 @@ Public Class Form1
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
         Dim DR_Card As DataRow
         DR_Card = DS.Tables("Card").Rows(0)
-        NumericUpDown_Card_Border_Left.Value = CType(DR_Card("Left"), Decimal)
-        NumericUpDown_Card_Border_Top.Value = CType(DR_Card("Top"), Decimal)
-        NumericUpDown_Card_Border_Right.Value = CType(DR_Card("Right"), Decimal)
-        NumericUpDown_Card_Border_Bottom.Value = CType(DR_Card("Bottom"), Decimal)
+
+        With UC_Card_Border
+            .NumericUpDown_Left.Value = CType(DR_Card("Left"), Decimal)
+            .NumericUpDown_Top.Value = CType(DR_Card("Top"), Decimal)
+            .NumericUpDown_Right.Value = CType(DR_Card("Right"), Decimal)
+            .NumericUpDown_Bottom.Value = CType(DR_Card("Bottom"), Decimal)
+        End With
+
         Label_Card_Size_Hight_Value.Text = CType(DR_Card("CardSizeHeight"), Decimal)
         Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
         If ListBox_CardRow.SelectedIndex = -1 Then
-            NumericUpDown_CardRow_Border_Left.Value = 0
-            NumericUpDown_CardRow_Border_Top.Value = 0
-            NumericUpDown_CardRow_Border_Right.Value = 0
-            NumericUpDown_CardRow_Border_Bottom.Value = 0
+            With UC_CardRow_Border
+                .NumericUpDown_Left.Value = 0
+                .NumericUpDown_Top.Value = 0
+                .NumericUpDown_Right.Value = 0
+                .NumericUpDown_Bottom.Value = 0
+            End With
         Else
             Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
             If DS.Tables("CardRow").Rows.Count > 0 Then
                 Dim DR_CardRow As DataRow
                 DR_CardRow = DS.Tables("CardRow").Select($"[ID]={ID}")(0)
                 If IsNothing(DR_CardRow) = False Then
-                    NumericUpDown_CardRow_Border_Left.Value = CType(DR_CardRow("Left"), Decimal)
-                    NumericUpDown_CardRow_Border_Top.Value = CType(DR_CardRow("Top"), Decimal)
-                    NumericUpDown_CardRow_Border_Right.Value = CType(DR_CardRow("Right"), Decimal)
-                    NumericUpDown_CardRow_Border_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
+                    With UC_CardRow_Border
+                        .NumericUpDown_Left.Value = CType(DR_CardRow("Left"), Decimal)
+                        .NumericUpDown_Top.Value = CType(DR_CardRow("Top"), Decimal)
+                        .NumericUpDown_Right.Value = CType(DR_CardRow("Right"), Decimal)
+                        .NumericUpDown_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
+                    End With
                 End If
             End If
         End If
@@ -342,25 +362,25 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-    Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged,
-        NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
+    'Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged,
+    '    NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
 
-        If sender.canselect = False Then Return
-        DS.Tables("Shema")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
-        IsModified = True
+    '    If sender.canselect = False Then Return
+    '    DS.Tables("Shema")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
+    '    IsModified = True
 
-        PaperPaint(Nothing, Nothing)
+    '    PaperPaint(Nothing, Nothing)
 
-    End Sub
-    Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
+    'End Sub
+    'Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
 
-        If sender.canselect = False Then Return
-        DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
-        IsModified = True
+    '    If sender.canselect = False Then Return
+    '    DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
+    '    IsModified = True
 
-        PaperPaint(Nothing, Nothing)
+    '    PaperPaint(Nothing, Nothing)
 
-    End Sub
+    'End Sub
     Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
 
         If sender.canselect = False Then Return
@@ -534,8 +554,7 @@ Public Class Form1
     End Sub
 
     Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
-        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged,
-        NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Top.ValueChanged, NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
+        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged
 
         CL_P.Ivalidate_Paper(Me, DS)
 
@@ -764,13 +783,15 @@ Public Class Form1
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
 
+
             If IsNothing(.SelectedItem) = True Then Check = False
             If .SelectedItems.Count = 0 Then Check = False
             If .SelectedIndex = -1 Then Check = False
 
             Dim ID As Integer = If(Check = True, .SelectedItem("ID"), Check = False)
             Dim DR As DataRow
-            Dim UC As UserControl_Font
+            Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+            Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
 
             If Check = True Then
 
@@ -780,35 +801,35 @@ Public Class Form1
                 ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
                 Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
                 CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
-                NumericUpDown_CardRow_Border_Left.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Left")))
-                NumericUpDown_CardRow_Border_Top.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Top")))
-                NumericUpDown_CardRow_Border_Right.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Right")))
-                NumericUpDown_CardRow_Border_Bottom.Value = If(IsDBNull(DR("Top")), 0, CDbl(DR("Bottom")))
+                With UC_Border
+                    .NumericUpDown_Left.Value = CDbl(DR("Left"))
+                    .NumericUpDown_Top.Value = CDbl(DR("Top"))
+                    .NumericUpDown_Right.Value = CDbl(DR("Right"))
+                    .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
+                End With
 
-                Dim FontString As String = DR("Font").ToString
-                Dim FontConverter As New Class_FontConverter
-                Dim nFont As Font = FontConverter.StringToFont(FontString)
-
+                Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
                 If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
-
-                UC = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                UC.View_UCFont(nFont)
-                UC.Enabled = Check
+                UC_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                With UC_Font
+                    .Label_Name_Value.Text = nFont.Name
+                    .Label_Size_Value.Text = nFont.Size.ToString
+                    .Label_Style_Value.Text = nFont.Style.ToString
+                End With
 
             End If
 
+            UC_Border.Enabled = Check
+            UC_Font.Enabled = Check
+
             CheckBox_CardRow_QRCode.Enabled = Check
-            ComboBox_CardRow_DataColumn.Enabled = Check
+            ComboBox_CardRow_DataColumn.Enabled = ComboBox_CardRow_DataColumn.Items.Count > 0
             Label_CardRow_LinePos_Value.Enabled = Check
             CheckBox_CardRow_AutoFont.Enabled = Check
-            NumericUpDown_CardRow_Border_Left.Enabled = Check
-            NumericUpDown_CardRow_Border_Top.Enabled = Check
-            NumericUpDown_CardRow_Border_Right.Enabled = Check
-            NumericUpDown_CardRow_Border_Bottom.Enabled = Check
 
             Button_CardRow_Delete.Enabled = Check
-            Button_CardRow_Add.Enabled = Check
             Button_CardRow_Save.Enabled = Check
+            Button_CardRow_Add.Enabled = CBool(ComboBox_CardRow_DataColumn.SelectedIndex > -1)
 
             If Check = False Or .SelectedIndex = 0 Then
                 Button_CardRow_Up.Enabled = False
@@ -865,6 +886,61 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UserControl_Border_Paper_Load()
+
+        If TableLayoutPanel_Paper.Controls.ContainsKey("UC_Border_Paper") = True Then Return
+        Dim UCB = New UserControl_Border()
+        Dim Border As New UserControl_Border.Border With {.Left = UCB.NumericUpDown_Left.Value, .Top = UCB.NumericUpDown_Top.Value, .Right = UCB.NumericUpDown_Right.Value, .Bottom = UCB.NumericUpDown_Bottom.Value}
+        With UCB
+            .GET_Border(Border)
+            .Name = "UC_Border_Paper"
+            .Dock = DockStyle.Top
+            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
+        End With
+        TableLayoutPanel_Paper.Controls.Add(UCB)
+
+    End Sub
+
+    Private Sub UserControl_Border_Card_Load()
+
+        If TableLayoutPanel_Card.Controls.ContainsKey("UC_Border_Card") = True Then Return
+
+        Dim UCB = New UserControl_Border()
+        Dim Border As New UserControl_Border.Border With {
+            .Left = UCB.NumericUpDown_Left.Value,
+            .Top = UCB.NumericUpDown_Top.Value,
+            .Right = UCB.NumericUpDown_Right.Value,
+            .Bottom = UCB.NumericUpDown_Bottom.Value}
+
+        With UCB
+            .GET_Border(Border)
+            .Name = "UC_Border_Card"
+            .Dock = DockStyle.Top
+            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
+        End With
+        TableLayoutPanel_Card.Controls.Add(UCB)
+
+    End Sub
+
+    Private Sub UserControl_Border_CardRow_Load()
+
+        If TableLayoutPanel_CardRow.Controls.ContainsKey("UC_Border_CardRow") = True Then Return
+        Dim UCB = New UserControl_Border()
+        Dim Border As New UserControl_Border.Border With {
+            .Left = UCB.NumericUpDown_Left.Value,
+            .Top = UCB.NumericUpDown_Top.Value,
+            .Right = UCB.NumericUpDown_Right.Value,
+            .Bottom = UCB.NumericUpDown_Bottom.Value}
+
+        With UCB
+            .GET_Border(Border)
+            .Name = "UC_Border_CardRow"
+            .Dock = DockStyle.Top
+            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
+        End With
+        TableLayoutPanel_CardRow.Controls.Add(UCB)
+
+    End Sub
 
     Private Sub UserControl_Font_General_Load()
 
@@ -919,10 +995,8 @@ Public Class Form1
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
-
             Case "UC_Font_Card"
                 DS.Tables("Card").Rows(0)("Font") = nFonString
-
             Case "UC_Font_CardRow"
 
                 Dim ID As Integer = ListBox_CardRow.SelectedValue
@@ -935,7 +1009,12 @@ Public Class Form1
 
         End Select
 
-        Sender.View_UCFont(e)
+        Dim UC As UserControl_Font = CType(Sender, UserControl_Font)
+        With UC
+            .Label_Name_Value.Text = e.Name
+            .Label_Size_Value.Text = e.Size.ToString
+            .Label_Style_Value.Text = e.Style.ToString
+        End With
 
         IsModified = True
 
@@ -943,20 +1022,30 @@ Public Class Form1
     Private Sub Save_CardRow(ID As Integer)
 
         Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-        If IsNothing(DR) = False Then DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
 
-        'DR("Left") = NumericUpDown_CardRow_Border_Left.Value
-        'DR("Top") = NumericUpDown_CardRow_Border_Top.Value
-        'DR("Right") = NumericUpDown_CardRow_Border_Right.Value
-        'DR("Bottom") = NumericUpDown_CardRow_Border_Bottom.Value
-        'DR("QRCode") = CheckBox_CardRow_QRCode.Checked
-        'DR("LinePos") = Label_CardRow_LinePos_Value.Text
+        If IsNothing(DR) = False Then
+            DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
+        Else
+            DR = DS.Tables("CardRow").NewRow
+            DS.Tables("CardRow").Rows.Add(DR)
+        End If
 
-        'Dim UC As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-        'DR("Font") = New Class_FontConverter().FontToString(UC.Font)
+        DR("DataColumn") = ComboBox_CardRow_DataColumn.Text
+        DR("QRCode") = CheckBox_CardRow_QRCode.Checked
+        DR("LinePos") = Label_CardRow_LinePos_Value.Text
+        DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
+        DR("FontColor") = String.Empty
 
-        'DR("FontColor") = String.Empty
-        'DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
+        Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
+        With UC_Border
+            DR("Left") = .NumericUpDown_Left.Value
+            DR("Top") = .NumericUpDown_Top.Value
+            DR("Right") = .NumericUpDown_Right.Value
+            DR("Bottom") = .NumericUpDown_Bottom.Value
+        End With
+
+        Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+        DR("Font") = New Class_FontConverter().FontToString(UC_Font.Font)
 
     End Sub
     Private Sub Button_CardRow_Save_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Save.Click
@@ -981,6 +1070,50 @@ Public Class Form1
         If CD.ShowDialog = DialogResult.OK Then
             sender.ForeColor = CD.Color
         End If
+
+    End Sub
+
+    Private Sub UC_Border_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UC_Border.Border_Changed
+
+        If sender.canselect = False Then Return
+
+        Dim Border As UserControl_Border.Border = e
+        Dim DR As DataRow
+
+        Select Case sender.Name
+            Case "UC_Border_Paper"
+                DR = DS.Tables("Shema").Rows(0)
+                If IsNothing(DR) = False Then
+                    DR("Left") = Border.Left
+                    DR("Top") = Border.Top
+                    DR("Right") = Border.Right
+                    DR("Bottom") = Border.Bottom
+                End If
+            Case "UC_Border_Card"
+                DR = DS.Tables("Card").Rows(0)
+                If IsNothing(DR) = False Then
+                    DR("Left") = Border.Left
+                    DR("Top") = Border.Top
+                    DR("Right") = Border.Right
+                    DR("Bottom") = Border.Bottom
+                End If
+            Case "UC_Border_CardRow"
+                If ListBox_CardRow.SelectedIndex = -1 Then Return
+                Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
+                DR = DS.Tables("CardRow").Rows.Find(ID)
+                If IsNothing(DR) = False Then
+                    DR("Left") = Border.Left
+                    DR("Top") = Border.Top
+                    DR("Right") = Border.Right
+                    DR("Bottom") = Border.Bottom
+                End If
+            Case Else
+                Beep()
+        End Select
+
+        IsModified = True
+
+        PaperPaint(Nothing, Nothing)
 
     End Sub
 

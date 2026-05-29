@@ -154,8 +154,11 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Left
         '
+        Me.NumericUpDown_Left.DecimalPlaces = 2
         Me.NumericUpDown_Left.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Left.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown_Left.Location = New System.Drawing.Point(42, 23)
+        Me.NumericUpDown_Left.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Left.Name = "NumericUpDown_Left"
         Me.NumericUpDown_Left.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Left.TabIndex = 1
@@ -163,8 +166,11 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Right
         '
+        Me.NumericUpDown_Right.DecimalPlaces = 2
         Me.NumericUpDown_Right.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Right.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown_Right.Location = New System.Drawing.Point(42, 49)
+        Me.NumericUpDown_Right.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Right.Name = "NumericUpDown_Right"
         Me.NumericUpDown_Right.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Right.TabIndex = 2
@@ -172,8 +178,11 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Top
         '
+        Me.NumericUpDown_Top.DecimalPlaces = 2
         Me.NumericUpDown_Top.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Top.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown_Top.Location = New System.Drawing.Point(42, 75)
+        Me.NumericUpDown_Top.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Top.Name = "NumericUpDown_Top"
         Me.NumericUpDown_Top.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Top.TabIndex = 3
@@ -181,8 +190,11 @@ Partial Class UserControl_Border
         '
         'NumericUpDown_Bottom
         '
+        Me.NumericUpDown_Bottom.DecimalPlaces = 2
         Me.NumericUpDown_Bottom.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Bottom.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown_Bottom.Location = New System.Drawing.Point(42, 101)
+        Me.NumericUpDown_Bottom.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Bottom.Name = "NumericUpDown_Bottom"
         Me.NumericUpDown_Bottom.Size = New System.Drawing.Size(73, 20)
         Me.NumericUpDown_Bottom.TabIndex = 4

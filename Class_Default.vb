@@ -42,10 +42,9 @@
                     Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
                     Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
-                    Case "Button" : Default_Button(OBJ)
-                    Case "FlowLayoutPanel" : Default_FlowLayoutPanel(OBJ)
+                        'Case "FlowLayoutPanel" : Default_FlowLayoutPanel(OBJ)
                     Case Else
-                        MessageBox.Show("Der Objecttyp ist nicht festgelegt.", "Konfig fehlt!" & .GetType.Name, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        'MessageBox.Show("Der Objecttyp ist nicht festgelegt.", "Konfig fehlt!" & .GetType.Name, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End Select
             End With
         Next
@@ -70,21 +69,21 @@
             .Add(FRM.TextBox_General_XML_Directory)
             .Add(FRM.Label_General_XML_Filname)
             .Add(FRM.TextBox_General_XML_Filename)
-            .Add(FRM.Button_General_XML_Open)
             .Add(FRM.GroupBox_General_Import)
             .Add(FRM.TableLayoutPanel_General_Import)
             .Add(FRM.Label_General_Import_Directory)
             .Add(FRM.TextBox_General_Import_Directory)
             .Add(FRM.Label_General_Import_Filname)
             .Add(FRM.TextBox_General_Import_Filename)
-            .Add(FRM.Button_General_Import)
             .Add(FRM.GroupBox_General_Export)
             .Add(FRM.TableLayoutPanel_General_Export)
             .Add(FRM.Label_General_Export_Directory)
             .Add(FRM.TextBox_General_Export_Directory)
             .Add(FRM.Label_General_Export_Filname)
             .Add(FRM.TextBox_General_Export_Filename)
+            .Add(FRM.Button_General_XML_Open)
             .Add(FRM.Button_General_Export)
+            .Add(FRM.Button_General_Import)
 #End Region
 #Region "TabPage_Paper"
             .Add(FRM.TabPage_Paper)
@@ -103,20 +102,6 @@
             .Add(FRM.ComboBox_Paper_DPI)
             .Add(FRM.TableLayoutPanel_Paper_Shema)
             .Add(FRM.TableLayoutPanel_Paper)
-            .Add(FRM.TableLayoutPanel_Paper_Border)
-            .Add(FRM.GroupBox_Paper_Border)
-            .Add(FRM.Label_Paper_Border_Left)
-            .Add(FRM.Label_Paper_Border_Top)
-            .Add(FRM.Label_Paper_Border_Right)
-            .Add(FRM.Label_Paper_Border_Bottom)
-            .Add(FRM.Label_Paper_Border_Right_Unit)
-            .Add(FRM.Label_Paper_Border_Top_Unit)
-            .Add(FRM.Label_Paper_Border_Bottom_Unit)
-            .Add(FRM.Label_Paper_Border_Left_Unit)
-            .Add(FRM.NumericUpDown_Paper_Border_Left)
-            .Add(FRM.NumericUpDown_Paper_Border_Top)
-            .Add(FRM.NumericUpDown_Paper_Border_Right)
-            .Add(FRM.NumericUpDown_Paper_Border_Bottom)
             .Add(FRM.GroupBox_Separatoren)
             .Add(FRM.NumericUpDown_Separator_Row_Value)
             .Add(FRM.NumericUpDown_Separator_Row_Count)
@@ -131,56 +116,30 @@
 #End Region
 #Region "TabPage_Card"
             .Add(FRM.TabPage_Card)
-            .Add(FRM.NumericUpDown_Card_Border_Left)
-            .Add(FRM.NumericUpDown_Card_Border_Top)
-            .Add(FRM.NumericUpDown_Card_Border_Right)
-            .Add(FRM.NumericUpDown_Card_Border_Bottom)
             .Add(FRM.TableLayoutPanel_Card_Size)
             .Add(FRM.TableLayoutPanel_Card)
             .Add(FRM.Label_Card_Size_Hight)
             .Add(FRM.Label_Card_Size_Hight_Value)
             .Add(FRM.Label_Card_Size_Width)
             .Add(FRM.Label_Card_Size_Width_Value)
-            .Add(FRM.GroupBox_Card_Border)
             .Add(FRM.GroupBox_Card_Size)
-            .Add(FRM.TableLayoutPanel_Card_Border)
             .Add(FRM.Label_Card_Size_Hight_Unit)
             .Add(FRM.Label_Card_Size_Width_Unit)
 #End Region
 #Region "CardRow"
             .Add(FRM.TabPage_CardRow)
             .Add(FRM.ListBox_CardRow)
-            .Add(FRM.NumericUpDown_CardRow_Border_Bottom)
-            .Add(FRM.NumericUpDown_CardRow_Border_Left)
-            .Add(FRM.NumericUpDown_CardRow_Border_Right)
-            .Add(FRM.NumericUpDown_CardRow_Border_Top)
-            .Add(FRM.Label_CardRow_Border_Left)
-            .Add(FRM.Label_CardRow_Border_Left_Unit)
-            .Add(FRM.Label_CardRow_Border_Bottom)
-            .Add(FRM.Label_CardRow_Border_Bottom_Unit)
-            .Add(FRM.Label_CardRow_Border_Top)
-            .Add(FRM.Label_CardRow_Border_Top_Unit)
-            .Add(FRM.Label_CardRow_Border_Right)
-            .Add(FRM.Label_CardRow_Border_Right_Unit)
             .Add(FRM.Label_CardRow_DataColumn)
             .Add(FRM.Label_CardRow_LinePos)
             .Add(FRM.Label_CardRow_QRCode)
             .Add(FRM.Label_CardRow_AutoFont)
             .Add(FRM.ComboBox_CardRow_DataColumn)
-            .Add(FRM.GroupBox_CardRow_Border)
             .Add(FRM.GroupBox_CardRow_Line)
             .Add(FRM.GroupBox_CardRow_List)
             .Add(FRM.CheckBox_CardRow_QRCode)
             .Add(FRM.CheckBox_CardRow_AutoFont)
             .Add(FRM.TableLayoutPanel_CardRow)
-            .Add(FRM.TableLayoutPanel_CardRow_List)
-            .Add(FRM.Button_CardRow_Add)
-            .Add(FRM.Button_CardRow_Delete)
             .Add(FRM.TableLayoutPanel_CardRow_Line)
-            .Add(FRM.TableLayoutPanel_CardRow_Border)
-            .Add(FRM.FlowLayoutPanel_CardRow_Row)
-            .Add(FRM.Button_CardRow_Up)
-            .Add(FRM.Button_CardRow_Down)
             .Add(FRM.Label_CardRow_LinePos_Value)
 
 #End Region
@@ -203,15 +162,15 @@
 #End Region
         End With
     End Sub
-    Private Sub Default_FlowLayoutPanel(ByRef OBJ As FlowLayoutPanel)
-        With OBJ
-            .FlowDirection = FlowDirection.LeftToRight
-            .Dock = DockStyle.Top
-            .AutoSize = True
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-        End With
-    End Sub
+    'Private Sub Default_FlowLayoutPanel(ByRef OBJ As FlowLayoutPanel)
+    '    With OBJ
+    '        .FlowDirection = FlowDirection.LeftToRight
+    '        .Dock = DockStyle.Top
+    '        .AutoSize = True
+    '        .Margin = New Padding(0)
+    '        .Padding = New Padding(0)
+    '    End With
+    'End Sub
     Private Sub Default_TextBox(ByRef OBJ As TextBox)
         With OBJ
             .Dock = DockStyle.Top
@@ -341,10 +300,11 @@
     Private Sub Default_ListBox(ByRef OBJ As ListBox)
 
         With OBJ
-            .Dock = DockStyle.Fill
+
+            .Dock = DockStyle.Top
             .BackColor = SystemColors.Control
             .IntegralHeight = True
-            .AutoSize = True
+            '.AutoSize = True
 
             Select Case .Name
                 Case FRM.ListBox_CardRow.Name
@@ -454,8 +414,8 @@
                     .SetColumnSpan(FRM.DGV_Search, 2)
                     .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
                     .SetColumnSpan(FRM.DGV_CSV, 2)
-                Case FRM.TableLayoutPanel_CardRow_List.Name
-                    .SetColumnSpan(FRM.ListBox_CardRow, 3)
+                'Case FRM.TableLayoutPanel_CardRow_List.Name
+                '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
                 Case FRM.TableLayoutPanel_General_XML.Name
                     .SetRowSpan(FRM.Button_General_XML_Open, 2)
                 Case FRM.TableLayoutPanel_General_Import.Name
@@ -469,25 +429,6 @@
                     .AutoScroll = True
                 Case Else
                     .AutoScroll = False
-            End Select
-
-        End With
-    End Sub
-    Private Sub Default_Button(ByRef OBJ As Button)
-        With OBJ
-
-            .Dock = DockStyle.Top
-            .AutoSizeMode = AutoSizeMode.GrowAndShrink
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-            .Location = New Point(0, 0)
-            .UseCompatibleTextRendering = True
-
-            Select Case .Name
-                Case FRM.Button_CardRow_Add.Name, FRM.Button_CardRow_Down.Name, FRM.Button_CardRow_Up.Name, FRM.Button_CardRow_Delete.Name
-                    .Enabled = False
-                Case Else
-                    .Enabled = True
             End Select
 
         End With
