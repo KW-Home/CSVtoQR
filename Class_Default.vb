@@ -42,10 +42,6 @@
                     Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
                     Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
-                    Case Else
-
-                        Debug.Print("Der Objecttyp ist nicht festgelegt." & vbNewLine & .GetType.Name)
-
                 End Select
             End With
         Next
@@ -165,6 +161,26 @@
         End With
     End Sub
 
+    Public Sub Default_ListBox(ByRef OBJ As ListBox, CMin As Integer, CMax As Integer)
+
+        With OBJ
+
+            .AutoSize = False
+
+            Dim C As Integer = .Items.Count
+            If CMin <= 1 Then CMin = 1
+            If CMin >= 6 Then CMin = 6
+            If CMax >= 20 Then CMax = 20
+            If CMin >= CMax Then CMax = CMin + 1
+
+            If .Items.Count <= CMin Then C = CMin
+            If .Items.Count >= CMax Then C = CMax
+
+            .Height = CType(MyFont.Height * C, Integer)
+
+        End With
+
+    End Sub
     Private Sub Default_TextBox(ByRef OBJ As TextBox)
         With OBJ
             .Dock = DockStyle.Top

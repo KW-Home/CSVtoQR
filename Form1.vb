@@ -773,20 +773,12 @@ Public Class Form1
         Next
 
         With ListBox_CardRow
-
-            '.ClearSelected()
-
             .DataSource = DT
             .DisplayMember = "DataColumn"
             .ValueMember = "ID"
-            .AutoSize = False
-
-            Dim H As Integer = MyFont.Height * .Items.Count
-            If .Items.Count < 4 Then H = MyFont.Height * 3
-            If .Items.Count > 6 Then H = MyFont.Height * 6
-            .Height = H
-
         End With
+
+        CL_Default.Default_ListBox(ListBox_CardRow, 4, 4)
 
     End Sub
 
