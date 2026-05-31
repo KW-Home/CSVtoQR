@@ -211,7 +211,7 @@ Public Class Form1
 
     Private Sub ListBox_Tabellen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_Tabellen.SelectedIndexChanged
 
-        If ListBox_Tabellen.SelectedIndex < 0 Then Return
+        If ListBox_Tabellen.SelectedIndex = -1 Then Return
         DGV_Table.DataSource = DS.Tables(ListBox_Tabellen.SelectedItem.ToString)
 
     End Sub
@@ -619,6 +619,7 @@ Public Class Form1
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
 
         SaveFileDialog_XML()
+        GET_ColumnTabele()
 
     End Sub
 
@@ -631,6 +632,8 @@ Public Class Form1
             SaveFileDialog_XML()
         End If
 
+        GET_ColumnTabele()
+
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
 
@@ -640,6 +643,8 @@ Public Class Form1
         Else
             SaveFileDialog_XML()
         End If
+
+        GET_ColumnTabele()
 
     End Sub
 
@@ -681,10 +686,27 @@ Public Class Form1
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
 
-        ListBox_Tabellen.Items.Clear()
-        ListBox_Tabellen.Items.AddRange(DS.Tables.Cast(Of DataTable).Select(Function(t) t.TableName).ToArray())
+        GET_ColumnTabele()
 
     End Sub
+
+    Private Sub GET_ColumnTabele()
+
+        Dim Los As New List(Of String)
+
+        With ListBox_Tabellen
+
+            'erst alles entfernen, damit die Datenbindung neu aufgebaut werden kann, ohne dass es zu Fehlern kommt
+            .DataSource = Nothing
+            For Each Table As DataTable In DS.Tables
+                Los.Add(Table.TableName)
+            Next
+            'befüllen die ListBox mit den Tabellennamen aus dem DataSet
+            .DataSource = Los
+        End With
+
+    End Sub
+
     Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
         SET_Changetext_XML(sender, e)
@@ -751,12 +773,20 @@ Public Class Form1
         Next
 
         With ListBox_CardRow
+
+            '.ClearSelected()
+
             .DataSource = DT
             .DisplayMember = "DataColumn"
             .ValueMember = "ID"
-        End With
+            .AutoSize = False
 
-        ListBox_CardRow.ClearSelected()
+            Dim H As Integer = MyFont.Height * .Items.Count
+            If .Items.Count < 4 Then H = MyFont.Height * 3
+            If .Items.Count > 6 Then H = MyFont.Height * 6
+            .Height = H
+
+        End With
 
     End Sub
 

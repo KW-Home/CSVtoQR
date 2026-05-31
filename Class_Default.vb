@@ -35,16 +35,17 @@
                     Case "TabPage" : Default_TabPage(OBJ)
                     Case "TabControl" : Default_TabControl(OBJ)
                     Case "BindingNavigator" : Default_BindingNavigator(OBJ)
-                    Case "ListBox" : Default_ListBox(OBJ)
+                    'Case "ListBox" : Default_ListBox(OBJ)
                     Case "PictureBox" : Default_PictureBox(OBJ)
                     Case "Panel" : Default_Panel(OBJ)
                     Case "DataGridView" : Default_DataGridView(OBJ)
                     Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
                     Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
-                        'Case "FlowLayoutPanel" : Default_FlowLayoutPanel(OBJ)
                     Case Else
-                        'MessageBox.Show("Der Objecttyp ist nicht festgelegt.", "Konfig fehlt!" & .GetType.Name, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        Debug.Print("Der Objecttyp ist nicht festgelegt." & vbNewLine & .GetType.Name)
+
                 End Select
             End With
         Next
@@ -52,12 +53,12 @@
     End Sub
     Private Sub Default_Fill()
         With ControlsListGesamt
+
 #Region "Formular"
             .Add(FRM.MenuStrip_Main)
             .Add(FRM.SplitContainer_Main)
             .Add(FRM.TabControl_Main)
             .Add(FRM.StatusStrip_Main)
-            .Add(FRM.ListBox_Tabellen)
             .Add(FRM.PictureBox_Preview)
             .Add(FRM.Panel_Preview)
 #End Region
@@ -160,17 +161,10 @@
             .Add(FRM.GroupBox_Table)
             .Add(FRM.TableLayoutPanel_Table)
 #End Region
+
         End With
     End Sub
-    'Private Sub Default_FlowLayoutPanel(ByRef OBJ As FlowLayoutPanel)
-    '    With OBJ
-    '        .FlowDirection = FlowDirection.LeftToRight
-    '        .Dock = DockStyle.Top
-    '        .AutoSize = True
-    '        .Margin = New Padding(0)
-    '        .Padding = New Padding(0)
-    '    End With
-    'End Sub
+
     Private Sub Default_TextBox(ByRef OBJ As TextBox)
         With OBJ
             .Dock = DockStyle.Top
@@ -296,25 +290,6 @@
             .Dock = DockStyle.Bottom
             .RenderMode = ToolStripRenderMode.System
         End With
-    End Sub
-    Private Sub Default_ListBox(ByRef OBJ As ListBox)
-
-        With OBJ
-
-            .Dock = DockStyle.Top
-            .BackColor = SystemColors.Control
-            .IntegralHeight = True
-            '.AutoSize = True
-
-            Select Case .Name
-                Case FRM.ListBox_CardRow.Name
-                    Dim H As Integer = MyFont.Height
-                    H *= FRM.ListBox_CardRow.Items.Count
-                    .Height = H + 12
-            End Select
-
-        End With
-
     End Sub
     Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
         With OBJ
