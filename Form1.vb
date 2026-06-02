@@ -947,7 +947,9 @@ Public Class Form1
     Private Sub UserControl_Border_CardRow_Load()
 
         If TableLayoutPanel_CardRow.Controls.ContainsKey("UC_Border_CardRow") = True Then Return
+
         Dim UCB = New UserControl_Border()
+
         Dim Border As New UserControl_Border.Border With {
             .Left = UCB.NumericUpDown_Left.Value,
             .Top = UCB.NumericUpDown_Top.Value,
@@ -960,47 +962,58 @@ Public Class Form1
             .Dock = DockStyle.Top
             AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
         End With
+
         TableLayoutPanel_CardRow.Controls.Add(UCB)
 
     End Sub
 
     Private Sub UserControl_Font_General_Load()
 
-        If TabPage_General.Controls.ContainsKey("UC_Font_General") = True Then Return
+        If TableLayoutPanel__General.Controls.ContainsKey("UC_Font_General") = True Then Return
+
         Dim UCF = New UserControl_Font(MyFont)
+
         With UCF
             .Name = "UC_Font_General"
             .Dock = DockStyle.Top
-            .Font = My.Settings.MyFont
+            .Font = MyFont
             AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
+
         TabPage_General.Controls.Add(UCF)
+        UCF.GET_FontToUC(MyFont)
 
     End Sub
     Private Sub UserControl_Font_Card_Load()
 
         If TabPage_General.Controls.ContainsKey("UC_Font_Card") = True Then Return
+
         Dim UCF = New UserControl_Font(MyFont)
+
         With UCF
             .Name = "UC_Font_Card"
             .Dock = DockStyle.Fill
-            .Font = My.Settings.MyFont
+            .Font = MyFont
             AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
+
         TableLayoutPanel_Card.Controls.Add(UCF)
 
     End Sub
     Private Sub UserControl_Font_CardRow_Load()
 
         If TabPage_General.Controls.ContainsKey("UC_Font_CardRow") = True Then Return
+
         Dim UCF = New UserControl_Font(MyFont)
+
         With UCF
             .Name = "UC_Font_CardRow"
             .Dock = DockStyle.Fill
-            .Font = My.Settings.MyFont
+            .Font = MyFont
             .Enabled = False
             AddHandler .Font_Changed, AddressOf UC_Font_Changed
         End With
+
         TableLayoutPanel_CardRow.Controls.Add(UCF)
 
     End Sub
@@ -1014,20 +1027,18 @@ Public Class Form1
         Select Case Sender.Name
 
             Case "UC_Font_General"
+                MyFont = e
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
+
             Case "UC_Font_Card"
                 DS.Tables("Card").Rows(0)("Font") = nFonString
-            Case "UC_Font_CardRow"
 
+            Case "UC_Font_CardRow"
                 Dim ID As Integer = ListBox_CardRow.SelectedValue
                 Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
                 If IsNothing(DR) = False Then DR("Font") = nFonString
-
-            Case Else
-
-                Beep()
 
         End Select
 
