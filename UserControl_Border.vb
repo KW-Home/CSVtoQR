@@ -9,7 +9,7 @@
 
     Public Event Border_Changed(ByVal sender As Object, ByVal e As Border)
 
-    Public Sub GET_Border(_Border As Border)
+    Public Sub GET_BorderToUC(_Border As Border)
         NumericUpDown_Left.Value = _Border.Left
         NumericUpDown_Top.Value = _Border.Top
         NumericUpDown_Right.Value = _Border.Right

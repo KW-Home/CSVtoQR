@@ -914,7 +914,7 @@ Public Class Form1
         Dim UCB = New UserControl_Border()
         Dim Border As New UserControl_Border.Border With {.Left = UCB.NumericUpDown_Left.Value, .Top = UCB.NumericUpDown_Top.Value, .Right = UCB.NumericUpDown_Right.Value, .Bottom = UCB.NumericUpDown_Bottom.Value}
         With UCB
-            .GET_Border(Border)
+            .GET_BorderToUC(Border)
             .Name = "UC_Border_Paper"
             .Dock = DockStyle.Top
             AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
@@ -935,7 +935,7 @@ Public Class Form1
             .Bottom = UCB.NumericUpDown_Bottom.Value}
 
         With UCB
-            .GET_Border(Border)
+            .GET_BorderToUC(Border)
             .Name = "UC_Border_Card"
             .Dock = DockStyle.Top
             AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
@@ -957,7 +957,7 @@ Public Class Form1
             .Bottom = UCB.NumericUpDown_Bottom.Value}
 
         With UCB
-            .GET_Border(Border)
+            .GET_BorderToUC(Border)
             .Name = "UC_Border_CardRow"
             .Dock = DockStyle.Top
             AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
