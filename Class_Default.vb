@@ -247,7 +247,7 @@
 
             Select Case .Name
                 Case FRM.ComboBox_CardRow_DataColumn.Name
-                    .Dock = DockStyle.Fill
+                    '.Dock = DockStyle.Fill
                 Case Else
                     .Dock = DockStyle.Left
             End Select
@@ -362,19 +362,19 @@
     Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
 
         With OBJ
-            .Margin = New Padding(0)
-            .Padding = New Padding(3)
+            '.Margin = New Padding(0)
+            '.Padding = New Padding(3)
 
             Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
             .Font = nF
             .BackColor = Color.Transparent
 
-            Select Case .Name
-                Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
-                    .Dock = DockStyle.Fill
-                Case Else
-                    .Dock = DockStyle.Top
-            End Select
+            'Select Case .Name
+            '    Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
+            '        .Dock = DockStyle.Fill
+            '    Case Else
+            '        .Dock = DockStyle.Top
+            'End Select
 
         End With
 
@@ -391,36 +391,36 @@
     Private Sub Default_TableLayoutPanel(ByRef OBJ As TableLayoutPanel)
         With OBJ
 
-            .Dock = DockStyle.Fill
-            .AutoSizeMode = AutoSizeMode.GrowAndShrink
-            .BorderStyle = BorderStyle.None
-            .CellBorderStyle = TableLayoutPanelCellBorderStyle.None
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-            .Location = New Point(0, 0)
-            .BackColor = SystemColors.Control
+            '.Dock = DockStyle.Fill
+            '.AutoSizeMode = AutoSizeMode.GrowAndShrink
+            '.BorderStyle = BorderStyle.None
+            '.CellBorderStyle = TableLayoutPanelCellBorderStyle.None
+            '.Margin = New Padding(0)
+            '.Padding = New Padding(0)
+            '.Location = New Point(0, 0)
+            '.BackColor = SystemColors.Control
 
-            Select Case .Name
-                Case FRM.TableLayoutPanel_Data.Name
-                    .SetColumnSpan(FRM.DGV_Search, 2)
-                    .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
-                    .SetColumnSpan(FRM.DGV_CSV, 2)
-                'Case FRM.TableLayoutPanel_CardRow_List.Name
-                '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
-                Case FRM.TableLayoutPanel_General_XML.Name
-                    .SetRowSpan(FRM.Button_General_XML_Open, 2)
-                Case FRM.TableLayoutPanel_General_Import.Name
-                    .SetRowSpan(FRM.Button_General_Import, 2)
-                Case FRM.TableLayoutPanel_General_Export.Name
-                    .SetRowSpan(FRM.Button_General_Export, 2)
-            End Select
+            'Select Case .Name
+            '    Case FRM.TableLayoutPanel_Data.Name
+            '        .SetColumnSpan(FRM.DGV_Search, 2)
+            '        .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
+            '        .SetColumnSpan(FRM.DGV_CSV, 2)
+            '    'Case FRM.TableLayoutPanel_CardRow_List.Name
+            '    '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
+            '    Case FRM.TableLayoutPanel_General_XML.Name
+            '        .SetRowSpan(FRM.Button_General_XML_Open, 2)
+            '    Case FRM.TableLayoutPanel_General_Import.Name
+            '        .SetRowSpan(FRM.Button_General_Import, 2)
+            '    Case FRM.TableLayoutPanel_General_Export.Name
+            '        .SetRowSpan(FRM.Button_General_Export, 2)
+            'End Select
 
-            Select Case .Name
-                Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
-                    .AutoScroll = True
-                Case Else
-                    .AutoScroll = False
-            End Select
+            'Select Case .Name
+            '    Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
+            '        .AutoScroll = True
+            '    Case Else
+            '        .AutoScroll = False
+            'End Select
 
         End With
     End Sub

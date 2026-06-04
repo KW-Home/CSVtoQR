@@ -14,7 +14,10 @@
     <Setting Name="MySpliter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">504</Value>
     </Setting>
-    <Setting Name="LastDataSet" Type="System.String" Scope="User">
+    <Setting Name="LastFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="LastDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\</Value>
     </Setting>
   </Settings>

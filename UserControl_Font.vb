@@ -2,11 +2,11 @@
 
     Public Event Font_Changed(ByVal sender As Object, ByVal e As Font)
 
-    Sub New(_Font As Font)
+    'Sub New(_Font As Font)
 
-        InitializeComponent()
+    '    InitializeComponent()
 
-    End Sub
+    'End Sub
 
     Private Sub Button_Font_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Font.Click
 

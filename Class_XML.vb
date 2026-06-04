@@ -43,6 +43,7 @@ Public Class Class_XML
             DS = New DataSet
             DataSetFile = OFD.FileName
             ReadXML(DS)
+            Form1.FileXML = OFD.FileName
         End If
 
     End Sub
@@ -54,6 +55,7 @@ Public Class Class_XML
             DS.ReadXmlSchema(Replace(DataSetFile_Value, "xml", "xsd", 1, -1, CompareMethod.Text))
             DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
         End If
+
     End Sub
 
 End Class
