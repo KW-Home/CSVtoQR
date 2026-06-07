@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports CSVtoQR.My
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
@@ -1750,29 +1752,29 @@ Partial Class Form1
         'ToolStripMenuItem_Beenden
         '
         Me.ToolStripMenuItem_Beenden.Name = "ToolStripMenuItem_Beenden"
-        Me.ToolStripMenuItem_Beenden.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_Beenden.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_Beenden.Text = "&Beenden"
         '
         'ToolStripSeparator03
         '
         Me.ToolStripSeparator03.Name = "ToolStripSeparator03"
-        Me.ToolStripSeparator03.Size = New System.Drawing.Size(173, 6)
+        Me.ToolStripSeparator03.Size = New System.Drawing.Size(185, 6)
         '
         'ToolStripSeparator02
         '
         Me.ToolStripSeparator02.Name = "ToolStripSeparator02"
-        Me.ToolStripSeparator02.Size = New System.Drawing.Size(173, 6)
+        Me.ToolStripSeparator02.Size = New System.Drawing.Size(185, 6)
         '
         'ToolStripMenuItem_XML_SaveAs
         '
         Me.ToolStripMenuItem_XML_SaveAs.Name = "ToolStripMenuItem_XML_SaveAs"
-        Me.ToolStripMenuItem_XML_SaveAs.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_XML_SaveAs.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_XML_SaveAs.Text = "Speichern &unter"
         '
         'ToolStripSeparator01
         '
         Me.ToolStripSeparator01.Name = "ToolStripSeparator01"
-        Me.ToolStripSeparator01.Size = New System.Drawing.Size(173, 6)
+        Me.ToolStripSeparator01.Size = New System.Drawing.Size(185, 6)
         '
         'ToolStripMenuItem_Datei
         '
@@ -1787,7 +1789,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_XML_New.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_XML_New.Name = "ToolStripMenuItem_XML_New"
         Me.ToolStripMenuItem_XML_New.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_XML_New.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_XML_New.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_XML_New.Text = "&Neu"
         '
         'ToolStripMenuItem_XML_Open
@@ -1796,7 +1798,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_XML_Open.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_XML_Open.Name = "ToolStripMenuItem_XML_Open"
         Me.ToolStripMenuItem_XML_Open.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_XML_Open.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_XML_Open.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_XML_Open.Text = "Ö&ffnen"
         '
         'ToolStripMenuItem_XML_Safe
@@ -1805,7 +1807,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_XML_Safe.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_XML_Safe.Name = "ToolStripMenuItem_XML_Safe"
         Me.ToolStripMenuItem_XML_Safe.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_XML_Safe.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_XML_Safe.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_XML_Safe.Text = "&Speichern"
         '
         'ToolStripMenuItem_Print
@@ -1814,7 +1816,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_Print.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_Print.Name = "ToolStripMenuItem_Print"
         Me.ToolStripMenuItem_Print.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.ToolStripMenuItem_Print.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_Print.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_Print.Text = "&Drucken"
         '
         'ToolStripMenuItem_Seitenansicht
@@ -1822,7 +1824,7 @@ Partial Class Form1
         Me.ToolStripMenuItem_Seitenansicht.Image = CType(resources.GetObject("ToolStripMenuItem_Seitenansicht.Image"), System.Drawing.Image)
         Me.ToolStripMenuItem_Seitenansicht.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripMenuItem_Seitenansicht.Name = "ToolStripMenuItem_Seitenansicht"
-        Me.ToolStripMenuItem_Seitenansicht.Size = New System.Drawing.Size(176, 30)
+        Me.ToolStripMenuItem_Seitenansicht.Size = New System.Drawing.Size(188, 30)
         Me.ToolStripMenuItem_Seitenansicht.Text = "&Seitenansicht"
         '
         'ToolStripMenuItem_Bearbeiten
@@ -1895,7 +1897,7 @@ Partial Class Form1
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(127, 28)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(126, 28)
         Me.ToolStripMenuItem1.Text = "ToolStripMenuItem1"
         '
         'ToolStripStatusLabel_SaveFile

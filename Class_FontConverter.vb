@@ -22,6 +22,8 @@ Public Class Class_FontConverter
     ' Gibt alle Properties (Name=Value) in Debug-Ausgabe aus
     Public Function FontToString(font As Font) As String
 
+        If IsNothing(font) = True Then font = New Font("Arial", 12, FontStyle.Regular)
+
         Dim props = GetFontProperties(font)
         Dim Fontstring As String = String.Empty
         For Each kvp In props
@@ -35,21 +37,31 @@ Public Class Class_FontConverter
 
     Public Function StringToFont(Fontstring As String) As Font
 
+        Dim nFont = New Font("Arial", 12, FontStyle.Regular)
+        Dim CheckError As Integer = 0
+
+        If Fontstring.LongCount = 0 Then CheckError += 1
+
         Dim sp() As String = Split(Fontstring, "|", -1, CompareMethod.Text)
+        If sp.Length = 1 Then CheckError += 1
 
-        Dim fd = CombineFontStyle(sp(1), sp(4), sp(7), sp(8))
-        Dim unit As GraphicsUnit
+        If CheckError = 0 Then
 
-        For Each wert In [Enum].GetValues(GetType(GraphicsUnit))
-            If wert.ToString = sp(12) Then
-                unit = wert
-            End If
-        Next
-        Dim FontFamily = Replace(sp(0), "[FontFamily: Name=", "", 1, -1, CompareMethod.Text)
-        FontFamily = Replace(FontFamily, "]", "", 1, -1, CompareMethod.Text)
-        Dim font As New Font(FontFamily, sp(10), fd, unit, sp(2), sp(3))
+            Dim fd = CombineFontStyle(sp(1), sp(4), sp(7), sp(8))
+            Dim unit As GraphicsUnit
 
-        Return font
+            For Each wert In [Enum].GetValues(GetType(GraphicsUnit))
+                If wert.ToString = sp(12) Then unit = wert
+            Next
+
+            Dim FontFamily = Replace(sp(0), "[FontFamily: Name=", "", 1, -1, CompareMethod.Text)
+            FontFamily = Replace(FontFamily, "]", "", 1, -1, CompareMethod.Text)
+            nFont = New Font(FontFamily, sp(10), fd, unit, sp(2), sp(3))
+
+        End If
+
+        Return nFont
+
     End Function
 
     Public Function CombineFontStyle(bold As Boolean, italic As Boolean, strikeout As Boolean, underline As Boolean) As FontStyle

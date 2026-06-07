@@ -6,6 +6,7 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports CSVtoQR.Class_DS
+Imports CSVtoQR.My
 
 Public Class Form1
 
@@ -286,17 +287,11 @@ Public Class Form1
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
+        Dim UCF As UserControl_Font
         Dim DR_Shema As DataRow
 
-        Dim UCFG As UserControl_Font = CType(TableLayoutPanel_General.Controls("UC_Font_General"), UserControl_Font)
-        Dim UCFC As UserControl_Font = CType(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
-        Dim UCFCR As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-
-        Dim UC_Paper_Border As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
-        Dim UC_Card_Border As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
-        Dim UC_CardRow_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
-
-        UCFG.GET_FontToUC(MyFont)
+        UCF = CType(TableLayoutPanel_General.Controls("UC_Font_General"), UserControl_Font)
+        UCF.GET_FontToUC(MyFont)
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
         DR_Shema = DS.Tables("Shema").Rows(0)
@@ -305,6 +300,7 @@ Public Class Form1
         FilePDF = DR_Shema("Export").ToString
         ComboBox_Paper_DPI.Text = DR_Shema("DPI")
         ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
+        Dim UC_Paper_Border As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
         With UC_Paper_Border
             .NumericUpDown_Left.Value = CType(DR_Shema("Left"), Decimal)
             .NumericUpDown_Top.Value = CType(DR_Shema("Top"), Decimal)
@@ -323,7 +319,10 @@ Public Class Form1
         Dim DR_Card As DataRow
         DR_Card = DS.Tables("Card").Rows(0)
 
-        UCFC.GET_FontToUC(New Class_FontConverter().StringToFont(DR_Card("Font").ToString))
+        UCF = CType(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
+        UCF.GET_FontToUC(New Class_FontConverter().StringToFont(DR_Card("Font").ToString))
+
+        Dim UC_Card_Border As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
         With UC_Card_Border
             .NumericUpDown_Left.Value = CType(DR_Card("Left"), Decimal)
             .NumericUpDown_Top.Value = CType(DR_Card("Top"), Decimal)
@@ -335,6 +334,7 @@ Public Class Form1
         Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
+        Dim UC_CardRow_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
         If ListBox_CardRow.SelectedIndex = -1 Then
             With UC_CardRow_Border
                 .NumericUpDown_Left.Value = 0
@@ -345,17 +345,19 @@ Public Class Form1
         Else
             Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
             If DS.Tables("CardRow").Rows.Count > 0 Then
-                Dim DR_CardRow As DataRow
-                DR_CardRow = DS.Tables("CardRow").Select($"[ID]={ID}")(0)
+                Dim DR_CardRow = CL_DS.GET_CardRow(DS, ID)
                 If IsNothing(DR_CardRow) = False Then
 
-                    UCFCR.GET_FontToUC(New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString))
+                    UCF = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                    UCF.GET_FontToUC(New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString))
+
                     With UC_CardRow_Border
                         .NumericUpDown_Left.Value = CType(DR_CardRow("Left"), Decimal)
                         .NumericUpDown_Top.Value = CType(DR_CardRow("Top"), Decimal)
                         .NumericUpDown_Right.Value = CType(DR_CardRow("Right"), Decimal)
                         .NumericUpDown_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
                     End With
+
                 End If
             End If
         End If
@@ -700,7 +702,7 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click, ToolStripMenuItem_XML_Safe.Click
 
-        If System.IO.File.Exists(CL_XML.DataSetFile) Then
+        If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
             CL_XML.SaveXML(DS)
             IsModified = False
         Else
@@ -712,14 +714,14 @@ Public Class Form1
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
 
-        If System.IO.File.Exists(CL_XML.DataSetFile) Then
-            CL_XML.SaveXML(DS)
-            IsModified = False
-        Else
-            SaveFileDialog_XML()
-        End If
+        'If System.IO.File.Exists(CL_XML.DataSetFile) Then
+        '    CL_XML.SaveXML(DS)
+        'Else
+        'End If
 
+        SaveFileDialog_XML()
         GET_ColumnTabele()
+        IsModified = False
 
     End Sub
 
@@ -743,8 +745,8 @@ Public Class Form1
         End With
 
         If SFD.ShowDialog = DialogResult.OK Then
-            DS = CL_DS.Get_DS(Nothing)
 
+            DS = CL_DS.Get_DS(DS)
             CL_XML.DataSetFile = SFD.FileName
             CL_XML.SaveXML(DS)
             IsModified = False
@@ -878,6 +880,7 @@ Public Class Form1
         Dim Check As Boolean = True
 
         With ListBox_CardRow
+
             If .CanSelect = False Then Return
             If .CanFocus = False Then Return
 
@@ -888,26 +891,32 @@ Public Class Form1
 
             Dim ID As Integer = If(Check = True, .SelectedItem("ID"), Check = False)
             Dim DR As DataRow
-            Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-            Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
 
             If Check = True Then
 
-                DR = DS.Tables("CardRow").Rows.Find(ID)
+                DR = CL_DS.GET_CardRow(DS, ID)
 
-                CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
-                ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
-                Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
-                CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
-                With UC_Border
-                    .NumericUpDown_Left.Value = CDbl(DR("Left"))
-                    .NumericUpDown_Top.Value = CDbl(DR("Top"))
-                    .NumericUpDown_Right.Value = CDbl(DR("Right"))
-                    .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
-                End With
+                If IsNothing(DR) = False Then
+
+                    CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
+                    ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
+                    Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
+                    CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
+
+                    Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
+                    With UC_Border
+                        .NumericUpDown_Left.Value = CDbl(DR("Left"))
+                        .NumericUpDown_Top.Value = CDbl(DR("Top"))
+                        .NumericUpDown_Right.Value = CDbl(DR("Right"))
+                        .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
+                    End With
+
+                End If
 
                 Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
                 If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
+
+                Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
                 UC_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
                 With UC_Font
                     .Label_Name_Value.Text = nFont.Name
@@ -941,6 +950,7 @@ Public Class Form1
             Else
                 Button_CardRow_Up.Enabled = True
             End If
+
             If Check = False Or .SelectedIndex = .Items.Count - 1 Then
                 Button_CardRow_Down.Enabled = False
             Else
@@ -1148,6 +1158,7 @@ Public Class Form1
         DR("QRCode") = CheckBox_CardRow_QRCode.Checked
         DR("LinePos") = Label_CardRow_LinePos_Value.Text
         DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
+
         'DR("FontColor") = Label_CardRow_FontColor.ForeColor.ToArgb
 
     End Sub
@@ -1174,11 +1185,8 @@ Public Class Form1
         Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
         Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
         If IsNothing(DR) = False Then
-
-            Dim CD As New ColorDialog
-            CD.Color = Color.Black
+            Dim CD As New ColorDialog With {.Color = Color.Black}
             If IsNumeric(DR("FontColor")) Then CD.Color = Color.FromArgb(DR("FontColor"))
-
             If CD.ShowDialog = DialogResult.OK Then
                 Button_CardRow_FontColor.ForeColor = CD.Color
                 Button_CardRow_FontColor.Text = CD.Color.Name.ToString
@@ -1203,7 +1211,7 @@ Public Class Form1
             Case "UC_Border_CardRow"
                 If ListBox_CardRow.SelectedIndex = -1 Then Return
                 Dim ID As Integer = ListBox_CardRow.SelectedItem("ID")
-                DR = DS.Tables("CardRow").Rows.Find(ID)
+                DR = CL_DS.GET_CardRow(DS, ID)
             Case Else
                 DR = Nothing
         End Select
@@ -1234,6 +1242,10 @@ Public Class Form1
         'If Index > -1 Then
         '    ToolStripComboBox_Shema.SelectedIndex = Index
         'End If
+
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
     End Sub
 

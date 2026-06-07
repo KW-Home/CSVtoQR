@@ -4,7 +4,7 @@ Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
 
-    'Private CL_F As Class_FontConverter
+    Private CL_F As Class_FontConverter
 
     Public Enum Auto_Font
         None
@@ -128,7 +128,7 @@ Public Class Class_DS
             DR("Bottom") = 0.0
 
             Dim CL_F As New Class_FontConverter
-            DR("Font") = CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+            DR("Font") = CL_F.FontToString(Nothing)
 
             'ToDo : Standardgröße der Karte abhängig von DIN-Format und Separatoren berechnen
             'Die Maße sollten in mm angegeben werden, damit sie unabhängig von der Auflösung (DPI) sind und später in Pixel umgerechnet werden können.
@@ -172,27 +172,26 @@ Public Class Class_DS
     Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
-        Dim DR As DataRow
-        Dim nDR() As DataRow = DS.Tables("CardRow").Select($"[ID]={ID}")
-        If nDR.Count = 0 Then
+        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+
+        If IsNothing(DR) = True Then
+
             DR = DS.Tables("CardRow").NewRow
 
             DR("ID") = ID
             DR("DataColumn") = String.Empty
-            DR("QRCode") = False
             DR("LinePos") = 0.0
-            DR("FontColor") = Color.Black.ToArgb.ToString
+            DR("QRCode") = False
             DR("AutoFont") = False
             DR("Left") = 0.0
             DR("Top") = 0.0
             DR("Right") = 0.0
             DR("Bottom") = 0.0
-            DR("Font") = String.Empty ' CL_F.FontToString(New Font("Arial", 12, FontStyle.Regular))
+            DR("FontColor") = Color.Black.ToArgb.ToString
+            DR("Font") = CL_F.FontToString(Nothing)
 
             DS.Tables("CardRow").Rows.Add(DR)
 
-        Else
-            DR = nDR(0)
         End If
 
         Return DR
