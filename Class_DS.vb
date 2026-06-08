@@ -172,13 +172,10 @@ Public Class Class_DS
     Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
-        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
 
-        If IsNothing(DR) = True Then
-
+        Dim DR As DataRow
+        If DS.Tables("CardRow").Select($"ID = {ID}").Length = 0 Then
             DR = DS.Tables("CardRow").NewRow
-
-            DR("ID") = ID
             DR("DataColumn") = String.Empty
             DR("LinePos") = 0.0
             DR("QRCode") = False
@@ -189,9 +186,11 @@ Public Class Class_DS
             DR("Bottom") = 0.0
             DR("FontColor") = Color.Black.ToArgb.ToString
             DR("Font") = CL_F.FontToString(Nothing)
-
             DS.Tables("CardRow").Rows.Add(DR)
-
+            Debug.Print($"Neue Zeile mit ID {DR("ID")} hinzugefügt.")
+        Else
+            DR = DS.Tables("CardRow").Rows.Find(ID)
+            Debug.Print($"Zeile mit ID {ID} gefunden.")
         End If
 
         Return DR

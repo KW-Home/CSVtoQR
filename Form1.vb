@@ -896,22 +896,18 @@ Public Class Form1
 
                 DR = CL_DS.GET_CardRow(DS, ID)
 
-                If IsNothing(DR) = False Then
+                CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
+                ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
+                Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
+                CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
 
-                    CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
-                    ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
-                    Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
-                    CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
-
-                    Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
-                    With UC_Border
-                        .NumericUpDown_Left.Value = CDbl(DR("Left"))
-                        .NumericUpDown_Top.Value = CDbl(DR("Top"))
-                        .NumericUpDown_Right.Value = CDbl(DR("Right"))
-                        .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
-                    End With
-
-                End If
+                Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
+                With UC_Border
+                    .NumericUpDown_Left.Value = CDbl(DR("Left"))
+                    .NumericUpDown_Top.Value = CDbl(DR("Top"))
+                    .NumericUpDown_Right.Value = CDbl(DR("Right"))
+                    .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
+                End With
 
                 Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
                 If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)

@@ -50,7 +50,7 @@ Public Class Class_XML
 
     Public Sub ReadXML(ByRef DS As DataSet)
 
-        If System.IO.File.Exists(DataSetFile_Value) Then
+        If System.IO.File.Exists(DataSetFile_Value) = True Then
             DS.Clear()
             DS.ReadXmlSchema(Replace(DataSetFile_Value, "xml", "xsd", 1, -1, CompareMethod.Text))
             DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
