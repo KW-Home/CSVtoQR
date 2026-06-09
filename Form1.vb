@@ -439,25 +439,6 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
-    'Public Sub NumericUpDown_Border_Paper_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Paper_Border_Top.ValueChanged,
-    '    NumericUpDown_Paper_Border_Right.ValueChanged, NumericUpDown_Paper_Border_Left.ValueChanged, NumericUpDown_Paper_Border_Bottom.ValueChanged
-
-    '    If sender.canselect = False Then Return
-    '    DS.Tables("Shema")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
-    '    IsModified = True
-
-    '    PaperPaint(Nothing, Nothing)
-
-    'End Sub
-    'Private Sub NumericUpDown_Border_Card_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Card_Border_Top.ValueChanged, NumericUpDown_Card_Border_Right.ValueChanged, NumericUpDown_Card_Border_Left.ValueChanged, NumericUpDown_Card_Border_Bottom.ValueChanged
-
-    '    If sender.canselect = False Then Return
-    '    DS.Tables("Card")(0)(sender.tag) = If(IsNumeric(sender.value) = True, CDbl(sender.value), 0)
-    '    IsModified = True
-
-    '    PaperPaint(Nothing, Nothing)
-
-    'End Sub
     Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
 
         If sender.canselect = False Then Return
@@ -889,12 +870,13 @@ Public Class Form1
             If .SelectedItems.Count = 0 Then Check = False
             If .SelectedIndex = -1 Then Check = False
 
-            Dim ID As Integer = If(Check = True, .SelectedItem("ID"), Check = False)
-            Dim DR As DataRow
+            If DS.Tables("CardRow").Rows.Count = 0 Then Check = False
+
 
             If Check = True Then
 
-                DR = CL_DS.GET_CardRow(DS, ID)
+                Dim ID As Integer = .SelectedItem("ID")
+                Dim DR As DataRow = CL_DS.GET_CardRow(DS, ID)
 
                 CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
                 ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
@@ -903,22 +885,20 @@ Public Class Form1
 
                 Dim UC_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
                 With UC_Border
-                    .NumericUpDown_Left.Value = CDbl(DR("Left"))
-                    .NumericUpDown_Top.Value = CDbl(DR("Top"))
-                    .NumericUpDown_Right.Value = CDbl(DR("Right"))
-                    .NumericUpDown_Bottom.Value = CDbl(DR("Bottom"))
+                    .NumericUpDown_Left.Value = If(DR.IsNull("Left"), 0D, Convert.ToDecimal(DR("Left")))
+                    .NumericUpDown_Top.Value = If(DR.IsNull("Top"), 0D, Convert.ToDecimal(DR("Top")))
+                    .NumericUpDown_Right.Value = If(DR.IsNull("Right"), 0D, Convert.ToDecimal(DR("Right")))
+                    .NumericUpDown_Bottom.Value = If(DR.IsNull("Bottom"), 0D, Convert.ToDecimal(DR("Bottom")))
                 End With
 
-                Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
-                If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
 
-                Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                UC_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                With UC_Font
-                    .Label_Name_Value.Text = nFont.Name
-                    .Label_Size_Value.Text = nFont.Size.ToString
-                    .Label_Style_Value.Text = nFont.Style.ToString
-                End With
+                'Dim UC_Font As UserControl_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                'UC_Font = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                'With UC_Font
+                '    .Label_Name_Value.Text = nFont.Name
+                '    .Label_Size_Value.Text = nFont.Size.ToString
+                '    .Label_Style_Value.Text = nFont.Style.ToString
+                'End With
 
                 If IsNumeric(DR("FontColor")) Then
                     Button_CardRow_FontColor.ForeColor = Color.FromArgb(DR("FontColor"))
@@ -926,10 +906,28 @@ Public Class Form1
                     Button_CardRow_FontColor.ForeColor = Color.Black
                 End If
 
-            End If
 
-            UC_Border.Enabled = Check
-            UC_Font.Enabled = Check
+                'UC_Border.Enabled = Check
+                ' Versuchen, das Control sicher zu holen und nur dann verwenden
+                Dim UC_Font As UserControl_Font = TryCast(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
+                If UC_Font IsNot Nothing Then
+
+
+                    Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
+                    If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
+
+                    ' nur wenn Daten vorhanden sind: Felder setzen (wie bisher)
+                    UC_Font.Label_Name_Value.Text = nFont.Name
+                    UC_Font.Label_Size_Value.Text = nFont.Size.ToString
+                    UC_Font.Label_Style_Value.Text = nFont.Style.ToString
+
+                    ' immer sichere Aktivierung/Deaktivierung
+
+                    UC_Font.Enabled = Check
+
+                End If
+
+            End If
 
             CheckBox_CardRow_QRCode.Enabled = Check
             ComboBox_CardRow_DataColumn.Enabled = ComboBox_CardRow_DataColumn.Items.Count > 0
@@ -1235,34 +1233,7 @@ Public Class Form1
 
         ToolStripComboBox_Shema.Text = ToolStripComboBox_Shema.Items(Index).ToString
 
-        'If Index > -1 Then
-        '    ToolStripComboBox_Shema.SelectedIndex = Index
-        'End If
-
     End Sub
-
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-
-    End Sub
-
-    'Private Sub ComboBox_CardRow_DataColumn_DataSourceChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.DataSourceChanged
-
-    '    Dim I As Integer = 16
-    '    Dim Ix As Integer = 0
-    '    For Each DR As DataRow In DS.Tables("Search_Columns").Rows
-    '        If IsNothing(DR) = False Then
-    '            Dim ST As String = DR("Column")
-    '            Ix = TextRenderer.MeasureText(ST, My.Settings.MyFont).Width
-    '            If I < Ix Then I = Ix
-    '        End If
-    '    Next
-
-    '    ComboBox_CardRow_DataColumn.DropDownWidth = I + 30
-    '    ComboBox_CardRow_DataColumn.Width = I + 30
-    '    ComboBox_CardRow_DataColumn.Invalidate()
-
-    'End Sub
-
 
 #End Region
 

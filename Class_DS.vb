@@ -173,8 +173,8 @@ Public Class Class_DS
 
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
 
-        Dim DR As DataRow
-        If DS.Tables("CardRow").Select($"ID = {ID}").Length = 0 Then
+        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
+        If DR Is Nothing Then
             DR = DS.Tables("CardRow").NewRow
             DR("DataColumn") = String.Empty
             DR("LinePos") = 0.0
@@ -187,10 +187,8 @@ Public Class Class_DS
             DR("FontColor") = Color.Black.ToArgb.ToString
             DR("Font") = CL_F.FontToString(Nothing)
             DS.Tables("CardRow").Rows.Add(DR)
-            Debug.Print($"Neue Zeile mit ID {DR("ID")} hinzugefügt.")
         Else
             DR = DS.Tables("CardRow").Rows.Find(ID)
-            Debug.Print($"Zeile mit ID {ID} gefunden.")
         End If
 
         Return DR
