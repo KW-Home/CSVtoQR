@@ -9,7 +9,6 @@ Imports CSVtoQR.Class_DS
 Imports CSVtoQR.My
 
 Public Class Form1
-
     Private DS As New DataSet
 
     Private MyFont As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
@@ -1259,6 +1258,12 @@ Public Class Form1
     Private Sub CheckBox_CardRow_AutoFont_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_CardRow_AutoFont.CheckedChanged
 
         Save_CardRow()
+
+    End Sub
+
+    Private Sub UserControl_Border1_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UserControl_Border1.Border_Changed
+
+        Debug.Print($"Border Changed: Left={e.Left}, Top={e.Top}, Right={e.Right}, Bottom={e.Bottom}")
 
     End Sub
 

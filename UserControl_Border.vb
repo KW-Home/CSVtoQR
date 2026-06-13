@@ -1,4 +1,7 @@
 ﻿Public Class UserControl_Border
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
     Public Structure Border
         Dim Left As Decimal

@@ -174,6 +174,8 @@ Partial Class Form1
         Me.SplitContainer_Main = New System.Windows.Forms.SplitContainer()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.UserControl_Border1 = New CSVtoQR.UserControl_Border()
         Me.TableLayoutPanel_Separatoren.SuspendLayout()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -225,6 +227,7 @@ Partial Class Form1
         Me.SplitContainer_Main.Panel2.SuspendLayout()
         Me.SplitContainer_Main.SuspendLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -685,6 +688,7 @@ Partial Class Form1
         Me.TabControl_Main.Controls.Add(Me.TabPage_CardRow)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Data)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Table)
+        Me.TabControl_Main.Controls.Add(Me.TabPage1)
         Me.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl_Main.Location = New System.Drawing.Point(0, 0)
         Me.TabControl_Main.Margin = New System.Windows.Forms.Padding(29)
@@ -1158,10 +1162,10 @@ Partial Class Form1
         '
         Me.TabPage_Card.AutoScroll = True
         Me.TabPage_Card.Controls.Add(Me.TableLayoutPanel_Card)
-        Me.TabPage_Card.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_Card.Location = New System.Drawing.Point(4, 40)
         Me.TabPage_Card.Name = "TabPage_Card"
         Me.TabPage_Card.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_Card.Size = New System.Drawing.Size(285, 454)
+        Me.TabPage_Card.Size = New System.Drawing.Size(285, 436)
         Me.TabPage_Card.TabIndex = 6
         Me.TabPage_Card.Text = "Karte"
         Me.TabPage_Card.UseVisualStyleBackColor = True
@@ -1178,7 +1182,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(279, 448)
+        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(279, 430)
         Me.TableLayoutPanel_Card.TabIndex = 3
         '
         'GroupBox_Card_Size
@@ -1968,6 +1972,25 @@ Partial Class Form1
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
         '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.UserControl_Border1)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 40)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(285, 436)
+        Me.TabPage1.TabIndex = 9
+        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'UserControl_Border1
+        '
+        Me.UserControl_Border1.AutoSize = True
+        Me.UserControl_Border1.Location = New System.Drawing.Point(47, 51)
+        Me.UserControl_Border1.Name = "UserControl_Border1"
+        Me.UserControl_Border1.Size = New System.Drawing.Size(143, 108)
+        Me.UserControl_Border1.TabIndex = 0
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2064,6 +2087,8 @@ Partial Class Form1
         CType(Me.SplitContainer_Main, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer_Main.ResumeLayout(False)
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2212,4 +2237,6 @@ Partial Class Form1
     Friend WithEvents TableLayoutPanel_General As TableLayoutPanel
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents UserControl_Border1 As UserControl_Border
 End Class
