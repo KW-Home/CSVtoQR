@@ -4,7 +4,8 @@ Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
 
-    Private CL_F As Class_FontConverter
+    Private ReadOnly CL_F As New Class_FontConverter
+    Private ReadOnly CL_FC As New Class_Form_Card
 
     Public Enum Auto_Font
         None
@@ -19,7 +20,9 @@ Public Class Class_DS
         With DS.Tables
 
             GET_Shema(DS)
-            GET_Card(DS)
+
+            CL_FC.GET_Card(DS)
+
             If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
@@ -91,57 +94,57 @@ Public Class Class_DS
 
     End Sub
 
-    Private Function DT_Card() As DataTable
+    'Private Function DT_Card() As DataTable
 
-        Dim DT As New DataTable With {.TableName = "Card"}
-        With DT
+    '    Dim DT As New DataTable With {.TableName = "Card"}
+    '    With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
+    '        .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
 
-            .PrimaryKey = New DataColumn() { .Columns("ID")}
+    '        .PrimaryKey = New DataColumn() { .Columns("ID")}
 
-        End With
+    '    End With
 
-        Return DT
+    '    Return DT
 
-    End Function
+    'End Function
 
-    Private Sub GET_Card(ByRef DS As DataSet)
+    'Private Sub GET_Card(ByRef DS As DataSet)
 
-        If DS.Tables.Contains("Card") = False Then DS.Tables.Add(DT_Card)
+    '    If DS.Tables.Contains("Card") = False Then DS.Tables.Add(New Class_Form_Card().DT_Card)
 
-        Dim DT As DataTable = DS.Tables("Card")
-        If DT.Rows.Count = 0 Then
+    '    Dim DT As DataTable = DS.Tables("Card")
+    '    If DT.Rows.Count = 0 Then
 
-            Dim DR As DataRow = DT.NewRow
+    '        Dim DR As DataRow = DT.NewRow
 
-            DR("Left") = 0.0
-            DR("Top") = 0.0
-            DR("Right") = 0.0
-            DR("Bottom") = 0.0
+    '        DR("Left") = 0.0
+    '        DR("Top") = 0.0
+    '        DR("Right") = 0.0
+    '        DR("Bottom") = 0.0
 
-            Dim CL_F As New Class_FontConverter
-            DR("Font") = CL_F.FontToString(Nothing)
+    '        Dim CL_F As New Class_FontConverter
+    '        DR("Font") = CL_F.FontToString(Nothing)
 
-            'ToDo : Standardgröße der Karte abhängig von DIN-Format und Separatoren berechnen
-            'Die Maße sollten in mm angegeben werden, damit sie unabhängig von der Auflösung (DPI) sind und später in Pixel umgerechnet werden können.
-            'Wird schon berechnett in Class_Paint.Ivalidate_Paper, aber da wird die Karte ja nur gezeichnet, hier sollte sie schon in der Tabelle stehen
+    '        'ToDo : Standardgröße der Karte abhängig von DIN-Format und Separatoren berechnen
+    '        'Die Maße sollten in mm angegeben werden, damit sie unabhängig von der Auflösung (DPI) sind und später in Pixel umgerechnet werden können.
+    '        'Wird schon berechnett in Class_Paint.Ivalidate_Paper, aber da wird die Karte ja nur gezeichnet, hier sollte sie schon in der Tabelle stehen
 
-            DR("CardSizeWidth") = 0
-            DR("CardSizeHeight") = 0
+    '        DR("CardSizeWidth") = 0
+    '        DR("CardSizeHeight") = 0
 
-            DS.Tables("Card").Rows.Add(DR)
+    '        DS.Tables("Card").Rows.Add(DR)
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
     Private Function DT_CardRow() As DataTable
 
         Dim DT As New DataTable With {.TableName = "CardRow"}
@@ -171,25 +174,28 @@ Public Class Class_DS
     End Function
     Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
+        Debug.WriteLine($"GET_CardRow: ID={ID}")
+
         If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
 
-        Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-        If DR Is Nothing Then
-            DR = DS.Tables("CardRow").NewRow
-            DR("DataColumn") = String.Empty
-            DR("LinePos") = 0.0
-            DR("QRCode") = False
-            DR("AutoFont") = False
-            DR("Left") = 0.0
-            DR("Top") = 0.0
-            DR("Right") = 0.0
-            DR("Bottom") = 0.0
-            DR("FontColor") = Color.Black.ToArgb.ToString
-            DR("Font") = CL_F.FontToString(Nothing)
-            DS.Tables("CardRow").Rows.Add(DR)
-        Else
-            DR = DS.Tables("CardRow").Rows.Find(ID)
-        End If
+        Dim DR As DataRow
+        DR = DS.Tables("CardRow").Rows.Find(ID)
+        If IsNothing(DR) = False Then Return DR
+
+        DR = DS.Tables("CardRow").NewRow
+
+        DR("DataColumn") = Form1.ComboBox_CardRow_DataColumn.Text
+        DR("LinePos") = 0.0
+        DR("QRCode") = False
+        DR("AutoFont") = False
+        DR("Left") = 0
+        DR("Top") = 0
+        DR("Right") = 0
+        DR("Bottom") = 0
+        DR("FontColor") = Color.Black.ToArgb.ToString
+        DR("Font") = CL_F.FontToString(My.Settings.MyFont)
+
+        DS.Tables("CardRow").Rows.Add(DR)
 
         Return DR
 

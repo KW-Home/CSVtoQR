@@ -19,6 +19,17 @@ Public Class Class_FontConverter
         Return result
     End Function
 
+    '0 FontFamily 1 Bold 2 GdiCharSet 3 GdiVerticalFont 4 Italic 5 Name 6 OriginalFontName
+    '7 Strikeout 8 Underline 9 Style 10 Size 11 SizeInPoints 12 Unit  13 Height 14 IsSystemFont 15 SystemFontName
+    Public Function CombineFontStyle(bold As Boolean, italic As Boolean, strikeout As Boolean, underline As Boolean) As FontStyle
+        Dim style As FontStyle = FontStyle.Regular
+        If bold Then style = style Or FontStyle.Bold
+        If italic Then style = style Or FontStyle.Italic
+        If underline Then style = style Or FontStyle.Underline
+        If strikeout Then style = style Or FontStyle.Strikeout
+        Return style
+    End Function
+
     ' Gibt alle Properties (Name=Value) in Debug-Ausgabe aus
     Public Function FontToString(font As Font) As String
 
@@ -64,29 +75,4 @@ Public Class Class_FontConverter
 
     End Function
 
-    Public Function CombineFontStyle(bold As Boolean, italic As Boolean, strikeout As Boolean, underline As Boolean) As FontStyle
-        Dim style As FontStyle = FontStyle.Regular
-        If bold Then style = style Or FontStyle.Bold
-        If italic Then style = style Or FontStyle.Italic
-        If underline Then style = style Or FontStyle.Underline
-        If strikeout Then style = style Or FontStyle.Strikeout
-        Return style
-    End Function
 End Class
-
-'0 FontFamily
-'1 Bold
-'2 GdiCharSet
-'3 GdiVerticalFont
-'4 Italic
-'5 Name
-'6 OriginalFontName 
-'7 Strikeout
-'8 Underline
-'9 Style
-'10 Size 
-'11 SizeInPoints
-'12 Unit 
-'13 Height
-'14 IsSystemFont
-'15 SystemFontName 

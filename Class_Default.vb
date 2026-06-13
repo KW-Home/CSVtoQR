@@ -126,18 +126,18 @@
 #Region "CardRow"
             .Add(FRM.TabPage_CardRow)
             .Add(FRM.ListBox_CardRow)
-            .Add(FRM.Label_CardRow_DataColumn)
-            .Add(FRM.Label_CardRow_LinePos)
-            .Add(FRM.Label_CardRow_QRCode)
-            .Add(FRM.Label_CardRow_AutoFont)
-            .Add(FRM.ComboBox_CardRow_DataColumn)
-            .Add(FRM.GroupBox_CardRow_Line)
-            .Add(FRM.GroupBox_CardRow_List)
-            .Add(FRM.CheckBox_CardRow_QRCode)
-            .Add(FRM.CheckBox_CardRow_AutoFont)
-            .Add(FRM.TableLayoutPanel_CardRow)
-            .Add(FRM.TableLayoutPanel_CardRow_Line)
-            .Add(FRM.Label_CardRow_LinePos_Value)
+            '.Add(FRM.Label_CardRow_LinePos)
+            '.Add(FRM.Label_CardRow_LinePos_Value)
+            '.Add(FRM.Label_CardRow_QRCode)
+            '.Add(FRM.Label_CardRow_AutoFont)
+            '.Add(FRM.Label_CardRow_DataColumn)
+            '.Add(FRM.GroupBox_CardRow_Line)
+            '.Add(FRM.GroupBox_CardRow_List)
+            '.Add(FRM.CheckBox_CardRow_QRCode)
+            '.Add(FRM.ComboBox_CardRow_DataColumn)
+            '.Add(FRM.CheckBox_CardRow_AutoFont)
+            '.Add(FRM.TableLayoutPanel_CardRow)
+            '.Add(FRM.TableLayoutPanel_CardRow_Line)
 
 #End Region
 #Region "TabPage_Data"
@@ -161,22 +161,17 @@
         End With
     End Sub
 
-    Public Sub Default_ListBox(ByRef OBJ As ListBox, CMin As Integer, CMax As Integer)
+    Public Sub Default_ListBox(ByRef OBJ As ListBox)
 
         With OBJ
 
             .AutoSize = False
+            .IntegralHeight = True
 
             Dim C As Integer = .Items.Count
-            If CMin <= 1 Then CMin = 1
-            If CMin >= 6 Then CMin = 6
-            If CMax >= 20 Then CMax = 20
-            If CMin >= CMax Then CMax = CMin + 1
-
-            If .Items.Count <= CMin Then C = CMin
-            If .Items.Count >= CMax Then C = CMax
-
-            .Height = CType(MyFont.Height * C, Integer)
+            If C < 3 Then C = 3
+            If C > 9 Then C = 9
+            .Height = CType(MyFont.Height * (C + 1), Integer)
 
         End With
 
