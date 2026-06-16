@@ -43,7 +43,7 @@ Public Class Class_XML
             DS = New DataSet
             DataSetFile = OFD.FileName
             ReadXML(DS)
-            Form1.FileXML = OFD.FileName
+            Form1.File_XML = OFD.FileName
         End If
 
     End Sub

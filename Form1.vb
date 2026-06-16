@@ -9,12 +9,13 @@ Imports CSVtoQR.Class_DS
 Imports CSVtoQR.My
 
 Public Class Form1
+
     Private DS As New DataSet
 
     Private MyFont As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
 
     Private WithEvents CL_XML As New Class_XML
-    Private WithEvents UC_Font As UserControl_Font
+    Private WithEvents UC_Font As New UserControl_Font(Me)
     Private WithEvents UC_Border As UserControl_Border
 
     Public CL_FC As New Class_Form_Card
@@ -45,32 +46,30 @@ Public Class Form1
         End Set
     End Property
 
-    Private FileXML_Value As String
-    Public Property FileXML() As String
+    Private File_XML_Value As String
+    Public Property File_XML() As String
         Get
-            Return FileXML_Value
+            Return File_XML_Value
         End Get
         Set(ByVal value As String)
-            If FileXML_Value <> value Then
-                FileXML_Value = value
+            If File_XML_Value <> value Then
+                File_XML_Value = value
                 XMLChange()
             End If
         End Set
     End Property
     Private Sub XMLChange()
 
-        Debug.Print($"FileXML gesetzt auf: {FileXML_Value}")
-
-        Dim DirStr As String = System.IO.Path.GetDirectoryName(FileXML_Value)
+        Dim DirStr As String = System.IO.Path.GetDirectoryName(File_XML_Value)
         If System.IO.Directory.Exists(DirStr) Then
 
-            ToolStripStatusLabel_SaveFile.Text = FileXML_Value
+            ToolStripStatusLabel_SaveFile.Text = File_XML_Value
             TextBox_General_XML_Directory.Text = DirStr
             My.Settings.LastDirectory = DirStr
 
-            If System.IO.File.Exists(FileXML_Value) = True Then
+            If System.IO.File.Exists(File_XML_Value) = True Then
 
-                Dim FileName As String = System.IO.Path.GetFileName(FileXML_Value)
+                Dim FileName As String = System.IO.Path.GetFileName(File_XML_Value)
                 TextBox_General_XML_Filename.Text = FileName
                 My.Settings.LastFile = FileName
 
@@ -88,7 +87,7 @@ Public Class Form1
                 End With
 
                 DS = CL_DS.Get_DS(DS)
-                CL_XML.DataSetFile = FileXML_Value
+                CL_XML.DataSetFile = File_XML_Value
                 CL_XML.ReadXML(DS)
 
                 DataSetRead()
@@ -105,13 +104,13 @@ Public Class Form1
 
     End Sub
 
-    Private FileCSV_Value As String
-    Public Property FileCSV() As String
+    Private File_CSV_Value As String
+    Public Property File_CSV() As String
         Get
-            Return FileCSV_Value
+            Return File_CSV_Value
         End Get
         Set(ByVal value As String)
-            FileCSV_Value = value
+            File_CSV_Value = value
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Shema").Rows(0).Item("Import") = value
             Load_CSV(value)
@@ -122,16 +121,16 @@ Public Class Form1
         End Set
     End Property
 
-    Private FilePDF_Value As String
-    Property FilePDF() As String
+    Private File_PDF_Value As String
+    Property File_PDF() As String
         Get
-            Return FilePDF_Value
+            Return File_PDF_Value
         End Get
         Set(ByVal value As String)
             Dim finalPath As String = If(value, String.Empty)
 
             If String.IsNullOrWhiteSpace(finalPath) Then
-                FilePDF_Value = String.Empty
+                File_PDF_Value = String.Empty
             Else
                 If finalPath.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) = False Then
                     Try
@@ -141,17 +140,17 @@ Public Class Form1
                     End Try
                 End If
 
-                FilePDF_Value = finalPath
+                File_PDF_Value = finalPath
             End If
 
             'If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
             'If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.GET_Shema(DS)
 
-            DS.Tables("Shema").Rows(0).Item("Export") = FilePDF_Value
+            DS.Tables("Shema").Rows(0).Item("Export") = File_PDF_Value
 
-            SET_Changetext_PDF(FilePDF_Value)
+            SET_Changetext_PDF(File_PDF_Value)
 
-            'MessageBox.Show($"FilePDF {vbNewLine}{CL_FF.Check_Path(FilePDF_Value)}", "FilePDF")
+            'MessageBox.Show($"File_PDF {vbNewLine}{CL_FF.Check_Path(File_PDF_Value)}", "File_PDF")
 
 
         End Set
@@ -168,10 +167,12 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        MyFont = My.Settings.MyFont
+        Me.Font = MyFont
 
-        UserControl_Font_General_Load()
-        UserControl_Font_Card_Load()
-        UserControl_Font_CardRow_Load()
+        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_General", MyFont)
+        UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", MyFont)
+        UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", MyFont)
 
         UserControl_Border_Paper_Load()
         UserControl_Border_Card_Load()
@@ -192,14 +193,8 @@ Public Class Form1
 
         With My.Settings
 
-            MyFont = .MyFont
-            Me.Font = MyFont
-
-            Dim UCFG As UserControl_Font = CType(TableLayoutPanel_General.Controls("UC_Font_General"), UserControl_Font)
-            UCFG.GET_FontToUC(My.Settings.MyFont)
-
             Me.Size = .MySize
-            FileXML = .LastFile
+            File_XML = .LastFile
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
 
@@ -208,8 +203,8 @@ Public Class Form1
 
                 Dim DT As DataTable = DS.Tables("Shema")
                 If DT.Rows.Count > 0 Then
-                    FileCSV = DT(0)("Import").ToString()
-                    FilePDF = DT(0)("Export").ToString()
+                    File_CSV = DT(0)("Import").ToString()
+                    File_PDF = DT(0)("Export").ToString()
                 Else
                     DS = CL_DS.Get_DS(DS)
                 End If
@@ -236,7 +231,7 @@ Public Class Form1
             .MySize = Me.Size
             .MyFont = MyFont
             .MySpliter = SplitContainer_Main.SplitterDistance
-            .LastFile = FileXML_Value
+            .LastFile = File_XML_Value
             .Save()
 
         End With
@@ -288,17 +283,15 @@ Public Class Form1
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
-        Dim UCF As UserControl_Font
+        'Dim UCF As UserControl_Font
         Dim DR_Shema As DataRow
-
-        UCF = CType(TableLayoutPanel_General.Controls("UC_Font_General"), UserControl_Font)
-        UCF.GET_FontToUC(MyFont)
+        Dim nFont As Font
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
         DR_Shema = DS.Tables("Shema").Rows(0)
         TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
-        FileCSV = DR_Shema("Import").ToString
-        FilePDF = DR_Shema("Export").ToString
+        File_CSV = DR_Shema("Import").ToString
+        File_PDF = DR_Shema("Export").ToString
         ComboBox_Paper_DPI.Text = DR_Shema("DPI")
         ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
         Dim UC_Paper_Border As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
@@ -320,8 +313,8 @@ Public Class Form1
         Dim DR_Card As DataRow
         DR_Card = DS.Tables("Card").Rows(0)
 
-        UCF = CType(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
-        UCF.GET_FontToUC(DR_Card("Font").ToString)
+        nFont = New Class_FontConverter().StringToFont(DR_Card("Font").ToString)
+        UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", nFont)
 
         Dim UC_Card_Border As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
         With UC_Card_Border
@@ -348,8 +341,8 @@ Public Class Form1
 
             Dim DR_CardRow = CL_DS.GET_CardRow(DS, ID)
 
-            UCF = CType(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-            UCF.GET_FontToUC(DR_CardRow("Font").ToString)
+            nFont = New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString)
+            UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", nFont)
 
             With UC_CardRow_Border
                 .NumericUpDown_Left.Value = CType(DR_CardRow("Left"), Decimal)
@@ -389,7 +382,7 @@ Public Class Form1
 
         End If
         If OFD.ShowDialog = DialogResult.OK Then
-            FileCSV = OFD.FileName
+            File_CSV = OFD.FileName
         End If
 
     End Sub
@@ -399,7 +392,7 @@ Public Class Form1
         'With { .Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
 
         If FBD.ShowDialog = DialogResult.OK Then
-            FilePDF = FBD.SelectedPath
+            File_PDF = FBD.SelectedPath
         End If
 
     End Sub
@@ -513,7 +506,7 @@ Public Class Form1
 
             DR = DT.Select($"[Operator] = '{FilterOperator}' ")
 
-            If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
+        If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
             If FilterString.Length > 0 Then FilterString &= " And "
             FilterString &= $"[{FilterColumn}] {DR(0)("Operator_Left")}{FilterValue}{DR(0)("Operator_Right")}"
@@ -1075,54 +1068,68 @@ Public Class Form1
         'UCB.Enabled = False
 
     End Sub
+    Private Sub TEST()
 
-    Private Sub UserControl_Font_General_Load()
-
-        With TableLayoutPanel_General
-            If .Controls.ContainsKey("UC_Font_General") = True Then Return
-            Dim UCFG = New UserControl_Font
-            With UCFG
-                .Name = "UC_Font_General"
-                .Dock = DockStyle.Top
-                .Font = My.Settings.MyFont
-                AddHandler .Font_Changed, AddressOf UC_Font_Changed
-            End With
-            .Controls.Add(UCFG)
-        End With
+        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_General", My.Settings.MyFont)
+        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_Card", My.Settings.MyFont)
+        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_CardRow", My.Settings.MyFont)
 
     End Sub
-    Private Sub UserControl_Font_Card_Load()
+    'Private Sub UserControl_Font_General_Load(UCFG_Parent As String, UCFG_Name As String)
 
-        With TableLayoutPanel_Card
-            If .Controls.ContainsKey("UC_Font_Card") = True Then Return
-            Dim UCF = New UserControl_Font
-            With UCF
-                .Name = "UC_Font_Card"
-                .Dock = DockStyle.Fill
-                .Font = MyFont
-                AddHandler .Font_Changed, AddressOf UC_Font_Changed
-            End With
-            .Controls.Add(UCF)
-        End With
+    '    Dim Tab As TabPage = TabControl_Main.TabPages("TabPage_General")
+    '    If Tab.Controls.ContainsKey("TableLayoutPanel_General") = False Then Return
 
-    End Sub
-    Private Sub UserControl_Font_CardRow_Load()
+    '    Dim TLP As TableLayoutPanel = Tab.Controls("TableLayoutPanel_General")
+    '    Dim UCFG As UserControl_Font
+    '    If TLP.Controls.ContainsKey("UC_Font_General") = False Then
+    '        UCFG = New UserControl_Font
+    '        TLP.Controls.Add(UCFG)
+    '        AddHandler UCFG.Font_Change, AddressOf UC_Font_Changed
+    '    Else
+    '        UCFG = CType(TLP.Controls("UC_Font_General"), UserControl_Font)
+    '    End If
 
-        With TableLayoutPanel_CardRow
-            If .Controls.ContainsKey("UC_Font_CardRow") = True Then Return
-            Dim UCF = New UserControl_Font
-            With UCF
-                .Name = "UC_Font_CardRow"
-                .Dock = DockStyle.Fill
-                .Font = MyFont
-                .Enabled = False
-                AddHandler .Font_Changed, AddressOf UC_Font_Changed
-            End With
-            .Controls.Add(UCF)
-        End With
+    '    With UCFG
+    '        .Name = "UC_Font_General"
+    '        .Dock = DockStyle.Top
+    '        .Font = My.Settings.MyFont
+    '        .GET_FontToUC(Settings.MyFont)
+    '    End With
 
-    End Sub
-    Private Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Changed
+    'End Sub
+    'Private Sub UserControl_Font_Card_Load()
+
+    '    With TableLayoutPanel_Card
+    '        If .Controls.ContainsKey("UC_Font_Card") = True Then Return
+    '        Dim UCF = New UserControl_Font(Me)
+    '        With UCF
+    '            .Name = "UC_Font_Card"
+    '            .Dock = DockStyle.Fill
+    '            .Font = MyFont
+    '            'AddHandler .ChangeFont, AddressOf UC_Font_Changed
+    '        End With
+    '        '.Controls.Add(UCF)
+    '    End With
+
+    'End Sub
+    'Private Sub UserControl_Font_CardRow_Load()
+
+    '    With TableLayoutPanel_CardRow
+    '        If .Controls.ContainsKey("UC_Font_CardRow") = True Then Return
+    '        Dim UCF = New UserControl_Font(Me)
+    '        With UCF
+    '            .Name = "UC_Font_CardRow"
+    '            .Dock = DockStyle.Fill
+    '            .Font = MyFont
+    '            .Enabled = False
+    '            AddHandler .Font_Change, AddressOf UC_Font_Changed
+    '        End With
+    '        .Controls.Add(UCF)
+    '    End With
+
+    'End Sub
+    Public Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Change
 
         If Sender.canselect = False Then Return
         If Sender.canfocus = False Then Return
@@ -1243,7 +1250,7 @@ Public Class Form1
 
         Dim Index As Integer = ToolStripComboBox_Shema.SelectedIndex
 
-        FileXML = My.Settings.LastDirectory & "\" & ToolStripComboBox_Shema.Text & ".xml"
+        File_XML = My.Settings.LastDirectory & "\" & ToolStripComboBox_Shema.Text & ".xml"
 
         ToolStripComboBox_Shema.Text = ToolStripComboBox_Shema.Items(Index).ToString
 
@@ -1261,11 +1268,22 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UserControl_Border1_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UserControl_Border1.Border_Changed
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
-        Debug.Print($"Border Changed: Left={e.Left}, Top={e.Top}, Right={e.Right}, Bottom={e.Bottom}")
+        TEST()
 
     End Sub
+
+
+    'Private Sub UC_Font_Card_ChangeFont(sender As Object, e As Font) Handles UC_Font_Card.ChangeFont
+
+    'End Sub
+
+    'Private Sub UserControl_Border1_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UserControl_Border1.Border_Changed
+
+    '    Debug.Print($"Border Changed: Left={e.Left}, Top={e.Top}, Right={e.Right}, Bottom={e.Bottom}")
+
+    'End Sub
 
 
 

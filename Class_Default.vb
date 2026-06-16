@@ -113,13 +113,13 @@
 #End Region
 #Region "TabPage_Card"
             .Add(FRM.TabPage_Card)
-            .Add(FRM.TableLayoutPanel_Card_Size)
-            .Add(FRM.TableLayoutPanel_Card)
+            '.Add(FRM.TableLayoutPanel_Card_Size)
+            '.Add(FRM.TableLayoutPanel_Card)
             .Add(FRM.Label_Card_Size_Hight)
             .Add(FRM.Label_Card_Size_Hight_Value)
             .Add(FRM.Label_Card_Size_Width)
             .Add(FRM.Label_Card_Size_Width_Value)
-            .Add(FRM.GroupBox_Card_Size)
+            '.Add(FRM.GroupBox_Card_Size)
             .Add(FRM.Label_Card_Size_Hight_Unit)
             .Add(FRM.Label_Card_Size_Width_Unit)
 #End Region
