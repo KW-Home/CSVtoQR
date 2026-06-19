@@ -36,12 +36,15 @@
 
         End If
 
-        With UC
-            .NUD_Left.Value = B.Left
-            .NUD_Top.Value = B.Top
-            .NUD_Right.Value = B.Right
-            .NUD_Bottom.Value = B.Bottom
-        End With
+        GET_BorderToUC(B)
+
+    End Sub
+    Private Sub GET_BorderToUC(B As Border)
+
+        NUD_Left.Value = B.Left
+        NUD_Top.Value = B.Top
+        NUD_Right.Value = B.Right
+        NUD_Bottom.Value = B.Bottom
 
     End Sub
 
@@ -53,6 +56,7 @@
         B.Right = NUD_Right.Value
         B.Bottom = NUD_Bottom.Value
 
+        GET_BorderToUC(B)
         RaiseEvent LeaveEvent(Me, B)
 
     End Sub

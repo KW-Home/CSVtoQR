@@ -124,7 +124,7 @@
             .Add(FRM.Label_Card_Size_Width_Unit)
 #End Region
 #Region "CardRow"
-            .Add(FRM.TabPage_CardRow)
+            .Add(FRM.TabPage_CardRow_List)
             .Add(FRM.ListBox_CardRow)
             '.Add(FRM.Label_CardRow_LinePos)
             '.Add(FRM.Label_CardRow_LinePos_Value)
@@ -263,7 +263,7 @@
     Private Sub Default_TabPage(ByRef OBJ As TabPage)
         With OBJ
             .BackColor = Color.Transparent
-            .AutoScroll = False
+            .AutoScroll = True
         End With
     End Sub
     Private Sub Default_ToolStripStatusLabel(ByRef OBJ As ToolStripStatusLabel)

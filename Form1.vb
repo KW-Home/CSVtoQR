@@ -73,19 +73,6 @@ Public Class Form1
                 TextBox_General_XML_Filename.Text = FileName
                 My.Settings.LastFile = FileName
 
-
-                With ToolStripComboBox_Shema
-
-                    With .Items
-                        .Clear()
-                        For Each F_Name In System.IO.Directory.GetFiles(DirStr, "*.xml")
-                            Dim ShemaName As String = System.IO.Path.GetFileNameWithoutExtension(F_Name)
-                            .Add(ShemaName)
-                        Next
-                    End With
-
-                End With
-
                 DS = CL_DS.Get_DS(DS)
                 CL_XML.DataSetFile = File_XML_Value
                 CL_XML.ReadXML(DS)
@@ -291,6 +278,7 @@ Public Class Form1
         Dim UCBB As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
+
         DR_Shema = DS.Tables("Shema").Rows(0)
         TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
         File_CSV = DR_Shema("Import").ToString
@@ -320,6 +308,7 @@ Public Class Form1
         NumericUpDown_Separator_Row_Value.Value = DR_Shema("SeparatorZeileWert")
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
+
         Dim DR_Card As DataRow
         DR_Card = DS.Tables("Card").Rows(0)
 
@@ -350,6 +339,7 @@ Public Class Form1
         Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
+
         'Dim UCBCR As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
         If ListBox_CardRow.SelectedIndex = -1 Then
             'With UCBCR
@@ -358,6 +348,7 @@ Public Class Form1
             '    .NUD_Right.Value = 0
             '    .NUD_Bottom.Value = 0
             'End With
+            UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", UCBB)
         Else
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
 
@@ -366,12 +357,17 @@ Public Class Form1
             nFont = New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString)
             UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", nFont)
 
-            'With UCBCR
-            '    .NUD_Left.Value = CType(DR_CardRow("Left"), Decimal)
-            '    .NUD_Top.Value = CType(DR_CardRow("Top"), Decimal)
-            '    .NUD_Right.Value = CType(DR_CardRow("Right"), Decimal)
-            '    .NUD_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
-            'End With
+            With UCBB
+                .Left = CType(DR_CardRow("Left"), Decimal)
+                .Top = CType(DR_CardRow("Top"), Decimal)
+                .Right = CType(DR_CardRow("Right"), Decimal)
+                .Bottom = CType(DR_CardRow("Bottom"), Decimal)
+            End With
+            UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", UCBB)
+            With TableLayoutPanel_Card
+                .RowCount += 1
+                .SetRow(.Controls("UC_Border_CardRow"), 3)
+            End With
 
             CheckBox_CardRow_QRCode.Checked = CType(DR_CardRow("QRCode"), Boolean)
             CheckBox_CardRow_AutoFont.Checked = CType(DR_CardRow("AutoFont"), Boolean)
@@ -693,14 +689,14 @@ Public Class Form1
 
 #Region "ToolStripMenu"
 
-    Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_New.Click
+    Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
         SaveFileDialog_XML()
         GET_ColumnTabele()
 
     End Sub
 
-    Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click, ToolStripMenuItem_XML_Safe.Click
+    Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click
 
         If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
             CL_XML.SaveXML(DS)
@@ -727,6 +723,7 @@ Public Class Form1
     End Sub
 
 #End Region
+
 #Region "Save XML"
     Private Function SaveFileDialog_XML() As DialogResult
 
@@ -753,7 +750,7 @@ Public Class Form1
         Return DialogResult
 
     End Function
-    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_Open.Click, Button_General_XML_Open.Click
+    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles Button_General_XML_Open.Click, ToolStripMenuItem2.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
@@ -826,13 +823,8 @@ Public Class Form1
 
     Private Sub Button_CardRow_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Add.Click
 
-        'ListBox_CardRow.SelectedIndex = -1
-
         CL_DS.GET_CardRow(DS, -1)
-        'Save_CardRow()
-
         Set_CardRow_DataBinding()
-
         DataSetRead()
 
     End Sub
@@ -1014,113 +1006,12 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub ComboBox_CardRow_DataColumn_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_CardRow_DataColumn.SelectedIndexChanged
 
         Button_CardRow_Add.Enabled = ComboBox_CardRow_DataColumn.SelectedIndex > -1
         Button_CardRow_FontColor.Enabled = ListBox_CardRow.SelectedIndex > -1
 
     End Sub
-
-
-    'Public Sub UC_Border_Changed(Sender As Object, e As UserControl_Border.Border) Handles UC_Border.LeaveEvent
-
-    '    Dim UC As UserControl_Border = TryCast(Sender, UserControl_Border)
-    '    If UC Is Nothing Then Return
-    '    Dim B As New UserControl_Border.Border With {
-    '        .Left = UC.NUD_Left.Value,
-    '        .Top = UC.NUD_Top.Value,
-    '        .Right = UC.NUD_Right.Value,
-    '        .Bottom = UC.NUD_Bottom.Value}
-    '    If UC.Name = "UC_Border_Paper" Then
-    '        DS.Tables("Shema").Rows(0).Item("Left") = B.Left
-    '        DS.Tables("Shema").Rows(0).Item("Top") = B.Top
-    '        DS.Tables("Shema").Rows(0).Item("Right") = B.Right
-    '        DS.Tables("Shema").Rows(0).Item("Bottom") = B.Bottom
-    '    ElseIf UC.Name = "UC_Border_Card" Then
-    '        DS.Tables("Card").Rows(0).Item("Left") = B.Left
-    '        DS.Tables("Card").Rows(0).Item("Top") = B.Top
-    '        DS.Tables("Card").Rows(0).Item("Right") = B.Right
-    '        DS.Tables("Card").Rows(0).Item("Bottom") = B.Bottom
-    '    ElseIf UC.Name = "UC_Border_CardRow" Then
-    '        If ListBox_CardRow.SelectedIndex = -1 Then Return
-    '        Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
-    '        Dim DR As DataRow = CL_DS.GET_CardRow(DS, ID)
-    '        DR("Left") = B.Left
-    '        DR("Top") = B.Top
-    '        DR("Right") = B.Right
-    '        DR("Bottom") = B.Bottom
-    '    End If
-    '    IsModified = True
-
-
-    'End Sub
-
-
-
-    'Private Sub UserControl_Border_Paper_Load()
-
-    '    If TableLayoutPanel_Paper.Controls.ContainsKey("UC_Border_Paper") = True Then Return
-    '    Dim UCB = New UserControl_Border(Me)
-    '    Dim Border As New UserControl_Border.Border With {.Left = UCB.NUD_Left.Value, .Top = UCB.NUD_Top.Value, .Right = UCB.NUD_Right.Value, .Bottom = UCB.NUD_Bottom.Value}
-    '    With UCB
-    '        .GET_BorderToUC(Border)
-    '        .Name = "UC_Border_Paper"
-    '        .Dock = DockStyle.Top
-    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
-    '    End With
-    '    TableLayoutPanel_Paper.Controls.Add(UCB)
-
-    'End Sub
-
-    'Private Sub UserControl_Border_Card_Load()
-
-    '    If TableLayoutPanel_Card.Controls.ContainsKey("UC_Border_Card") = True Then Return
-
-    '    Dim UC = New UserControl_Border(Me)
-    '    Dim Border As New UserControl_Border.Border With {
-    '        .Left = UC.NUD_Left.Value,
-    '        .Top = UC.NUD_Top.Value,
-    '        .Right = UC.NUD_Right.Value,
-    '        .Bottom = UC.NUD_Bottom.Value}
-
-    '    With UC
-    '        .GET_BorderToUC(Border)
-    '        .Name = "UC_Border_Card"
-    '        .Dock = DockStyle.Top
-    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
-    '    End With
-    '    TableLayoutPanel_Card.Controls.Add(UC)
-
-    'End Sub
-
-    'Private Sub UserControl_Border_CardRow_Load()
-
-    '    If TableLayoutPanel_CardRow.Controls.ContainsKey("UC_Border_CardRow") = True Then Return
-
-    '    Dim UC = New UserControl_Border(Me)
-
-    '    Dim Border As New UserControl_Border.Border With {
-    '        .Left = UC.NUD_Left.Value,
-    '        .Top = UC.NUD_Top.Value,
-    '        .Right = UC.NUD_Right.Value,
-    '        .Bottom = UC.NUD_Bottom.Value}
-
-    '    With UC
-
-    '        .GET_BorderToUC(Border)
-    '        .Name = "UC_Border_CardRow"
-    '        .Dock = DockStyle.Top
-    '        .Enabled = False
-
-    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
-
-    '    End With
-
-    '    TableLayoutPanel_CardRow.Controls.Add(UC)
-    '    'UCB.Enabled = False
-
-    'End Sub
 
     Public Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Change
 
@@ -1202,9 +1093,7 @@ Public Class Form1
 
         If sender.canselect = False Then Return
 
-        Dim Border As UserControl_Border.Border = e
         Dim DR As DataRow
-
         Select Case sender.Name
             Case "UC_Border_Paper"
                 DR = DS.Tables("Shema").Rows(0)
@@ -1219,27 +1108,13 @@ Public Class Form1
         End Select
 
         If DR IsNot Nothing Then
-            DR("Left") = Border.Left
-            DR("Top") = Border.Top
-            DR("Right") = Border.Right
-            DR("Bottom") = Border.Bottom
+            DR("Left") = e.Left
+            DR("Top") = e.Top
+            DR("Right") = e.Right
+            DR("Bottom") = e.Bottom
             IsModified = True
+            PaperPaint(Nothing, Nothing)
         End If
-
-        PaperPaint(Nothing, Nothing)
-
-    End Sub
-
-    Private Sub ToolStripComboBox_Shema_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox_Shema.SelectedIndexChanged
-
-        If sender.canselect = False Then Return
-
-
-        Dim Index As Integer = ToolStripComboBox_Shema.SelectedIndex
-
-        File_XML = My.Settings.LastDirectory & "\" & ToolStripComboBox_Shema.Text & ".xml"
-
-        ToolStripComboBox_Shema.Text = ToolStripComboBox_Shema.Items(Index).ToString
 
     End Sub
 

@@ -63,7 +63,7 @@ Partial Class UserControl_Border
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Bottom, 0, 4)
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Left_Unit, 2, 1)
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Header, 0, 0)
-        Me.TableLayoutPanel_Border.Location = New System.Drawing.Point(8, 8)
+        Me.TableLayoutPanel_Border.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_Border.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel_Border.Name = "TableLayoutPanel_Border"
         Me.TableLayoutPanel_Border.RowCount = 5
@@ -256,8 +256,9 @@ Partial Class UserControl_Border
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.Controls.Add(Me.TableLayoutPanel_Border)
+        Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UserControl_Border"
-        Me.Size = New System.Drawing.Size(202, 178)
+        Me.Size = New System.Drawing.Size(135, 100)
         Me.TableLayoutPanel_Border.ResumeLayout(False)
         Me.TableLayoutPanel_Border.PerformLayout()
         CType(Me.NUD_Left, System.ComponentModel.ISupportInitialize).EndInit()

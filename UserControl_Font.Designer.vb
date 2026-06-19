@@ -139,6 +139,7 @@ Partial Class UserControl_Font
         Me.TableLayoutPanel1.Controls.Add(Me.Label_Size, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_Header, 0, 0)
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 5
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
@@ -173,8 +174,9 @@ Partial Class UserControl_Font
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UserControl_Font"
-        Me.Size = New System.Drawing.Size(173, 86)
+        Me.Size = New System.Drawing.Size(170, 71)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
