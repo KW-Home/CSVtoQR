@@ -16,7 +16,7 @@ Public Class Form1
 
     Private WithEvents CL_XML As New Class_XML
     Private WithEvents UC_Font As New UserControl_Font(Me)
-    Private WithEvents UC_Border As UserControl_Border
+    Private WithEvents UC_Border As New UserControl_Border(Me)
 
     Public CL_FC As New Class_Form_Card
 
@@ -158,10 +158,8 @@ Public Class Form1
 
     Public Sub New()
 
-        ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
         DS = CL_DS.Get_DS(DS)
-        'CL_FC = New Class_Form_Card()
 
     End Sub
 
@@ -174,13 +172,18 @@ Public Class Form1
         UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", MyFont)
         UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", MyFont)
 
-        UserControl_Border_Paper_Load()
-        UserControl_Border_Card_Load()
-        UserControl_Border_CardRow_Load()
+        Dim B As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+        UC_Border.UC_Load(TableLayoutPanel_Paper, "UC_Border_Paper", B)
+
+        TableLayoutPanel_Card.RowCount += 1
+        UC_Border.UC_Load(TableLayoutPanel_Card, "UC_Border_Card", B)
+        Dim newRow As Integer = TableLayoutPanel_Card.RowCount - 1
+        TableLayoutPanel_Card.SetRow(TableLayoutPanel_Card.Controls("UC_Border_Card"), newRow)
+
+        UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", B)
 
         CL_Default = New Class_Default(Me, DS)
 
-        'lädt die Einstellungen, die im Designer unter "My.Settings" definiert wurden   
         MySettings_Load()
 
     End Sub
@@ -283,9 +286,9 @@ Public Class Form1
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
-        'Dim UCF As UserControl_Font
         Dim DR_Shema As DataRow
         Dim nFont As Font
+        Dim UCBB As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
         DR_Shema = DS.Tables("Shema").Rows(0)
@@ -294,12 +297,19 @@ Public Class Form1
         File_PDF = DR_Shema("Export").ToString
         ComboBox_Paper_DPI.Text = DR_Shema("DPI")
         ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
-        Dim UC_Paper_Border As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
-        With UC_Paper_Border
-            .NumericUpDown_Left.Value = CType(DR_Shema("Left"), Decimal)
-            .NumericUpDown_Top.Value = CType(DR_Shema("Top"), Decimal)
-            .NumericUpDown_Right.Value = CType(DR_Shema("Right"), Decimal)
-            .NumericUpDown_Bottom.Value = CType(DR_Shema("Bottom"), Decimal)
+
+        With UCBB
+            .Left = CType(DR_Shema("Left"), Decimal)
+            .Top = CType(DR_Shema("Top"), Decimal)
+            .Right = CType(DR_Shema("Right"), Decimal)
+            .Bottom = CType(DR_Shema("Bottom"), Decimal)
+        End With
+        UC_Border.UC_Load(TableLayoutPanel_Paper, "UC_Border_Paper", UCBB)
+        With TableLayoutPanel_Paper
+            .RowCount += 1
+            .SetRow(.Controls("UC_Border_Paper"), 3)
+            .SetColumn(.Controls("UC_Border_Paper"), 0)
+            .SetColumnSpan(.Controls("UC_Border_Paper"), 1)
         End With
 
         Label_Paper_Height_Value.Text = DR_Shema("PaperHeight").ToString
@@ -315,27 +325,39 @@ Public Class Form1
 
         nFont = New Class_FontConverter().StringToFont(DR_Card("Font").ToString)
         UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", nFont)
+        With TableLayoutPanel_Card
+            .RowCount += 1
+            .SetRow(.Controls("UC_Font_Card"), 3)
+            .SetColumn(.Controls("UC_Font_Card"), 0)
+            .SetColumnSpan(.Controls("UC_Font_Card"), 3)
+        End With
 
-        Dim UC_Card_Border As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
-        With UC_Card_Border
-            .NumericUpDown_Left.Value = CType(DR_Card("Left"), Decimal)
-            .NumericUpDown_Top.Value = CType(DR_Card("Top"), Decimal)
-            .NumericUpDown_Right.Value = CType(DR_Card("Right"), Decimal)
-            .NumericUpDown_Bottom.Value = CType(DR_Card("Bottom"), Decimal)
+        With UCBB
+            .Left = CType(DR_Card("Left"), Decimal)
+            .Top = CType(DR_Card("Top"), Decimal)
+            .Right = CType(DR_Card("Right"), Decimal)
+            .Bottom = CType(DR_Card("Bottom"), Decimal)
+        End With
+        UC_Border.UC_Load(TableLayoutPanel_Card, "UC_Border_Card", UCBB)
+        With TableLayoutPanel_Card
+            .RowCount += 1
+            .SetRow(.Controls("UC_Border_Card"), 4)
+            .SetColumn(.Controls("UC_Border_Card"), 0)
+            .SetColumnSpan(.Controls("UC_Border_Card"), 3)
         End With
 
         Label_Card_Size_Hight_Value.Text = CType(DR_Card("CardSizeHeight"), Decimal)
         Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
-        Dim UC_CardRow_Border As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
+        'Dim UCBCR As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
         If ListBox_CardRow.SelectedIndex = -1 Then
-            With UC_CardRow_Border
-                .NumericUpDown_Left.Value = 0
-                .NumericUpDown_Top.Value = 0
-                .NumericUpDown_Right.Value = 0
-                .NumericUpDown_Bottom.Value = 0
-            End With
+            'With UCBCR
+            '    .NUD_Left.Value = 0
+            '    .NUD_Top.Value = 0
+            '    .NUD_Right.Value = 0
+            '    .NUD_Bottom.Value = 0
+            'End With
         Else
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
 
@@ -344,12 +366,12 @@ Public Class Form1
             nFont = New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString)
             UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", nFont)
 
-            With UC_CardRow_Border
-                .NumericUpDown_Left.Value = CType(DR_CardRow("Left"), Decimal)
-                .NumericUpDown_Top.Value = CType(DR_CardRow("Top"), Decimal)
-                .NumericUpDown_Right.Value = CType(DR_CardRow("Right"), Decimal)
-                .NumericUpDown_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
-            End With
+            'With UCBCR
+            '    .NUD_Left.Value = CType(DR_CardRow("Left"), Decimal)
+            '    .NUD_Top.Value = CType(DR_CardRow("Top"), Decimal)
+            '    .NUD_Right.Value = CType(DR_CardRow("Right"), Decimal)
+            '    .NUD_Bottom.Value = CType(DR_CardRow("Bottom"), Decimal)
+            'End With
 
             CheckBox_CardRow_QRCode.Checked = CType(DR_CardRow("QRCode"), Boolean)
             CheckBox_CardRow_AutoFont.Checked = CType(DR_CardRow("AutoFont"), Boolean)
@@ -506,7 +528,7 @@ Public Class Form1
 
             DR = DT.Select($"[Operator] = '{FilterOperator}' ")
 
-        If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
+            If FilterColumn Is Nothing OrElse FilterColumn.ToString.Trim.Length = 0 Then Continue For
             If FilterOperator Is Nothing OrElse FilterOperator.ToString.Trim.Length = 0 Then Continue For
             If FilterString.Length > 0 Then FilterString &= " And "
             FilterString &= $"[{FilterColumn}] {DR(0)("Operator_Left")}{FilterValue}{DR(0)("Operator_Right")}"
@@ -691,11 +713,6 @@ Public Class Form1
 
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
-
-        'If System.IO.File.Exists(CL_XML.DataSetFile) Then
-        '    CL_XML.SaveXML(DS)
-        'Else
-        'End If
 
         SaveFileDialog_XML()
         GET_ColumnTabele()
@@ -897,10 +914,10 @@ Public Class Form1
 
                         .Enabled = Check
 
-                        .NumericUpDown_Left.Value = Convert.ToDecimal(DR("Left"))
-                        .NumericUpDown_Top.Value = Convert.ToDecimal(DR("Top"))
-                        .NumericUpDown_Right.Value = Convert.ToDecimal(DR("Right"))
-                        .NumericUpDown_Bottom.Value = Convert.ToDecimal(DR("Bottom"))
+                        .NUD_Left.Value = Convert.ToDecimal(DR("Left"))
+                        .NUD_Top.Value = Convert.ToDecimal(DR("Top"))
+                        .NUD_Right.Value = Convert.ToDecimal(DR("Right"))
+                        .NUD_Bottom.Value = Convert.ToDecimal(DR("Bottom"))
 
                     End With
                 End If
@@ -1005,137 +1022,112 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UserControl_Border_Paper_Load()
 
-        If TableLayoutPanel_Paper.Controls.ContainsKey("UC_Border_Paper") = True Then Return
-        Dim UCB = New UserControl_Border()
-        Dim Border As New UserControl_Border.Border With {.Left = UCB.NumericUpDown_Left.Value, .Top = UCB.NumericUpDown_Top.Value, .Right = UCB.NumericUpDown_Right.Value, .Bottom = UCB.NumericUpDown_Bottom.Value}
-        With UCB
-            .GET_BorderToUC(Border)
-            .Name = "UC_Border_Paper"
-            .Dock = DockStyle.Top
-            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
-        End With
-        TableLayoutPanel_Paper.Controls.Add(UCB)
+    'Public Sub UC_Border_Changed(Sender As Object, e As UserControl_Border.Border) Handles UC_Border.LeaveEvent
 
-    End Sub
-
-    Private Sub UserControl_Border_Card_Load()
-
-        If TableLayoutPanel_Card.Controls.ContainsKey("UC_Border_Card") = True Then Return
-
-        Dim UCB = New UserControl_Border()
-        Dim Border As New UserControl_Border.Border With {
-            .Left = UCB.NumericUpDown_Left.Value,
-            .Top = UCB.NumericUpDown_Top.Value,
-            .Right = UCB.NumericUpDown_Right.Value,
-            .Bottom = UCB.NumericUpDown_Bottom.Value}
-
-        With UCB
-            .GET_BorderToUC(Border)
-            .Name = "UC_Border_Card"
-            .Dock = DockStyle.Top
-            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
-        End With
-        TableLayoutPanel_Card.Controls.Add(UCB)
-
-    End Sub
-
-    Private Sub UserControl_Border_CardRow_Load()
-
-        If TableLayoutPanel_CardRow.Controls.ContainsKey("UC_Border_CardRow") = True Then Return
-
-        Dim UCB = New UserControl_Border()
-
-        Dim Border As New UserControl_Border.Border With {
-            .Left = UCB.NumericUpDown_Left.Value,
-            .Top = UCB.NumericUpDown_Top.Value,
-            .Right = UCB.NumericUpDown_Right.Value,
-            .Bottom = UCB.NumericUpDown_Bottom.Value}
-
-        With UCB
-
-            .GET_BorderToUC(Border)
-            .Name = "UC_Border_CardRow"
-            .Dock = DockStyle.Top
-            .Enabled = False
-
-            AddHandler .Border_Changed, AddressOf UC_Border_Border_Changed
-
-        End With
-
-        TableLayoutPanel_CardRow.Controls.Add(UCB)
-        'UCB.Enabled = False
-
-    End Sub
-    Private Sub TEST()
-
-        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_General", My.Settings.MyFont)
-        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_Card", My.Settings.MyFont)
-        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_CardRow", My.Settings.MyFont)
-
-    End Sub
-    'Private Sub UserControl_Font_General_Load(UCFG_Parent As String, UCFG_Name As String)
-
-    '    Dim Tab As TabPage = TabControl_Main.TabPages("TabPage_General")
-    '    If Tab.Controls.ContainsKey("TableLayoutPanel_General") = False Then Return
-
-    '    Dim TLP As TableLayoutPanel = Tab.Controls("TableLayoutPanel_General")
-    '    Dim UCFG As UserControl_Font
-    '    If TLP.Controls.ContainsKey("UC_Font_General") = False Then
-    '        UCFG = New UserControl_Font
-    '        TLP.Controls.Add(UCFG)
-    '        AddHandler UCFG.Font_Change, AddressOf UC_Font_Changed
-    '    Else
-    '        UCFG = CType(TLP.Controls("UC_Font_General"), UserControl_Font)
+    '    Dim UC As UserControl_Border = TryCast(Sender, UserControl_Border)
+    '    If UC Is Nothing Then Return
+    '    Dim B As New UserControl_Border.Border With {
+    '        .Left = UC.NUD_Left.Value,
+    '        .Top = UC.NUD_Top.Value,
+    '        .Right = UC.NUD_Right.Value,
+    '        .Bottom = UC.NUD_Bottom.Value}
+    '    If UC.Name = "UC_Border_Paper" Then
+    '        DS.Tables("Shema").Rows(0).Item("Left") = B.Left
+    '        DS.Tables("Shema").Rows(0).Item("Top") = B.Top
+    '        DS.Tables("Shema").Rows(0).Item("Right") = B.Right
+    '        DS.Tables("Shema").Rows(0).Item("Bottom") = B.Bottom
+    '    ElseIf UC.Name = "UC_Border_Card" Then
+    '        DS.Tables("Card").Rows(0).Item("Left") = B.Left
+    '        DS.Tables("Card").Rows(0).Item("Top") = B.Top
+    '        DS.Tables("Card").Rows(0).Item("Right") = B.Right
+    '        DS.Tables("Card").Rows(0).Item("Bottom") = B.Bottom
+    '    ElseIf UC.Name = "UC_Border_CardRow" Then
+    '        If ListBox_CardRow.SelectedIndex = -1 Then Return
+    '        Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
+    '        Dim DR As DataRow = CL_DS.GET_CardRow(DS, ID)
+    '        DR("Left") = B.Left
+    '        DR("Top") = B.Top
+    '        DR("Right") = B.Right
+    '        DR("Bottom") = B.Bottom
     '    End If
+    '    IsModified = True
 
-    '    With UCFG
-    '        .Name = "UC_Font_General"
+
+    'End Sub
+
+
+
+    'Private Sub UserControl_Border_Paper_Load()
+
+    '    If TableLayoutPanel_Paper.Controls.ContainsKey("UC_Border_Paper") = True Then Return
+    '    Dim UCB = New UserControl_Border(Me)
+    '    Dim Border As New UserControl_Border.Border With {.Left = UCB.NUD_Left.Value, .Top = UCB.NUD_Top.Value, .Right = UCB.NUD_Right.Value, .Bottom = UCB.NUD_Bottom.Value}
+    '    With UCB
+    '        .GET_BorderToUC(Border)
+    '        .Name = "UC_Border_Paper"
     '        .Dock = DockStyle.Top
-    '        .Font = My.Settings.MyFont
-    '        .GET_FontToUC(Settings.MyFont)
+    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
     '    End With
+    '    TableLayoutPanel_Paper.Controls.Add(UCB)
 
     'End Sub
-    'Private Sub UserControl_Font_Card_Load()
 
-    '    With TableLayoutPanel_Card
-    '        If .Controls.ContainsKey("UC_Font_Card") = True Then Return
-    '        Dim UCF = New UserControl_Font(Me)
-    '        With UCF
-    '            .Name = "UC_Font_Card"
-    '            .Dock = DockStyle.Fill
-    '            .Font = MyFont
-    '            'AddHandler .ChangeFont, AddressOf UC_Font_Changed
-    '        End With
-    '        '.Controls.Add(UCF)
+    'Private Sub UserControl_Border_Card_Load()
+
+    '    If TableLayoutPanel_Card.Controls.ContainsKey("UC_Border_Card") = True Then Return
+
+    '    Dim UC = New UserControl_Border(Me)
+    '    Dim Border As New UserControl_Border.Border With {
+    '        .Left = UC.NUD_Left.Value,
+    '        .Top = UC.NUD_Top.Value,
+    '        .Right = UC.NUD_Right.Value,
+    '        .Bottom = UC.NUD_Bottom.Value}
+
+    '    With UC
+    '        .GET_BorderToUC(Border)
+    '        .Name = "UC_Border_Card"
+    '        .Dock = DockStyle.Top
+    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
     '    End With
+    '    TableLayoutPanel_Card.Controls.Add(UC)
 
     'End Sub
-    'Private Sub UserControl_Font_CardRow_Load()
 
-    '    With TableLayoutPanel_CardRow
-    '        If .Controls.ContainsKey("UC_Font_CardRow") = True Then Return
-    '        Dim UCF = New UserControl_Font(Me)
-    '        With UCF
-    '            .Name = "UC_Font_CardRow"
-    '            .Dock = DockStyle.Fill
-    '            .Font = MyFont
-    '            .Enabled = False
-    '            AddHandler .Font_Change, AddressOf UC_Font_Changed
-    '        End With
-    '        .Controls.Add(UCF)
+    'Private Sub UserControl_Border_CardRow_Load()
+
+    '    If TableLayoutPanel_CardRow.Controls.ContainsKey("UC_Border_CardRow") = True Then Return
+
+    '    Dim UC = New UserControl_Border(Me)
+
+    '    Dim Border As New UserControl_Border.Border With {
+    '        .Left = UC.NUD_Left.Value,
+    '        .Top = UC.NUD_Top.Value,
+    '        .Right = UC.NUD_Right.Value,
+    '        .Bottom = UC.NUD_Bottom.Value}
+
+    '    With UC
+
+    '        .GET_BorderToUC(Border)
+    '        .Name = "UC_Border_CardRow"
+    '        .Dock = DockStyle.Top
+    '        .Enabled = False
+
+    '        AddHandler .LeaveEvent, AddressOf UC_Border_Sender_Changed
+
     '    End With
 
+    '    TableLayoutPanel_CardRow.Controls.Add(UC)
+    '    'UCB.Enabled = False
+
     'End Sub
+
     Public Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Change
 
         If Sender.canselect = False Then Return
         If Sender.canfocus = False Then Return
 
         Dim nFonString As String = New Class_FontConverter().FontToString(e)
-
         Select Case Sender.Name
 
             Case "UC_Font_General"
@@ -1143,17 +1135,14 @@ Public Class Form1
                 My.Settings.MyFont = e
                 My.Settings.Save()
                 CL_Default = New Class_Default(Me, DS)
-
             Case "UC_Font_Card"
                 DS.Tables("Card").Rows(0)("Font") = nFonString
-
+                IsModified = True
             Case "UC_Font_CardRow"
                 Dim ID As Integer = ListBox_CardRow.SelectedValue
                 Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-                If IsNothing(DR) = False Then
-                    DR("Font") = nFonString
-                End If
-
+                If IsNothing(DR) = False Then DR("Font") = nFonString
+                IsModified = True
         End Select
 
         Dim UC As UserControl_Font = CType(Sender, UserControl_Font)
@@ -1162,8 +1151,6 @@ Public Class Form1
             .Label_Size_Value.Text = e.Size.ToString
             .Label_Style_Value.Text = e.Style.ToString
         End With
-
-        IsModified = True
 
     End Sub
     Private Sub Save_CardRow()
@@ -1211,7 +1198,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UC_Border_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UC_Border.Border_Changed
+    Public Sub UC_Border_LeaveEvent(sender As Object, e As UserControl_Border.Border) Handles UC_Border.LeaveEvent
 
         If sender.canselect = False Then Return
 
@@ -1267,25 +1254,6 @@ Public Class Form1
         Save_CardRow()
 
     End Sub
-
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-
-        TEST()
-
-    End Sub
-
-
-    'Private Sub UC_Font_Card_ChangeFont(sender As Object, e As Font) Handles UC_Font_Card.ChangeFont
-
-    'End Sub
-
-    'Private Sub UserControl_Border1_Border_Changed(sender As Object, e As UserControl_Border.Border) Handles UserControl_Border1.Border_Changed
-
-    '    Debug.Print($"Border Changed: Left={e.Left}, Top={e.Top}, Right={e.Right}, Bottom={e.Bottom}")
-
-    'End Sub
-
-
 
 #End Region
 

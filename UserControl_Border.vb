@@ -1,6 +1,12 @@
 ﻿Public Class UserControl_Border
-    Public Sub New()
+
+    Private ReadOnly FRM As Form1
+
+    Public Event LeaveEvent(ByVal sender As Object, ByVal e As Border)
+
+    Public Sub New(ByRef _FRM As Form1)
         InitializeComponent()
+        FRM = _FRM
     End Sub
 
     Public Structure Border
@@ -10,20 +16,45 @@
         Dim Bottom As Decimal
     End Structure
 
-    Public Event Border_Changed(ByVal sender As Object, ByVal e As Border)
+    Public Sub UC_Load(TLP As TableLayoutPanel, UC_Name As String, B As Border)
 
-    Public Sub GET_BorderToUC(_Border As Border)
-        NumericUpDown_Left.Value = _Border.Left
-        NumericUpDown_Top.Value = _Border.Top
-        NumericUpDown_Right.Value = _Border.Right
-        NumericUpDown_Bottom.Value = _Border.Bottom
+        Dim UC As UserControl_Border
+        If TLP.Controls.ContainsKey(UC_Name) = False Then
+
+            UC = New UserControl_Border(FRM) With {.Name = UC_Name}
+            With UC
+                .Dock = DockStyle.Top
+                .Font = My.Settings.MyFont
+            End With
+
+            TLP.Controls.Add(UC)
+            AddHandler UC.LeaveEvent, AddressOf FRM.UC_Border_LeaveEvent
+
+        Else
+
+            UC = CType(TLP.Controls(UC_Name), UserControl_Border)
+
+        End If
+
+        With UC
+            .NUD_Left.Value = B.Left
+            .NUD_Top.Value = B.Top
+            .NUD_Right.Value = B.Right
+            .NUD_Bottom.Value = B.Bottom
+        End With
+
     End Sub
 
-    Private Sub NumericUpDown_Top_Leave(sender As Object, e As EventArgs) Handles NumericUpDown_Top.Leave, NumericUpDown_Bottom.Leave, NumericUpDown_Right.Leave, NumericUpDown_Left.Leave
-        RaiseEvent Border_Changed(Me, New Border With {
-                                  .Left = NumericUpDown_Left.Value,
-                                  .Top = NumericUpDown_Top.Value,
-                                  .Right = NumericUpDown_Right.Value,
-                                  .Bottom = NumericUpDown_Bottom.Value})
+    Private Sub LeaveSender() Handles NUD_Top.Leave, NUD_Bottom.Leave, NUD_Right.Leave, NUD_Left.Leave
+
+        Dim B As Border
+        B.Left = NUD_Left.Value
+        B.Top = NUD_Top.Value
+        B.Right = NUD_Right.Value
+        B.Bottom = NUD_Bottom.Value
+
+        RaiseEvent LeaveEvent(Me, B)
+
     End Sub
+
 End Class

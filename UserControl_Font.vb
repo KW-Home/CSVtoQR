@@ -1,9 +1,9 @@
 ﻿Public Class UserControl_Font
 
+    Public Event Font_Change(ByVal sender As Object, ByVal e As Font)
+
     Private ReadOnly FRM As Form1
     Private UCF As UserControl_Font
-
-    Public Event Font_Change(ByVal sender As Object, ByVal e As Font)
 
     Public Sub New(ByRef _FRM As Form1)
 
@@ -30,21 +30,21 @@
         GET_FontToUC(F)
     End Sub
 
-    Public Sub UC_Load(TLP As TableLayoutPanel, UC_Name As String, MyFont As Font)
+    Public Sub UC_Load(TLP As TableLayoutPanel, UC_Name As String, _Font As Font)
 
         If TLP.Controls.ContainsKey(UC_Name) = False Then
             UCF = New UserControl_Font(FRM) With {.Name = UC_Name}
+            With UCF
+                .Dock = DockStyle.Top
+                .Font = My.Settings.MyFont
+            End With
             TLP.Controls.Add(UCF)
             AddHandler UCF.Font_Change, AddressOf FRM.UC_Font_Changed
         Else
             UCF = CType(TLP.Controls(UC_Name), UserControl_Font)
         End If
 
-        With UCF
-            .Dock = DockStyle.Top
-            .Font = MyFont
-            .GET_FontToUC(MyFont)
-        End With
+        UCF.GET_FontToUC(_Font)
 
     End Sub
 

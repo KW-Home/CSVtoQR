@@ -41,7 +41,7 @@
                     Case "DataGridView" : Default_DataGridView(OBJ)
                     Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
-                    Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
+                        'Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
                 End Select
             End With
         Next
@@ -383,41 +383,41 @@
             .Padding = New Padding(3)
         End With
     End Sub
-    Private Sub Default_TableLayoutPanel(ByRef OBJ As TableLayoutPanel)
-        With OBJ
+    'Private Sub Default_TableLayoutPanel(ByRef OBJ As TableLayoutPanel)
+    '    With OBJ
 
-            '.Dock = DockStyle.Fill
-            '.AutoSizeMode = AutoSizeMode.GrowAndShrink
-            '.BorderStyle = BorderStyle.None
-            '.CellBorderStyle = TableLayoutPanelCellBorderStyle.None
-            '.Margin = New Padding(0)
-            '.Padding = New Padding(0)
-            '.Location = New Point(0, 0)
-            '.BackColor = SystemColors.Control
+    '        '.Dock = DockStyle.Fill
+    '        '.AutoSizeMode = AutoSizeMode.GrowAndShrink
+    '        '.BorderStyle = BorderStyle.None
+    '        '.CellBorderStyle = TableLayoutPanelCellBorderStyle.None
+    '        '.Margin = New Padding(0)
+    '        '.Padding = New Padding(0)
+    '        '.Location = New Point(0, 0)
+    '        '.BackColor = SystemColors.Control
 
-            'Select Case .Name
-            '    Case FRM.TableLayoutPanel_Data.Name
-            '        .SetColumnSpan(FRM.DGV_Search, 2)
-            '        .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
-            '        .SetColumnSpan(FRM.DGV_CSV, 2)
-            '    'Case FRM.TableLayoutPanel_CardRow_List.Name
-            '    '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
-            '    Case FRM.TableLayoutPanel_General_XML.Name
-            '        .SetRowSpan(FRM.Button_General_XML_Open, 2)
-            '    Case FRM.TableLayoutPanel_General_Import.Name
-            '        .SetRowSpan(FRM.Button_General_Import, 2)
-            '    Case FRM.TableLayoutPanel_General_Export.Name
-            '        .SetRowSpan(FRM.Button_General_Export, 2)
-            'End Select
+    '        'Select Case .Name
+    '        '    Case FRM.TableLayoutPanel_Data.Name
+    '        '        .SetColumnSpan(FRM.DGV_Search, 2)
+    '        '        .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
+    '        '        .SetColumnSpan(FRM.DGV_CSV, 2)
+    '        '    'Case FRM.TableLayoutPanel_CardRow_List.Name
+    '        '    '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
+    '        '    Case FRM.TableLayoutPanel_General_XML.Name
+    '        '        .SetRowSpan(FRM.Button_General_XML_Open, 2)
+    '        '    Case FRM.TableLayoutPanel_General_Import.Name
+    '        '        .SetRowSpan(FRM.Button_General_Import, 2)
+    '        '    Case FRM.TableLayoutPanel_General_Export.Name
+    '        '        .SetRowSpan(FRM.Button_General_Export, 2)
+    '        'End Select
 
-            'Select Case .Name
-            '    Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
-            '        .AutoScroll = True
-            '    Case Else
-            '        .AutoScroll = False
-            'End Select
+    '        'Select Case .Name
+    '        '    Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
+    '        '        .AutoScroll = True
+    '        '    Case Else
+    '        '        .AutoScroll = False
+    '        'End Select
 
-        End With
-    End Sub
+    '    End With
+    'End Sub
 
 End Class
