@@ -39,7 +39,7 @@
                     Case "PictureBox" : Default_PictureBox(OBJ)
                     Case "Panel" : Default_Panel(OBJ)
                     Case "DataGridView" : Default_DataGridView(OBJ)
-                    Case "GroupBox" : Default_GroupBox(OBJ)
+                    'Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
                         'Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
                 End Select
@@ -124,8 +124,8 @@
             .Add(FRM.Label_Card_Size_Width_Unit)
 #End Region
 #Region "CardRow"
-            .Add(FRM.TabPage_CardRow_List)
-            .Add(FRM.ListBox_CardRow)
+            '.Add(FRM.TabPage_CardRow_List)
+            '.Add(FRM.ListBox_CardRow)
             '.Add(FRM.Label_CardRow_LinePos)
             '.Add(FRM.Label_CardRow_LinePos_Value)
             '.Add(FRM.Label_CardRow_QRCode)
@@ -354,26 +354,26 @@
 
         End With
     End Sub
-    Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
+    'Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
 
-        With OBJ
-            '.Margin = New Padding(0)
-            '.Padding = New Padding(3)
+    '    With OBJ
+    '        '.Margin = New Padding(0)
+    '        '.Padding = New Padding(3)
 
-            Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
-            .Font = nF
-            .BackColor = Color.Transparent
+    '        Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
+    '        .Font = nF
+    '        .BackColor = Color.Transparent
 
-            'Select Case .Name
-            '    Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
-            '        .Dock = DockStyle.Fill
-            '    Case Else
-            '        .Dock = DockStyle.Top
-            'End Select
+    '        'Select Case .Name
+    '        '    Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
+    '        '        .Dock = DockStyle.Fill
+    '        '    Case Else
+    '        '        .Dock = DockStyle.Top
+    '        'End Select
 
-        End With
+    '    End With
 
-    End Sub
+    'End Sub
     Private Sub Default_CheckBox(ByRef OBJ As CheckBox)
         With OBJ
             .Dock = DockStyle.Left
@@ -383,41 +383,5 @@
             .Padding = New Padding(3)
         End With
     End Sub
-    'Private Sub Default_TableLayoutPanel(ByRef OBJ As TableLayoutPanel)
-    '    With OBJ
-
-    '        '.Dock = DockStyle.Fill
-    '        '.AutoSizeMode = AutoSizeMode.GrowAndShrink
-    '        '.BorderStyle = BorderStyle.None
-    '        '.CellBorderStyle = TableLayoutPanelCellBorderStyle.None
-    '        '.Margin = New Padding(0)
-    '        '.Padding = New Padding(0)
-    '        '.Location = New Point(0, 0)
-    '        '.BackColor = SystemColors.Control
-
-    '        'Select Case .Name
-    '        '    Case FRM.TableLayoutPanel_Data.Name
-    '        '        .SetColumnSpan(FRM.DGV_Search, 2)
-    '        '        .SetColumnSpan(FRM.BindingNavigator_CSV, 2)
-    '        '        .SetColumnSpan(FRM.DGV_CSV, 2)
-    '        '    'Case FRM.TableLayoutPanel_CardRow_List.Name
-    '        '    '    .SetColumnSpan(FRM.ListBox_CardRow, 3)
-    '        '    Case FRM.TableLayoutPanel_General_XML.Name
-    '        '        .SetRowSpan(FRM.Button_General_XML_Open, 2)
-    '        '    Case FRM.TableLayoutPanel_General_Import.Name
-    '        '        .SetRowSpan(FRM.Button_General_Import, 2)
-    '        '    Case FRM.TableLayoutPanel_General_Export.Name
-    '        '        .SetRowSpan(FRM.Button_General_Export, 2)
-    '        'End Select
-
-    '        'Select Case .Name
-    '        '    Case FRM.TableLayoutPanel_CardRow.Name, FRM.TableLayoutPanel_Card.Name, FRM.TableLayoutPanel_Paper.Name
-    '        '        .AutoScroll = True
-    '        '    Case Else
-    '        '        .AutoScroll = False
-    '        'End Select
-
-    '    End With
-    'End Sub
 
 End Class

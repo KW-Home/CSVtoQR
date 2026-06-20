@@ -18,8 +18,6 @@ Public Class Form1
     Private WithEvents UC_Font As New UserControl_Font(Me)
     Private WithEvents UC_Border As New UserControl_Border(Me)
 
-    Public CL_FC As New Class_Form_Card
-
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
@@ -155,19 +153,19 @@ Public Class Form1
         MyFont = My.Settings.MyFont
         Me.Font = MyFont
 
-        UC_Font.UC_Load(TableLayoutPanel_General, "UC_Font_General", MyFont)
-        UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", MyFont)
-        UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", MyFont)
+        UC_Font.UC_Load("UC_Font_General", MyFont)
+        UC_Font.UC_Load("UC_Font_Card", MyFont)
+        UC_Font.UC_Load("UC_Font_CardRow", MyFont)
 
-        Dim B As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
-        UC_Border.UC_Load(TableLayoutPanel_Paper, "UC_Border_Paper", B)
+        Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+        UC_Border.UC_Load("UC_Border_Paper", Border)
 
-        TableLayoutPanel_Card.RowCount += 1
-        UC_Border.UC_Load(TableLayoutPanel_Card, "UC_Border_Card", B)
-        Dim newRow As Integer = TableLayoutPanel_Card.RowCount - 1
-        TableLayoutPanel_Card.SetRow(TableLayoutPanel_Card.Controls("UC_Border_Card"), newRow)
+        'TableLayoutPanel_Card.RowCount += 1
+        UC_Border.UC_Load("UC_Border_Card", Border)
+        'Dim newRow As Integer = TableLayoutPanel_Card.RowCount - 1
+        'TableLayoutPanel_Card.SetRow(TableLayoutPanel_Card.Controls("UC_Border_Card"), newRow)
 
-        UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", B)
+        UC_Border.UC_Load("UC_Border_CardRow", Border)
 
         CL_Default = New Class_Default(Me, DS)
 
@@ -273,107 +271,80 @@ Public Class Form1
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
 
-        Dim DR_Shema As DataRow
+        Dim DR As DataRow
         Dim nFont As Font
-        Dim UCBB As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+        Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
 
         'Shema auslesen und in die entsprechenden Steuerelemente einfügen
+        DR = DS.Tables("Shema").Rows(0)
+        TextBox_Paper_Shema.Text = DR("Shema").ToString
+        File_CSV = DR("Import").ToString
+        File_PDF = DR("Export").ToString
+        ComboBox_Paper_DPI.Text = DR("DPI")
+        ComboBox_Paper_DIN.Text = DR("DIN").ToString
 
-        DR_Shema = DS.Tables("Shema").Rows(0)
-        TextBox_Paper_Shema.Text = DR_Shema("Shema").ToString
-        File_CSV = DR_Shema("Import").ToString
-        File_PDF = DR_Shema("Export").ToString
-        ComboBox_Paper_DPI.Text = DR_Shema("DPI")
-        ComboBox_Paper_DIN.Text = DR_Shema("DIN").ToString
-
-        With UCBB
-            .Left = CType(DR_Shema("Left"), Decimal)
-            .Top = CType(DR_Shema("Top"), Decimal)
-            .Right = CType(DR_Shema("Right"), Decimal)
-            .Bottom = CType(DR_Shema("Bottom"), Decimal)
+        With Border
+            .Left = CType(DR("Left"), Decimal)
+            .Top = CType(DR("Top"), Decimal)
+            .Right = CType(DR("Right"), Decimal)
+            .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border.UC_Load(TableLayoutPanel_Paper, "UC_Border_Paper", UCBB)
-        With TableLayoutPanel_Paper
-            .RowCount += 1
-            .SetRow(.Controls("UC_Border_Paper"), 3)
-            .SetColumn(.Controls("UC_Border_Paper"), 0)
-            .SetColumnSpan(.Controls("UC_Border_Paper"), 1)
-        End With
+        UC_Border.UC_Load("UC_Border_Paper", Border)
 
-        Label_Paper_Height_Value.Text = DR_Shema("PaperHeight").ToString
-        Label_Paper_Width_Value.Text = DR_Shema("PaperWidth")
-        NumericUpDown_Separator_Column_Count.Value = DR_Shema("SeparatorSpalteAnzahl")
-        NumericUpDown_Separator_Column_Value.Value = DR_Shema("SeparatorSpalteWert")
-        NumericUpDown_Separator_Row_Count.Value = DR_Shema("SeparatorZeileAnzahl")
-        NumericUpDown_Separator_Row_Value.Value = DR_Shema("SeparatorZeileWert")
+        Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
+        Label_Paper_Width_Value.Text = DR("PaperWidth")
+        NumericUpDown_Separator_Column_Count.Value = DR("SeparatorSpalteAnzahl")
+        NumericUpDown_Separator_Column_Value.Value = DR("SeparatorSpalteWert")
+        NumericUpDown_Separator_Row_Count.Value = DR("SeparatorZeileAnzahl")
+        NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
+        DR = DS.Tables("Card").Rows(0)
 
-        Dim DR_Card As DataRow
-        DR_Card = DS.Tables("Card").Rows(0)
+        nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
+        UC_Font.UC_Load("UC_Font_Card", nFont)
 
-        nFont = New Class_FontConverter().StringToFont(DR_Card("Font").ToString)
-        UC_Font.UC_Load(TableLayoutPanel_Card, "UC_Font_Card", nFont)
-        With TableLayoutPanel_Card
-            .RowCount += 1
-            .SetRow(.Controls("UC_Font_Card"), 3)
-            .SetColumn(.Controls("UC_Font_Card"), 0)
-            .SetColumnSpan(.Controls("UC_Font_Card"), 3)
+        With Border
+            .Left = CType(DR("Left"), Decimal)
+            .Top = CType(DR("Top"), Decimal)
+            .Right = CType(DR("Right"), Decimal)
+            .Bottom = CType(DR("Bottom"), Decimal)
         End With
+        UC_Border.UC_Load("UC_Border_Card", Border)
 
-        With UCBB
-            .Left = CType(DR_Card("Left"), Decimal)
-            .Top = CType(DR_Card("Top"), Decimal)
-            .Right = CType(DR_Card("Right"), Decimal)
-            .Bottom = CType(DR_Card("Bottom"), Decimal)
-        End With
-        UC_Border.UC_Load(TableLayoutPanel_Card, "UC_Border_Card", UCBB)
-        With TableLayoutPanel_Card
-            .RowCount += 1
-            .SetRow(.Controls("UC_Border_Card"), 4)
-            .SetColumn(.Controls("UC_Border_Card"), 0)
-            .SetColumnSpan(.Controls("UC_Border_Card"), 3)
-        End With
-
-        Label_Card_Size_Hight_Value.Text = CType(DR_Card("CardSizeHeight"), Decimal)
-        Label_Card_Size_Width_Value.Text = CType(DR_Card("CardSizeWidth"), Decimal)
+        Label_Card_Size_Hight_Value.Text = CType(DR("CardSizeHeight"), Decimal)
+        Label_Card_Size_Width_Value.Text = CType(DR("CardSizeWidth"), Decimal)
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
-
-        'Dim UCBCR As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
         If ListBox_CardRow.SelectedIndex = -1 Then
-            'With UCBCR
-            '    .NUD_Left.Value = 0
-            '    .NUD_Top.Value = 0
-            '    .NUD_Right.Value = 0
-            '    .NUD_Bottom.Value = 0
-            'End With
-            UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", UCBB)
+            With Border
+                .Left = 0
+                .Top = 0
+                .Right = 0
+                .Bottom = 0
+            End With
+            UC_Border.UC_Load("UC_Border_CardRow", Border)
         Else
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
 
-            Dim DR_CardRow = CL_DS.GET_CardRow(DS, ID)
+            DR = CL_DS.GET_CardRow(DS, ID)
 
-            nFont = New Class_FontConverter().StringToFont(DR_CardRow("Font").ToString)
-            UC_Font.UC_Load(TableLayoutPanel_CardRow, "UC_Font_CardRow", nFont)
+            nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
+            UC_Font.UC_Load("UC_Font_CardRow", nFont)
 
-            With UCBB
-                .Left = CType(DR_CardRow("Left"), Decimal)
-                .Top = CType(DR_CardRow("Top"), Decimal)
-                .Right = CType(DR_CardRow("Right"), Decimal)
-                .Bottom = CType(DR_CardRow("Bottom"), Decimal)
+            With Border
+                .Left = CType(DR("Left"), Decimal)
+                .Top = CType(DR("Top"), Decimal)
+                .Right = CType(DR("Right"), Decimal)
+                .Bottom = CType(DR("Bottom"), Decimal)
             End With
-            UC_Border.UC_Load(TableLayoutPanel_CardRow, "UC_Border_CardRow", UCBB)
-            With TableLayoutPanel_Card
-                .RowCount += 1
-                .SetRow(.Controls("UC_Border_CardRow"), 3)
-            End With
+            UC_Border.UC_Load("UC_Border_CardRow", Border)
 
-            CheckBox_CardRow_QRCode.Checked = CType(DR_CardRow("QRCode"), Boolean)
-            CheckBox_CardRow_AutoFont.Checked = CType(DR_CardRow("AutoFont"), Boolean)
-            Button_CardRow_FontColor.BackColor = Color.FromArgb(CInt(DR_CardRow("FontColor")))
-            Label_CardRow_LinePos_Value.Text = DR_CardRow("LinePos").ToString
-            ComboBox_CardRow_DataColumn.Text = DR_CardRow("DataColumn").ToString
+            CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
+            CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
+            Button_CardRow_FontColor.BackColor = Color.FromArgb(CInt(DR("FontColor")))
+            Label_CardRow_LinePos_Value.Text = DR("LinePos").ToString
+            ComboBox_CardRow_DataColumn.Text = DR("DataColumn").ToString
 
         End If
 
@@ -687,8 +658,6 @@ Public Class Form1
 
     End Sub
 
-#Region "ToolStripMenu"
-
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
         SaveFileDialog_XML()
@@ -722,9 +691,6 @@ Public Class Form1
 
     End Sub
 
-#End Region
-
-#Region "Save XML"
     Private Function SaveFileDialog_XML() As DialogResult
 
         Dim SFD As New SaveFileDialog
@@ -1129,7 +1095,5 @@ Public Class Form1
         Save_CardRow()
 
     End Sub
-
-#End Region
 
 End Class

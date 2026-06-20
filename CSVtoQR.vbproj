@@ -77,7 +77,6 @@
     <Compile Include="Class_DS.vb" />
     <Compile Include="Class_FontConverter.vb" />
     <Compile Include="Class_Form1_Funktionen.vb" />
-    <Compile Include="Class_Form_Card.vb" />
     <Compile Include="Class_Paint.vb" />
     <Compile Include="Class_XML.vb" />
     <Compile Include="Form1.vb">

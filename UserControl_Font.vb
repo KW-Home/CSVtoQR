@@ -1,9 +1,11 @@
-﻿Public Class UserControl_Font
+﻿Imports CSVtoQR.UserControl_Border
+
+Public Class UserControl_Font
 
     Public Event Font_Change(ByVal sender As Object, ByVal e As Font)
 
     Private ReadOnly FRM As Form1
-    Private UCF As UserControl_Font
+    Private UC As UserControl_Font
 
     Public Sub New(ByRef _FRM As Form1)
 
@@ -30,21 +32,55 @@
         GET_FontToUC(F)
     End Sub
 
-    Public Sub UC_Load(TLP As TableLayoutPanel, UC_Name As String, _Font As Font)
+    Public Sub UC_Load(UC_Name As String, _Font As Font)
+
+        Dim TLP As TableLayoutPanel = Nothing
+        Select Case UC_Name
+            Case "UC_Font_General"
+                TLP = FRM.TableLayoutPanel_General
+            Case "UC_Font_Card"
+                TLP = FRM.TableLayoutPanel_Card
+            Case "UC_Font_CardRow"
+                TLP = FRM.TableLayoutPanel_CardRow
+        End Select
 
         If TLP.Controls.ContainsKey(UC_Name) = False Then
-            UCF = New UserControl_Font(FRM) With {.Name = UC_Name}
-            With UCF
+            UC = New UserControl_Font(FRM) With {.Name = UC_Name}
+            With UC
                 .Dock = DockStyle.Top
                 .Font = My.Settings.MyFont
             End With
-            TLP.Controls.Add(UCF)
-            AddHandler UCF.Font_Change, AddressOf FRM.UC_Font_Changed
+
+            TLP.Controls.Add(UC)
+
+            With TLP
+                .RowCount += 1
+                Select Case UC_Name
+                    Case "UC_Font_General"
+                        .SetRow(UC, 3)
+                        .SetRowSpan(UC, 1)
+                        .SetColumn(UC, 0)
+                        .SetColumnSpan(UC, 1)
+                    Case "UC_Font_Card"
+                        .SetRow(UC, 3)
+                        .SetRowSpan(UC, 1)
+                        .SetColumn(UC, 0)
+                        .SetColumnSpan(Uc, 3)
+                    Case "UC_Font_CardRow"
+                        .SetRow(UC, 3)
+                        .SetRowSpan(UC, 1)
+                        .SetColumn(UC, 0)
+                        .SetColumnSpan(UC, 1)
+                End Select
+            End With
+
+            AddHandler UC.Font_Change, AddressOf FRM.UC_Font_Changed
+
         Else
-            UCF = CType(TLP.Controls(UC_Name), UserControl_Font)
+            UC = CType(TLP.Controls(UC_Name), UserControl_Font)
         End If
 
-        UCF.GET_FontToUC(_Font)
+        UC.GET_FontToUC(_Font)
 
     End Sub
 
