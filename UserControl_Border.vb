@@ -2,7 +2,7 @@
 
     Private ReadOnly FRM As Form1
 
-    Public Event LeaveEvent(ByVal sender As Object, ByVal e As Border)
+    'Public Event LeaveEvent(ByVal sender As Object, ByVal e As Border)
 
     Public Sub New(ByRef _FRM As Form1)
         InitializeComponent()
@@ -62,7 +62,7 @@
                 End Select
             End With
 
-            AddHandler UC.LeaveEvent, AddressOf FRM.UC_Border_LeaveEvent
+            'AddHandler UC.LeaveEvent, AddressOf FRM.UC_Border_LeaveEvent
 
         Else
 
@@ -70,28 +70,27 @@
 
         End If
 
-        GET_BorderToUC(B)
+        GET_BorderToUC(UC, B)
 
     End Sub
-    Private Sub GET_BorderToUC(B As Border)
+    Private Sub GET_BorderToUC(UC As UserControl_Border, B As Border)
 
-        NUD_Left.Value = B.Left
-        NUD_Top.Value = B.Top
-        NUD_Right.Value = B.Right
-        NUD_Bottom.Value = B.Bottom
+        UC.NUD_Left.Value = B.Left
+        UC.NUD_Top.Value = B.Top
+        UC.NUD_Right.Value = B.Right
+        UC.NUD_Bottom.Value = B.Bottom
 
     End Sub
 
     Private Sub LeaveSender() Handles NUD_Top.Leave, NUD_Bottom.Leave, NUD_Right.Leave, NUD_Left.Leave
+        Dim B As New Border With {
+            .Left = NUD_Left.Value,
+            .Top = NUD_Top.Value,
+            .Right = NUD_Right.Value,
+            .Bottom = NUD_Bottom.Value
+        }
 
-        Dim B As Border
-        B.Left = NUD_Left.Value
-        B.Top = NUD_Top.Value
-        B.Right = NUD_Right.Value
-        B.Bottom = NUD_Bottom.Value
-
-        GET_BorderToUC(B)
-        RaiseEvent LeaveEvent(Me, B)
+        'RaiseEvent LeaveEvent(Me, B)
 
     End Sub
 

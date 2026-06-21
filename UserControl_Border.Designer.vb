@@ -256,6 +256,8 @@ Partial Class UserControl_Border
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.Controls.Add(Me.TableLayoutPanel_Border)
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UserControl_Border"
         Me.Size = New System.Drawing.Size(135, 100)
