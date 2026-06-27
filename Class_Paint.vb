@@ -183,43 +183,49 @@ Public Class Class_Paint
                     Dim RowBorderRight As Integer = 0
                     Dim RowBorderBottom As Integer = 0
 
-                    Dim DR_CardRow As DataRow = Form1.DT_CSV.Rows(0)
-                    Dim STR As String = ""
+                    Dim Index As Integer = -1
+                    If Form1.DGV_CSV.SelectedCells.Count > 0 Then
 
-                    'Dim DV As New DataView(DS.Tables("CardRow"))
-                    'DV.Sort("LinePos ASC")
-                    Dim DT As DataTable = DS.Tables("CardRow")
+                        Index = Form1.DGV_CSV.SelectedCells(0).RowIndex
 
+                        Dim DR_CardRow As DataRow = Form1.DT_CSV.Rows(Index)
+                        Dim STR As String = ""
 
-                    DT.DefaultView.Sort = "LinePos ASC"
-
-                    For Each DR As DataRow In DT.DefaultView.ToTable().Rows
-
-                        STR = DR_CardRow(DR("DataColumn").ToString())
-
-                        RowBorderLeft = DR("Left") * DPIFactor
-                        RowBorderTop = DR("Top") * DPIFactor
-                        RowBorderRight = DR("Right") * DPIFactor
-                        RowBorderBottom = DR("Bottom") * DPIFactor
-
-                        nFont = New Class_FontConverter().StringToFont(DR("Font"))
-                        nFontHeight = g.MeasureString(STR, nFont).Height
-
-                        Dim Loc As New Point(PBL + RowBorderLeft, CurrentTop)
-                        Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
-                        Dim _Rec As New Rectangle(Loc, Siz)
-
-                        g.DrawRectangle(P(1), _Rec)
+                        'Dim DV As New DataView(DS.Tables("CardRow"))
+                        'DV.Sort("LinePos ASC")
+                        Dim DT As DataTable = DS.Tables("CardRow")
 
 
+                        DT.DefaultView.Sort = "LinePos ASC"
 
-                        g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                        For Each DR As DataRow In DT.DefaultView.ToTable().Rows
 
-                        CurrentTop += nFontHeight
-                        CurrentTop += RowBorderTop
-                        CurrentTop += RowBorderBottom
+                            STR = DR_CardRow(DR("DataColumn").ToString())
 
-                    Next
+                            RowBorderLeft = DR("Left") * DPIFactor
+                            RowBorderTop = DR("Top") * DPIFactor
+                            RowBorderRight = DR("Right") * DPIFactor
+                            RowBorderBottom = DR("Bottom") * DPIFactor
+
+                            nFont = New Class_FontConverter().StringToFont(DR("Font"))
+                            nFontHeight = g.MeasureString(STR, nFont).Height
+
+                            Dim Loc As New Point(PBL + RowBorderLeft, CurrentTop)
+                            Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
+                            Dim _Rec As New Rectangle(Loc, Siz)
+
+                            g.DrawRectangle(P(1), _Rec)
+
+
+
+                            g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+
+                            CurrentTop += nFontHeight
+                            CurrentTop += RowBorderTop
+                            CurrentTop += RowBorderBottom
+
+                        Next
+                    End If
 
                 End Using
 

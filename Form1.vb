@@ -675,7 +675,7 @@ Public Class Form1
             Case "TabPage_Files"
         End Select
 
-        SplitContainer_Main.Panel2Collapsed = Not CBool(TabControl_Main.SelectedIndex > 0 AndAlso TabControl_Main.SelectedIndex < 4)
+        SplitContainer_Main.Panel2Collapsed = Not CBool(TabControl_Main.SelectedIndex > 0 AndAlso TabControl_Main.SelectedIndex < 5)
 
     End Sub
 
@@ -1144,12 +1144,22 @@ Public Class Form1
 
     Public Sub UC_Border_Paper_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
 
+        If sender.CanSelect = False Then Return
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
     Public Sub UC_Border_Card_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
 
+        If sender.CanSelect = False Then Return
         CL_P.Ivalidate_Card(Me, DS)
+
+    End Sub
+
+    Private Sub DGV_CSV_SelectionChanged(sender As Object, e As EventArgs) Handles DGV_CSV.SelectionChanged
+
+        If sender.CanSelect = False Then Return
+
+        CL_P.Ivalidate_CardRow(Me, DS)
 
     End Sub
 
