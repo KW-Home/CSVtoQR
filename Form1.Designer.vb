@@ -1709,7 +1709,7 @@ Partial Class Form1
         Me.MenuStrip_Main.Location = New System.Drawing.Point(6, 6)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(1016, 32)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(745, 32)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -1769,7 +1769,7 @@ Partial Class Form1
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
         Me.StatusStrip_Main.Location = New System.Drawing.Point(6, 518)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(1016, 30)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(745, 30)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -1798,7 +1798,7 @@ Partial Class Form1
         'SplitContainer_Main.Panel2
         '
         Me.SplitContainer_Main.Panel2.Controls.Add(Me.Panel_Preview)
-        Me.SplitContainer_Main.Size = New System.Drawing.Size(1016, 480)
+        Me.SplitContainer_Main.Size = New System.Drawing.Size(745, 480)
         Me.SplitContainer_Main.SplitterDistance = 488
         Me.SplitContainer_Main.SplitterWidth = 9
         Me.SplitContainer_Main.TabIndex = 28
@@ -1808,7 +1808,7 @@ Partial Class Form1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(1028, 554)
+        Me.ClientSize = New System.Drawing.Size(757, 554)
         Me.Controls.Add(Me.SplitContainer_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
