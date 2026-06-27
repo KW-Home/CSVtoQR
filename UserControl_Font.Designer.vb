@@ -51,10 +51,10 @@ Partial Class UserControl_Font
         'Label_Name
         '
         Me.Label_Name.AutoSize = True
-        Me.Label_Name.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Name.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Name.Location = New System.Drawing.Point(3, 20)
         Me.Label_Name.Name = "Label_Name"
-        Me.Label_Name.Size = New System.Drawing.Size(36, 17)
+        Me.Label_Name.Size = New System.Drawing.Size(34, 17)
         Me.Label_Name.TabIndex = 9
         Me.Label_Name.Text = "Name"
         Me.Label_Name.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -63,7 +63,7 @@ Partial Class UserControl_Font
         'Label_Size
         '
         Me.Label_Size.AutoSize = True
-        Me.Label_Size.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Size.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Size.Location = New System.Drawing.Point(3, 37)
         Me.Label_Size.Name = "Label_Size"
         Me.Label_Size.Size = New System.Drawing.Size(36, 17)
@@ -75,10 +75,10 @@ Partial Class UserControl_Font
         'Label_Style
         '
         Me.Label_Style.AutoSize = True
-        Me.Label_Style.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Style.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Style.Location = New System.Drawing.Point(3, 54)
         Me.Label_Style.Name = "Label_Style"
-        Me.Label_Style.Size = New System.Drawing.Size(36, 17)
+        Me.Label_Style.Size = New System.Drawing.Size(29, 17)
         Me.Label_Style.TabIndex = 11
         Me.Label_Style.Text = "Style"
         Me.Label_Style.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -87,7 +87,7 @@ Partial Class UserControl_Font
         'Label_Name_Value
         '
         Me.Label_Name_Value.AutoSize = True
-        Me.Label_Name_Value.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Name_Value.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Name_Value.Location = New System.Drawing.Point(45, 20)
         Me.Label_Name_Value.Name = "Label_Name_Value"
         Me.Label_Name_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
@@ -100,11 +100,11 @@ Partial Class UserControl_Font
         'Label_Size_Value
         '
         Me.Label_Size_Value.AutoSize = True
-        Me.Label_Size_Value.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Size_Value.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Size_Value.Location = New System.Drawing.Point(45, 37)
         Me.Label_Size_Value.Name = "Label_Size_Value"
         Me.Label_Size_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.Label_Size_Value.Size = New System.Drawing.Size(76, 17)
+        Me.Label_Size_Value.Size = New System.Drawing.Size(68, 17)
         Me.Label_Size_Value.TabIndex = 14
         Me.Label_Size_Value.Text = "Size_Value"
         Me.Label_Size_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -113,11 +113,11 @@ Partial Class UserControl_Font
         'Label_Style_Value
         '
         Me.Label_Style_Value.AutoSize = True
-        Me.Label_Style_Value.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Style_Value.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label_Style_Value.Location = New System.Drawing.Point(45, 54)
         Me.Label_Style_Value.Name = "Label_Style_Value"
         Me.Label_Style_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.Label_Style_Value.Size = New System.Drawing.Size(76, 17)
+        Me.Label_Style_Value.Size = New System.Drawing.Size(71, 17)
         Me.Label_Style_Value.TabIndex = 15
         Me.Label_Style_Value.Text = "Style_Value"
         Me.Label_Style_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -171,6 +171,7 @@ Partial Class UserControl_Font
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
