@@ -11,7 +11,7 @@ Imports CSVtoQR.UserControl_Border
 
 Public Class Form1
 
-    Private DS As New DataSet
+    Public DS As New DataSet
 
     Private MyFont As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
 
@@ -25,7 +25,7 @@ Public Class Form1
     Private CL_P As New Class_Paint
     Private CL_FF As New Class_Form1_Funktionen
 
-    Private DT_CSV As DataTable
+    Public DT_CSV As DataTable
     Private DV_CSV As DataView
 
 
@@ -79,6 +79,8 @@ Public Class Form1
                 DataSetRead()
 
                 GET_ColumnTabele()
+
+                ToolStripMenuItem_Save.Enabled = True
 
             End If
             My.Settings.Save()
@@ -664,11 +666,16 @@ Public Class Form1
     Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl_Main.SelectedIndexChanged
 
         Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
-            Case "TabPage_Files", "TabPage_Data", "TabPage_Table"
-                SplitContainer_Main.Panel2Collapsed = True
-            Case Else
-                SplitContainer_Main.Panel2Collapsed = False
+            Case "TabPage_Paper"
+                CL_P.Ivalidate_Paper(Me, DS)
+            Case "TabPage_Card"
+                CL_P.Ivalidate_Card(Me, DS)
+            Case "TabPage_CardRow"
+                CL_P.Ivalidate_CardRow(Me, DS)
+            Case "TabPage_Files"
         End Select
+
+        SplitContainer_Main.Panel2Collapsed = Not CBool(TabControl_Main.SelectedIndex > 0 AndAlso TabControl_Main.SelectedIndex < 4)
 
     End Sub
 
@@ -682,8 +689,8 @@ Public Class Form1
     Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click
 
         Save_General()
-        Save_Paper()
-        Save_Card()
+        'Save_Paper()
+        'Save_Card()
         Save_CardRow()
 
         If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
@@ -694,6 +701,16 @@ Public Class Form1
         End If
 
         GET_ColumnTabele()
+
+        Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
+            Case "TabPage_Paper"
+                CL_P.Ivalidate_Paper(Me, DS)
+            Case "TabPage_Card"
+                CL_P.Ivalidate_Card(Me, DS)
+            Case "TabPage_CardRow"
+                CL_P.Ivalidate_CardRow(Me, DS)
+            Case "TabPage_Files"
+        End Select
 
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
@@ -729,6 +746,7 @@ Public Class Form1
             IsModified = False
 
             DataSetRead()
+            ToolStripMenuItem_Save.Enabled = True
 
         End If
 
@@ -1040,24 +1058,24 @@ Public Class Form1
         IsModified = True
 
     End Sub
-    Private Sub Save_Card()
+    'Private Sub Save_Card()
 
-        Dim UCF As UserControl_Font = TryCast(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
+    '    Dim UCF As UserControl_Font = TryCast(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
 
-        Dim DR As DataRow = DS.Tables("Card").Rows(0)
-        DR("Font") = New Class_FontConverter().FontToString(UCF.UC_Font)
-        DR("CardSizeHeight") = Label_Card_Size_Hight_Value.Text
-        DR("CardSizeWidth") = Label_Card_Size_Width_Value.Text
+    '    Dim DR As DataRow = DS.Tables("Card").Rows(0)
+    '    DR("Font") = New Class_FontConverter().FontToString(UCF.UC_Font)
+    '    DR("CardSizeHeight") = Label_Card_Size_Hight_Value.Text
+    '    DR("CardSizeWidth") = Label_Card_Size_Width_Value.Text
 
-        Dim UCB As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
-        DR("Left") = UCB.NUD_Left.Value
-        DR("Top") = UCB.NUD_Top.Value
-        DR("Right") = UCB.NUD_Right.Value
-        DR("Bottom") = UCB.NUD_Bottom.Value
+    '    Dim UCB As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
+    '    DR("Left") = UCB.NUD_Left.Value
+    '    DR("Top") = UCB.NUD_Top.Value
+    '    DR("Right") = UCB.NUD_Right.Value
+    '    DR("Bottom") = UCB.NUD_Bottom.Value
 
-        IsModified = True
+    '    IsModified = True
 
-    End Sub
+    'End Sub
 
     Private Sub Save_CardRow()
 
@@ -1121,6 +1139,17 @@ Public Class Form1
 
                 'CL_Default = New Class_Default(Me, DS)
         End Select
+
+    End Sub
+
+    Public Sub UC_Border_Paper_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
+
+        CL_P.Ivalidate_Paper(Me, DS)
+
+    End Sub
+    Public Sub UC_Border_Card_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
+
+        CL_P.Ivalidate_Card(Me, DS)
 
     End Sub
 

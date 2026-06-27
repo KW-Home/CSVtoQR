@@ -1,4 +1,6 @@
-﻿Public Class Class_Paint
+﻿Imports System.Configuration
+
+Public Class Class_Paint
 
     Private ReadOnly CL_DS As New Class_DS
 
@@ -10,18 +12,13 @@
         Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
 
-        Dim PBL As Single = 0
-        Dim PBT As Single = 0
-        Dim PBR As Single = 0
-        Dim PBB As Single = 0
+        Dim DR_Shema As DataRow = DS.Tables("Shema").Rows(0)
+        Dim PBL As Single = DR_Shema("Left")
+        Dim PBT As Single = DR_Shema("Top")
+        Dim PBR As Single = DR_Shema("Right")
+        Dim PBB As Single = DR_Shema("Bottom")
 
         'PictureBox_Paper.Invalidate()
-        Dim DR_Shema As DataRow = DS.Tables("Shema").Rows(0)
-        PBL = DR_Shema("Left")
-        PBT = DR_Shema("Top")
-        PBR = DR_Shema("Right")
-        PBB = DR_Shema("Bottom")
-
         Dim SSA As Integer = CInt(DR_Shema("SeparatorSpalteAnzahl"))
         Dim SSW As Single = CType(DR_Shema("SeparatorSpalteWert"), Single)
         Dim SZA As Integer = CInt(DR_Shema("SeparatorZeileAnzahl"))
@@ -29,7 +26,7 @@
 
         With FRM
             Dim P(2) As Pen
-            P(0) = New Pen(Color.Red, 1)
+            P(0) = New Pen(Color.Red, 2)
             P(1) = New Pen(Color.Green, 1)
             .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
             .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
@@ -43,7 +40,7 @@
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-                    g.DrawRectangle(P(0), PBL, PBT, PW, PH)
+                    'g.DrawRectangle(P(0), PBL - 1, PBT - 1, PW + 2, PH + 2)
 
                     Dim CW As Single
                     CW = (SSA - 1) * SSW
@@ -69,6 +66,159 @@
                         Next
                         CP.X = PBL
                         CP.Y = CP.Y + CS.Height + SZW
+                    Next
+
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End With
+
+    End Sub
+
+    Public Sub Ivalidate_Card(ByRef FRM As Form1, ByRef DS As DataSet)
+
+        DS = CL_DS.Get_DS(DS)
+
+        Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
+        Dim DPI As Single = CType(DS.Tables("Shema").Rows(0)("DPI"), Single)
+        Dim DPIFactor As Single = DPI / 96.0F
+
+        Dim PW As Single = DR_Card.Item("CardSizeWidth") * DPIFactor
+        Dim PH As Single = DR_Card.Item("CardSizeHeight") * DPIFactor
+
+        Dim PBL As Single = DR_Card.Item("Left") * DPIFactor
+        Dim PBT As Single = DR_Card.Item("Top") * DPIFactor
+        Dim PBR As Single = DR_Card.Item("Right") * DPIFactor
+        Dim PBB As Single = DR_Card.Item("Bottom") * DPIFactor
+
+        With FRM
+
+            Dim P(2) As Pen
+            P(0) = New Pen(Color.Red, 2)
+            P(1) = New Pen(Color.Green, 1)
+
+            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
+
+            PW -= PBL
+            PW -= PBR
+            PW -= P(1).Width
+            PH -= PBT
+            PH -= PBB
+            PH -= P(1).Width
+
+            Dim PP As New Point(PBL, PBT)
+            Dim PS As New Size(PW, PH)
+            Dim Rec As New Rectangle(PP, PS)
+
+            Try
+                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
+                    g.Clear(Color.White)
+                    g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+                    g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+                    g.DrawRectangle(P(1), Rec)
+
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End With
+
+    End Sub
+
+    Public Sub Ivalidate_CardRow(ByRef FRM As Form1, ByRef DS As DataSet)
+
+        DS = CL_DS.Get_DS(DS)
+
+        Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
+        Dim DPI As Single = CType(DS.Tables("Shema").Rows(0)("DPI"), Single)
+        Dim DPIFactor As Single = DPI / 96.0F
+
+        Dim PW As Single = DR_Card.Item("CardSizeWidth") * DPIFactor
+        Dim PH As Single = DR_Card.Item("CardSizeHeight") * DPIFactor
+
+        Dim PBL As Single = DR_Card.Item("Left") * DPIFactor
+        Dim PBT As Single = DR_Card.Item("Top") * DPIFactor
+        Dim PBR As Single = DR_Card.Item("Right") * DPIFactor
+        Dim PBB As Single = DR_Card.Item("Bottom") * DPIFactor
+
+        With FRM
+
+            Dim P(2) As Pen
+            P(0) = New Pen(Color.Red, 2)
+            P(1) = New Pen(Color.Green, 1)
+
+            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
+
+            PW -= PBL
+            PW -= PBR
+            PW -= P(1).Width
+            PH -= PBT
+            PH -= PBB
+            PH -= P(1).Width
+
+            Dim PP As New Point(PBL, PBT)
+            Dim PS As New Size(PW, PH)
+            Dim Rec As New Rectangle(PP, PS)
+
+            Try
+                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
+                    g.Clear(Color.White)
+                    g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+                    g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+                    g.DrawRectangle(P(0), Rec)
+
+                    Dim nFont As Font
+                    Dim nFontHeight As Integer
+                    Dim CurrentTop As Integer = PBT
+
+                    Dim RowBorderLeft As Integer = 0
+                    Dim RowBorderTop As Integer = 0
+                    Dim RowBorderRight As Integer = 0
+                    Dim RowBorderBottom As Integer = 0
+
+                    Dim DR_CardRow As DataRow = Form1.DT_CSV.Rows(0)
+                    Dim STR As String = ""
+
+                    'Dim DV As New DataView(DS.Tables("CardRow"))
+                    'DV.Sort("LinePos ASC")
+                    Dim DT As DataTable = DS.Tables("CardRow")
+
+
+                    DT.DefaultView.Sort = "LinePos ASC"
+
+                    For Each DR As DataRow In DT.DefaultView.ToTable().Rows
+
+                        STR = DR_CardRow(DR("DataColumn").ToString())
+
+                        RowBorderLeft = DR("Left") * DPIFactor
+                        RowBorderTop = DR("Top") * DPIFactor
+                        RowBorderRight = DR("Right") * DPIFactor
+                        RowBorderBottom = DR("Bottom") * DPIFactor
+
+                        nFont = New Class_FontConverter().StringToFont(DR("Font"))
+                        nFontHeight = g.MeasureString(STR, nFont).Height
+
+                        Dim Loc As New Point(PBL + RowBorderLeft, CurrentTop)
+                        Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
+                        Dim _Rec As New Rectangle(Loc, Siz)
+
+                        g.DrawRectangle(P(1), _Rec)
+
+
+
+                        g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+
+                        CurrentTop += nFontHeight
+                        CurrentTop += RowBorderTop
+                        CurrentTop += RowBorderBottom
+
                     Next
 
                 End Using

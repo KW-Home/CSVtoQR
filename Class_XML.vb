@@ -43,7 +43,10 @@ Public Class Class_XML
             DS = New DataSet
             DataSetFile = OFD.FileName
             ReadXML(DS)
+
             Form1.File_XML = OFD.FileName
+            Form1.ToolStripMenuItem_Save.Enabled = True
+
         End If
 
     End Sub

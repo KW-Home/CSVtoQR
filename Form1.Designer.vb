@@ -109,7 +109,7 @@ Partial Class Form1
         Me.Label_Card_Size_Width_Value = New System.Windows.Forms.Label()
         Me.Label_Card_Size_Width_Unit = New System.Windows.Forms.Label()
         Me.Label_Card_Size_Hight = New System.Windows.Forms.Label()
-        Me.TabPage_CardRow_List = New System.Windows.Forms.TabPage()
+        Me.TabPage_CardRow = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_CardRow = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel_CardRow_Line = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_CardRow_LinePos_Value = New System.Windows.Forms.Label()
@@ -185,7 +185,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper_Shema.SuspendLayout()
         Me.TabPage_Card.SuspendLayout()
         Me.TableLayoutPanel_Card.SuspendLayout()
-        Me.TabPage_CardRow_List.SuspendLayout()
+        Me.TabPage_CardRow.SuspendLayout()
         Me.TableLayoutPanel_CardRow.SuspendLayout()
         Me.TableLayoutPanel_CardRow_Line.SuspendLayout()
         Me.TableLayoutPanel_CardRow_ListBox.SuspendLayout()
@@ -663,7 +663,7 @@ Partial Class Form1
         Me.TabControl_Main.Controls.Add(Me.TabPage_General)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Paper)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Card)
-        Me.TabControl_Main.Controls.Add(Me.TabPage_CardRow_List)
+        Me.TabControl_Main.Controls.Add(Me.TabPage_CardRow)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Data)
         Me.TabControl_Main.Controls.Add(Me.TabPage_Table)
         Me.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1236,18 +1236,18 @@ Partial Class Form1
         Me.Label_Card_Size_Hight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Label_Card_Size_Hight.UseCompatibleTextRendering = True
         '
-        'TabPage_CardRow_List
+        'TabPage_CardRow
         '
-        Me.TabPage_CardRow_List.AutoScroll = True
-        Me.TabPage_CardRow_List.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.TabPage_CardRow_List.Controls.Add(Me.TableLayoutPanel_CardRow)
-        Me.TabPage_CardRow_List.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage_CardRow_List.Name = "TabPage_CardRow_List"
-        Me.TabPage_CardRow_List.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage_CardRow_List.Size = New System.Drawing.Size(480, 454)
-        Me.TabPage_CardRow_List.TabIndex = 7
-        Me.TabPage_CardRow_List.Text = "Zeile"
-        Me.TabPage_CardRow_List.UseVisualStyleBackColor = True
+        Me.TabPage_CardRow.AutoScroll = True
+        Me.TabPage_CardRow.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.TabPage_CardRow.Controls.Add(Me.TableLayoutPanel_CardRow)
+        Me.TabPage_CardRow.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage_CardRow.Name = "TabPage_CardRow"
+        Me.TabPage_CardRow.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage_CardRow.Size = New System.Drawing.Size(480, 454)
+        Me.TabPage_CardRow.TabIndex = 7
+        Me.TabPage_CardRow.Text = "Zeile"
+        Me.TabPage_CardRow.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel_CardRow
         '
@@ -1524,7 +1524,6 @@ Partial Class Form1
         Me.Button_CardRow_Add.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Button_CardRow_Add.AutoSize = True
         Me.Button_CardRow_Add.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.Button_CardRow_Add.Enabled = False
         Me.Button_CardRow_Add.ImageKey = "Plus"
         Me.Button_CardRow_Add.ImageList = Me.ImageList_Main
         Me.Button_CardRow_Add.Location = New System.Drawing.Point(0, 0)
@@ -1634,16 +1633,19 @@ Partial Class Form1
         'Panel_Preview
         '
         Me.Panel_Preview.AutoScroll = True
+        Me.Panel_Preview.BackColor = System.Drawing.Color.Goldenrod
         Me.Panel_Preview.Controls.Add(Me.PictureBox_Preview)
-        Me.Panel_Preview.Location = New System.Drawing.Point(27, 12)
+        Me.Panel_Preview.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel_Preview.Location = New System.Drawing.Point(0, 0)
+        Me.Panel_Preview.Margin = New System.Windows.Forms.Padding(0)
         Me.Panel_Preview.Name = "Panel_Preview"
-        Me.Panel_Preview.Size = New System.Drawing.Size(114, 115)
+        Me.Panel_Preview.Size = New System.Drawing.Size(248, 480)
         Me.Panel_Preview.TabIndex = 0
         '
         'PictureBox_Preview
         '
         Me.PictureBox_Preview.BackColor = System.Drawing.Color.FloralWhite
-        Me.PictureBox_Preview.Location = New System.Drawing.Point(22, 16)
+        Me.PictureBox_Preview.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox_Preview.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_Preview.Name = "PictureBox_Preview"
         Me.PictureBox_Preview.Size = New System.Drawing.Size(68, 53)
@@ -1733,6 +1735,7 @@ Partial Class Form1
         '
         'ToolStripMenuItem_Save
         '
+        Me.ToolStripMenuItem_Save.Enabled = False
         Me.ToolStripMenuItem_Save.Image = Global.CSVtoQR.My.Resources.Resources.Save
         Me.ToolStripMenuItem_Save.Name = "ToolStripMenuItem_Save"
         Me.ToolStripMenuItem_Save.Size = New System.Drawing.Size(95, 28)
@@ -1864,8 +1867,8 @@ Partial Class Form1
         Me.TabPage_Card.ResumeLayout(False)
         Me.TableLayoutPanel_Card.ResumeLayout(False)
         Me.TableLayoutPanel_Card.PerformLayout()
-        Me.TabPage_CardRow_List.ResumeLayout(False)
-        Me.TabPage_CardRow_List.PerformLayout()
+        Me.TabPage_CardRow.ResumeLayout(False)
+        Me.TabPage_CardRow.PerformLayout()
         Me.TableLayoutPanel_CardRow.ResumeLayout(False)
         Me.TableLayoutPanel_CardRow.PerformLayout()
         Me.TableLayoutPanel_CardRow_Line.ResumeLayout(False)
@@ -1961,7 +1964,7 @@ Partial Class Form1
     Friend WithEvents Label_CardRow_AutoFont As Label
     Friend WithEvents ComboBox_CardRow_DataColumn As ComboBox
     Friend WithEvents ListBox_CardRow As ListBox
-    Friend WithEvents TabPage_CardRow_List As TabPage
+    Friend WithEvents TabPage_CardRow As TabPage
     Friend WithEvents SplitContainer_Main As SplitContainer
     Friend WithEvents TableLayoutPanel_CardRow_Line As TableLayoutPanel
     Friend WithEvents Label_Separator_Column_Count As Label

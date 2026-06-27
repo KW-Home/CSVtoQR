@@ -36,8 +36,8 @@
                     Case "TabControl" : Default_TabControl(OBJ)
                     Case "BindingNavigator" : Default_BindingNavigator(OBJ)
                     'Case "ListBox" : Default_ListBox(OBJ)
-                    Case "PictureBox" : Default_PictureBox(OBJ)
-                    Case "Panel" : Default_Panel(OBJ)
+                    'Case "PictureBox" : Default_PictureBox(OBJ)
+                    'Case "Panel" : Default_Panel(OBJ)
                     Case "DataGridView" : Default_DataGridView(OBJ)
                     'Case "GroupBox" : Default_GroupBox(OBJ)
                     Case "CheckBox" : Default_CheckBox(OBJ)
@@ -55,7 +55,7 @@
             .Add(FRM.SplitContainer_Main)
             .Add(FRM.TabControl_Main)
             .Add(FRM.StatusStrip_Main)
-            .Add(FRM.PictureBox_Preview)
+            '.Add(FRM.PictureBox_Preview)
             .Add(FRM.Panel_Preview)
 #End Region
 #Region "TabPage_General"
@@ -302,26 +302,26 @@
             .RenderMode = ToolStripRenderMode.System
         End With
     End Sub
-    Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
-        With OBJ
-            .BorderStyle = BorderStyle.FixedSingle
-            .Dock = DockStyle.None
-            .Location = New Point(0, 0)
-            .SizeMode = PictureBoxSizeMode.AutoSize
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
-            .BackColor = Color.WhiteSmoke
-        End With
-    End Sub
-    Private Sub Default_Panel(ByRef OBJ As Panel)
-        With OBJ
-            .Dock = DockStyle.Fill
-            .BackColor = Color.AliceBlue
-            .BorderStyle = BorderStyle.FixedSingle
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
-        End With
-    End Sub
+    'Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
+    '    With OBJ
+    '        .BorderStyle = BorderStyle.FixedSingle
+    '        .Dock = DockStyle.None
+    '        .Location = New Point(0, 0)
+    '        .SizeMode = PictureBoxSizeMode.AutoSize
+    '        .Margin = New Padding(3)
+    '        .Padding = New Padding(3)
+    '        .BackColor = Color.WhiteSmoke
+    '    End With
+    'End Sub
+    'Private Sub Default_Panel(ByRef OBJ As Panel)
+    '    With OBJ
+    '        .Dock = DockStyle.Fill
+    '        .BackColor = Color.AliceBlue
+    '        .BorderStyle = BorderStyle.FixedSingle
+    '        .Margin = New Padding(3)
+    '        .Padding = New Padding(3)
+    '    End With
+    'End Sub
     Private Sub Default_DataGridView(ByRef OBJ As DataGridView)
         With OBJ
             .BackgroundColor = Color.WhiteSmoke

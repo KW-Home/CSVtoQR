@@ -1,8 +1,10 @@
-﻿Public Class UserControl_Border
+﻿Imports System.Runtime.Remoting.Channels
+
+Public Class UserControl_Border
 
     Private ReadOnly FRM As Form1
 
-    'Public Event LeaveEvent(ByVal sender As Object, ByVal e As Border)
+    Public Event ChangeEvent(ByVal sender As Object, ByVal e As Border)
 
     Public Sub New(ByRef _FRM As Form1)
         InitializeComponent()
@@ -49,20 +51,27 @@
                         .SetRowSpan(UC, 1)
                         .SetColumn(UC, 0)
                         .SetColumnSpan(UC, 1)
+
+                        AddHandler UC.ChangeEvent, AddressOf Save_Data
+                        AddHandler UC.ChangeEvent, AddressOf FRM.UC_Border_Paper_ChangeEvent
+
                     Case "UC_Border_Card"
                         .SetRow(UC, 4)
                         .SetRowSpan(UC, 1)
                         .SetColumn(UC, 0)
                         .SetColumnSpan(UC, 3)
+
+                        AddHandler UC.ChangeEvent, AddressOf Save_Data
+                        AddHandler UC.ChangeEvent, AddressOf FRM.UC_Border_Card_ChangeEvent
+
                     Case "UC_Border_CardRow"
                         .SetRow(UC, 3)
                         .SetRowSpan(UC, 1)
                         .SetColumn(UC, 0)
                         .SetColumnSpan(UC, 1)
+
                 End Select
             End With
-
-            'AddHandler UC.LeaveEvent, AddressOf FRM.UC_Border_LeaveEvent
 
         Else
 
@@ -82,7 +91,9 @@
 
     End Sub
 
-    Private Sub LeaveSender() Handles NUD_Top.Leave, NUD_Bottom.Leave, NUD_Right.Leave, NUD_Left.Leave
+    Private Sub NUD_Top_ValueChanged(sender As Object, e As EventArgs) Handles NUD_Top.ValueChanged,
+        NUD_Bottom.ValueChanged, NUD_Right.ValueChanged, NUD_Left.ValueChanged
+
         Dim B As New Border With {
             .Left = NUD_Left.Value,
             .Top = NUD_Top.Value,
@@ -90,7 +101,33 @@
             .Bottom = NUD_Bottom.Value
         }
 
-        'RaiseEvent LeaveEvent(Me, B)
+        RaiseEvent ChangeEvent(Me, B)
+
+    End Sub
+
+    Private Sub Save_Data(Sender As Object, B As Border)
+
+        Dim DR As DataRow = Nothing
+
+        Select Case Sender.Name
+            Case "UC_Border_Paper"
+                DR = FRM.DS.Tables("Shema").Rows(0)
+            Case "UC_Border_Card"
+                DR = FRM.DS.Tables("Card").Rows(0)
+            Case "UC_Border_CardRow"
+                DR = FRM.DS.Tables("CardRow").Rows(0)
+        End Select
+
+        If IsNothing(DR) = False Then
+
+            DR("Left") = B.Left
+            DR("Top") = B.Top
+            DR("Right") = B.Right
+            DR("Bottom") = B.Bottom
+
+            FRM.IsModified = True
+
+        End If
 
     End Sub
 
