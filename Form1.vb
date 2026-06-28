@@ -138,9 +138,6 @@ Public Class Form1
 
             SET_Changetext_PDF(File_PDF_Value)
 
-            'MessageBox.Show($"File_PDF {vbNewLine}{CL_FF.Check_Path(File_PDF_Value)}", "File_PDF")
-
-
         End Set
     End Property
 
