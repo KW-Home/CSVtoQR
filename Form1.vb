@@ -23,7 +23,6 @@ Public Class Form1
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
     Private CL_P As New Class_Paint
-    Private CL_FF As New Class_Form1_Funktionen
 
     Public DT_CSV As DataTable
     Private DV_CSV As DataView
@@ -137,9 +136,6 @@ Public Class Form1
             DS.Tables("Shema").Rows(0).Item("Export") = File_PDF_Value
 
             SET_Changetext_PDF(File_PDF_Value)
-
-            'MessageBox.Show($"File_PDF {vbNewLine}{CL_FF.Check_Path(File_PDF_Value)}", "File_PDF")
-
 
         End Set
     End Property

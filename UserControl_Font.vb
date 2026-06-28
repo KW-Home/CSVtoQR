@@ -63,6 +63,7 @@ Public Class UserControl_Font
                 .RowCount += 1
 
                 Select Case UC_Name
+
                     Case "UC_Font_General"
                         .SetRow(UC, 3)
                         .SetRowSpan(UC, 1)
@@ -77,15 +78,15 @@ Public Class UserControl_Font
                         .SetRowSpan(UC, 1)
                         .SetColumn(UC, 0)
                         .SetColumnSpan(UC, 3)
+
                     Case "UC_Font_CardRow"
                         .SetRow(UC, 3)
                         .SetRowSpan(UC, 1)
                         .SetColumn(UC, 0)
                         .SetColumnSpan(UC, 1)
+
                 End Select
             End With
-
-
 
         Else
 
