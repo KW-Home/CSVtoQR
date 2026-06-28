@@ -25,23 +25,10 @@
                 .Margin = New Padding(0)
                 Select Case .GetType.Name
                     Case "TextBox" : Default_TextBox(OBJ)
-                    Case "SplitContainer" : Default_SplitContainer(OBJ)
                     Case "NumericUpDown" : Default_NumericUpDown(OBJ)
                     Case "Label" : Default_Label(OBJ)
                     Case "ComboBox" : Default_ComboBox(OBJ)
-                    Case "ToolStripStatusLabel" : Default_ToolStripStatusLabel(OBJ)
-                    Case "MenuStrip" : Default_MenuStrip(OBJ)
-                    Case "StatusStrip" : Default_StatusStrip(OBJ)
-                    Case "TabPage" : Default_TabPage(OBJ)
-                    Case "TabControl" : Default_TabControl(OBJ)
-                    Case "BindingNavigator" : Default_BindingNavigator(OBJ)
-                    'Case "ListBox" : Default_ListBox(OBJ)
-                    'Case "PictureBox" : Default_PictureBox(OBJ)
-                    'Case "Panel" : Default_Panel(OBJ)
                     Case "DataGridView" : Default_DataGridView(OBJ)
-                    'Case "GroupBox" : Default_GroupBox(OBJ)
-                    Case "CheckBox" : Default_CheckBox(OBJ)
-                        'Case "TableLayoutPanel" : Default_TableLayoutPanel(OBJ)
                 End Select
             End With
         Next
@@ -50,14 +37,6 @@
     Private Sub Default_Fill()
         With ControlsListGesamt
 
-#Region "Formular"
-            .Add(FRM.MenuStrip_Main)
-            .Add(FRM.SplitContainer_Main)
-            .Add(FRM.TabControl_Main)
-            .Add(FRM.StatusStrip_Main)
-            '.Add(FRM.PictureBox_Preview)
-            .Add(FRM.Panel_Preview)
-#End Region
 #Region "TabPage_General"
             .Add(FRM.TabPage_General)
             .Add(FRM.GroupBox_General_XML)
@@ -185,18 +164,6 @@
             .Padding = New Padding(3)
         End With
     End Sub
-    Private Sub Default_SplitContainer(ByRef OBJ As SplitContainer)
-        With OBJ
-            .Dock = DockStyle.Fill
-            .BackColor = Color.AliceBlue
-            .SplitterWidth = 12
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
-
-            .Panel1MinSize = 300
-
-        End With
-    End Sub
     Private Sub Default_NumericUpDown(ByRef OBJ As NumericUpDown)
         With OBJ
             .BorderStyle = BorderStyle.FixedSingle
@@ -260,68 +227,6 @@
             End Select
         End With
     End Sub
-    Private Sub Default_TabPage(ByRef OBJ As TabPage)
-        With OBJ
-            .BackColor = Color.Transparent
-            .AutoScroll = True
-        End With
-    End Sub
-    Private Sub Default_ToolStripStatusLabel(ByRef OBJ As ToolStripStatusLabel)
-        With OBJ
-            .BackColor = Color.WhiteSmoke
-        End With
-    End Sub
-    Private Sub Default_MenuStrip(ByRef OBJ As MenuStrip)
-        With OBJ
-            .BackColor = Color.Transparent
-            .RenderMode = ToolStripRenderMode.System
-        End With
-    End Sub
-    Private Sub Default_StatusStrip(ByRef OBJ As StatusStrip)
-        With OBJ
-            .BackColor = Color.Transparent
-            .Dock = DockStyle.Bottom
-            .Margin = New Padding(0)
-            .Padding = New Padding(0)
-            .RenderMode = ToolStripRenderMode.System
-        End With
-    End Sub
-    Private Sub Default_TabControl(ByRef OBJ As TabControl)
-        With OBJ
-            .BackColor = Color.Red
-            .Dock = DockStyle.Fill
-            .Appearance = TabAppearance.Buttons
-            .Margin = New Padding(0)
-            .Padding = New Point(3, 9)
-        End With
-    End Sub
-    Private Sub Default_BindingNavigator(ByRef OBJ As BindingNavigator)
-        With OBJ
-            .BackColor = Color.Transparent
-            .Dock = DockStyle.Bottom
-            .RenderMode = ToolStripRenderMode.System
-        End With
-    End Sub
-    'Private Sub Default_PictureBox(ByRef OBJ As PictureBox)
-    '    With OBJ
-    '        .BorderStyle = BorderStyle.FixedSingle
-    '        .Dock = DockStyle.None
-    '        .Location = New Point(0, 0)
-    '        .SizeMode = PictureBoxSizeMode.AutoSize
-    '        .Margin = New Padding(3)
-    '        .Padding = New Padding(3)
-    '        .BackColor = Color.WhiteSmoke
-    '    End With
-    'End Sub
-    'Private Sub Default_Panel(ByRef OBJ As Panel)
-    '    With OBJ
-    '        .Dock = DockStyle.Fill
-    '        .BackColor = Color.AliceBlue
-    '        .BorderStyle = BorderStyle.FixedSingle
-    '        .Margin = New Padding(3)
-    '        .Padding = New Padding(3)
-    '    End With
-    'End Sub
     Private Sub Default_DataGridView(ByRef OBJ As DataGridView)
         With OBJ
             .BackgroundColor = Color.WhiteSmoke
@@ -352,35 +257,6 @@
                     .Height = FRM.DGV_Search.ColumnHeadersHeight * 4
             End Select
 
-        End With
-    End Sub
-    'Private Sub Default_GroupBox(ByRef OBJ As GroupBox)
-
-    '    With OBJ
-    '        '.Margin = New Padding(0)
-    '        '.Padding = New Padding(3)
-
-    '        Dim nF As New Font(MyFont.Name, MyFont.Size, FontStyle.Bold)
-    '        .Font = nF
-    '        .BackColor = Color.Transparent
-
-    '        'Select Case .Name
-    '        '    Case FRM.GroupBox_Table.Name, FRM.GroupBox_Data.Name
-    '        '        .Dock = DockStyle.Fill
-    '        '    Case Else
-    '        '        .Dock = DockStyle.Top
-    '        'End Select
-
-    '    End With
-
-    'End Sub
-    Private Sub Default_CheckBox(ByRef OBJ As CheckBox)
-        With OBJ
-            .Dock = DockStyle.Left
-            .Appearance = Appearance.Normal
-            .Text = ""
-            .Margin = New Padding(3)
-            .Padding = New Padding(3)
         End With
     End Sub
 

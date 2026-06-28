@@ -1,5 +1,6 @@
 ﻿Imports System.Resources.ResXFileRef
 Imports System.Security.Cryptography
+Imports System.Xml
 Imports CSVtoQR.Class_DS
 
 Public Class Class_DS
@@ -18,11 +19,9 @@ Public Class Class_DS
 
         With DS.Tables
 
-            GET_Shema(DS)
-
-            GET_Card(DS)
-
-            If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
+            If .Contains("Shema") = False Then .Add(DT_Shema(DS))
+            If .Contains("Card") = False Then .Add(DT_Card(DS))
+            If .Contains("CardRow") = False Then .Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
 
@@ -32,20 +31,21 @@ Public Class Class_DS
 
     End Function
 
-    Private Function DT_Shema() As DataTable
+    Private Function DT_Shema(ByRef DS As DataSet) As DataTable
 
         Dim DT As New DataTable With {.TableName = "Shema"}
+
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String), .DefaultValue = "Beschreibung"})
+            .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String), .DefaultValue = ""})
+            .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "DPI", .DataType = GetType(Integer), .DefaultValue = 96})
             .Columns.Add(New DataColumn With {.ColumnName = "DIN", .DataType = GetType(String), .DefaultValue = "A4"})
-            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorZeileWert", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "SeparatorSpalteAnzahl", .DataType = GetType(Integer), .DefaultValue = 1})
@@ -57,101 +57,53 @@ Public Class Class_DS
 
         End With
 
+        DT.Rows.Add(DT.NewRow)
+
         Return DT
 
     End Function
 
-    ''' <summary>
-    ''' Fügt eine neue Zeile mit Standardwerten in die "Shema"-Tabelle ein, wenn diese leer ist.
-    ''' </summary>
-    Private Sub GET_Shema(ByRef DS As DataSet)
-
-        If DS.Tables.Contains("Shema") = False Then DS.Tables.Add(DT_Shema)
-
-        Dim DT As DataTable = DS.Tables("Shema")
-        If DT.Rows.Count = 0 Then
-            Dim DR As DataRow = DT.NewRow
-            DR("Shema") = "Standard"
-            DR("Import") = String.Empty
-            DR("Export") = String.Empty
-            DR("DIN") = "A4"
-            DR("DPI") = 96
-            DR("Bottom") = 0
-            DR("Left") = 0
-            DR("Right") = 0
-            DR("Top") = 0
-            DR("PaperHeight") = 297
-            DR("PaperWidth") = 210
-            DR("SeparatorSpalteAnzahl") = 1
-            DR("SeparatorSpalteWert") = 0
-            DR("SeparatorZeileAnzahl") = 1
-            DR("SeparatorZeileWert") = 0
-
-            DS.Tables("Shema").Rows.Add(DR)
-
-        End If
-
-    End Sub
-
-    Public Function DT_Card() As DataTable
+    Public Function DT_Card(ByRef DS As DataSet) As DataTable
 
         Dim DT As New DataTable With {.TableName = "Card"}
+
         With DT
 
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer)})
-            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.MyFont)})
+            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer), .DefaultValue = 0})
 
             .PrimaryKey = New DataColumn() { .Columns("ID")}
 
         End With
 
+        DT.Rows.Add(DT.NewRow)
+
         Return DT
 
     End Function
 
-    Public Sub GET_Card(ByRef DS As DataSet)
-
-        If DS.Tables.Contains("Card") = False Then
-            DS.Tables.Add(DT_Card)
-        End If
-
-        Dim DT As DataTable = DS.Tables("Card")
-        If DT.Rows.Count = 0 Then
-            Dim DR As DataRow = DT.NewRow
-            DR("Left") = 0.0
-            DR("Top") = 0.0
-            DR("Right") = 0.0
-            DR("Bottom") = 0.0
-            Dim CL_F As New Class_FontConverter
-            DR("Font") = CL_F.FontToString(Nothing)
-            DR("CardSizeWidth") = 0
-            DR("CardSizeHeight") = 0
-            DS.Tables("Card").Rows.Add(DR)
-        End If
-
-    End Sub
     Private Function DT_CardRow() As DataTable
 
         Dim DT As New DataTable With {.TableName = "CardRow"}
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double)})
+            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
-            .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean)})
-            .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String)})
-            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double)})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String)})
+            .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String), .DefaultValue = "-------"})
+            .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean), .DefaultValue = False})
+            .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String), .DefaultValue = Color.Black.ToArgb.ToString})
+            .Columns.Add(New DataColumn With {.ColumnName = "AutoFont", .DataType = GetType(Boolean), .DefaultValue = False})
+            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.MyFont)})
 
             .PrimaryKey = New DataColumn() { .Columns("ID")}
 
@@ -160,33 +112,32 @@ Public Class Class_DS
 
         End With
 
+        DT.Rows.Add(DT.NewRow)
+
         Return DT
 
     End Function
+
     Public Function GET_CardRow(ByRef DS As DataSet, ID As Integer) As DataRow
 
-        Debug.WriteLine($"GET_CardRow: ID={ID}")
+        Dim DT As DataTable = DS.Tables("CardRow")
+        Dim DR As DataRow = DT.Rows.Find(ID)
 
-        If DS.Tables.Contains("CardRow") = False Then DS.Tables.Add(DT_CardRow)
-
-        Dim DR As DataRow
-        DR = DS.Tables("CardRow").Rows.Find(ID)
         If IsNothing(DR) = False Then Return DR
 
         DR = DS.Tables("CardRow").NewRow
-
         DR("DataColumn") = Form1.ComboBox_CardRow_DataColumn.Text
         DR("LinePos") = 0.0
         DR("QRCode") = False
         DR("AutoFont") = False
-        DR("Left") = 0
-        DR("Top") = 0
-        DR("Right") = 0
-        DR("Bottom") = 0
+        DR("Left") = 0.0
+        DR("Top") = 0.0
+        DR("Right") = 0.0
+        DR("Bottom") = 0.0
         DR("FontColor") = Color.Black.ToArgb.ToString
         DR("Font") = CL_F.FontToString(My.Settings.MyFont)
 
-        DS.Tables("CardRow").Rows.Add(DR)
+        DT.Rows.Add(DR)
 
         Return DR
 

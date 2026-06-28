@@ -153,13 +153,59 @@ Public Class Form1
         Me.Font = MyFont
 
         UC_Font.UC_Load("UC_Font_General", MyFont)
-        UC_Font.UC_Load("UC_Font_Card", MyFont)
-        UC_Font.UC_Load("UC_Font_CardRow", MyFont)
 
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
         UC_Border.UC_Load("UC_Border_Paper", Border)
+        With TableLayoutPanel_Paper
+            .SetRow(UC_Border, 2)
+            .SetRowSpan(UC_Border, 1)
+            .SetColumn(UC_Border, 0)
+            .SetColumnSpan(UC_Border, 1)
+
+            .SetRow(PictureBox_Paper, 0)
+            .SetRowSpan(PictureBox_Paper, 3)
+            .SetColumn(PictureBox_Paper, 1)
+            .SetColumnSpan(PictureBox_Paper, 1)
+        End With
+
+        UC_Font.UC_Load("UC_Font_Card", MyFont)
         UC_Border.UC_Load("UC_Border_Card", Border)
+        With TableLayoutPanel_Card
+            .SetRow(UC_Font, 1)
+            .SetRowSpan(UC_Font, 1)
+            .SetColumn(UC_Font, 0)
+            .SetColumnSpan(UC_Font, 1)
+
+            .SetRow(UC_Border, 2)
+            .SetRowSpan(UC_Border, 1)
+            .SetColumn(UC_Border, 0)
+            .SetColumnSpan(UC_Border, 1)
+
+            .SetRow(PictureBox_Card, 0)
+            .SetRowSpan(PictureBox_Card, 3)
+            .SetColumn(PictureBox_Card, 1)
+            .SetColumnSpan(PictureBox_Card, 1)
+
+        End With
+
+        UC_Font.UC_Load("UC_Font_CardRow", MyFont)
         UC_Border.UC_Load("UC_Border_CardRow", Border)
+        With TableLayoutPanel_CardRow
+            .SetRow(UC_Font, 2)
+            .SetRowSpan(UC_Font, 1)
+            .SetColumn(UC_Font, 0)
+            .SetColumnSpan(UC_Font, 1)
+
+            .SetRow(UC_Border, 3)
+            .SetRowSpan(UC_Border, 1)
+            .SetColumn(UC_Border, 0)
+            .SetColumnSpan(UC_Border, 1)
+
+            .SetRow(PictureBox_CardRow, 0)
+            .SetRowSpan(PictureBox_CardRow, 4)
+            .SetColumn(PictureBox_CardRow, 1)
+            .SetColumnSpan(PictureBox_CardRow, 1)
+        End With
 
         CL_Default = New Class_Default(Me, DS)
 
@@ -220,7 +266,6 @@ Public Class Form1
 
             .MySize = sizeToSave
             .MyFont = MyFont
-            .MySpliter = SplitContainer_Main.SplitterDistance
             .LastFile = File_XML_Value
             .Save()
 
@@ -336,6 +381,7 @@ Public Class Form1
             End With
             UC_Border.UC_Load("UC_Border_CardRow", Border)
         Else
+
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
 
             DR = CL_DS.GET_CardRow(DS, ID)
@@ -671,8 +717,6 @@ Public Class Form1
             Case "TabPage_Files"
         End Select
 
-        SplitContainer_Main.Panel2Collapsed = Not CBool(TabControl_Main.SelectedIndex > 0 AndAlso TabControl_Main.SelectedIndex < 5)
-
     End Sub
 
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
@@ -910,7 +954,7 @@ Public Class Form1
 
         End With
 
-        CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border).Enabled = Check
+        TryCast(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border).Enabled = Check
         TryCast(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font).Enabled = Check
 
         Return Check

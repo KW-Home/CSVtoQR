@@ -4,21 +4,28 @@ Public Class Class_Paint
 
     Private ReadOnly CL_DS As New Class_DS
 
+    Private PW As Single = 0 'Paper Width
+    Private PH As Single = 0 'Paper Height
+
+    Private PBL As Single = 0 'Paper Border Left
+    Private PBT As Single = 0 'Paper Border Top
+    Private PBR As Single = 0 'Paper Border Right
+    Private PBB As Single = 0 'Paper Border Bottom
+
     Public Sub Ivalidate_Paper(ByRef FRM As Form1, ByRef DS As DataSet)
 
         DS = CL_DS.Get_DS(DS)
 
-        Dim PW As Single = DS.Tables("Shema").Rows(0).Item("PaperWidth")
-        Dim PH As Single = DS.Tables("Shema").Rows(0).Item("PaperHeight")
+        PW = DS.Tables("Shema").Rows(0).Item("PaperWidth")
+        PH = DS.Tables("Shema").Rows(0).Item("PaperHeight")
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
 
         Dim DR_Shema As DataRow = DS.Tables("Shema").Rows(0)
-        Dim PBL As Single = DR_Shema("Left")
-        Dim PBT As Single = DR_Shema("Top")
-        Dim PBR As Single = DR_Shema("Right")
-        Dim PBB As Single = DR_Shema("Bottom")
+        PBL = DR_Shema("Left") 'Paper Border Left
+        PBT = DR_Shema("Top") 'Paper Border Top
+        PBR = DR_Shema("Right") 'Paper Border Right
+        PBB = DR_Shema("Bottom") 'Paper Border Bottom
 
-        'PictureBox_Paper.Invalidate()
         Dim SSA As Integer = CInt(DR_Shema("SeparatorSpalteAnzahl"))
         Dim SSW As Single = CType(DR_Shema("SeparatorSpalteWert"), Single)
         Dim SZA As Integer = CInt(DR_Shema("SeparatorZeileAnzahl"))
@@ -28,15 +35,15 @@ Public Class Class_Paint
             Dim P(2) As Pen
             P(0) = New Pen(Color.Red, 2)
             P(1) = New Pen(Color.Green, 1)
-            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
-            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
+            .PictureBox_Paper.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_Paper.Image = New Bitmap(CInt(PW), CInt(PH))
             PW -= PBL
             PW -= PBR
             PH -= PBT
             PH -= PBB
 
             Try
-                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
+                Using g As Graphics = Graphics.FromImage(.PictureBox_Paper.Image)
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
@@ -100,8 +107,8 @@ Public Class Class_Paint
             P(0) = New Pen(Color.Red, 2)
             P(1) = New Pen(Color.Green, 1)
 
-            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
-            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
+            .PictureBox_Card.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_Card.Image = New Bitmap(CInt(PW), CInt(PH))
 
             PW -= PBL
             PW -= PBR
@@ -115,7 +122,7 @@ Public Class Class_Paint
             Dim Rec As New Rectangle(PP, PS)
 
             Try
-                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
+                Using g As Graphics = Graphics.FromImage(.PictureBox_Card.Image)
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
@@ -153,8 +160,8 @@ Public Class Class_Paint
             P(0) = New Pen(Color.Red, 2)
             P(1) = New Pen(Color.Green, 1)
 
-            .PictureBox_Preview.Size = New Size(CInt(PW), CInt(PH))
-            .PictureBox_Preview.Image = New Bitmap(CInt(PW), CInt(PH))
+            .PictureBox_CardRow.Size = New Size(CInt(PW), CInt(PH))
+            .PictureBox_CardRow.Image = New Bitmap(CInt(PW), CInt(PH))
 
             PW -= PBL
             PW -= PBR
@@ -168,7 +175,7 @@ Public Class Class_Paint
             Dim Rec As New Rectangle(PP, PS)
 
             Try
-                Using g As Graphics = Graphics.FromImage(.PictureBox_Preview.Image)
+                Using g As Graphics = Graphics.FromImage(.PictureBox_CardRow.Image)
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality

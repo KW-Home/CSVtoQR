@@ -34,49 +34,27 @@ Public Class UserControl_Border
         If TLP Is Nothing Then Exit Sub
 
         If TLP.Controls.ContainsKey(UC_Name) = False Then
-
             UC = New UserControl_Border(FRM) With {.Name = UC_Name}
             With UC
                 .Dock = DockStyle.Top
                 .Font = My.Settings.MyFont
             End With
-
             TLP.Controls.Add(UC)
-
             With TLP
                 .RowCount += 1
+                .RowStyles.Add(New RowStyle(SizeType.AutoSize))
                 Select Case UC_Name
                     Case "UC_Border_Paper"
-                        .SetRow(UC, 3)
-                        .SetRowSpan(UC, 1)
-                        .SetColumn(UC, 0)
-                        .SetColumnSpan(UC, 1)
-
                         AddHandler UC.ChangeEvent, AddressOf Save_Data
                         AddHandler UC.ChangeEvent, AddressOf FRM.UC_Border_Paper_ChangeEvent
-
                     Case "UC_Border_Card"
-                        .SetRow(UC, 4)
-                        .SetRowSpan(UC, 1)
-                        .SetColumn(UC, 0)
-                        .SetColumnSpan(UC, 3)
-
                         AddHandler UC.ChangeEvent, AddressOf Save_Data
                         AddHandler UC.ChangeEvent, AddressOf FRM.UC_Border_Card_ChangeEvent
-
                     Case "UC_Border_CardRow"
-                        .SetRow(UC, 3)
-                        .SetRowSpan(UC, 1)
-                        .SetColumn(UC, 0)
-                        .SetColumnSpan(UC, 1)
-
                 End Select
             End With
-
         Else
-
             UC = CType(TLP.Controls(UC_Name), UserControl_Border)
-
         End If
 
         GET_BorderToUC(UC, B)
