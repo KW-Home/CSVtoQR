@@ -40,7 +40,7 @@ Partial Class UserControl_Font
         Me.Button_Font.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button_Font.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_Font.ImageKey = "Font"
-        Me.Button_Font.Location = New System.Drawing.Point(127, 23)
+        Me.Button_Font.Location = New System.Drawing.Point(130, 44)
         Me.Button_Font.Name = "Button_Font"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button_Font, 3)
         Me.Button_Font.Size = New System.Drawing.Size(40, 40)
@@ -52,7 +52,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Name.AutoSize = True
         Me.Label_Name.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Name.Location = New System.Drawing.Point(3, 20)
+        Me.Label_Name.Location = New System.Drawing.Point(6, 41)
         Me.Label_Name.Name = "Label_Name"
         Me.Label_Name.Size = New System.Drawing.Size(34, 17)
         Me.Label_Name.TabIndex = 9
@@ -64,7 +64,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Size.AutoSize = True
         Me.Label_Size.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Size.Location = New System.Drawing.Point(3, 37)
+        Me.Label_Size.Location = New System.Drawing.Point(6, 58)
         Me.Label_Size.Name = "Label_Size"
         Me.Label_Size.Size = New System.Drawing.Size(36, 17)
         Me.Label_Size.TabIndex = 10
@@ -76,7 +76,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Style.AutoSize = True
         Me.Label_Style.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Style.Location = New System.Drawing.Point(3, 54)
+        Me.Label_Style.Location = New System.Drawing.Point(6, 75)
         Me.Label_Style.Name = "Label_Style"
         Me.Label_Style.Size = New System.Drawing.Size(29, 17)
         Me.Label_Style.TabIndex = 11
@@ -88,7 +88,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Name_Value.AutoSize = True
         Me.Label_Name_Value.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Name_Value.Location = New System.Drawing.Point(45, 20)
+        Me.Label_Name_Value.Location = New System.Drawing.Point(48, 41)
         Me.Label_Name_Value.Name = "Label_Name_Value"
         Me.Label_Name_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.Label_Name_Value.Size = New System.Drawing.Size(76, 17)
@@ -101,7 +101,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Size_Value.AutoSize = True
         Me.Label_Size_Value.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Size_Value.Location = New System.Drawing.Point(45, 37)
+        Me.Label_Size_Value.Location = New System.Drawing.Point(48, 58)
         Me.Label_Size_Value.Name = "Label_Size_Value"
         Me.Label_Size_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.Label_Size_Value.Size = New System.Drawing.Size(68, 17)
@@ -114,7 +114,7 @@ Partial Class UserControl_Font
         '
         Me.Label_Style_Value.AutoSize = True
         Me.Label_Style_Value.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label_Style_Value.Location = New System.Drawing.Point(45, 54)
+        Me.Label_Style_Value.Location = New System.Drawing.Point(48, 75)
         Me.Label_Style_Value.Name = "Label_Style_Value"
         Me.Label_Style_Value.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.Label_Style_Value.Size = New System.Drawing.Size(71, 17)
@@ -138,16 +138,18 @@ Partial Class UserControl_Font
         Me.TableLayoutPanel1.Controls.Add(Me.Label_Name_Value, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_Size, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label_Header, 0, 0)
+        Me.TableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.Padding = New System.Windows.Forms.Padding(3)
         Me.TableLayoutPanel1.RowCount = 5
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(170, 71)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(176, 95)
         Me.TableLayoutPanel1.TabIndex = 16
         '
         'Label_Header
@@ -159,9 +161,10 @@ Partial Class UserControl_Font
         Me.Label_Header.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Header.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
-        Me.Label_Header.Location = New System.Drawing.Point(3, 0)
+        Me.Label_Header.Location = New System.Drawing.Point(12, 12)
+        Me.Label_Header.Margin = New System.Windows.Forms.Padding(9)
         Me.Label_Header.Name = "Label_Header"
-        Me.Label_Header.Size = New System.Drawing.Size(164, 20)
+        Me.Label_Header.Size = New System.Drawing.Size(152, 20)
         Me.Label_Header.TabIndex = 16
         Me.Label_Header.Text = "Schriftart"
         Me.Label_Header.UseCompatibleTextRendering = True
@@ -177,7 +180,7 @@ Partial Class UserControl_Font
         Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UserControl_Font"
-        Me.Size = New System.Drawing.Size(170, 71)
+        Me.Size = New System.Drawing.Size(176, 95)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)

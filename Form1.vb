@@ -62,13 +62,13 @@ Public Class Form1
         If System.IO.Directory.Exists(DirStr) Then
 
             ToolStripStatusLabel_SaveFile.Text = File_XML_Value
-            TextBox_General_XML_Directory.Text = DirStr
+            TextBox_XML_Directory.Text = DirStr
             My.Settings.LastDirectory = DirStr
 
             If System.IO.File.Exists(File_XML_Value) = True Then
 
                 Dim FileName As String = System.IO.Path.GetFileName(File_XML_Value)
-                TextBox_General_XML_Filename.Text = FileName
+                TextBox_XML_Filename.Text = FileName
                 My.Settings.LastFile = FileName
 
                 DS = CL_DS.Get_DS(DS)
@@ -84,8 +84,8 @@ Public Class Form1
             End If
             My.Settings.Save()
         Else
-            TextBox_General_XML_Directory.Text = String.Empty
-            TextBox_General_XML_Filename.Text = String.Empty
+            TextBox_XML_Directory.Text = String.Empty
+            TextBox_XML_Filename.Text = String.Empty
             ToolStripStatusLabel_SaveFile.Text = String.Empty
         End If
 
@@ -157,6 +157,7 @@ Public Class Form1
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
         UC_Border.UC_Load("UC_Border_Paper", Border)
         With TableLayoutPanel_Paper
+
             .SetRow(UC_Border, 2)
             .SetRowSpan(UC_Border, 1)
             .SetColumn(UC_Border, 0)
@@ -166,11 +167,13 @@ Public Class Form1
             .SetRowSpan(PictureBox_Paper, 3)
             .SetColumn(PictureBox_Paper, 1)
             .SetColumnSpan(PictureBox_Paper, 1)
+
         End With
 
         UC_Font.UC_Load("UC_Font_Card", MyFont)
         UC_Border.UC_Load("UC_Border_Card", Border)
         With TableLayoutPanel_Card
+
             .SetRow(UC_Font, 1)
             .SetRowSpan(UC_Font, 1)
             .SetColumn(UC_Font, 0)
@@ -191,6 +194,7 @@ Public Class Form1
         UC_Font.UC_Load("UC_Font_CardRow", MyFont)
         UC_Border.UC_Load("UC_Border_CardRow", Border)
         With TableLayoutPanel_CardRow
+
             .SetRow(UC_Font, 2)
             .SetRowSpan(UC_Font, 1)
             .SetColumn(UC_Font, 0)
@@ -205,7 +209,28 @@ Public Class Form1
             .SetRowSpan(PictureBox_CardRow, 4)
             .SetColumn(PictureBox_CardRow, 1)
             .SetColumnSpan(PictureBox_CardRow, 1)
+
         End With
+
+        'With TableLayoutPanel_CSV
+
+        '    .SetRow(UC_Font, 2)
+        '    .SetRowSpan(UC_Font, 1)
+        '    .SetColumn(UC_Font, 0)
+        '    .SetColumnSpan(UC_Font, 1)
+
+        '    .SetRow(UC_Border, 3)
+        '    .SetRowSpan(UC_Border, 1)
+        '    .SetColumn(UC_Border, 0)
+        '    .SetColumnSpan(UC_Border, 1)
+
+        '    .SetRow(PictureBox_CardRow, 0)
+        '    .SetRowSpan(PictureBox_CardRow, 4)
+        '    .SetColumn(PictureBox_CardRow, 1)
+        '    .SetColumnSpan(PictureBox_CardRow, 1)
+
+        'End With
+
 
         CL_Default = New Class_Default(Me, DS)
 
@@ -240,8 +265,8 @@ Public Class Form1
             Else
 
                 DS = CL_DS.Get_DS(DS)
-                TextBox_General_XML_Directory.Text = "Kein gültiger Pfad."
-                TextBox_General_XML_Filename.Text = "Kein gültiger Name."
+                TextBox_XML_Directory.Text = "Kein gültiger Pfad."
+                TextBox_XML_Filename.Text = "Kein gültiger Name."
                 ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
 
             End If
@@ -415,7 +440,7 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_General_Import.Click
+    Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_Import.Click
 
         Dim Path As String = CL_XML.DataSetFile
         Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
@@ -433,7 +458,7 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_General_Export.Click
+    Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_Export.Click
 
         Dim FBD As New FolderBrowserDialog
         'With { .Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
@@ -492,15 +517,15 @@ Public Class Form1
         IsModified = True
 
     End Sub
-    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs) Handles TextBox_General_Import_Directory.TextChanged, TextBox_General_Import_Filename.TextChanged
+    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Import_Directory.TextChanged, TextBox_Import_Filename.TextChanged
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
 
         Dim File As String
-        File = TextBox_General_Import_Directory.Text
+        File = TextBox_Import_Directory.Text
         If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
-        File &= "\" & TextBox_General_Import_Filename.Text
+        File &= "\" & TextBox_Import_Filename.Text
         If My.Computer.FileSystem.FileExists(File) = False Then Return
 
         DS = CL_DS.Get_DS(DS)
@@ -714,7 +739,8 @@ Public Class Form1
                 CL_P.Ivalidate_Card(Me, DS)
             Case "TabPage_CardRow"
                 CL_P.Ivalidate_CardRow(Me, DS)
-            Case "TabPage_Files"
+            Case "TabPage_CSV"
+                CL_P.Ivalidate_CSV(Me, DS)
         End Select
 
     End Sub
@@ -793,7 +819,7 @@ Public Class Form1
         Return DialogResult
 
     End Function
-    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles Button_General_XML_Open.Click, ToolStripMenuItem2.Click
+    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles Button_XML.Click, ToolStripMenuItem2.Click
 
         CL_XML.OpenFileDialog_XML(DS)
         DataSetRead()
@@ -829,8 +855,8 @@ Public Class Form1
         Dim FI As New FileInfo(e)
 
         With FI
-            TextBox_General_XML_Directory.Text = .Directory.ToString
-            TextBox_General_XML_Filename.Text = .Name.ToString
+            TextBox_XML_Directory.Text = .Directory.ToString
+            TextBox_XML_Filename.Text = .Name.ToString
             ToolStripStatusLabel_SaveFile.Text = .FullName
         End With
 
@@ -843,8 +869,8 @@ Public Class Form1
 
         Dim FI As New FileInfo(File)
         With FI
-            TextBox_General_Import_Directory.Text = .Directory.ToString
-            TextBox_General_Import_Filename.Text = .Name.ToString
+            TextBox_Import_Directory.Text = .Directory.ToString
+            TextBox_Import_Filename.Text = .Name.ToString
         End With
 
         IsModified = False
@@ -892,7 +918,6 @@ Public Class Form1
         End With
 
         CL_Default.Default_ListBox(ListBox_CardRow)
-        'ListBox_CardRow.SelectedIndex = -1
 
     End Sub
 
@@ -1040,39 +1065,6 @@ Public Class Form1
 
     End Sub
 
-
-    'Public Sub UC_Font_Changed(Sender As Object, e As Font) Handles UC_Font.Font_Change
-
-    '    If Sender.canselect = False Then Return
-    '    If Sender.canfocus = False Then Return
-
-    '    Dim nFonString As String = New Class_FontConverter().FontToString(e)
-    '    Select Case Sender.Name
-
-    '        Case "UC_Font_General"
-    '            MyFont = e
-    '            My.Settings.MyFont = e
-    '            My.Settings.Save()
-    '            CL_Default = New Class_Default(Me, DS)
-    '        Case "UC_Font_Card"
-    '            DS.Tables("Card").Rows(0)("Font") = nFonString
-    '            IsModified = True
-    '        Case "UC_Font_CardRow"
-    '            Dim ID As Integer = ListBox_CardRow.SelectedValue
-    '            Dim DR As DataRow = DS.Tables("CardRow").Rows.Find(ID)
-    '            If IsNothing(DR) = False Then DR("Font") = nFonString
-    '            IsModified = True
-    '    End Select
-
-    '    Dim UC As UserControl_Font = CType(Sender, UserControl_Font)
-    '    With UC
-    '        .Label_Name_Value.Text = e.Name
-    '        .Label_Size_Value.Text = e.Size.ToString
-    '        .Label_Style_Value.Text = e.Style.ToString
-    '    End With
-
-    'End Sub
-
     Private Sub Save_General()
 
         Dim DR As DataRow = DS.Tables("Shema").Rows(0)
@@ -1098,24 +1090,6 @@ Public Class Form1
         IsModified = True
 
     End Sub
-    'Private Sub Save_Card()
-
-    '    Dim UCF As UserControl_Font = TryCast(TableLayoutPanel_Card.Controls("UC_Font_Card"), UserControl_Font)
-
-    '    Dim DR As DataRow = DS.Tables("Card").Rows(0)
-    '    DR("Font") = New Class_FontConverter().FontToString(UCF.UC_Font)
-    '    DR("CardSizeHeight") = Label_Card_Size_Hight_Value.Text
-    '    DR("CardSizeWidth") = Label_Card_Size_Width_Value.Text
-
-    '    Dim UCB As UserControl_Border = CType(TableLayoutPanel_Card.Controls("UC_Border_Card"), UserControl_Border)
-    '    DR("Left") = UCB.NUD_Left.Value
-    '    DR("Top") = UCB.NUD_Top.Value
-    '    DR("Right") = UCB.NUD_Right.Value
-    '    DR("Bottom") = UCB.NUD_Bottom.Value
-
-    '    IsModified = True
-
-    'End Sub
 
     Private Sub Save_CardRow()
 
