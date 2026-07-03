@@ -131,6 +131,7 @@ Partial Class Form1
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Open = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem_Save = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripStatusLabel_SaveFile = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel_SaveInfo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel_IsModified = New System.Windows.Forms.ToolStripStatusLabel()
@@ -517,14 +518,13 @@ Partial Class Form1
         '
         'PictureBox_CSV
         '
-        Me.PictureBox_CSV.BackColor = System.Drawing.Color.FloralWhite
+        Me.PictureBox_CSV.BackColor = System.Drawing.Color.Firebrick
         Me.PictureBox_CSV.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox_CSV.Location = New System.Drawing.Point(713, 1)
         Me.PictureBox_CSV.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_CSV.Name = "PictureBox_CSV"
         Me.TableLayoutPanel_CSV.SetRowSpan(Me.PictureBox_CSV, 2)
         Me.PictureBox_CSV.Size = New System.Drawing.Size(24, 185)
-        Me.PictureBox_CSV.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox_CSV.TabIndex = 47
         Me.PictureBox_CSV.TabStop = False
         '
@@ -1441,7 +1441,7 @@ Partial Class Form1
         '
         Me.MenuStrip_Main.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip_Main.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem1, Me.ToolStripMenuItem_Open, Me.ToolStripMenuItem_Save})
+        Me.MenuStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem_Datei, Me.ToolStripMenuItem1, Me.ToolStripMenuItem_Open, Me.ToolStripMenuItem_Save, Me.TestToolStripMenuItem})
         Me.MenuStrip_Main.Location = New System.Drawing.Point(3, 3)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -1474,6 +1474,12 @@ Partial Class Form1
         Me.ToolStripMenuItem_Save.Name = "ToolStripMenuItem_Save"
         Me.ToolStripMenuItem_Save.Size = New System.Drawing.Size(95, 28)
         Me.ToolStripMenuItem_Save.Text = "Speichern"
+        '
+        'TestToolStripMenuItem
+        '
+        Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(40, 28)
+        Me.TestToolStripMenuItem.Text = "Test"
         '
         'ToolStripStatusLabel_SaveFile
         '
@@ -1707,4 +1713,5 @@ Partial Class Form1
     Friend WithEvents PictureBox_CardRow As PictureBox
     Friend WithEvents PictureBox_CSV As PictureBox
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
 End Class

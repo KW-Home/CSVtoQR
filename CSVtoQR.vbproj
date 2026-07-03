@@ -71,6 +71,8 @@
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
+    <Import Include="ZXing" />
+    <Import Include="ZXing.Common" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class_Default.vb" />
@@ -101,6 +103,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="QRCodeGenerator.vb" />
     <Compile Include="UserControl_Border.Designer.vb">
       <DependentUpon>UserControl_Border.vb</DependentUpon>
     </Compile>
@@ -194,6 +197,11 @@
     <None Include="Werkbank\Bonus\Images\Standard\Edit_32xMD.png" />
     <Content Include="Werkbank\DataSet\DataSetNeu.xml" />
     <Content Include="Werkbank\DataSet\Standard.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ZXing.Net">
+      <Version>0.16.11</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

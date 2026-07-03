@@ -319,10 +319,23 @@ Public Class Class_Paint
                             Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
                             Dim _Rec As New Rectangle(Loc, Siz)
 
-                            g.DrawRectangle(P(1), _Rec)
-                            g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
 
-                            CurrentTop += nFontHeight
+
+                            If CType(DR("QRCode"), Boolean) = True Then
+                                Dim QR As Image = QRCodePicture(STR)
+                                _Rec = New Rectangle(Loc, QR.Size)
+                                g.DrawRectangle(P(1), _Rec)
+                                g.DrawImage(QR, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                                CurrentTop += QR.Size.Height
+                            Else
+                                g.DrawRectangle(P(1), _Rec)
+                                g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                                CurrentTop += nFontHeight
+                            End If
+
+
+
+
                             CurrentTop += RowBorderTop
                             CurrentTop += RowBorderBottom
 
@@ -338,5 +351,12 @@ Public Class Class_Paint
         End With
 
     End Sub
+
+    Public Function QRCodePicture(URL As String) As Image
+
+        'Dim qrGen As New QRCodeGenerator
+        Return New QRCodeGenerator().ErstelleQR(URL, 1)
+
+    End Function
 
 End Class

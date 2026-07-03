@@ -1,6 +1,7 @@
-﻿Imports System.ComponentModel
-Imports System.Drawing.Text
+﻿
 Imports System.IO
+Imports System.ComponentModel
+Imports System.Drawing.Text
 Imports System.Net.WebRequestMethods
 Imports System.Reflection
 Imports System.Runtime.InteropServices
@@ -8,6 +9,9 @@ Imports System.Security.Cryptography
 Imports CSVtoQR.Class_DS
 Imports CSVtoQR.My
 Imports CSVtoQR.UserControl_Border
+
+Imports ZXing
+Imports ZXing.Common
 
 Public Class Form1
 
@@ -1186,4 +1190,33 @@ Public Class Form1
         UC_File_ChangeEvent(UC_File_XML, CL_XML.DataSetFile)
 
     End Sub
+
+    Public Function GeneriereQR(url As String, size As Integer) As Bitmap
+
+        Dim writer As New BarcodeWriter With {
+            .Format = BarcodeFormat.QR_CODE,
+            .Options = New EncodingOptions With {
+                .Width = size,
+                .Height = size,
+                .Margin = 1,
+                .PureBarcode = True
+            }
+        }
+
+        ' Rückgabe des Bildes
+
+        Return DirectCast(writer.Write(url), Bitmap)
+
+    End Function
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+
+        Dim qrGen As New QRCodeGenerator
+        Dim zielURL As String = "https://www.beispiel.de/datenblatt?id=123https://www.miraphone.de/bb-trumpet-rotary-valves-19.html"
+        Dim qrBild As Bitmap = qrGen.ErstelleQR(zielURL, 960)
+
+        Me.PictureBox_CSV.Image = qrBild
+
+    End Sub
+
 End Class
