@@ -174,6 +174,7 @@ Public Class Class_DS
         Dim DT As New DataTable With {.TableName = "Search_Columns"}
         With DT
             .Columns.Add(New DataColumn With {.ColumnName = "Column", .DataType = GetType(String), .Unique = True, .AllowDBNull = False})
+            .Columns.Add(New DataColumn With {.ColumnName = "MaxSize", .DataType = GetType(Integer)})
             .PrimaryKey = New DataColumn() { .Columns("Column")}
         End With
 

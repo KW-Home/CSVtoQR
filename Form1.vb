@@ -336,7 +336,24 @@ Public Class Form1
         ComboBox_CardRow_DataColumn.Width = I + 30
         ComboBox_CardRow_DataColumn.Invalidate()
 
+        DurchlaufCSV()
+
         UC_Font.Controlls_Read()
+
+    End Sub
+
+    Private Sub DurchlaufCSV()
+
+        Dim OldIndex As Integer = 0
+
+        For Each WertC As DataRow In DS.Tables("Search_Columns").Rows
+            For Each Wert As DataRow In DT_CSV.Rows
+                Dim I As Integer = TextRenderer.MeasureText(WertC("Column").ToString, My.Settings.MyFont).Width
+                If OldIndex < I Then OldIndex = I
+            Next
+            WertC("MaxSize") = OldIndex
+            OldIndex = 0
+        Next
 
     End Sub
 

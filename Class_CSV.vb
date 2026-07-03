@@ -47,4 +47,17 @@ Public Class Class_CSV
 
     End Function
 
+    'Private Sub DurchlaufCSV(ColumnName As String)
+
+    '    Dim OldIndex As Integer = 0
+
+    '    For Each Wert In FRM.DT_CSV.Rows
+    '        Dim I As Integer = TextRenderer.MeasureText(Wert(ColumnName).ToString, My.Settings.MyFont).Width
+    '        If OldIndex < I Then OldIndex = I
+    '    Next
+
+    '    FRM.DS.Tables("Search_Columns").Select($"[Column] = '{ColumnName}'")(0)("MaxSize") = OldIndex
+
+    'End Sub
+
 End Class

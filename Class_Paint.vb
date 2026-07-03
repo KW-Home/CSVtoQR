@@ -216,10 +216,32 @@ Public Class Class_Paint
                             Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
                             Dim _Rec As New Rectangle(Loc, Siz)
 
-                            g.DrawRectangle(P(1), _Rec)
-                            g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
 
-                            CurrentTop += nFontHeight
+                            If CType(DR("QRCode"), Boolean) = True Then
+
+                                Dim QR As Image = QRCodePicture(STR)
+                                Dim ImageNew As Image = ResizeImage(QR, 32, 32)
+
+                                _Rec = New Rectangle(Loc, ImageNew.Size)
+
+                                g.DrawImage(ImageNew, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                                g.DrawRectangle(P(1), _Rec)
+
+                                CurrentTop += _Rec.Size.Height
+
+                                ImageNew.Dispose()
+
+                            Else
+                                g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                                g.DrawRectangle(P(1), _Rec)
+                                CurrentTop += nFontHeight
+                            End If
+
+
+                            'g.DrawRectangle(P(1), _Rec)
+                            'g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+
+                            'CurrentTop += nFontHeight
                             CurrentTop += RowBorderTop
                             CurrentTop += RowBorderBottom
 
@@ -322,11 +344,19 @@ Public Class Class_Paint
 
 
                             If CType(DR("QRCode"), Boolean) = True Then
+
                                 Dim QR As Image = QRCodePicture(STR)
-                                _Rec = New Rectangle(Loc, QR.Size)
+                                Dim ImageNew As Image = ResizeImage(QR, 96, 96)
+
+                                _Rec = New Rectangle(Loc, ImageNew.Size)
+
                                 g.DrawRectangle(P(1), _Rec)
-                                g.DrawImage(QR, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
-                                CurrentTop += QR.Size.Height
+                                g.DrawImage(ImageNew, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+
+                                CurrentTop += ImageNew.Size.Height
+
+                                ImageNew.Dispose()
+
                             Else
                                 g.DrawRectangle(P(1), _Rec)
                                 g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
@@ -355,7 +385,28 @@ Public Class Class_Paint
     Public Function QRCodePicture(URL As String) As Image
 
         'Dim qrGen As New QRCodeGenerator
-        Return New QRCodeGenerator().ErstelleQR(URL, 1)
+        Return New QRCodeGenerator().ErstelleQR(URL, 960)
+
+    End Function
+
+    ' Hilfsfunktion: skaliert ein Image auf die gewünschte Pixel-Größe (hochwertig)
+    Private Function ResizeImage(src As Image, width As Integer, height As Integer) As Image
+        Dim dest As New Bitmap(width, height)
+        dest.SetResolution(src.HorizontalResolution, src.VerticalResolution)
+
+        Using GR As Graphics = Graphics.FromImage(dest)
+            GR.CompositingMode = Drawing2D.CompositingMode.SourceCopy
+            GR.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            GR.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            GR.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+
+            Using ia As New System.Drawing.Imaging.ImageAttributes()
+                ia.SetWrapMode(Drawing2D.WrapMode.TileFlipXY)
+                GR.DrawImage(src, New Rectangle(0, 0, width, height), 0, 0, src.Width, src.Height, GraphicsUnit.Pixel, ia)
+            End Using
+        End Using
+
+        Return dest
 
     End Function
 
