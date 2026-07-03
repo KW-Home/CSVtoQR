@@ -37,7 +37,7 @@ Public Class Class_DS
 
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String), .DefaultValue = "Beschreibung"})
+            .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String), .DefaultValue = "Default"})
             .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "DPI", .DataType = GetType(Integer), .DefaultValue = 96})

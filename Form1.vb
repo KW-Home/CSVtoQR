@@ -16,6 +16,11 @@ Public Class Form1
     Private MyFont As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
 
     Private WithEvents CL_XML As New Class_XML
+
+    Private WithEvents UC_File_XML As New UserControl_File
+    Private WithEvents UC_File_CSV As New UserControl_File
+    Private WithEvents UC_File_PDF As New UserControl_File
+
     Private WithEvents UC_Font As New UserControl_Font(Me)
     Private WithEvents UC_Border As New UserControl_Border(Me)
 
@@ -62,13 +67,20 @@ Public Class Form1
         If System.IO.Directory.Exists(DirStr) Then
 
             ToolStripStatusLabel_SaveFile.Text = File_XML_Value
-            TextBox_XML_Directory.Text = DirStr
             My.Settings.LastDirectory = DirStr
+
+            With UC_File_CSV
+                .TextBox_Directory.Text = String.Empty
+                .TextBox_Filename.Text = String.Empty
+            End With
 
             If System.IO.File.Exists(File_XML_Value) = True Then
 
                 Dim FileName As String = System.IO.Path.GetFileName(File_XML_Value)
-                TextBox_XML_Filename.Text = FileName
+                With UC_File_XML
+                    .TextBox_Directory.Text = DirStr
+                    .TextBox_Filename.Text = FileName
+                End With
                 My.Settings.LastFile = FileName
 
                 DS = CL_DS.Get_DS(DS)
@@ -84,8 +96,10 @@ Public Class Form1
             End If
             My.Settings.Save()
         Else
-            TextBox_XML_Directory.Text = String.Empty
-            TextBox_XML_Filename.Text = String.Empty
+            With UC_File_XML
+                .TextBox_Directory.Text = String.Empty
+                .TextBox_Filename.Text = String.Empty
+            End With
             ToolStripStatusLabel_SaveFile.Text = String.Empty
         End If
 
@@ -148,8 +162,17 @@ Public Class Form1
 
         MyFont = My.Settings.MyFont
         Me.Font = MyFont
+        UC_File_XML.Name = "UC_File_XML"
+        UC_File_CSV.Name = "UC_File_CSV"
+        UC_File_PDF.Name = "UC_File_PDF"
+
+        UC_File_CSV.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
+        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
+        UC_File_CSV.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
 
         UC_Font.UC_Load("UC_Font_General", MyFont)
+
+
 
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
         UC_Border.UC_Load("UC_Border_Paper", Border)
@@ -209,26 +232,6 @@ Public Class Form1
 
         End With
 
-        'With TableLayoutPanel_CSV
-
-        '    .SetRow(UC_Font, 2)
-        '    .SetRowSpan(UC_Font, 1)
-        '    .SetColumn(UC_Font, 0)
-        '    .SetColumnSpan(UC_Font, 1)
-
-        '    .SetRow(UC_Border, 3)
-        '    .SetRowSpan(UC_Border, 1)
-        '    .SetColumn(UC_Border, 0)
-        '    .SetColumnSpan(UC_Border, 1)
-
-        '    .SetRow(PictureBox_CardRow, 0)
-        '    .SetRowSpan(PictureBox_CardRow, 4)
-        '    .SetColumn(PictureBox_CardRow, 1)
-        '    .SetColumnSpan(PictureBox_CardRow, 1)
-
-        'End With
-
-
         CL_Default = New Class_Default(Me, DS)
 
         MySettings_Load()
@@ -262,9 +265,9 @@ Public Class Form1
             Else
 
                 DS = CL_DS.Get_DS(DS)
-                TextBox_XML_Directory.Text = "Kein gültiger Pfad."
-                TextBox_XML_Filename.Text = "Kein gültiger Name."
-                ToolStripStatusLabel_SaveFile.Text = "Kein gültiger Pfad."
+                UC_File_XML.TextBox_Directory.Text = String.Empty
+                UC_File_XML.TextBox_Filename.Text = String.Empty
+                ToolStripStatusLabel_SaveFile.Text = String.Empty
 
             End If
 
@@ -435,34 +438,7 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub Button_Import_Click(sender As Object, e As EventArgs) Handles Button_Import.Click
 
-        Dim Path As String = CL_XML.DataSetFile
-        Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
-
-        If IsNothing(Path) = False Then
-
-            If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
-                OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
-                OFD.FileName = System.IO.Path.GetFileName(Path)
-            End If
-
-        End If
-        If OFD.ShowDialog = DialogResult.OK Then
-            File_CSV = OFD.FileName
-        End If
-
-    End Sub
-    Private Sub Button_Export_Click(sender As Object, e As EventArgs) Handles Button_Export.Click
-
-        Dim FBD As New FolderBrowserDialog
-        'With { .Title = "Export PDF-Datei", .Filter = "PDF-Dateien (*.PDF)|*.PDF|Alle Dateien (*.*)|*.*"}
-
-        If FBD.ShowDialog = DialogResult.OK Then
-            File_PDF = FBD.SelectedPath
-        End If
-
-    End Sub
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         If IsModified = True Then
@@ -512,15 +488,15 @@ Public Class Form1
         IsModified = True
 
     End Sub
-    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Import_Directory.TextChanged, TextBox_Import_Filename.TextChanged
+    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
 
         Dim File As String
-        File = TextBox_Import_Directory.Text
+        File = UC_File_CSV.TextBox_Directory.Text
         If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
-        File &= "\" & TextBox_Import_Filename.Text
+        File &= "\" & UC_File_CSV.TextBox_Filename.Text
         If My.Computer.FileSystem.FileExists(File) = False Then Return
 
         DS = CL_DS.Get_DS(DS)
@@ -528,15 +504,15 @@ Public Class Form1
         DS.Tables("Shema").Rows(0).Item("Import") = File
 
     End Sub
-    Private Sub TextBox_General_Export_TextChanged(sender As Object, e As EventArgs) Handles TextBox_General_Export_Directory.TextChanged, TextBox_General_Export_Filename.TextChanged
+    Private Sub TextBox_General_Export_TextChanged(sender As Object, e As EventArgs)
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
 
         Dim File As String
-        File = TextBox_General_Export_Directory.Text
+        File = UC_File_PDF.TextBox_Directory.Text
         If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
-        File &= "\" & TextBox_General_Export_Filename.Text
+        File &= "\" & UC_File_PDF.TextBox_Filename.Text
 
         DS = CL_DS.Get_DS(DS)
         IsModified = CType(DS.Tables("Shema").Rows(0).Item("Export") = File, Boolean)
@@ -750,8 +726,6 @@ Public Class Form1
     Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click
 
         Save_General()
-        'Save_Paper()
-        'Save_Card()
         Save_CardRow()
 
         If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
@@ -814,14 +788,6 @@ Public Class Form1
         Return DialogResult
 
     End Function
-    Private Sub XML_Open_Click(sender As Object, e As EventArgs) Handles Button_XML.Click, ToolStripMenuItem2.Click
-
-        CL_XML.OpenFileDialog_XML(DS)
-        DataSetRead()
-
-        GET_ColumnTabele()
-
-    End Sub
 
     Private Sub GET_ColumnTabele()
 
@@ -850,8 +816,8 @@ Public Class Form1
         Dim FI As New FileInfo(e)
 
         With FI
-            TextBox_XML_Directory.Text = .Directory.ToString
-            TextBox_XML_Filename.Text = .Name.ToString
+            UC_File_XML.TextBox_Directory.Text = .Directory.ToString
+            UC_File_XML.TextBox_Filename.Text = .Name.ToString
             ToolStripStatusLabel_SaveFile.Text = .FullName
         End With
 
@@ -863,10 +829,8 @@ Public Class Form1
         If My.Computer.FileSystem.FileExists(File) = False Then Return
 
         Dim FI As New FileInfo(File)
-        With FI
-            TextBox_Import_Directory.Text = .Directory.ToString
-            TextBox_Import_Filename.Text = .Name.ToString
-        End With
+        UC_File_CSV.TextBox_Directory.Text = FI.Directory.ToString
+        UC_File_CSV.TextBox_Filename.Text = FI.Name.ToString
 
         IsModified = False
 
@@ -878,8 +842,8 @@ Public Class Form1
         If File.Length = 0 Then Return
 
         Dim FI As New FileInfo(File)
-        TextBox_General_Export_Directory.Text = FI.Directory.ToString
-        TextBox_General_Export_Filename.Text = FI.Name.ToString
+        UC_File_PDF.TextBox_Directory.Text = FI.Directory.ToString
+        UC_File_PDF.TextBox_Filename.Text = FI.Name.ToString
 
         IsModified = False
 
@@ -890,6 +854,8 @@ Public Class Form1
         CL_DS.GET_CardRow(DS, -1)
         Set_CardRow_DataBinding()
         DataSetRead()
+
+        CL_P.Ivalidate_CardRow(Me, DS)
 
     End Sub
     Private Sub Set_CardRow_DataBinding()
@@ -924,6 +890,8 @@ Public Class Form1
         End With
 
         Set_CardRow_DataBinding()
+
+        CL_P.Ivalidate_CardRow(Me, DS)
 
     End Sub
 
@@ -1028,6 +996,7 @@ Public Class Form1
         If sender.CanSelect = False Then Return
 
         CardRow_Sort(sender, e)
+        CL_P.Ivalidate_CardRow(Me, DS)
 
     End Sub
     Private Sub CardRow_Sort(sender As Object, e As EventArgs)
@@ -1170,4 +1139,51 @@ Public Class Form1
 
     End Sub
 
+    Public Sub UC_File_ChangeEvent(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
+
+        Debug.Print("UC_File_ChangeEvent: " & sender.Name & " - " & e)
+
+        Select Case sender.Name
+
+            Case "UC_File_XML"
+
+                CL_XML.OpenFileDialog_XML(DS)
+                DataSetRead()
+                GET_ColumnTabele()
+
+            Case "UC_File_PDF"
+
+                Dim FBD As New FolderBrowserDialog
+                If FBD.ShowDialog = DialogResult.OK Then
+                    File_PDF = FBD.SelectedPath
+                End If
+
+            Case "UC_File_CSV"
+
+                Dim Path As String = CL_XML.DataSetFile
+                Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
+
+                If IsNothing(Path) = False Then
+
+                    If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
+                        OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
+                        OFD.FileName = System.IO.Path.GetFileName(Path)
+                    End If
+
+                End If
+
+                If OFD.ShowDialog = DialogResult.OK Then
+                    File_CSV = OFD.FileName
+                End If
+
+        End Select
+
+
+    End Sub
+
+    Private Sub ToolStripMenuItem_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Open.Click
+
+        UC_File_ChangeEvent(UC_File_XML, CL_XML.DataSetFile)
+
+    End Sub
 End Class
