@@ -155,7 +155,7 @@ Partial Class UserControl_Border
         '
         'NUD_Left
         '
-        Me.NUD_Left.DecimalPlaces = 2
+        Me.NUD_Left.DecimalPlaces = 1
         Me.NUD_Left.Dock = System.Windows.Forms.DockStyle.Top
         Me.NUD_Left.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NUD_Left.Location = New System.Drawing.Point(39, 20)
@@ -169,7 +169,7 @@ Partial Class UserControl_Border
         '
         'NUD_Right
         '
-        Me.NUD_Right.DecimalPlaces = 2
+        Me.NUD_Right.DecimalPlaces = 1
         Me.NUD_Right.Dock = System.Windows.Forms.DockStyle.Top
         Me.NUD_Right.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NUD_Right.Location = New System.Drawing.Point(39, 40)
@@ -183,7 +183,7 @@ Partial Class UserControl_Border
         '
         'NUD_Top
         '
-        Me.NUD_Top.DecimalPlaces = 2
+        Me.NUD_Top.DecimalPlaces = 1
         Me.NUD_Top.Dock = System.Windows.Forms.DockStyle.Top
         Me.NUD_Top.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NUD_Top.Location = New System.Drawing.Point(39, 60)
@@ -197,7 +197,7 @@ Partial Class UserControl_Border
         '
         'NUD_Bottom
         '
-        Me.NUD_Bottom.DecimalPlaces = 2
+        Me.NUD_Bottom.DecimalPlaces = 1
         Me.NUD_Bottom.Dock = System.Windows.Forms.DockStyle.Top
         Me.NUD_Bottom.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NUD_Bottom.Location = New System.Drawing.Point(39, 80)

@@ -130,9 +130,6 @@ Public Class Form1
                 File_PDF_Value = finalPath
             End If
 
-            'If IsNothing(DS.Tables("Shema")) = False Then CL_DS.Get_DS(DS)
-            'If DS.Tables("Shema").Rows.Count = 0 Then CL_DS.GET_Shema(DS)
-
             DS.Tables("Shema").Rows(0).Item("Export") = File_PDF_Value
 
             SET_Changetext_PDF(File_PDF_Value)
@@ -315,10 +312,6 @@ Public Class Form1
                 .DataSource = DS.Tables("Search_Columns")
                 .DisplayMember = "Column"
                 .ValueMember = "Column"
-
-                '.DataSource = DT_CSV.Columns.Cast(Of DataColumn)().Select(Function(c) c.ColumnName).ToList()
-                ' DT_CSV.Columns.Cast(Of DataColumn)().ToList()
-
             End With
         End If
 
@@ -335,6 +328,8 @@ Public Class Form1
         ComboBox_CardRow_DataColumn.DropDownWidth = I + 30
         ComboBox_CardRow_DataColumn.Width = I + 30
         ComboBox_CardRow_DataColumn.Invalidate()
+
+        UC_Font.Controlls_Read()
 
     End Sub
 
@@ -917,8 +912,6 @@ Public Class Form1
             .ValueMember = "ID"
         End With
 
-        CL_Default.Default_ListBox(ListBox_CardRow)
-
     End Sub
 
     Private Sub Button_CardRow_List_Delete_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Delete.Click
@@ -1144,14 +1137,14 @@ Public Class Form1
 
     Public Sub UC_Font_Font_Change(sender As Object, e As Font)
 
+        Dim FRMSize As Size = Me.Size
+
         Select Case sender.Name
             Case "UC_Font_General"
                 My.Settings.MyFont = e
                 My.Settings.Save()
-
                 Me.Font = e
-
-                'CL_Default = New Class_Default(Me, DS)
+                Me.Size = FRMSize
         End Select
 
     End Sub
@@ -1173,7 +1166,7 @@ Public Class Form1
 
         If sender.CanSelect = False Then Return
 
-        CL_P.Ivalidate_CardRow(Me, DS)
+        CL_P.Ivalidate_CSV(Me, DS)
 
     End Sub
 
