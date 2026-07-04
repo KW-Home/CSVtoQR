@@ -3,7 +3,7 @@
 Public Class UserControl_Font
 
     Public Event Font_Change(ByVal sender As Object, ByVal e As Font)
-    Public UC_Font As Font = My.Settings.MyFont
+    Public UC_Font As Font = My.Settings.Font_Main
 
     Private ReadOnly FRM As Form1
     Private UC As UserControl_Font
@@ -17,7 +17,7 @@ Public Class UserControl_Font
 
     Private Sub Button_Font_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Font.Click
 
-        Dim FD As New FontDialog With {.Font = My.Settings.MyFont}
+        Dim FD As New FontDialog With {.Font = My.Settings.Font_Main}
         If FD.ShowDialog = DialogResult.OK Then
             UC_Font = FD.Font
             RaiseEvent Font_Change(Me, FD.Font)
@@ -60,7 +60,7 @@ Public Class UserControl_Font
             UC = New UserControl_Font(FRM) With {.Name = UC_Name}
             With UC
                 .Dock = DockStyle.Fill
-                .Font = My.Settings.MyFont
+                .Font = My.Settings.Font_Main
             End With
 
             TLP.Controls.Add(UC)
@@ -101,7 +101,7 @@ Public Class UserControl_Font
 
             Application.DoEvents()
 
-            Con.Font = My.Settings.MyFont
+            Con.Font = My.Settings.Font_Main
             Controlls_Read_Sub(Con)
             Con.ResumeLayout()
 
@@ -120,7 +120,7 @@ Public Class UserControl_Font
     Private Sub Controlls_Read_Sub(_Con As Control)
 
         For Each Con As Control In _Con.Controls
-            Con.Font = My.Settings.MyFont
+            Con.Font = My.Settings.Font_Main
             If Con.Controls.Count > 0 Then
                 Controlls_Read_Sub(Con)
             End If

@@ -17,7 +17,7 @@ Public Class Form1
 
     Public DS As New DataSet
 
-    Private MyFont As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
+    Private FontMain As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
 
     Private WithEvents CL_XML As New Class_XML
 
@@ -117,7 +117,7 @@ Public Class Form1
         Set(ByVal value As String)
             File_CSV_Value = value
             DS = CL_DS.Get_DS(DS)
-            DS.Tables("Shema").Rows(0).Item("Import") = value
+            DS.Tables("Paper").Rows(0).Item("Import") = value
             Load_CSV(value)
             SET_Changetext_CSV(value)
 
@@ -148,7 +148,7 @@ Public Class Form1
                 File_PDF_Value = finalPath
             End If
 
-            DS.Tables("Shema").Rows(0).Item("Export") = File_PDF_Value
+            DS.Tables("Paper").Rows(0).Item("Export") = File_PDF_Value
 
             SET_Changetext_PDF(File_PDF_Value)
 
@@ -164,8 +164,8 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        MyFont = My.Settings.MyFont
-        Me.Font = MyFont
+        FontMain = My.Settings.Font_Main
+        Me.Font = FontMain
         UC_File_XML.Name = "UC_File_XML"
         UC_File_CSV.Name = "UC_File_CSV"
         UC_File_PDF.Name = "UC_File_PDF"
@@ -174,7 +174,7 @@ Public Class Form1
         UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
         UC_File_CSV.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
 
-        UC_Font.UC_Load("UC_Font_General", MyFont)
+        UC_Font.UC_Load("UC_Font_General", FontMain)
 
 
 
@@ -194,7 +194,7 @@ Public Class Form1
 
         End With
 
-        UC_Font.UC_Load("UC_Font_Card", MyFont)
+        UC_Font.UC_Load("UC_Font_Card", FontMain)
         UC_Border.UC_Load("UC_Border_Card", Border)
         With TableLayoutPanel_Card
 
@@ -215,7 +215,7 @@ Public Class Form1
 
         End With
 
-        UC_Font.UC_Load("UC_Font_CardRow", MyFont)
+        UC_Font.UC_Load("UC_Font_CardRow", FontMain)
         UC_Border.UC_Load("UC_Border_CardRow", Border)
         With TableLayoutPanel_CardRow
 
@@ -236,7 +236,7 @@ Public Class Form1
 
         End With
 
-        CL_Default = New Class_Default(Me, DS)
+        CL_Default = New Class_Default(Me)
 
         MySettings_Load()
 
@@ -258,7 +258,7 @@ Public Class Form1
                 DS = CL_DS.Get_DS(DS)
                 CL_XML.ReadXML(DS)
 
-                Dim DT As DataTable = DS.Tables("Shema")
+                Dim DT As DataTable = DS.Tables("Paper")
                 If DT.Rows.Count > 0 Then
                     File_CSV = DT(0)("Import").ToString()
                     File_PDF = DT(0)("Export").ToString()
@@ -294,7 +294,7 @@ Public Class Form1
         With My.Settings
 
             .MySize = sizeToSave
-            .MyFont = MyFont
+            .Font_Main = FontMain
             .LastFile = File_XML_Value
             .Save()
 
@@ -327,7 +327,7 @@ Public Class Form1
         For Each DR As DataRow In DS.Tables("Search_Columns").Rows
             If IsNothing(DR) = False Then
                 Dim ST As String = DR("Column")
-                Ix = TextRenderer.MeasureText(ST, My.Settings.MyFont).Width
+                Ix = TextRenderer.MeasureText(ST, My.Settings.Font_Main).Width
                 If I < Ix Then I = Ix
             End If
         Next
@@ -348,7 +348,7 @@ Public Class Form1
 
         For Each WertC As DataRow In DS.Tables("Search_Columns").Rows
             For Each Wert As DataRow In DT_CSV.Rows
-                Dim I As Integer = TextRenderer.MeasureText(WertC("Column").ToString, My.Settings.MyFont).Width
+                Dim I As Integer = TextRenderer.MeasureText(WertC("Column").ToString, My.Settings.Font_Main).Width
                 If OldIndex < I Then OldIndex = I
             Next
             WertC("MaxSize") = OldIndex
@@ -372,9 +372,9 @@ Public Class Form1
         Dim nFont As Font
         Dim Border As UserControl_Border.Border
 
-        'Shema auslesen und in die entsprechenden Steuerelemente einfügen
-        DR = DS.Tables("Shema").Rows(0)
-        TextBox_Paper_Shema.Text = DR("Shema").ToString
+        'Paper auslesen und in die entsprechenden Steuerelemente einfügen
+        DR = DS.Tables("Paper").Rows(0)
+        TextBox_Paper_Paper.Text = DR("Paper").ToString
         File_CSV = DR("Import").ToString
         File_PDF = DR("Export").ToString
         ComboBox_Paper_DPI.Text = DR("DPI")
@@ -495,17 +495,17 @@ Public Class Form1
         IsModified = True
 
         Dim ObjName As String = sender.tag
-        DS.Tables("Shema").Rows(0).Item(ObjName) = sender.value
+        DS.Tables("Paper").Rows(0).Item(ObjName) = sender.value
 
         PaperPaint(Nothing, Nothing)
 
     End Sub
-    Private Sub TextBox_Paper_Shema_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Shema.TextChanged
+    Private Sub TextBox_Paper_Paper_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Paper.TextChanged
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
         DS = CL_DS.Get_DS(DS)
-        DS.Tables("Shema").Rows(0).Item("Shema") = TextBox_Paper_Shema.Text
+        DS.Tables("Paper").Rows(0).Item("Paper") = TextBox_Paper_Paper.Text
         IsModified = True
 
     End Sub
@@ -521,8 +521,8 @@ Public Class Form1
         If My.Computer.FileSystem.FileExists(File) = False Then Return
 
         DS = CL_DS.Get_DS(DS)
-        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Import") = File, Boolean)
-        DS.Tables("Shema").Rows(0).Item("Import") = File
+        IsModified = CType(DS.Tables("Paper").Rows(0).Item("Import") = File, Boolean)
+        DS.Tables("Paper").Rows(0).Item("Import") = File
 
     End Sub
     Private Sub TextBox_General_Export_TextChanged(sender As Object, e As EventArgs)
@@ -536,8 +536,8 @@ Public Class Form1
         File &= "\" & UC_File_PDF.TextBox_Filename.Text
 
         DS = CL_DS.Get_DS(DS)
-        IsModified = CType(DS.Tables("Shema").Rows(0).Item("Export") = File, Boolean)
-        DS.Tables("Shema").Rows(0).Item("Export") = File
+        IsModified = CType(DS.Tables("Paper").Rows(0).Item("Export") = File, Boolean)
+        DS.Tables("Paper").Rows(0).Item("Export") = File
 
     End Sub
     Private Sub CSVSearch()
@@ -684,7 +684,7 @@ Public Class Form1
         If ComboBox_Paper_DIN.SelectedIndex = -1 Then Return
         If ComboBox_Paper_DIN.CanFocus = False Then Return
 
-        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
+        Dim DR As DataRow = DS.Tables("Paper").Rows(0)
 
         DR("DIN") = CType(ComboBox_Paper_DIN.Text, String)
         DR("PaperHeight") = CType(ComboBox_Paper_DIN.SelectedItem("PaperHeight"), Integer)
@@ -700,7 +700,7 @@ Public Class Form1
     End Sub
 
     Public Sub CB_DPI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DPI.SelectedIndexChanged
-        DS.Tables("Shema").Rows(0)("DPI") = CType(ComboBox_Paper_DPI.Text, Integer)
+        DS.Tables("Paper").Rows(0)("DPI") = CType(ComboBox_Paper_DPI.Text, Integer)
 
         PaperPaint(Nothing, Nothing)
 
@@ -790,7 +790,7 @@ Public Class Form1
             .CheckPathExists = True
             .Title = "Die Datei Speichern (" & CL_XML.DataSetFile & ")"
             .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile)
-            .FileName = TextBox_Paper_Shema.Text
+            .FileName = TextBox_Paper_Paper.Text
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
 
@@ -1050,7 +1050,7 @@ Public Class Form1
 
     Private Sub Save_General()
 
-        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
+        Dim DR As DataRow = DS.Tables("Paper").Rows(0)
         DR("Import") = File_CSV
         DR("Export") = File_PDF
 
@@ -1058,8 +1058,8 @@ Public Class Form1
 
     Private Sub Save_Paper()
 
-        Dim DR As DataRow = DS.Tables("Shema").Rows(0)
-        DR("Shema") = TextBox_Paper_Shema.Text
+        Dim DR As DataRow = DS.Tables("Paper").Rows(0)
+        DR("Paper") = TextBox_Paper_Paper.Text
         DR("DPI") = ComboBox_Paper_DPI.Text
         DR("DIN") = ComboBox_Paper_DIN.Text
         DR("PaperHeight") = Label_Paper_Height_Value.Text
@@ -1131,7 +1131,7 @@ Public Class Form1
 
         Select Case sender.Name
             Case "UC_Font_General"
-                My.Settings.MyFont = e
+                My.Settings.Font_Main = e
                 My.Settings.Save()
                 Me.Font = e
                 Me.Size = FRMSize

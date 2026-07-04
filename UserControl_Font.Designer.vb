@@ -158,9 +158,9 @@ Partial Class UserControl_Font
         Me.Label_Header.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.Label_Header.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label_Header, 3)
-        Me.Label_Header.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Label_Header.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "Font_Main", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_Header.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.Label_Header.Font = Global.CSVtoQR.My.MySettings.Default.Font_Main
         Me.Label_Header.Location = New System.Drawing.Point(12, 12)
         Me.Label_Header.Margin = New System.Windows.Forms.Padding(9)
         Me.Label_Header.Name = "Label_Header"
@@ -176,8 +176,8 @@ Partial Class UserControl_Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "Font_Main", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Font = Global.CSVtoQR.My.MySettings.Default.Font_Main
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "UserControl_Font"
         Me.Size = New System.Drawing.Size(176, 95)

@@ -37,7 +37,7 @@ Public Class UserControl_Border
             UC = New UserControl_Border(FRM) With {.Name = UC_Name}
             With UC
                 .Dock = DockStyle.Top
-                .Font = My.Settings.MyFont
+                .Font = My.Settings.Font_Main
             End With
             TLP.Controls.Add(UC)
             With TLP
@@ -89,7 +89,7 @@ Public Class UserControl_Border
 
         Select Case Sender.Name
             Case "UC_Border_Paper"
-                DR = FRM.DS.Tables("Shema").Rows(0)
+                DR = FRM.DS.Tables("Paper").Rows(0)
             Case "UC_Border_Card"
                 DR = FRM.DS.Tables("Card").Rows(0)
             Case "UC_Border_CardRow"

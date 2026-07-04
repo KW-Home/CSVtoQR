@@ -4,35 +4,27 @@ Public Class UserControl_File
 
     Public Event ChangeEvent(ByVal sender As Object, ByVal e As String)
 
-    Public Sub UC_Load(FRM As Form1, UC_Name As UserControl_File, TLP As TableLayoutPanel)
+    Public Sub UC_Load(FRM As Form1, UC As UserControl_File, TLP As TableLayoutPanel)
 
-        With UC_Name
-
+        With UC
             .Dock = DockStyle.Top
-            .Font = My.Settings.MyFont
-
+            .Font = My.Settings.Font_Main
             Select Case .Name
                 Case "UC_File_XML"
-
                     .Label_Header.Text = "XML Files"
                     .Button_File.ImageKey = "File_XML"
-
                 Case "UC_File_CSV"
-
                     .Label_Header.Text = "CSV Files"
                     .Button_File.ImageKey = "File_CSV"
-
                 Case "UC_File_PDF"
-
                     .Label_Header.Text = "PDF Files"
                     .Button_File.ImageKey = "File_PDF"
-
             End Select
         End With
 
         TLP.RowCount += 1
         TLP.RowStyles.Add(New RowStyle(SizeType.AutoSize))
-        TLP.Controls.Add(UC_Name)
+        TLP.Controls.Add(UC)
 
     End Sub
 

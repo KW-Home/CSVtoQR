@@ -81,12 +81,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Microsoft Sans Serif, 8.25pt")>  _
-        Public Property MyFont() As Global.System.Drawing.Font
+        Public Property Font_Main() As Global.System.Drawing.Font
             Get
-                Return CType(Me("MyFont"),Global.System.Drawing.Font)
+                Return CType(Me("Font_Main"),Global.System.Drawing.Font)
             End Get
             Set
-                Me("MyFont") = value
+                Me("Font_Main") = value
             End Set
         End Property
         

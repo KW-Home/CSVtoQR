@@ -19,7 +19,7 @@ Public Class Class_DS
 
         With DS.Tables
 
-            If .Contains("Shema") = False Then .Add(DT_Shema(DS))
+            If .Contains("Paper") = False Then .Add(DT_Paper(DS))
             If .Contains("Card") = False Then .Add(DT_Card(DS))
             If .Contains("CardRow") = False Then .Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
@@ -31,13 +31,13 @@ Public Class Class_DS
 
     End Function
 
-    Private Function DT_Shema(ByRef DS As DataSet) As DataTable
+    Private Function DT_Paper(ByRef DS As DataSet) As DataTable
 
-        Dim DT As New DataTable With {.TableName = "Shema"}
+        Dim DT As New DataTable With {.TableName = "Paper"}
 
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "Shema", .Unique = False, .DataType = GetType(String), .DefaultValue = "Default"})
+            .Columns.Add(New DataColumn With {.ColumnName = "Paper", .Unique = False, .DataType = GetType(String), .DefaultValue = "Default"})
             .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "DPI", .DataType = GetType(Integer), .DefaultValue = 96})
@@ -53,7 +53,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "PaperHeight", .DataType = GetType(Double), .DefaultValue = 297})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperWidth", .DataType = GetType(Double), .DefaultValue = 210})
 
-            .PrimaryKey = New DataColumn() { .Columns("Shema")}
+            .PrimaryKey = New DataColumn() { .Columns("Paper")}
 
         End With
 
@@ -74,7 +74,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.MyFont)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Font_Main)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer), .DefaultValue = 0})
 
@@ -103,7 +103,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.MyFont)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Font_Main)})
 
             .PrimaryKey = New DataColumn() { .Columns("ID")}
 
@@ -135,7 +135,7 @@ Public Class Class_DS
         DR("Right") = 0.0
         DR("Bottom") = 0.0
         DR("FontColor") = Color.Black.ToArgb.ToString
-        DR("Font") = CL_F.FontToString(My.Settings.MyFont)
+        DR("Font") = CL_F.FontToString(My.Settings.Font_Main)
 
         DT.Rows.Add(DR)
 

@@ -72,15 +72,15 @@ Partial Class Form1
         Me.TabPage_Paper = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_Paper = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox_Paper = New System.Windows.Forms.PictureBox()
-        Me.GroupBox_Paper_Shema = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel_Paper_Shema = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox_Paper_Paper = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel_Paper_Paper = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_Paper_Width_Unit = New System.Windows.Forms.Label()
         Me.Label_Paper_Height_Unit = New System.Windows.Forms.Label()
         Me.Label_Paper_Width_Value = New System.Windows.Forms.Label()
-        Me.Label_Paper_Shema = New System.Windows.Forms.Label()
+        Me.Label_Paper_Paper = New System.Windows.Forms.Label()
         Me.Label_Paper_Height_Value = New System.Windows.Forms.Label()
         Me.ComboBox_Paper_DPI = New System.Windows.Forms.ComboBox()
-        Me.TextBox_Paper_Shema = New System.Windows.Forms.TextBox()
+        Me.TextBox_Paper_Paper = New System.Windows.Forms.TextBox()
         Me.ComboBox_Paper_DIN = New System.Windows.Forms.ComboBox()
         Me.TabPage_Card = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_Card = New System.Windows.Forms.TableLayoutPanel()
@@ -157,8 +157,8 @@ Partial Class Form1
         Me.TabPage_Paper.SuspendLayout()
         Me.TableLayoutPanel_Paper.SuspendLayout()
         CType(Me.PictureBox_Paper, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox_Paper_Shema.SuspendLayout()
-        Me.TableLayoutPanel_Paper_Shema.SuspendLayout()
+        Me.GroupBox_Paper_Paper.SuspendLayout()
+        Me.TableLayoutPanel_Paper_Paper.SuspendLayout()
         Me.TabPage_Card.SuspendLayout()
         Me.TableLayoutPanel_Card.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -702,7 +702,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.Controls.Add(Me.PictureBox_Paper, 1, 0)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Paper_Shema, 0, 0)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Paper_Paper, 0, 0)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.GroupBox_Separatoren, 0, 1)
         Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
@@ -723,52 +723,52 @@ Partial Class Form1
         Me.PictureBox_Paper.TabIndex = 46
         Me.PictureBox_Paper.TabStop = False
         '
-        'GroupBox_Paper_Shema
+        'GroupBox_Paper_Paper
         '
-        Me.GroupBox_Paper_Shema.AutoSize = True
-        Me.GroupBox_Paper_Shema.Controls.Add(Me.TableLayoutPanel_Paper_Shema)
-        Me.GroupBox_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupBox_Paper_Shema.Location = New System.Drawing.Point(12, 12)
-        Me.GroupBox_Paper_Shema.Name = "GroupBox_Paper_Shema"
-        Me.GroupBox_Paper_Shema.Size = New System.Drawing.Size(241, 133)
-        Me.GroupBox_Paper_Shema.TabIndex = 0
-        Me.GroupBox_Paper_Shema.TabStop = False
-        Me.GroupBox_Paper_Shema.Text = "Shema"
+        Me.GroupBox_Paper_Paper.AutoSize = True
+        Me.GroupBox_Paper_Paper.Controls.Add(Me.TableLayoutPanel_Paper_Paper)
+        Me.GroupBox_Paper_Paper.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox_Paper_Paper.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox_Paper_Paper.Name = "GroupBox_Paper_Paper"
+        Me.GroupBox_Paper_Paper.Size = New System.Drawing.Size(241, 133)
+        Me.GroupBox_Paper_Paper.TabIndex = 0
+        Me.GroupBox_Paper_Paper.TabStop = False
+        Me.GroupBox_Paper_Paper.Text = "Paper"
         '
-        'TableLayoutPanel_Paper_Shema
+        'TableLayoutPanel_Paper_Paper
         '
-        Me.TableLayoutPanel_Paper_Shema.AutoSize = True
-        Me.TableLayoutPanel_Paper_Shema.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel_Paper_Shema.ColumnCount = 3
-        Me.TableLayoutPanel_Paper_Shema.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Paper_Shema.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Paper_Shema.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Width_Unit, 2, 4)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Height_Unit, 2, 3)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Width_Value, 1, 4)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Shema, 0, 0)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Height_Value, 1, 3)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.ComboBox_Paper_DPI, 1, 1)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Width, 0, 4)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.TextBox_Paper_Shema, 1, 0)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_Height, 0, 3)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_DPI, 0, 1)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.Label_Paper_DIN, 0, 2)
-        Me.TableLayoutPanel_Paper_Shema.Controls.Add(Me.ComboBox_Paper_DIN, 1, 2)
-        Me.TableLayoutPanel_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel_Paper_Shema.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel_Paper_Shema.Name = "TableLayoutPanel_Paper_Shema"
-        Me.TableLayoutPanel_Paper_Shema.RowCount = 5
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper_Shema.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper_Shema.Size = New System.Drawing.Size(235, 114)
-        Me.TableLayoutPanel_Paper_Shema.TabIndex = 0
+        Me.TableLayoutPanel_Paper_Paper.AutoSize = True
+        Me.TableLayoutPanel_Paper_Paper.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.TableLayoutPanel_Paper_Paper.ColumnCount = 3
+        Me.TableLayoutPanel_Paper_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Paper_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Paper_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Width_Unit, 2, 4)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Height_Unit, 2, 3)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Width_Value, 1, 4)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Paper, 0, 0)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Height_Value, 1, 3)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.ComboBox_Paper_DPI, 1, 1)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Width, 0, 4)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.TextBox_Paper_Paper, 1, 0)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_Height, 0, 3)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_DPI, 0, 1)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.Label_Paper_DIN, 0, 2)
+        Me.TableLayoutPanel_Paper_Paper.Controls.Add(Me.ComboBox_Paper_DIN, 1, 2)
+        Me.TableLayoutPanel_Paper_Paper.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel_Paper_Paper.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel_Paper_Paper.Name = "TableLayoutPanel_Paper_Paper"
+        Me.TableLayoutPanel_Paper_Paper.RowCount = 5
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_Paper_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_Paper_Paper.Size = New System.Drawing.Size(235, 114)
+        Me.TableLayoutPanel_Paper_Paper.TabIndex = 0
         '
         'Label_Paper_Width_Unit
         '
@@ -801,17 +801,17 @@ Partial Class Form1
         Me.Label_Paper_Width_Value.TabIndex = 47
         Me.Label_Paper_Width_Value.Text = "PW"
         '
-        'Label_Paper_Shema
+        'Label_Paper_Paper
         '
-        Me.Label_Paper_Shema.AutoSize = True
-        Me.Label_Paper_Shema.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label_Paper_Shema.Location = New System.Drawing.Point(3, 0)
-        Me.Label_Paper_Shema.Name = "Label_Paper_Shema"
-        Me.Label_Paper_Shema.Size = New System.Drawing.Size(34, 17)
-        Me.Label_Paper_Shema.TabIndex = 0
-        Me.Label_Paper_Shema.Text = "Name"
-        Me.Label_Paper_Shema.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Paper_Shema.UseCompatibleTextRendering = True
+        Me.Label_Paper_Paper.AutoSize = True
+        Me.Label_Paper_Paper.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label_Paper_Paper.Location = New System.Drawing.Point(3, 0)
+        Me.Label_Paper_Paper.Name = "Label_Paper_Paper"
+        Me.Label_Paper_Paper.Size = New System.Drawing.Size(34, 17)
+        Me.Label_Paper_Paper.TabIndex = 0
+        Me.Label_Paper_Paper.Text = "Name"
+        Me.Label_Paper_Paper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Paper_Paper.UseCompatibleTextRendering = True
         '
         'Label_Paper_Height_Value
         '
@@ -833,15 +833,15 @@ Partial Class Form1
         Me.ComboBox_Paper_DPI.TabIndex = 0
         Me.ComboBox_Paper_DPI.Tag = "DPI"
         '
-        'TextBox_Paper_Shema
+        'TextBox_Paper_Paper
         '
-        Me.TextBox_Paper_Shema.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TableLayoutPanel_Paper_Shema.SetColumnSpan(Me.TextBox_Paper_Shema, 2)
-        Me.TextBox_Paper_Shema.Location = New System.Drawing.Point(43, 3)
-        Me.TextBox_Paper_Shema.Name = "TextBox_Paper_Shema"
-        Me.TextBox_Paper_Shema.Size = New System.Drawing.Size(109, 20)
-        Me.TextBox_Paper_Shema.TabIndex = 0
-        Me.TextBox_Paper_Shema.Tag = "Shema"
+        Me.TextBox_Paper_Paper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TableLayoutPanel_Paper_Paper.SetColumnSpan(Me.TextBox_Paper_Paper, 2)
+        Me.TextBox_Paper_Paper.Location = New System.Drawing.Point(43, 3)
+        Me.TextBox_Paper_Paper.Name = "TextBox_Paper_Paper"
+        Me.TextBox_Paper_Paper.Size = New System.Drawing.Size(109, 20)
+        Me.TextBox_Paper_Paper.TabIndex = 0
+        Me.TextBox_Paper_Paper.Tag = "Paper"
         '
         'ComboBox_Paper_DIN
         '
@@ -1341,9 +1341,9 @@ Partial Class Form1
         Me.TableLayoutPanel_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_DataSet.Controls.Add(Me.ListBox_Tabellen, 0, 0)
         Me.TableLayoutPanel_DataSet.Controls.Add(Me.DGV_Table, 1, 0)
-        Me.TableLayoutPanel_DataSet.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.TableLayoutPanel_DataSet.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "FontMain", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.TableLayoutPanel_DataSet.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel_DataSet.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.TableLayoutPanel_DataSet.Font = Global.CSVtoQR.My.MySettings.Default.Font_Main
         Me.TableLayoutPanel_DataSet.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_DataSet.Name = "TableLayoutPanel_DataSet"
         Me.TableLayoutPanel_DataSet.RowCount = 1
@@ -1355,9 +1355,8 @@ Partial Class Form1
         '
         Me.ListBox_Tabellen.BackColor = System.Drawing.SystemColors.Control
         Me.ListBox_Tabellen.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.ListBox_Tabellen.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListBox_Tabellen.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.ListBox_Tabellen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.ListBox_Tabellen.FormattingEnabled = True
         Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 3)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
@@ -1369,9 +1368,8 @@ Partial Class Form1
         Me.DGV_Table.AllowUserToAddRows = False
         Me.DGV_Table.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV_Table.DataBindings.Add(New System.Windows.Forms.Binding("Font", Global.CSVtoQR.My.MySettings.Default, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DGV_Table.Font = Global.CSVtoQR.My.MySettings.Default.MyFont
+        Me.DGV_Table.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.DGV_Table.Location = New System.Drawing.Point(140, 3)
         Me.DGV_Table.Name = "DGV_Table"
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -1478,7 +1476,7 @@ Partial Class Form1
         'TestToolStripMenuItem
         '
         Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
-        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(40, 28)
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(39, 28)
         Me.TestToolStripMenuItem.Text = "Test"
         '
         'ToolStripStatusLabel_SaveFile
@@ -1526,14 +1524,13 @@ Partial Class Form1
         Me.Controls.Add(Me.TabControl_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
+        MySettings1.Font_Main = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         MySettings1.LastDirectory = "C:\"
         MySettings1.LastFile = "C:\"
-        MySettings1.MyFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         MySettings1.MyLocation = New System.Drawing.Point(100, 100)
         MySettings1.MySize = New System.Drawing.Size(600, 600)
         MySettings1.MySpliter = 504
         MySettings1.SettingsKey = ""
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("Font", MySettings1, "MyFont", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings1, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
@@ -1569,10 +1566,10 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.ResumeLayout(False)
         Me.TableLayoutPanel_Paper.PerformLayout()
         CType(Me.PictureBox_Paper, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox_Paper_Shema.ResumeLayout(False)
-        Me.GroupBox_Paper_Shema.PerformLayout()
-        Me.TableLayoutPanel_Paper_Shema.ResumeLayout(False)
-        Me.TableLayoutPanel_Paper_Shema.PerformLayout()
+        Me.GroupBox_Paper_Paper.ResumeLayout(False)
+        Me.GroupBox_Paper_Paper.PerformLayout()
+        Me.TableLayoutPanel_Paper_Paper.ResumeLayout(False)
+        Me.TableLayoutPanel_Paper_Paper.PerformLayout()
         Me.TabPage_Card.ResumeLayout(False)
         Me.TabPage_Card.PerformLayout()
         Me.TableLayoutPanel_Card.ResumeLayout(False)
@@ -1609,10 +1606,10 @@ Partial Class Form1
     Friend WithEvents Label_Separator_Row As Label
     Friend WithEvents TableLayoutPanel_Separatoren As TableLayoutPanel
     Friend WithEvents GroupBox_Separatoren As GroupBox
-    Friend WithEvents GroupBox_Paper_Shema As GroupBox
-    Friend WithEvents TableLayoutPanel_Paper_Shema As TableLayoutPanel
-    Friend WithEvents Label_Paper_Shema As Label
-    Friend WithEvents TextBox_Paper_Shema As TextBox
+    Friend WithEvents GroupBox_Paper_Paper As GroupBox
+    Friend WithEvents TableLayoutPanel_Paper_Paper As TableLayoutPanel
+    Friend WithEvents Label_Paper_Paper As Label
+    Friend WithEvents TextBox_Paper_Paper As TextBox
     Friend WithEvents Label_Paper_Width As Label
     Friend WithEvents Label_Paper_Height As Label
     Friend WithEvents Label_Paper_DPI As Label

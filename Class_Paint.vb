@@ -16,20 +16,20 @@ Public Class Class_Paint
 
         DS = CL_DS.Get_DS(DS)
 
-        PW = DS.Tables("Shema").Rows(0).Item("PaperWidth")
-        PH = DS.Tables("Shema").Rows(0).Item("PaperHeight")
+        PW = DS.Tables("Paper").Rows(0).Item("PaperWidth")
+        PH = DS.Tables("Paper").Rows(0).Item("PaperHeight")
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
 
-        Dim DR_Shema As DataRow = DS.Tables("Shema").Rows(0)
-        PBL = DR_Shema("Left") 'Paper Border Left
-        PBT = DR_Shema("Top") 'Paper Border Top
-        PBR = DR_Shema("Right") 'Paper Border Right
-        PBB = DR_Shema("Bottom") 'Paper Border Bottom
+        Dim DR_Paper As DataRow = DS.Tables("Paper").Rows(0)
+        PBL = DR_Paper("Left") 'Paper Border Left
+        PBT = DR_Paper("Top") 'Paper Border Top
+        PBR = DR_Paper("Right") 'Paper Border Right
+        PBB = DR_Paper("Bottom") 'Paper Border Bottom
 
-        Dim SSA As Integer = CInt(DR_Shema("SeparatorSpalteAnzahl"))
-        Dim SSW As Single = CType(DR_Shema("SeparatorSpalteWert"), Single)
-        Dim SZA As Integer = CInt(DR_Shema("SeparatorZeileAnzahl"))
-        Dim SZW As Single = CType(DR_Shema("SeparatorZeileWert"), Single)
+        Dim SSA As Integer = CInt(DR_Paper("SeparatorSpalteAnzahl"))
+        Dim SSW As Single = CType(DR_Paper("SeparatorSpalteWert"), Single)
+        Dim SZA As Integer = CInt(DR_Paper("SeparatorZeileAnzahl"))
+        Dim SZW As Single = CType(DR_Paper("SeparatorZeileWert"), Single)
 
         With FRM
             Dim P(2) As Pen
@@ -90,7 +90,7 @@ Public Class Class_Paint
         DS = CL_DS.Get_DS(DS)
 
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
-        Dim DPI As Single = CType(DS.Tables("Shema").Rows(0)("DPI"), Single)
+        Dim DPI As Single = CType(DS.Tables("Paper").Rows(0)("DPI"), Single)
         Dim DPIFactor As Single = DPI / 96.0F
 
         Dim PW As Single = DR_Card.Item("CardSizeWidth") * DPIFactor
@@ -143,7 +143,7 @@ Public Class Class_Paint
         DS = CL_DS.Get_DS(DS)
 
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
-        Dim DPI As Single = CType(DS.Tables("Shema").Rows(0)("DPI"), Single)
+        Dim DPI As Single = CType(DS.Tables("Paper").Rows(0)("DPI"), Single)
         Dim DPIFactor As Single = DPI / 96.0F
 
         Dim PW As Single = DR_Card.Item("CardSizeWidth") * DPIFactor
@@ -263,7 +263,7 @@ Public Class Class_Paint
         DS = CL_DS.Get_DS(DS)
 
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
-        Dim DPI As Single = CType(DS.Tables("Shema").Rows(0)("DPI"), Single)
+        Dim DPI As Single = CType(DS.Tables("Paper").Rows(0)("DPI"), Single)
         Dim DPIFactor As Single = DPI / 96.0F
 
         Dim PW As Single = DR_Card.Item("CardSizeWidth") * DPIFactor
