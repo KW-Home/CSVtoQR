@@ -3,7 +3,7 @@
 Public Class UserControl_Font
 
     Public Event Font_Change(ByVal sender As Object, ByVal e As Font)
-    Public UC_Font As Font = My.Settings.Font_Main
+    Public UC_Font As Font = My.Settings.Main_Font
 
     Private ReadOnly FRM As Form1
     Private UC As UserControl_Font
@@ -17,14 +17,11 @@ Public Class UserControl_Font
 
     Private Sub Button_Font_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Font.Click
 
-        Dim FD As New FontDialog With {.Font = My.Settings.Font_Main}
+        Dim FD As New FontDialog With {.Font = My.Settings.Main_Font}
         If FD.ShowDialog = DialogResult.OK Then
             UC_Font = FD.Font
             RaiseEvent Font_Change(Me, FD.Font)
             GET_FontToUC(FD.Font)
-
-            Controlls_Read()
-
         End If
 
     End Sub
@@ -60,7 +57,7 @@ Public Class UserControl_Font
             UC = New UserControl_Font(FRM) With {.Name = UC_Name}
             With UC
                 .Dock = DockStyle.Fill
-                .Font = My.Settings.Font_Main
+                .Font = My.Settings.Main_Font
             End With
 
             TLP.Controls.Add(UC)
@@ -85,46 +82,6 @@ Public Class UserControl_Font
         End If
 
         UC.GET_FontToUC(_Font)
-
-    End Sub
-
-    Public Sub Controlls_Read()
-
-        Me.SuspendLayout()
-
-        For Each Con As Control In FRM.Controls
-
-            Con.Visible = False
-            Con.Enabled = False
-
-            Con.SuspendLayout()
-
-            Application.DoEvents()
-
-            Con.Font = My.Settings.Font_Main
-            Controlls_Read_Sub(Con)
-            Con.ResumeLayout()
-
-        Next
-
-        For Each Con As Control In FRM.Controls
-            Con.Visible = True
-            Con.Enabled = True
-            Con.ResumeLayout()
-        Next
-
-        Me.ResumeLayout()
-
-    End Sub
-
-    Private Sub Controlls_Read_Sub(_Con As Control)
-
-        For Each Con As Control In _Con.Controls
-            Con.Font = My.Settings.Font_Main
-            If Con.Controls.Count > 0 Then
-                Controlls_Read_Sub(Con)
-            End If
-        Next
 
     End Sub
 

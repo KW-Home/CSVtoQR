@@ -8,11 +8,8 @@
     <Setting Name="MySize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">600, 600</Value>
     </Setting>
-    <Setting Name="Font_Main" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="Main_Font" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Microsoft Sans Serif, 8.25pt</Value>
-    </Setting>
-    <Setting Name="MySpliter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">504</Value>
     </Setting>
     <Setting Name="LastFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\</Value>

@@ -74,7 +74,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Font_Main)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Main_Font)})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeWidth", .DataType = GetType(Integer), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "CardSizeHeight", .DataType = GetType(Integer), .DefaultValue = 0})
 
@@ -103,7 +103,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
-            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Font_Main)})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Main_Font)})
 
             .PrimaryKey = New DataColumn() { .Columns("ID")}
 
@@ -135,7 +135,7 @@ Public Class Class_DS
         DR("Right") = 0.0
         DR("Bottom") = 0.0
         DR("FontColor") = Color.Black.ToArgb.ToString
-        DR("Font") = CL_F.FontToString(My.Settings.Font_Main)
+        DR("Font") = CL_F.FontToString(My.Settings.Main_Font)
 
         DT.Rows.Add(DR)
 

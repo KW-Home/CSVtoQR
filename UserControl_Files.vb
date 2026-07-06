@@ -8,7 +8,7 @@ Public Class UserControl_File
 
         With UC
             .Dock = DockStyle.Top
-            .Font = My.Settings.Font_Main
+            .Font = My.Settings.Main_Font
             Select Case .Name
                 Case "UC_File_XML"
                     .Label_Header.Text = "XML Files"

@@ -37,7 +37,7 @@ Public Class UserControl_Border
             UC = New UserControl_Border(FRM) With {.Name = UC_Name}
             With UC
                 .Dock = DockStyle.Top
-                .Font = My.Settings.Font_Main
+                .Font = My.Settings.Main_Font
             End With
             TLP.Controls.Add(UC)
             With TLP

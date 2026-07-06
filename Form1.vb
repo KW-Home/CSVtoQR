@@ -25,8 +25,14 @@ Public Class Form1
     Private WithEvents UC_File_CSV As New UserControl_File
     Private WithEvents UC_File_PDF As New UserControl_File
 
-    Private WithEvents UC_Font As New UserControl_Font(Me)
-    Private WithEvents UC_Border As New UserControl_Border(Me)
+    'Private WithEvents UC_Font As New UserControl_Font(Me)
+    Private WithEvents UC_Font_General As New UserControl_Font(Me)
+    Private WithEvents UC_Font_Card As New UserControl_Font(Me)
+    Private WithEvents UC_Font_CardRow As New UserControl_Font(Me)
+
+    Private WithEvents UC_Border_Paper As New UserControl_Border(Me)
+    Private WithEvents UC_Border_Card As New UserControl_Border(Me)
+    Private WithEvents UC_Border_CardRow As New UserControl_Border(Me)
 
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
@@ -164,49 +170,49 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        FontMain = My.Settings.Font_Main
-        Me.Font = FontMain
-        UC_File_XML.Name = "UC_File_XML"
-        UC_File_CSV.Name = "UC_File_CSV"
-        UC_File_PDF.Name = "UC_File_PDF"
-
-        UC_File_CSV.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
-        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
-        UC_File_CSV.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
-
-        UC_Font.UC_Load("UC_Font_General", FontMain)
-
-
-
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
-        UC_Border.UC_Load("UC_Border_Paper", Border)
+
+        UC_File_XML.Name = "UC_File_XML"
+        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
+
+        UC_File_CSV.Name = "UC_File_CSV"
+        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
+
+        UC_File_PDF.Name = "UC_File_PDF"
+        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
+
+        UC_Font_General.Name = "UC_Font_General"
+        UC_Font_General.UC_Load("UC_Font_General", FontMain)
+
+
+        UC_Border_Paper.UC_Load("UC_Border_Paper", Border)
         With TableLayoutPanel_Paper
 
-            .SetRow(UC_Border, 2)
-            .SetRowSpan(UC_Border, 1)
-            .SetColumn(UC_Border, 0)
-            .SetColumnSpan(UC_Border, 1)
+            .SetRow(UC_Border_Paper, 9)
+            .SetRowSpan(UC_Border_Paper, 1)
+            .SetColumn(UC_Border_Paper, 0)
+            .SetColumnSpan(UC_Border_Paper, 3)
 
             .SetRow(PictureBox_Paper, 0)
             .SetRowSpan(PictureBox_Paper, 3)
-            .SetColumn(PictureBox_Paper, 1)
+            .SetColumn(PictureBox_Paper, 4)
             .SetColumnSpan(PictureBox_Paper, 1)
 
         End With
 
-        UC_Font.UC_Load("UC_Font_Card", FontMain)
-        UC_Border.UC_Load("UC_Border_Card", Border)
+        UC_Font_Card.UC_Load("UC_Font_Card", FontMain)
+        UC_Border_Card.UC_Load("UC_Border_Card", Border)
         With TableLayoutPanel_Card
 
-            .SetRow(UC_Font, 1)
-            .SetRowSpan(UC_Font, 1)
-            .SetColumn(UC_Font, 0)
-            .SetColumnSpan(UC_Font, 1)
+            .SetRow(UC_Font_Card, 1)
+            .SetRowSpan(UC_Font_Card, 1)
+            .SetColumn(UC_Font_Card, 0)
+            .SetColumnSpan(UC_Font_Card, 1)
 
-            .SetRow(UC_Border, 2)
-            .SetRowSpan(UC_Border, 1)
-            .SetColumn(UC_Border, 0)
-            .SetColumnSpan(UC_Border, 1)
+            .SetRow(UC_Border_Card, 2)
+            .SetRowSpan(UC_Border_Card, 1)
+            .SetColumn(UC_Border_Card, 0)
+            .SetColumnSpan(UC_Border_Card, 1)
 
             .SetRow(PictureBox_Card, 0)
             .SetRowSpan(PictureBox_Card, 3)
@@ -215,19 +221,19 @@ Public Class Form1
 
         End With
 
-        UC_Font.UC_Load("UC_Font_CardRow", FontMain)
-        UC_Border.UC_Load("UC_Border_CardRow", Border)
+        UC_Font_CardRow.UC_Load("UC_Font_CardRow", FontMain)
+        UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
         With TableLayoutPanel_CardRow
 
-            .SetRow(UC_Font, 2)
-            .SetRowSpan(UC_Font, 1)
-            .SetColumn(UC_Font, 0)
-            .SetColumnSpan(UC_Font, 1)
+            .SetRow(UC_Font_CardRow, 2)
+            .SetRowSpan(UC_Font_CardRow, 1)
+            .SetColumn(UC_Font_CardRow, 0)
+            .SetColumnSpan(UC_Font_CardRow, 1)
 
-            .SetRow(UC_Border, 3)
-            .SetRowSpan(UC_Border, 1)
-            .SetColumn(UC_Border, 0)
-            .SetColumnSpan(UC_Border, 1)
+            .SetRow(UC_Border_CardRow, 3)
+            .SetRowSpan(UC_Border_CardRow, 1)
+            .SetColumn(UC_Border_CardRow, 0)
+            .SetColumnSpan(UC_Border_CardRow, 1)
 
             .SetRow(PictureBox_CardRow, 0)
             .SetRowSpan(PictureBox_CardRow, 4)
@@ -250,14 +256,14 @@ Public Class Form1
 
         With My.Settings
 
+            FontMain = .Main_Font
+            Me.Font = FontMain
             Me.Size = .MySize
             File_XML = .LastFile
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
-
                 DS = CL_DS.Get_DS(DS)
                 CL_XML.ReadXML(DS)
-
                 Dim DT As DataTable = DS.Tables("Paper")
                 If DT.Rows.Count > 0 Then
                     File_CSV = DT(0)("Import").ToString()
@@ -265,18 +271,14 @@ Public Class Form1
                 Else
                     DS = CL_DS.Get_DS(DS)
                 End If
-
             Else
-
                 DS = CL_DS.Get_DS(DS)
                 UC_File_XML.TextBox_Directory.Text = String.Empty
                 UC_File_XML.TextBox_Filename.Text = String.Empty
                 ToolStripStatusLabel_SaveFile.Text = String.Empty
-
             End If
 
         End With
-
 
     End Sub
     Private Sub MySettings_Save()
@@ -292,12 +294,9 @@ Public Class Form1
         End If
 
         With My.Settings
-
             .MySize = sizeToSave
-            .Font_Main = FontMain
             .LastFile = File_XML_Value
             .Save()
-
         End With
 
     End Sub
@@ -327,7 +326,7 @@ Public Class Form1
         For Each DR As DataRow In DS.Tables("Search_Columns").Rows
             If IsNothing(DR) = False Then
                 Dim ST As String = DR("Column")
-                Ix = TextRenderer.MeasureText(ST, My.Settings.Font_Main).Width
+                Ix = TextRenderer.MeasureText(ST, My.Settings.Main_Font).Width
                 If I < Ix Then I = Ix
             End If
         Next
@@ -338,7 +337,7 @@ Public Class Form1
 
         DurchlaufCSV()
 
-        UC_Font.Controlls_Read()
+        CL_Default.Controlls_Read()
 
     End Sub
 
@@ -348,7 +347,7 @@ Public Class Form1
 
         For Each WertC As DataRow In DS.Tables("Search_Columns").Rows
             For Each Wert As DataRow In DT_CSV.Rows
-                Dim I As Integer = TextRenderer.MeasureText(WertC("Column").ToString, My.Settings.Font_Main).Width
+                Dim I As Integer = TextRenderer.MeasureText(WertC("Column").ToString, My.Settings.Main_Font).Width
                 If OldIndex < I Then OldIndex = I
             Next
             WertC("MaxSize") = OldIndex
@@ -387,7 +386,7 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border.UC_Load("UC_Border_Paper", Border)
+        UC_Border_Paper.UC_Load("UC_Border_Paper", Border)
 
         Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
         Label_Paper_Width_Value.Text = DR("PaperWidth")
@@ -400,7 +399,7 @@ Public Class Form1
         DR = DS.Tables("Card").Rows(0)
 
         nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-        UC_Font.UC_Load("UC_Font_Card", nFont)
+        UC_Font_Card.UC_Load("UC_Font_Card", nFont)
 
         Border = New UserControl_Border.Border
         With Border
@@ -409,7 +408,7 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border.UC_Load("UC_Border_Card", Border)
+        UC_Border_Card.UC_Load("UC_Border_Card", Border)
 
         Label_Card_Size_Hight_Value.Text = CType(DR("CardSizeHeight"), Decimal)
         Label_Card_Size_Width_Value.Text = CType(DR("CardSizeWidth"), Decimal)
@@ -423,7 +422,7 @@ Public Class Form1
                 .Right = 0
                 .Bottom = 0
             End With
-            UC_Border.UC_Load("UC_Border_CardRow", Border)
+            UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
         Else
 
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
@@ -431,7 +430,7 @@ Public Class Form1
             DR = CL_DS.GET_CardRow(DS, ID)
 
             nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-            UC_Font.UC_Load("UC_Font_CardRow", nFont)
+            UC_Font_CardRow.UC_Load("UC_Font_CardRow", nFont)
 
             Border = New UserControl_Border.Border
             With Border
@@ -440,7 +439,7 @@ Public Class Form1
                 .Right = CType(DR("Right"), Decimal)
                 .Bottom = CType(DR("Bottom"), Decimal)
             End With
-            UC_Border.UC_Load("UC_Border_CardRow", Border)
+            UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
 
             CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
             CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
@@ -1131,7 +1130,7 @@ Public Class Form1
 
         Select Case sender.Name
             Case "UC_Font_General"
-                My.Settings.Font_Main = e
+                My.Settings.Main_Font = e
                 My.Settings.Save()
                 Me.Font = e
                 Me.Size = FRMSize
@@ -1233,6 +1232,12 @@ Public Class Form1
         Dim qrBild As Bitmap = qrGen.ErstelleQR(zielURL, 960)
 
         Me.PictureBox_CSV.Image = qrBild
+
+    End Sub
+
+    Private Sub UC_Font_General_Font_Change(sender As Object, e As Font) Handles UC_Font_General.Font_Change
+
+        CL_Default.Controlls_Read()
 
     End Sub
 

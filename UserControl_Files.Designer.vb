@@ -28,10 +28,10 @@ Partial Class UserControl_File
         Me.TextBox_Filename = New System.Windows.Forms.TextBox()
         Me.Label_General_XML_Filname = New System.Windows.Forms.Label()
         Me.Button_File = New System.Windows.Forms.Button()
+        Me.ImageList_File = New System.Windows.Forms.ImageList(Me.components)
         Me.TextBox_Directory = New System.Windows.Forms.TextBox()
         Me.Label_General_XML_Directory = New System.Windows.Forms.Label()
         Me.Label_Header = New System.Windows.Forms.Label()
-        Me.ImageList_File = New System.Windows.Forms.ImageList(Me.components)
         Me.TableLayoutPanel_General_XML.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -62,8 +62,7 @@ Partial Class UserControl_File
         'TextBox_Filename
         '
         Me.TextBox_Filename.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_Filename.Location = New System.Drawing.Point(62, 56)
-        Me.TextBox_Filename.Margin = New System.Windows.Forms.Padding(3, 6, 3, 3)
+        Me.TextBox_Filename.Location = New System.Drawing.Point(68, 56)
         Me.TextBox_Filename.Name = "TextBox_Filename"
         Me.TextBox_Filename.Size = New System.Drawing.Size(88, 20)
         Me.TextBox_Filename.TabIndex = 12
@@ -72,10 +71,10 @@ Partial Class UserControl_File
         '
         Me.Label_General_XML_Filname.AutoSize = True
         Me.Label_General_XML_Filname.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_General_XML_Filname.Location = New System.Drawing.Point(0, 50)
-        Me.Label_General_XML_Filname.Margin = New System.Windows.Forms.Padding(0)
+        Me.Label_General_XML_Filname.Location = New System.Drawing.Point(3, 56)
+        Me.Label_General_XML_Filname.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_General_XML_Filname.Name = "Label_General_XML_Filname"
-        Me.Label_General_XML_Filname.Size = New System.Drawing.Size(59, 29)
+        Me.Label_General_XML_Filname.Size = New System.Drawing.Size(59, 20)
         Me.Label_General_XML_Filname.TabIndex = 11
         Me.Label_General_XML_Filname.Text = "Dateiname"
         Me.Label_General_XML_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -84,25 +83,28 @@ Partial Class UserControl_File
         'Button_File
         '
         Me.Button_File.AutoSize = True
-        Me.Button_File.Dock = System.Windows.Forms.DockStyle.Top
         Me.Button_File.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_File.ImageKey = "(Keine)"
         Me.Button_File.ImageList = Me.ImageList_File
-        Me.Button_File.Location = New System.Drawing.Point(159, 27)
-        Me.Button_File.Margin = New System.Windows.Forms.Padding(6)
+        Me.Button_File.Location = New System.Drawing.Point(162, 30)
         Me.Button_File.Name = "Button_File"
         Me.TableLayoutPanel_General_XML.SetRowSpan(Me.Button_File, 2)
         Me.Button_File.Size = New System.Drawing.Size(38, 38)
         Me.Button_File.TabIndex = 10
         Me.Button_File.UseVisualStyleBackColor = True
         '
+        'ImageList_File
+        '
+        Me.ImageList_File.ImageStream = CType(resources.GetObject("ImageList_File.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList_File.TransparentColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(246, Byte), Integer), CType(CType(246, Byte), Integer))
+        Me.ImageList_File.Images.SetKeyName(0, "File_PDF")
+        Me.ImageList_File.Images.SetKeyName(1, "File_CSV")
+        Me.ImageList_File.Images.SetKeyName(2, "File_XML")
+        '
         'TextBox_Directory
         '
-        Me.TextBox_Directory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.TextBox_Directory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
         Me.TextBox_Directory.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TextBox_Directory.Location = New System.Drawing.Point(62, 27)
-        Me.TextBox_Directory.Margin = New System.Windows.Forms.Padding(3, 6, 3, 3)
+        Me.TextBox_Directory.Location = New System.Drawing.Point(68, 30)
         Me.TextBox_Directory.Name = "TextBox_Directory"
         Me.TextBox_Directory.Size = New System.Drawing.Size(88, 20)
         Me.TextBox_Directory.TabIndex = 9
@@ -112,10 +114,10 @@ Partial Class UserControl_File
         '
         Me.Label_General_XML_Directory.AutoSize = True
         Me.Label_General_XML_Directory.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_General_XML_Directory.Location = New System.Drawing.Point(0, 21)
-        Me.Label_General_XML_Directory.Margin = New System.Windows.Forms.Padding(0)
+        Me.Label_General_XML_Directory.Location = New System.Drawing.Point(3, 30)
+        Me.Label_General_XML_Directory.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_General_XML_Directory.Name = "Label_General_XML_Directory"
-        Me.Label_General_XML_Directory.Size = New System.Drawing.Size(59, 29)
+        Me.Label_General_XML_Directory.Size = New System.Drawing.Size(59, 20)
         Me.Label_General_XML_Directory.TabIndex = 8
         Me.Label_General_XML_Directory.Text = "Ordner"
         Me.Label_General_XML_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -129,21 +131,13 @@ Partial Class UserControl_File
         Me.TableLayoutPanel_General_XML.SetColumnSpan(Me.Label_Header, 3)
         Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label_Header.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Label_Header.Location = New System.Drawing.Point(0, 0)
-        Me.Label_Header.Margin = New System.Windows.Forms.Padding(0)
+        Me.Label_Header.Location = New System.Drawing.Point(3, 3)
+        Me.Label_Header.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Header.Name = "Label_Header"
         Me.Label_Header.Padding = New System.Windows.Forms.Padding(3)
-        Me.Label_Header.Size = New System.Drawing.Size(203, 21)
+        Me.Label_Header.Size = New System.Drawing.Size(197, 21)
         Me.Label_Header.TabIndex = 13
         Me.Label_Header.Text = "Label1"
-        '
-        'ImageList_File
-        '
-        Me.ImageList_File.ImageStream = CType(resources.GetObject("ImageList_File.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList_File.TransparentColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(246, Byte), Integer), CType(CType(246, Byte), Integer))
-        Me.ImageList_File.Images.SetKeyName(0, "File_PDF")
-        Me.ImageList_File.Images.SetKeyName(1, "File_CSV")
-        Me.ImageList_File.Images.SetKeyName(2, "File_XML")
         '
         'UserControl_File
         '

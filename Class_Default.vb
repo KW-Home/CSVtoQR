@@ -1,6 +1,5 @@
 ﻿Public Class Class_Default
 
-    Private ReadOnly FontMain As Font = My.Settings.Font_Main
     Private ReadOnly FRM As Form1
     'Private ReadOnly DS As DataSet
 
@@ -28,6 +27,46 @@
                     End If
             End Select
         End With
+
+    End Sub
+
+    Public Sub Controlls_Read()
+
+        FRM.SuspendLayout()
+
+        For Each Con As Control In FRM.Controls
+
+            Con.Visible = False
+            Con.Enabled = False
+
+            Con.SuspendLayout()
+
+            Application.DoEvents()
+
+            Con.Font = My.Settings.Main_Font
+            Controlls_Read_Sub(Con)
+            Con.ResumeLayout()
+
+        Next
+
+        For Each Con As Control In FRM.Controls
+            Con.Visible = True
+            Con.Enabled = True
+            Con.ResumeLayout()
+        Next
+
+        FRM.ResumeLayout()
+
+    End Sub
+
+    Private Sub Controlls_Read_Sub(_Con As Control)
+
+        For Each Con As Control In _Con.Controls
+            Con.Font = My.Settings.Main_Font
+            If Con.Controls.Count > 0 Then
+                Controlls_Read_Sub(Con)
+            End If
+        Next
 
     End Sub
 

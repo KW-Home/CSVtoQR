@@ -136,12 +136,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl_Border.resx">
       <DependentUpon>UserControl_Border.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl_Files.resx">
       <DependentUpon>UserControl_Files.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl_Font.resx">
       <DependentUpon>UserControl_Font.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

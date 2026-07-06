@@ -81,24 +81,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Microsoft Sans Serif, 8.25pt")>  _
-        Public Property Font_Main() As Global.System.Drawing.Font
+        Public Property Main_Font() As Global.System.Drawing.Font
             Get
-                Return CType(Me("Font_Main"),Global.System.Drawing.Font)
+                Return CType(Me("Main_Font"),Global.System.Drawing.Font)
             End Get
             Set
-                Me("Font_Main") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("504")>  _
-        Public Property MySpliter() As Integer
-            Get
-                Return CType(Me("MySpliter"),Integer)
-            End Get
-            Set
-                Me("MySpliter") = value
+                Me("Main_Font") = value
             End Set
         End Property
         
