@@ -17,18 +17,15 @@ Public Class Form1
 
     Public DS As New DataSet
 
-    Private FontMain As New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point, 0)
-
     Private WithEvents CL_XML As New Class_XML
 
     Private WithEvents UC_File_XML As New UserControl_File
     Private WithEvents UC_File_CSV As New UserControl_File
     Private WithEvents UC_File_PDF As New UserControl_File
 
-    'Private WithEvents UC_Font As New UserControl_Font(Me)
-    Private WithEvents UC_Font_General As New UserControl_Font(Me)
-    Private WithEvents UC_Font_Card As New UserControl_Font(Me)
-    Private WithEvents UC_Font_CardRow As New UserControl_Font(Me)
+    Private WithEvents UC_Font_General As New UserControl_Font
+    Private WithEvents UC_Font_Card As New UserControl_Font
+    Private WithEvents UC_Font_CardRow As New UserControl_Font
 
     Private WithEvents UC_Border_Paper As New UserControl_Border(Me)
     Private WithEvents UC_Border_Card As New UserControl_Border(Me)
@@ -172,18 +169,25 @@ Public Class Form1
 
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
 
-        UC_File_XML.Name = "UC_File_XML"
-        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
+        With UC_File_XML
+            .Name = "UC_File_XML"
+            .UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
+        End With
 
-        UC_File_CSV.Name = "UC_File_CSV"
-        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
+        With UC_File_CSV
+            .Name = "UC_File_CSV"
+            .UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
+        End With
 
-        UC_File_PDF.Name = "UC_File_PDF"
-        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
+        With UC_File_PDF
+            .Name = "UC_File_PDF"
+            .UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
+        End With
 
-        UC_Font_General.Name = "UC_Font_General"
-        UC_Font_General.UC_Load("UC_Font_General", FontMain)
-
+        With UC_Font_General
+            .Name = "UC_Font_General"
+            .UC_Load(Me, UC_Font_General, TableLayoutPanel_General)
+        End With
 
         UC_Border_Paper.UC_Load("UC_Border_Paper", Border)
         With TableLayoutPanel_Paper
@@ -200,7 +204,9 @@ Public Class Form1
 
         End With
 
-        UC_Font_Card.UC_Load("UC_Font_Card", FontMain)
+        UC_Font_Card.Name = "UC_Font_Card"
+        UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card)
+
         UC_Border_Card.UC_Load("UC_Border_Card", Border)
         With TableLayoutPanel_Card
 
@@ -221,7 +227,9 @@ Public Class Form1
 
         End With
 
-        UC_Font_CardRow.UC_Load("UC_Font_CardRow", FontMain)
+        UC_Font_CardRow.Name = "UC_Font_CardRow"
+        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow)
+
         UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
         With TableLayoutPanel_CardRow
 
@@ -256,8 +264,8 @@ Public Class Form1
 
         With My.Settings
 
-            FontMain = .Main_Font
-            Me.Font = FontMain
+            Me.Font = .Main_Font
+            UC_Font_General.GET_FontToUC(.Main_Font)
             Me.Size = .MySize
             File_XML = .LastFile
 
@@ -399,7 +407,7 @@ Public Class Form1
         DR = DS.Tables("Card").Rows(0)
 
         nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-        UC_Font_Card.UC_Load("UC_Font_Card", nFont)
+        UC_Font_Card.GET_FontToUC(nFont)
 
         Border = New UserControl_Border.Border
         With Border
@@ -430,7 +438,7 @@ Public Class Form1
             DR = CL_DS.GET_CardRow(DS, ID)
 
             nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-            UC_Font_CardRow.UC_Load("UC_Font_CardRow", nFont)
+            UC_Font_CardRow.GET_FontToUC(nFont)
 
             Border = New UserControl_Border.Border
             With Border
@@ -960,8 +968,8 @@ Public Class Form1
 
         End With
 
-        TryCast(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border).Enabled = Check
-        TryCast(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font).Enabled = Check
+        UC_Border_CardRow.Enabled = Check
+        UC_Font_CardRow.Enabled = Check
 
         Return Check
 
@@ -999,12 +1007,12 @@ Public Class Form1
                 Dim nFont As Font = New Class_FontConverter().StringToFont(DR("Font").ToString)
                 If nFont Is Nothing Then nFont = New Font("Arial", 12, FontStyle.Regular)
 
-                Dim UCF As UserControl_Font = TryCast(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                With UCF
+                With UC_Font_CardRow
                     .Label_Name_Value.Text = nFont.Name
                     .Label_Size_Value.Text = nFont.Size.ToString
                     .Label_Style_Value.Text = nFont.Style.ToString
                 End With
+
             End If
 
         End With
@@ -1087,15 +1095,11 @@ Public Class Form1
                 DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
                 DR("FontColor") = Button_CardRow_FontColor.BackColor.ToArgb
                 DR("DataColumn") = ComboBox_CardRow_DataColumn.SelectedValue
-
-                Dim UCF As UserControl_Font = TryCast(TableLayoutPanel_CardRow.Controls("UC_Font_CardRow"), UserControl_Font)
-                DR("Font") = New Class_FontConverter().FontToString(UCF.UC_Font)
-
-                Dim UCB As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
-                DR("Left") = UCB.NUD_Left.Value
-                DR("Top") = UCB.NUD_Top.Value
-                DR("Right") = UCB.NUD_Right.Value
-                DR("Bottom") = UCB.NUD_Bottom.Value
+                DR("Font") = New Class_FontConverter().FontToString(UC_Font_CardRow.UC_Font)
+                DR("Left") = UC_Border_CardRow.NUD_Left.Value
+                DR("Top") = UC_Border_CardRow.NUD_Top.Value
+                DR("Right") = UC_Border_CardRow.NUD_Right.Value
+                DR("Bottom") = UC_Border_CardRow.NUD_Bottom.Value
 
                 IsModified = True
 
@@ -1121,20 +1125,6 @@ Public Class Form1
         If CD.ShowDialog = DialogResult.OK Then
             Button_CardRow_FontColor.BackColor = CD.Color
         End If
-
-    End Sub
-
-    Public Sub UC_Font_Font_Change(sender As Object, e As Font)
-
-        Dim FRMSize As Size = Me.Size
-
-        Select Case sender.Name
-            Case "UC_Font_General"
-                My.Settings.Main_Font = e
-                My.Settings.Save()
-                Me.Font = e
-                Me.Size = FRMSize
-        End Select
 
     End Sub
 
@@ -1235,9 +1225,27 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UC_Font_General_Font_Change(sender As Object, e As Font) Handles UC_Font_General.Font_Change
+    Private Sub UC_Font_General_ChangeFont(sender As Object, e As Font) Handles UC_Font_General.ChangeFont,
+        UC_Font_Card.ChangeFont, UC_Font_CardRow.ChangeFont
 
-        CL_Default.Controlls_Read()
+
+        Dim FRMSize As Size = Me.Size
+        Select Case sender.Name
+            Case "UC_Font_General"
+
+                My.Settings.Main_Font = e
+                My.Settings.Save()
+                Me.Font = e
+
+                CL_Default.Controlls_Read()
+
+                Me.Size = FRMSize
+
+            Case "UC_Font_Card"
+
+            Case "UC_Font_CardRow"
+
+        End Select
 
     End Sub
 
