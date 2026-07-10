@@ -17,7 +17,7 @@ Public Class Form1
 
     Public DS As New DataSet
 
-    Private WithEvents CL_XML As New Class_XML
+    Public WithEvents CL_XML As New Class_XML
 
     Private WithEvents UC_File_XML As New UserControl_File
     Private WithEvents UC_File_CSV As New UserControl_File
@@ -27,9 +27,9 @@ Public Class Form1
     Private WithEvents UC_Font_Card As New UserControl_Font
     Private WithEvents UC_Font_CardRow As New UserControl_Font
 
-    Private WithEvents UC_Border_Paper As New UserControl_Border(Me)
-    Private WithEvents UC_Border_Card As New UserControl_Border(Me)
-    Private WithEvents UC_Border_CardRow As New UserControl_Border(Me)
+    Private WithEvents UC_Border_Paper As New UserControl_Border With {.Name = "UC_Border_Paper"}
+    Private WithEvents UC_Border_Card As New UserControl_Border With {.Name = "UC_Border_Card"}
+    Private WithEvents UC_Border_CardRow As New UserControl_Border With {.Name = "UC_Border_CardRow"}
 
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
@@ -68,6 +68,7 @@ Public Class Form1
             End If
         End Set
     End Property
+
     Private Sub XMLChange()
 
         Dim DirStr As String = System.IO.Path.GetDirectoryName(File_XML_Value)
@@ -76,10 +77,6 @@ Public Class Form1
             ToolStripStatusLabel_SaveFile.Text = File_XML_Value
             My.Settings.LastDirectory = DirStr
 
-            With UC_File_CSV
-                .TextBox_Directory.Text = String.Empty
-                .TextBox_Filename.Text = String.Empty
-            End With
 
             If System.IO.File.Exists(File_XML_Value) = True Then
 
@@ -101,13 +98,18 @@ Public Class Form1
                 ToolStripMenuItem_Save.Enabled = True
 
             End If
+
             My.Settings.Save()
+
         Else
+
             With UC_File_XML
                 .TextBox_Directory.Text = String.Empty
                 .TextBox_Filename.Text = String.Empty
             End With
+
             ToolStripStatusLabel_SaveFile.Text = String.Empty
+
         End If
 
     End Sub
@@ -118,13 +120,23 @@ Public Class Form1
             Return File_CSV_Value
         End Get
         Set(ByVal value As String)
+
             File_CSV_Value = value
+
             DS = CL_DS.Get_DS(DS)
             DS.Tables("Paper").Rows(0).Item("Import") = value
             Load_CSV(value)
-            SET_Changetext_CSV(value)
 
             Set_CardRow_DataBinding()
+
+            If IsNothing(File_CSV_Value) = True Then Return
+            If System.IO.File.Exists(File_CSV_Value) = False Then Return
+
+
+            With UC_File_CSV
+                    .TextBox_Directory.Text = Path.GetDirectoryName(File_CSV_Value)
+                    .TextBox_Filename.Text = Path.GetFileName(File_CSV_Value)
+                End With
 
         End Set
     End Property
@@ -163,6 +175,9 @@ Public Class Form1
         InitializeComponent()
         DS = CL_DS.Get_DS(DS)
 
+        Debug.Print("LastDirectory: " & My.Settings.LastDirectory)
+
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -189,16 +204,16 @@ Public Class Form1
             .UC_Load(Me, UC_Font_General, TableLayoutPanel_General)
         End With
 
-        UC_Border_Paper.UC_Load("UC_Border_Paper", Border)
+        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
         With TableLayoutPanel_Paper
 
-            .SetRow(UC_Border_Paper, 9)
-            .SetRowSpan(UC_Border_Paper, 1)
-            .SetColumn(UC_Border_Paper, 0)
-            .SetColumnSpan(UC_Border_Paper, 3)
+            .SetRow(UC_Border_Paper, 7)
+            .SetRowSpan(UC_Border_Paper, 2)
+            .SetColumn(UC_Border_Paper, 4)
+            .SetColumnSpan(UC_Border_Paper, 1)
 
             .SetRow(PictureBox_Paper, 0)
-            .SetRowSpan(PictureBox_Paper, 3)
+            .SetRowSpan(PictureBox_Paper, 5)
             .SetColumn(PictureBox_Paper, 4)
             .SetColumnSpan(PictureBox_Paper, 1)
 
@@ -206,8 +221,8 @@ Public Class Form1
 
         UC_Font_Card.Name = "UC_Font_Card"
         UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card)
+        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card)
 
-        UC_Border_Card.UC_Load("UC_Border_Card", Border)
         With TableLayoutPanel_Card
 
             .SetRow(UC_Font_Card, 1)
@@ -229,8 +244,8 @@ Public Class Form1
 
         UC_Font_CardRow.Name = "UC_Font_CardRow"
         UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow)
+        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
 
-        UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
         With TableLayoutPanel_CardRow
 
             .SetRow(UC_Font_CardRow, 2)
@@ -254,6 +269,12 @@ Public Class Form1
 
         MySettings_Load()
 
+        Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
+
+        ToolStripMenuItem_Save.Enabled = XMLBool
+        TabControl_Main.Enabled = XMLBool
+
+
     End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         'zeichnet die Papiervorschau basierend auf den aktuellen Einstellungen
@@ -267,7 +288,12 @@ Public Class Form1
             Me.Font = .Main_Font
             UC_Font_General.GET_FontToUC(.Main_Font)
             Me.Size = .MySize
-            File_XML = .LastFile
+
+            If System.IO.File.Exists(.LastFile) = True Then
+                File_XML = .LastFile
+            Else
+                File_XML = String.Empty
+            End If
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
                 DS = CL_DS.Get_DS(DS)
@@ -329,12 +355,13 @@ Public Class Form1
             End With
         End If
 
-        Dim I As Integer = 16
+        Dim I As Integer = 0
         Dim Ix As Integer = 0
         For Each DR As DataRow In DS.Tables("Search_Columns").Rows
             If IsNothing(DR) = False Then
                 Dim ST As String = DR("Column")
                 Ix = TextRenderer.MeasureText(ST, My.Settings.Main_Font).Width
+                Debug.Print(Ix)
                 If I < Ix Then I = Ix
             End If
         Next
@@ -374,6 +401,7 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
+        If CL_XML.ReadXML_Exists() = False Then Return
 
         Dim DR As DataRow
         Dim nFont As Font
@@ -394,14 +422,14 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border_Paper.UC_Load("UC_Border_Paper", Border)
+        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
 
         Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
-        Label_Paper_Width_Value.Text = DR("PaperWidth")
-        NumericUpDown_Separator_Column_Count.Value = DR("SeparatorSpalteAnzahl")
-        NumericUpDown_Separator_Column_Value.Value = DR("SeparatorSpalteWert")
-        NumericUpDown_Separator_Row_Count.Value = DR("SeparatorZeileAnzahl")
-        NumericUpDown_Separator_Row_Value.Value = DR("SeparatorZeileWert")
+        Label_Paper_Width_Value.Text = DR("PaperWidth").ToString
+        NumericUpDown_Separator_Column_Count.Value = CType(DR("SeparatorSpalteAnzahl"), Decimal)
+        NumericUpDown_Separator_Column_Value.Value = CType(DR("SeparatorSpalteWert"), Decimal)
+        NumericUpDown_Separator_Row_Count.Value = CType(DR("SeparatorZeileAnzahl"), Decimal)
+        NumericUpDown_Separator_Row_Value.Value = CType(DR("SeparatorZeileWert"), Decimal)
 
         'Card auslesen und in die entsprechenden Steuerelemente einfügen
         DR = DS.Tables("Card").Rows(0)
@@ -416,7 +444,7 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border_Card.UC_Load("UC_Border_Card", Border)
+        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card)
 
         Label_Card_Size_Hight_Value.Text = CType(DR("CardSizeHeight"), Decimal)
         Label_Card_Size_Width_Value.Text = CType(DR("CardSizeWidth"), Decimal)
@@ -430,7 +458,7 @@ Public Class Form1
                 .Right = 0
                 .Bottom = 0
             End With
-            UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
+            UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
         Else
 
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
@@ -447,7 +475,7 @@ Public Class Form1
                 .Right = CType(DR("Right"), Decimal)
                 .Bottom = CType(DR("Bottom"), Decimal)
             End With
-            UC_Border_CardRow.UC_Load("UC_Border_CardRow", Border)
+            UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
 
             CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
             CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
@@ -682,6 +710,8 @@ Public Class Form1
     Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged
 
+
+
         CL_P.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -714,7 +744,9 @@ Public Class Form1
     End Sub
 
     Private Sub DGV_Search_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_Search.DataError
+
         e.Cancel = True
+
     End Sub
 
     Private Sub DGV_Search_DataSourceChanged(sender As Object, e As EventArgs) Handles DGV_Search.DataSourceChanged
@@ -730,6 +762,8 @@ Public Class Form1
     End Sub
 
     Private Sub Main_TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl_Main.SelectedIndexChanged
+
+        If sender.canselect = False Then Return
 
         Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
             Case "TabPage_Paper"
@@ -753,27 +787,31 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click
 
-        Save_General()
-        Save_CardRow()
+        If CL_XML.ReadXML_Exists = True Then
 
-        If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
-            CL_XML.SaveXML(DS)
-            IsModified = False
-        Else
-            SaveFileDialog_XML()
+            Save_General()
+            Save_CardRow()
+
+            If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
+                CL_XML.SaveXML(DS)
+                IsModified = False
+            Else
+                SaveFileDialog_XML()
+            End If
+
+            GET_ColumnTabele()
+
+            Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
+                Case "TabPage_Paper"
+                    CL_P.Ivalidate_Paper(Me, DS)
+                Case "TabPage_Card"
+                    CL_P.Ivalidate_Card(Me, DS)
+                Case "TabPage_CardRow"
+                    CL_P.Ivalidate_CardRow(Me, DS)
+                Case "TabPage_Files"
+            End Select
+
         End If
-
-        GET_ColumnTabele()
-
-        Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
-            Case "TabPage_Paper"
-                CL_P.Ivalidate_Paper(Me, DS)
-            Case "TabPage_Card"
-                CL_P.Ivalidate_Card(Me, DS)
-            Case "TabPage_CardRow"
-                CL_P.Ivalidate_CardRow(Me, DS)
-            Case "TabPage_Files"
-        End Select
 
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
@@ -852,17 +890,19 @@ Public Class Form1
         IsModified = False
 
     End Sub
-    Private Sub SET_Changetext_CSV(File As String)
+    'Private Sub SET_Changetext_CSV(File As String) Handles UC_File_CSV.ChangeEvent
 
-        If My.Computer.FileSystem.FileExists(File) = False Then Return
 
-        Dim FI As New FileInfo(File)
-        UC_File_CSV.TextBox_Directory.Text = FI.Directory.ToString
-        UC_File_CSV.TextBox_Filename.Text = FI.Name.ToString
 
-        IsModified = False
+    '    If My.Computer.FileSystem.FileExists(File) = False Then Return
 
-    End Sub
+    '    Dim FI As New FileInfo(File)
+    '    UC_File_CSV.TextBox_Directory.Text = FI.Directory.ToString
+    '    UC_File_CSV.TextBox_Filename.Text = FI.Name.ToString
+
+    '    IsModified = False
+
+    'End Sub
     Private Sub SET_Changetext_PDF(File As String)
 
         'ToDo Ordner Überprüfen und erstellen fals nicht vorhanden
@@ -990,8 +1030,7 @@ Public Class Form1
                 Label_CardRow_LinePos_Value.Text = CDbl(DR("LinePos")).ToString
                 CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
 
-                Dim UCB As UserControl_Border = CType(TableLayoutPanel_CardRow.Controls("UC_Border_CardRow"), UserControl_Border)
-                With UCB
+                With UC_Border_CardRow
                     .NUD_Left.Value = Convert.ToDecimal(DR("Left"))
                     .NUD_Top.Value = Convert.ToDecimal(DR("Top"))
                     .NUD_Right.Value = Convert.ToDecimal(DR("Right"))
@@ -1128,19 +1167,6 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_Border_Paper_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
-
-        If sender.CanSelect = False Then Return
-        CL_P.Ivalidate_Paper(Me, DS)
-
-    End Sub
-    Public Sub UC_Border_Card_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border)
-
-        If sender.CanSelect = False Then Return
-        CL_P.Ivalidate_Card(Me, DS)
-
-    End Sub
-
     Private Sub DGV_CSV_SelectionChanged(sender As Object, e As EventArgs) Handles DGV_CSV.SelectionChanged
 
         If sender.CanSelect = False Then Return
@@ -1149,51 +1175,72 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_File_ChangeEvent(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
+    Public Sub UC_Border_Card_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles UC_Border_Paper.ChangeEvent, UC_Border_Card.ChangeEvent, UC_Border_CardRow.ChangeEvent
 
-        Debug.Print("UC_File_ChangeEvent: " & sender.Name & " - " & e)
+        If sender.CanSelect = False Then Return
 
         Select Case sender.Name
+            Case UC_Border_Paper.Name
+                SetBorderValue("Paper", e)
+                CL_P.Ivalidate_Paper(Me, DS)
+            Case UC_Border_Card.Name
+                SetBorderValue("Card", e)
+                CL_P.Ivalidate_Card(Me, DS)
+            Case UC_Border_CardRow.Name
+                If ListBox_CardRow.SelectedIndex = -1 Then Return
+                Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
+                SetBorderValue("CardRow", e, ID)
+                CL_P.Ivalidate_CardRow(Me, DS)
+        End Select
 
+    End Sub
+
+    Private Sub SetBorderValue(ByVal Table As String, ByVal e As UserControl_Border.Border, Optional ID As Integer = 0)
+
+        Dim DR As DataRow = DS.Tables(Table).Rows.Find(ID)
+
+        If IsNothing(DR) Then Return
+
+        DR("Left") = e.Left
+        DR("Top") = e.Top
+        DR("Right") = e.Right
+        DR("Bottom") = e.Bottom
+
+    End Sub
+
+    Public Sub UC_File_ChangeEvent(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
+
+        Select Case sender.Name
             Case "UC_File_XML"
-
                 CL_XML.OpenFileDialog_XML(DS)
                 DataSetRead()
                 GET_ColumnTabele()
-
             Case "UC_File_PDF"
-
                 Dim FBD As New FolderBrowserDialog
                 If FBD.ShowDialog = DialogResult.OK Then
                     File_PDF = FBD.SelectedPath
                 End If
-
             Case "UC_File_CSV"
-
                 Dim Path As String = CL_XML.DataSetFile
                 Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
-
                 If IsNothing(Path) = False Then
-
                     If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
                         OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
                         OFD.FileName = System.IO.Path.GetFileName(Path)
                     End If
-
                 End If
-
-                If OFD.ShowDialog = DialogResult.OK Then
-                    File_CSV = OFD.FileName
-                End If
-
+                If OFD.ShowDialog = DialogResult.OK Then File_CSV = OFD.FileName
         End Select
-
 
     End Sub
 
     Private Sub ToolStripMenuItem_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Open.Click
 
         UC_File_ChangeEvent(UC_File_XML, CL_XML.DataSetFile)
+
+        Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
+        ToolStripMenuItem_Save.Enabled = XMLBool
+        TabControl_Main.Enabled = XMLBool
 
     End Sub
 
@@ -1217,11 +1264,13 @@ Public Class Form1
 
     Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
 
-        Dim qrGen As New QRCodeGenerator
-        Dim zielURL As String = "https://www.beispiel.de/datenblatt?id=123https://www.miraphone.de/bb-trumpet-rotary-valves-19.html"
-        Dim qrBild As Bitmap = qrGen.ErstelleQR(zielURL, 960)
+        'Dim qrGen As New QRCodeGenerator
+        'Dim zielURL As String = "https://www.miraphone.de/bb-trumpet-rotary-valves-19.html"
+        'Dim qrBild As Bitmap = qrGen.ErstelleQR(zielURL, 960)
 
-        Me.PictureBox_CSV.Image = qrBild
+        'Me.PictureBox_CSV.Image = qrBild
+
+        CL_XML.ReadXML_Exists()
 
     End Sub
 
@@ -1246,6 +1295,12 @@ Public Class Form1
             Case "UC_Font_CardRow"
 
         End Select
+
+    End Sub
+
+    Private Sub DGV_CSV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_CSV.DataError
+
+        e.Cancel = True
 
     End Sub
 

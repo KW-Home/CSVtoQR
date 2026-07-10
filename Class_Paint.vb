@@ -299,7 +299,6 @@ Public Class Class_Paint
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-                    g.DrawRectangle(P(0), Rec)
 
                     Dim nFont As Font
                     Dim nFontHeight As Integer
@@ -311,23 +310,30 @@ Public Class Class_Paint
                     Dim RowBorderBottom As Integer = 0
 
                     Dim Index As Integer = -1
+
                     If Form1.DGV_CSV.SelectedCells.Count > 0 Then
 
-                        Index = Form1.DGV_CSV.SelectedCells(0).RowIndex
+                        With Form1.DGV_CSV
+                            If .SelectedCells.Count > 0 Then
+                                Index = .SelectedCells(0).RowIndex
+                                Index = .Item("ID", Index).Value
+                            End If
+                        End With
 
-                        Dim DR_CardRow As DataRow = Form1.DT_CSV.Rows(Index)
+                        'Index = Form1.DGV_CSV.SelectedCells(0).RowIndex
+
+                        Dim DR_CardRow As DataRow = Form1.DT_CSV.Select($"[ID] = {Index}")(0)
                         Dim STR As String = ""
 
                         'Dim DV As New DataView(DS.Tables("CardRow"))
                         'DV.Sort("LinePos ASC")
                         Dim DT As DataTable = DS.Tables("CardRow")
 
-
                         DT.DefaultView.Sort = "LinePos ASC"
 
-                        For Each DR As DataRow In DT.DefaultView.ToTable().Rows
+                        Dim QRSize As Size = QRMaxSize(g, DT, Rec, DPIFactor)
 
-                            STR = DR_CardRow(DR("DataColumn").ToString())
+                        For Each DR As DataRow In DT.DefaultView.ToTable().Rows
 
                             RowBorderLeft = DR("Left") * DPIFactor
                             RowBorderTop = DR("Top") * DPIFactor
@@ -335,18 +341,17 @@ Public Class Class_Paint
                             RowBorderBottom = DR("Bottom") * DPIFactor
 
                             nFont = New Class_FontConverter().StringToFont(DR("Font"))
+                            STR = DR_CardRow(DR("DataColumn").ToString())
                             nFontHeight = g.MeasureString(STR, nFont).Height
 
                             Dim Loc As New Point(PBL + RowBorderLeft, CurrentTop)
                             Dim Siz As New Size(PW - (RowBorderLeft + RowBorderRight), nFontHeight + RowBorderTop + RowBorderBottom)
                             Dim _Rec As New Rectangle(Loc, Siz)
 
-
-
                             If CType(DR("QRCode"), Boolean) = True Then
 
                                 Dim QR As Image = QRCodePicture(STR)
-                                Dim ImageNew As Image = ResizeImage(QR, 96, 96)
+                                Dim ImageNew As Image = ResizeImage(QR, QRSize.Height, QRSize.Height)
 
                                 _Rec = New Rectangle(Loc, ImageNew.Size)
 
@@ -363,14 +368,13 @@ Public Class Class_Paint
                                 CurrentTop += nFontHeight
                             End If
 
-
-
-
                             CurrentTop += RowBorderTop
                             CurrentTop += RowBorderBottom
 
                         Next
                     End If
+
+                    g.DrawRectangle(P(0), Rec)
 
                 End Using
 
@@ -382,6 +386,35 @@ Public Class Class_Paint
 
     End Sub
 
+    Private Function QRMaxSize(g As Graphics, DT As DataTable, Rec As Rectangle, DPIFactor As Integer) As Size
+
+        Dim nFont As Font
+        Dim nFontHeight As Integer
+        'Dim CurrentTop As Integer = PBT
+
+        Dim CardHeight As Integer = Rec.Height
+        Dim CardWidth As Integer = Rec.Width
+
+        For Each DR As DataRow In DT.Rows
+
+            Dim RowBorderLeft As Integer = DR("Left") * DPIFactor
+            Dim RowBorderTop As Integer = DR("Top") * DPIFactor
+            Dim RowBorderRight As Integer = DR("Right") * DPIFactor
+            Dim RowBorderBottom As Integer = DR("Bottom") * DPIFactor
+
+            If DR("QRCode") = False Then
+                nFont = New Class_FontConverter().StringToFont(DR("Font"))
+                nFontHeight = g.MeasureString("XXXXXX", nFont).Height + RowBorderTop + RowBorderBottom
+            Else
+                nFontHeight = RowBorderTop + RowBorderBottom
+            End If
+            CardHeight -= nFontHeight
+
+        Next
+
+        Return New Size(CardWidth, CardHeight)
+
+    End Function
     Public Function QRCodePicture(URL As String) As Image
 
         'Dim qrGen As New QRCodeGenerator

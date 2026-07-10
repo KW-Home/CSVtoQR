@@ -37,6 +37,7 @@ Public Class Class_DS
 
         With DT
 
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .DataType = GetType(Integer), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "Paper", .Unique = False, .DataType = GetType(String), .DefaultValue = "Default"})
             .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String), .DefaultValue = ""})
@@ -53,7 +54,7 @@ Public Class Class_DS
             .Columns.Add(New DataColumn With {.ColumnName = "PaperHeight", .DataType = GetType(Double), .DefaultValue = 297})
             .Columns.Add(New DataColumn With {.ColumnName = "PaperWidth", .DataType = GetType(Double), .DefaultValue = 210})
 
-            .PrimaryKey = New DataColumn() { .Columns("Paper")}
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
 
         End With
 
@@ -69,7 +70,7 @@ Public Class Class_DS
 
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .DataType = GetType(Integer), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
             .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
@@ -93,8 +94,8 @@ Public Class Class_DS
         Dim DT As New DataTable With {.TableName = "CardRow"}
         With DT
 
-            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "LinePos", .DataType = GetType(Double), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "DataColumn", .DataType = GetType(String), .DefaultValue = "-------"})
             .Columns.Add(New DataColumn With {.ColumnName = "QRCode", .DataType = GetType(Boolean), .DefaultValue = False})
             .Columns.Add(New DataColumn With {.ColumnName = "FontColor", .DataType = GetType(String), .DefaultValue = Color.Black.ToArgb.ToString})

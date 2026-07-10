@@ -61,4 +61,54 @@ Public Class Class_XML
 
     End Sub
 
+    Public Function ReadXML_Exists() As Boolean
+
+        Dim ERRORList As New List(Of String) From {"Default"}
+
+        If Directory.Exists(My.Settings.LastDirectory) = False Then ERRORList.Add("LastDirectory")
+        If File.Exists(System.IO.Path.Combine(My.Settings.LastDirectory, My.Settings.LastFile)) = False Then ERRORList.Add("LastFile")
+        If File.Exists(DataSetFile_Value) = False Then ERRORList.Add("DataSetFile")
+
+        Dim FileName As String = String.Empty
+
+        If ERRORList.Count = 1 Then
+
+            Dim _File As String = Replace(DataSetFile_Value, ".xml", ".xsd")
+            If File.Exists(_File) = False Then ERRORList.Add("DataSetFile_XSD")
+            If ERRORList.Contains("DataSetFile_XSD") = True Then Return False
+
+            Dim _DS As New DataSet
+            _DS.ReadXmlSchema(_File)
+
+            Dim DS As New DataSet
+            DS = CL_DS.Get_DS(DS)
+
+            For Each Table As DataTable In _DS.Tables
+                If DS.Tables.Contains(Table.TableName) = False Then
+                    ERRORList.Add("Tabelle fehlt: [" & Table.TableName & "]")
+                Else
+                    For Each Column As DataColumn In Table.Columns
+                        If Table.Columns.Contains(Column.ColumnName) = False Then
+                            ERRORList.Add("Spalte fehlt: [" & Table.TableName & "]" & Column.ColumnName)
+                        End If
+                    Next
+                End If
+            Next
+        End If
+
+        Dim ERRORString As String = "Fehlerhafte Dateien: " & vbCrLf
+        For Each item In ERRORList
+            If item <> "Default" Then ERRORString += item & vbCrLf
+        Next
+
+        If ERRORList.Count > 1 Then
+            MessageBox.Show(ERRORString, "Fehlerhafte Dateien", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End If
+
+        Return True
+
+    End Function
+
+
 End Class
