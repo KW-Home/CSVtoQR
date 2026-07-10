@@ -134,9 +134,9 @@ Public Class Form1
 
 
             With UC_File_CSV
-                    .TextBox_Directory.Text = Path.GetDirectoryName(File_CSV_Value)
-                    .TextBox_Filename.Text = Path.GetFileName(File_CSV_Value)
-                End With
+                .TextBox_Directory.Text = Path.GetDirectoryName(File_CSV_Value)
+                .TextBox_Filename.Text = Path.GetFileName(File_CSV_Value)
+            End With
 
         End Set
     End Property
@@ -207,15 +207,15 @@ Public Class Form1
         UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
         With TableLayoutPanel_Paper
 
-            .SetRow(UC_Border_Paper, 7)
-            .SetRowSpan(UC_Border_Paper, 2)
-            .SetColumn(UC_Border_Paper, 4)
-            .SetColumnSpan(UC_Border_Paper, 1)
-
             .SetRow(PictureBox_Paper, 0)
-            .SetRowSpan(PictureBox_Paper, 5)
+            .SetRowSpan(PictureBox_Paper, 6)
             .SetColumn(PictureBox_Paper, 4)
             .SetColumnSpan(PictureBox_Paper, 1)
+
+            .SetRow(UC_Border_Paper, 6)
+            .SetRowSpan(UC_Border_Paper, 4)
+            .SetColumn(UC_Border_Paper, 4)
+            .SetColumnSpan(UC_Border_Paper, 1)
 
         End With
 
@@ -259,7 +259,7 @@ Public Class Form1
             .SetColumnSpan(UC_Border_CardRow, 1)
 
             .SetRow(PictureBox_CardRow, 0)
-            .SetRowSpan(PictureBox_CardRow, 4)
+            .SetRowSpan(PictureBox_CardRow, 8)
             .SetColumn(PictureBox_CardRow, 1)
             .SetColumnSpan(PictureBox_CardRow, 1)
 
@@ -877,6 +877,7 @@ Public Class Form1
         SET_Changetext_XML(sender, e)
 
     End Sub
+
     Private Sub SET_Changetext_XML(sender As Object, e As Object)
 
         Dim FI As New FileInfo(e)
@@ -890,19 +891,7 @@ Public Class Form1
         IsModified = False
 
     End Sub
-    'Private Sub SET_Changetext_CSV(File As String) Handles UC_File_CSV.ChangeEvent
 
-
-
-    '    If My.Computer.FileSystem.FileExists(File) = False Then Return
-
-    '    Dim FI As New FileInfo(File)
-    '    UC_File_CSV.TextBox_Directory.Text = FI.Directory.ToString
-    '    UC_File_CSV.TextBox_Filename.Text = FI.Name.ToString
-
-    '    IsModified = False
-
-    'End Sub
     Private Sub SET_Changetext_PDF(File As String)
 
         'ToDo Ordner Überprüfen und erstellen fals nicht vorhanden
@@ -1175,26 +1164,6 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_Border_Card_ChangeEvent(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles UC_Border_Paper.ChangeEvent, UC_Border_Card.ChangeEvent, UC_Border_CardRow.ChangeEvent
-
-        If sender.CanSelect = False Then Return
-
-        Select Case sender.Name
-            Case UC_Border_Paper.Name
-                SetBorderValue("Paper", e)
-                CL_P.Ivalidate_Paper(Me, DS)
-            Case UC_Border_Card.Name
-                SetBorderValue("Card", e)
-                CL_P.Ivalidate_Card(Me, DS)
-            Case UC_Border_CardRow.Name
-                If ListBox_CardRow.SelectedIndex = -1 Then Return
-                Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
-                SetBorderValue("CardRow", e, ID)
-                CL_P.Ivalidate_CardRow(Me, DS)
-        End Select
-
-    End Sub
-
     Private Sub SetBorderValue(ByVal Table As String, ByVal e As UserControl_Border.Border, Optional ID As Integer = 0)
 
         Dim DR As DataRow = DS.Tables(Table).Rows.Find(ID)
@@ -1208,35 +1177,9 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_File_ChangeEvent(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
-
-        Select Case sender.Name
-            Case "UC_File_XML"
-                CL_XML.OpenFileDialog_XML(DS)
-                DataSetRead()
-                GET_ColumnTabele()
-            Case "UC_File_PDF"
-                Dim FBD As New FolderBrowserDialog
-                If FBD.ShowDialog = DialogResult.OK Then
-                    File_PDF = FBD.SelectedPath
-                End If
-            Case "UC_File_CSV"
-                Dim Path As String = CL_XML.DataSetFile
-                Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
-                If IsNothing(Path) = False Then
-                    If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
-                        OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
-                        OFD.FileName = System.IO.Path.GetFileName(Path)
-                    End If
-                End If
-                If OFD.ShowDialog = DialogResult.OK Then File_CSV = OFD.FileName
-        End Select
-
-    End Sub
-
     Private Sub ToolStripMenuItem_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Open.Click
 
-        UC_File_ChangeEvent(UC_File_XML, CL_XML.DataSetFile)
+        UC_ChangeEvent_File(UC_File_XML, CL_XML.DataSetFile)
 
         Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
         ToolStripMenuItem_Save.Enabled = XMLBool
@@ -1274,9 +1217,16 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UC_Font_General_ChangeFont(sender As Object, e As Font) Handles UC_Font_General.ChangeFont,
-        UC_Font_Card.ChangeFont, UC_Font_CardRow.ChangeFont
 
+    Private Sub DGV_CSV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_CSV.DataError
+
+        e.Cancel = True
+
+    End Sub
+
+#Region "UC ChangeEvent"
+
+    Private Sub UC_ChangeEvent_Font(sender As Object, e As Font) Handles UC_Font_General.ChangeEvent, UC_Font_Card.ChangeEvent, UC_Font_CardRow.ChangeEvent
 
         Dim FRMSize As Size = Me.Size
         Select Case sender.Name
@@ -1298,10 +1248,52 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DGV_CSV_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DGV_CSV.DataError
+    Public Sub UC_ChangeEvent_Border(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles UC_Border_Paper.ChangeEvent, UC_Border_Card.ChangeEvent, UC_Border_CardRow.ChangeEvent
 
-        e.Cancel = True
+        If sender.CanSelect = False Then Return
+
+        Select Case sender.Name
+            Case UC_Border_Paper.Name
+                SetBorderValue("Paper", e)
+                CL_P.Ivalidate_Paper(Me, DS)
+            Case UC_Border_Card.Name
+                SetBorderValue("Card", e)
+                CL_P.Ivalidate_Card(Me, DS)
+            Case UC_Border_CardRow.Name
+                If ListBox_CardRow.SelectedIndex = -1 Then Return
+                Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
+                SetBorderValue("CardRow", e, ID)
+                CL_P.Ivalidate_CardRow(Me, DS)
+        End Select
 
     End Sub
+
+    Public Sub UC_ChangeEvent_File(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
+
+        Select Case sender.Name
+            Case "UC_File_XML"
+                CL_XML.OpenFileDialog_XML(DS)
+                DataSetRead()
+                GET_ColumnTabele()
+            Case "UC_File_PDF"
+                Dim FBD As New FolderBrowserDialog
+                If FBD.ShowDialog = DialogResult.OK Then
+                    File_PDF = FBD.SelectedPath
+                End If
+            Case "UC_File_CSV"
+                Dim Path As String = CL_XML.DataSetFile
+                Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
+                If IsNothing(Path) = False Then
+                    If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
+                        OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
+                        OFD.FileName = System.IO.Path.GetFileName(Path)
+                    End If
+                End If
+                If OFD.ShowDialog = DialogResult.OK Then File_CSV = OFD.FileName
+        End Select
+
+    End Sub
+
+#End Region
 
 End Class

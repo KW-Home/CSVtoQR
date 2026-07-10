@@ -2,7 +2,7 @@
 
 Public Class UserControl_Font
 
-    Public Event ChangeFont(ByVal sender As Object, ByVal e As Font)
+    Public Event ChangeEvent(ByVal sender As Object, ByVal e As Font)
     Public UC_Font As Font = My.Settings.Main_Font
 
     Private Sub Button_Font_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Font.Click
@@ -10,7 +10,7 @@ Public Class UserControl_Font
         Dim FD As New FontDialog With {.Font = My.Settings.Main_Font}
         If FD.ShowDialog = DialogResult.OK Then
             UC_Font = FD.Font
-            RaiseEvent ChangeFont(Me, FD.Font)
+            RaiseEvent ChangeEvent(Me, FD.Font)
             GET_FontToUC(FD.Font)
         End If
 

@@ -11,13 +11,13 @@ Public Class UserControl_File
             .Font = My.Settings.Main_Font
             Select Case .Name
                 Case "UC_File_XML"
-                    .Label_Header.Text = "XML Files"
+                    .Label_Header.Text = "XML File"
                     .Button_File.ImageKey = "File_XML"
                 Case "UC_File_CSV"
-                    .Label_Header.Text = "CSV Files"
+                    .Label_Header.Text = "CSV File"
                     .Button_File.ImageKey = "File_CSV"
                 Case "UC_File_PDF"
-                    .Label_Header.Text = "PDF Files"
+                    .Label_Header.Text = "PDF File"
                     .Button_File.ImageKey = "File_PDF"
             End Select
         End With

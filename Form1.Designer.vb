@@ -170,7 +170,7 @@ Partial Class Form1
         'Label_Separator_Row
         '
         Me.Label_Separator_Row.AutoSize = True
-        Me.Label_Separator_Row.Location = New System.Drawing.Point(5, 222)
+        Me.Label_Separator_Row.Location = New System.Drawing.Point(3, 201)
         Me.Label_Separator_Row.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Row.Name = "Label_Separator_Row"
         Me.Label_Separator_Row.Size = New System.Drawing.Size(29, 17)
@@ -181,7 +181,7 @@ Partial Class Form1
         '
         'NumericUpDown_Separator_Column_Count
         '
-        Me.NumericUpDown_Separator_Column_Count.Location = New System.Drawing.Point(49, 194)
+        Me.NumericUpDown_Separator_Column_Count.Location = New System.Drawing.Point(45, 175)
         Me.NumericUpDown_Separator_Column_Count.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
         Me.NumericUpDown_Separator_Column_Count.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDown_Separator_Column_Count.Name = "NumericUpDown_Separator_Column_Count"
@@ -194,7 +194,7 @@ Partial Class Form1
         'Label_Separator_Column_Count
         '
         Me.Label_Separator_Column_Count.AutoSize = True
-        Me.Label_Separator_Column_Count.Location = New System.Drawing.Point(49, 169)
+        Me.Label_Separator_Column_Count.Location = New System.Drawing.Point(45, 152)
         Me.Label_Separator_Column_Count.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Column_Count.Name = "Label_Separator_Column_Count"
         Me.Label_Separator_Column_Count.Size = New System.Drawing.Size(39, 17)
@@ -206,7 +206,7 @@ Partial Class Form1
         'Label_Separator_Row_Unit
         '
         Me.Label_Separator_Row_Unit.AutoSize = True
-        Me.Label_Separator_Row_Unit.Location = New System.Drawing.Point(179, 222)
+        Me.Label_Separator_Row_Unit.Location = New System.Drawing.Point(171, 201)
         Me.Label_Separator_Row_Unit.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Row_Unit.Name = "Label_Separator_Row_Unit"
         Me.Label_Separator_Row_Unit.Size = New System.Drawing.Size(23, 17)
@@ -218,7 +218,7 @@ Partial Class Form1
         'NumericUpDown_Separator_Row_Value
         '
         Me.NumericUpDown_Separator_Row_Value.DecimalPlaces = 1
-        Me.NumericUpDown_Separator_Row_Value.Location = New System.Drawing.Point(114, 222)
+        Me.NumericUpDown_Separator_Row_Value.Location = New System.Drawing.Point(108, 201)
         Me.NumericUpDown_Separator_Row_Value.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Separator_Row_Value.Name = "NumericUpDown_Separator_Row_Value"
         Me.NumericUpDown_Separator_Row_Value.Size = New System.Drawing.Size(57, 20)
@@ -228,7 +228,7 @@ Partial Class Form1
         '
         'NumericUpDown_Separator_Row_Count
         '
-        Me.NumericUpDown_Separator_Row_Count.Location = New System.Drawing.Point(49, 222)
+        Me.NumericUpDown_Separator_Row_Count.Location = New System.Drawing.Point(45, 201)
         Me.NumericUpDown_Separator_Row_Count.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
         Me.NumericUpDown_Separator_Row_Count.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDown_Separator_Row_Count.Name = "NumericUpDown_Separator_Row_Count"
@@ -241,7 +241,7 @@ Partial Class Form1
         'NumericUpDown_Separator_Column_Value
         '
         Me.NumericUpDown_Separator_Column_Value.DecimalPlaces = 1
-        Me.NumericUpDown_Separator_Column_Value.Location = New System.Drawing.Point(114, 194)
+        Me.NumericUpDown_Separator_Column_Value.Location = New System.Drawing.Point(108, 175)
         Me.NumericUpDown_Separator_Column_Value.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
         Me.NumericUpDown_Separator_Column_Value.Name = "NumericUpDown_Separator_Column_Value"
         Me.NumericUpDown_Separator_Column_Value.Size = New System.Drawing.Size(57, 20)
@@ -252,7 +252,7 @@ Partial Class Form1
         'Label_Separator_Column_Value
         '
         Me.Label_Separator_Column_Value.AutoSize = True
-        Me.Label_Separator_Column_Value.Location = New System.Drawing.Point(114, 169)
+        Me.Label_Separator_Column_Value.Location = New System.Drawing.Point(108, 152)
         Me.Label_Separator_Column_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Column_Value.Name = "Label_Separator_Column_Value"
         Me.Label_Separator_Column_Value.Size = New System.Drawing.Size(28, 17)
@@ -264,7 +264,7 @@ Partial Class Form1
         'Label_Separator_Column_Unit
         '
         Me.Label_Separator_Column_Unit.AutoSize = True
-        Me.Label_Separator_Column_Unit.Location = New System.Drawing.Point(179, 194)
+        Me.Label_Separator_Column_Unit.Location = New System.Drawing.Point(171, 175)
         Me.Label_Separator_Column_Unit.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Column_Unit.Name = "Label_Separator_Column_Unit"
         Me.Label_Separator_Column_Unit.Size = New System.Drawing.Size(23, 17)
@@ -276,7 +276,7 @@ Partial Class Form1
         'Label_Separator_Column
         '
         Me.Label_Separator_Column.AutoSize = True
-        Me.Label_Separator_Column.Location = New System.Drawing.Point(5, 194)
+        Me.Label_Separator_Column.Location = New System.Drawing.Point(3, 175)
         Me.Label_Separator_Column.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Separator_Column.Name = "Label_Separator_Column"
         Me.Label_Separator_Column.Size = New System.Drawing.Size(36, 17)
@@ -288,10 +288,10 @@ Partial Class Form1
         'Label_Paper_Width
         '
         Me.Label_Paper_Width.AutoSize = True
-        Me.Label_Paper_Width.Location = New System.Drawing.Point(5, 116)
+        Me.Label_Paper_Width.Location = New System.Drawing.Point(3, 106)
         Me.Label_Paper_Width.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Width.Name = "Label_Paper_Width"
-        Me.Label_Paper_Width.Size = New System.Drawing.Size(34, 17)
+        Me.Label_Paper_Width.Size = New System.Drawing.Size(34, 14)
         Me.Label_Paper_Width.TabIndex = 6
         Me.Label_Paper_Width.Text = "Breite"
         Me.Label_Paper_Width.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -300,7 +300,7 @@ Partial Class Form1
         'Label_Paper_Height
         '
         Me.Label_Paper_Height.AutoSize = True
-        Me.Label_Paper_Height.Location = New System.Drawing.Point(5, 91)
+        Me.Label_Paper_Height.Location = New System.Drawing.Point(3, 83)
         Me.Label_Paper_Height.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Height.Name = "Label_Paper_Height"
         Me.Label_Paper_Height.Size = New System.Drawing.Size(31, 17)
@@ -312,7 +312,7 @@ Partial Class Form1
         'Label_Paper_DPI
         '
         Me.Label_Paper_DPI.AutoSize = True
-        Me.Label_Paper_DPI.Location = New System.Drawing.Point(5, 33)
+        Me.Label_Paper_DPI.Location = New System.Drawing.Point(3, 29)
         Me.Label_Paper_DPI.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_DPI.Name = "Label_Paper_DPI"
         Me.Label_Paper_DPI.Size = New System.Drawing.Size(23, 17)
@@ -324,7 +324,7 @@ Partial Class Form1
         'Label_Paper_DIN
         '
         Me.Label_Paper_DIN.AutoSize = True
-        Me.Label_Paper_DIN.Location = New System.Drawing.Point(5, 62)
+        Me.Label_Paper_DIN.Location = New System.Drawing.Point(3, 56)
         Me.Label_Paper_DIN.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_DIN.Name = "Label_Paper_DIN"
         Me.Label_Paper_DIN.Size = New System.Drawing.Size(24, 17)
@@ -480,6 +480,7 @@ Partial Class Form1
         Me.PictureBox_CSV.Name = "PictureBox_CSV"
         Me.TableLayoutPanel_CSV.SetRowSpan(Me.PictureBox_CSV, 2)
         Me.PictureBox_CSV.Size = New System.Drawing.Size(24, 195)
+        Me.PictureBox_CSV.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox_CSV.TabIndex = 47
         Me.PictureBox_CSV.TabStop = False
         '
@@ -652,28 +653,24 @@ Partial Class Form1
         'TableLayoutPanel_Paper
         '
         Me.TableLayoutPanel_Paper.AutoSize = True
-        Me.TableLayoutPanel_Paper.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset
         Me.TableLayoutPanel_Paper.ColumnCount = 5
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Paper.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Row_Unit, 3, 8)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Column_Count, 1, 7)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Unit, 3, 7)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Row_Value, 2, 8)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Header, 0, 5)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Column_Value, 2, 7)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Row_Count, 1, 8)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Row, 0, 8)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Unit, 2, 4)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Value, 1, 4)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Row_Unit, 3, 9)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Column_Count, 1, 8)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Unit, 3, 8)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Row_Value, 2, 9)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Header, 0, 6)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Column_Value, 2, 8)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.NumericUpDown_Separator_Row_Count, 1, 9)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Row, 0, 9)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Height_Unit, 2, 3)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width, 0, 4)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Height_Value, 1, 3)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Paper, 0, 0)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column, 0, 7)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column, 0, 8)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.ComboBox_Paper_DPI, 1, 1)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Height, 0, 3)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.TextBox_Paper_Paper, 1, 0)
@@ -681,23 +678,25 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_DIN, 0, 2)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_DPI, 0, 1)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.PictureBox_Paper, 4, 0)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Count, 1, 6)
-        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Value, 2, 6)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Count, 1, 7)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Separator_Column_Value, 2, 7)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width, 0, 4)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Value, 1, 4)
+        Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Unit, 2, 4)
         Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_Paper.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
-        Me.TableLayoutPanel_Paper.RowCount = 9
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper.RowCount = 10
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(233, 251)
         Me.TableLayoutPanel_Paper.TabIndex = 45
         '
@@ -709,10 +708,10 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.SetColumnSpan(Me.Label_Header, 3)
         Me.Label_Header.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Header.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label_Header.Location = New System.Drawing.Point(5, 141)
+        Me.Label_Header.Location = New System.Drawing.Point(3, 126)
         Me.Label_Header.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Header.Name = "Label_Header"
-        Me.Label_Header.Size = New System.Drawing.Size(166, 20)
+        Me.Label_Header.Size = New System.Drawing.Size(162, 20)
         Me.Label_Header.TabIndex = 46
         Me.Label_Header.Text = "Separatoren Spalte"
         Me.Label_Header.UseCompatibleTextRendering = True
@@ -720,10 +719,10 @@ Partial Class Form1
         'Label_Paper_Width_Unit
         '
         Me.Label_Paper_Width_Unit.AutoSize = True
-        Me.Label_Paper_Width_Unit.Location = New System.Drawing.Point(114, 116)
+        Me.Label_Paper_Width_Unit.Location = New System.Drawing.Point(108, 106)
         Me.Label_Paper_Width_Unit.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Width_Unit.Name = "Label_Paper_Width_Unit"
-        Me.Label_Paper_Width_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Paper_Width_Unit.Size = New System.Drawing.Size(23, 14)
         Me.Label_Paper_Width_Unit.TabIndex = 9
         Me.Label_Paper_Width_Unit.Text = "mm"
         Me.Label_Paper_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -732,7 +731,7 @@ Partial Class Form1
         'Label_Paper_Width_Value
         '
         Me.Label_Paper_Width_Value.AutoSize = True
-        Me.Label_Paper_Width_Value.Location = New System.Drawing.Point(49, 116)
+        Me.Label_Paper_Width_Value.Location = New System.Drawing.Point(45, 106)
         Me.Label_Paper_Width_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Width_Value.Name = "Label_Paper_Width_Value"
         Me.Label_Paper_Width_Value.Size = New System.Drawing.Size(25, 13)
@@ -742,7 +741,7 @@ Partial Class Form1
         'Label_Paper_Height_Unit
         '
         Me.Label_Paper_Height_Unit.AutoSize = True
-        Me.Label_Paper_Height_Unit.Location = New System.Drawing.Point(114, 91)
+        Me.Label_Paper_Height_Unit.Location = New System.Drawing.Point(108, 83)
         Me.Label_Paper_Height_Unit.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Height_Unit.Name = "Label_Paper_Height_Unit"
         Me.Label_Paper_Height_Unit.Size = New System.Drawing.Size(23, 17)
@@ -754,7 +753,7 @@ Partial Class Form1
         'Label_Paper_Height_Value
         '
         Me.Label_Paper_Height_Value.AutoSize = True
-        Me.Label_Paper_Height_Value.Location = New System.Drawing.Point(49, 91)
+        Me.Label_Paper_Height_Value.Location = New System.Drawing.Point(45, 83)
         Me.Label_Paper_Height_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Height_Value.Name = "Label_Paper_Height_Value"
         Me.Label_Paper_Height_Value.Size = New System.Drawing.Size(22, 13)
@@ -764,7 +763,7 @@ Partial Class Form1
         'Label_Paper_Paper
         '
         Me.Label_Paper_Paper.AutoSize = True
-        Me.Label_Paper_Paper.Location = New System.Drawing.Point(5, 5)
+        Me.Label_Paper_Paper.Location = New System.Drawing.Point(3, 3)
         Me.Label_Paper_Paper.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Paper_Paper.Name = "Label_Paper_Paper"
         Me.Label_Paper_Paper.Size = New System.Drawing.Size(34, 17)
@@ -778,7 +777,7 @@ Partial Class Form1
         Me.ComboBox_Paper_DPI.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.ComboBox_Paper_DPI.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox_Paper_DPI.FormattingEnabled = True
-        Me.ComboBox_Paper_DPI.Location = New System.Drawing.Point(49, 33)
+        Me.ComboBox_Paper_DPI.Location = New System.Drawing.Point(45, 29)
         Me.ComboBox_Paper_DPI.Name = "ComboBox_Paper_DPI"
         Me.ComboBox_Paper_DPI.Size = New System.Drawing.Size(57, 21)
         Me.ComboBox_Paper_DPI.TabIndex = 0
@@ -789,7 +788,7 @@ Partial Class Form1
         Me.TextBox_Paper_Paper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TableLayoutPanel_Paper.SetColumnSpan(Me.TextBox_Paper_Paper, 3)
         Me.TextBox_Paper_Paper.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_Paper_Paper.Location = New System.Drawing.Point(49, 5)
+        Me.TextBox_Paper_Paper.Location = New System.Drawing.Point(45, 3)
         Me.TextBox_Paper_Paper.Name = "TextBox_Paper_Paper"
         Me.TextBox_Paper_Paper.Size = New System.Drawing.Size(153, 20)
         Me.TextBox_Paper_Paper.TabIndex = 0
@@ -801,7 +800,7 @@ Partial Class Form1
         Me.ComboBox_Paper_DIN.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox_Paper_DIN.DropDownWidth = 200
         Me.ComboBox_Paper_DIN.FormattingEnabled = True
-        Me.ComboBox_Paper_DIN.Location = New System.Drawing.Point(49, 62)
+        Me.ComboBox_Paper_DIN.Location = New System.Drawing.Point(45, 56)
         Me.ComboBox_Paper_DIN.Name = "ComboBox_Paper_DIN"
         Me.ComboBox_Paper_DIN.Size = New System.Drawing.Size(57, 21)
         Me.ComboBox_Paper_DIN.TabIndex = 1
@@ -811,10 +810,9 @@ Partial Class Form1
         '
         Me.PictureBox_Paper.BackColor = System.Drawing.Color.FloralWhite
         Me.PictureBox_Paper.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.PictureBox_Paper.Location = New System.Drawing.Point(207, 2)
+        Me.PictureBox_Paper.Location = New System.Drawing.Point(201, 0)
         Me.PictureBox_Paper.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_Paper.Name = "PictureBox_Paper"
-        Me.TableLayoutPanel_Paper.SetRowSpan(Me.PictureBox_Paper, 4)
         Me.PictureBox_Paper.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox_Paper.TabIndex = 46
         Me.PictureBox_Paper.TabStop = False
@@ -841,13 +839,13 @@ Partial Class Form1
         Me.TableLayoutPanel_Card.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_Card.Controls.Add(Me.TableLayoutPanel1, 0, 0)
         Me.TableLayoutPanel_Card.Controls.Add(Me.PictureBox_Card, 1, 0)
-        Me.TableLayoutPanel_Card.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TableLayoutPanel_Card.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_Card.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_Card.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel_Card.Name = "TableLayoutPanel_Card"
         Me.TableLayoutPanel_Card.RowCount = 1
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(628, 52)
+        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(628, 519)
         Me.TableLayoutPanel_Card.TabIndex = 3
         '
         'TableLayoutPanel1
