@@ -19,13 +19,13 @@ Public Class Form1
 
     Public WithEvents CL_XML As New Class_XML
 
-    Private WithEvents UC_File_XML As New UserControl_File
-    Private WithEvents UC_File_CSV As New UserControl_File
-    Private WithEvents UC_File_PDF As New UserControl_File
+    Private WithEvents UC_File_XML As New UserControl_File With {.Name = "UC_File_XML"}
+    Private WithEvents UC_File_CSV As New UserControl_File With {.Name = "UC_File_CSV"}
+    Private WithEvents UC_File_PDF As New UserControl_File With {.Name = "UC_File_PDF"}
 
-    Private WithEvents UC_Font_General As New UserControl_Font
-    Private WithEvents UC_Font_Card As New UserControl_Font
-    Private WithEvents UC_Font_CardRow As New UserControl_Font
+    Private WithEvents UC_Font_General As New UserControl_Font With {.Name = "UC_Font_General"}
+    Private WithEvents UC_Font_Card As New UserControl_Font With {.Name = "UC_Font_Card"}
+    Private WithEvents UC_Font_CardRow As New UserControl_Font With {.Name = "UC_Font_CardRow"}
 
     Private WithEvents UC_Border_Paper As New UserControl_Border With {.Name = "UC_Border_Paper"}
     Private WithEvents UC_Border_Card As New UserControl_Border With {.Name = "UC_Border_Card"}
@@ -34,7 +34,7 @@ Public Class Form1
     Private CL_CSV As New Class_CSV
     Private CL_Default As Class_Default
     Private CL_DS As New Class_DS
-    Private CL_P As New Class_Paint
+    Private CL_Paint As New Class_Paint
 
     Public DT_CSV As DataTable
     Private DV_CSV As DataView
@@ -175,74 +175,55 @@ Public Class Form1
         InitializeComponent()
         DS = CL_DS.Get_DS(DS)
 
-        Debug.Print("LastDirectory: " & My.Settings.LastDirectory)
-
-
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
 
-        With UC_File_XML
-            .Name = "UC_File_XML"
-            .UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
-        End With
+        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General)
 
-        With UC_File_CSV
-            .Name = "UC_File_CSV"
-            .UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
-        End With
-
-        With UC_File_PDF
-            .Name = "UC_File_PDF"
-            .UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
-        End With
-
-        With UC_Font_General
-            .Name = "UC_Font_General"
-            .UC_Load(Me, UC_Font_General, TableLayoutPanel_General)
-        End With
+        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
+        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
+        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
 
         UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
         With TableLayoutPanel_Paper
 
             .SetRow(PictureBox_Paper, 0)
-            .SetRowSpan(PictureBox_Paper, 6)
+            .SetRowSpan(PictureBox_Paper, 10)
             .SetColumn(PictureBox_Paper, 4)
             .SetColumnSpan(PictureBox_Paper, 1)
 
-            .SetRow(UC_Border_Paper, 6)
-            .SetRowSpan(UC_Border_Paper, 4)
-            .SetColumn(UC_Border_Paper, 4)
-            .SetColumnSpan(UC_Border_Paper, 1)
+            .SetRow(UC_Border_Paper, 9)
+            .SetRowSpan(UC_Border_Paper, 1)
+            .SetColumn(UC_Border_Paper, 0)
+            .SetColumnSpan(UC_Border_Paper, 3)
 
         End With
 
-        UC_Font_Card.Name = "UC_Font_Card"
         UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card)
         UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card)
 
         With TableLayoutPanel_Card
 
-            .SetRow(UC_Font_Card, 1)
+            .SetRow(UC_Font_Card, 2)
             .SetRowSpan(UC_Font_Card, 1)
             .SetColumn(UC_Font_Card, 0)
-            .SetColumnSpan(UC_Font_Card, 1)
+            .SetColumnSpan(UC_Font_Card, 3)
 
-            .SetRow(UC_Border_Card, 2)
+            .SetRow(UC_Border_Card, 3)
             .SetRowSpan(UC_Border_Card, 1)
             .SetColumn(UC_Border_Card, 0)
-            .SetColumnSpan(UC_Border_Card, 1)
+            .SetColumnSpan(UC_Border_Card, 3)
 
             .SetRow(PictureBox_Card, 0)
-            .SetRowSpan(PictureBox_Card, 3)
-            .SetColumn(PictureBox_Card, 1)
+            .SetRowSpan(PictureBox_Card, 4)
+            .SetColumn(PictureBox_Card, 4)
             .SetColumnSpan(PictureBox_Card, 1)
 
         End With
 
-        UC_Font_CardRow.Name = "UC_Font_CardRow"
         UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow)
         UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
 
@@ -274,10 +255,10 @@ Public Class Form1
         ToolStripMenuItem_Save.Enabled = XMLBool
         TabControl_Main.Enabled = XMLBool
 
-
     End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        'zeichnet die Papiervorschau basierend auf den aktuellen Einstellungen
+
+        CL_Default.Controlls_Read()
         PaperPaint(Nothing, Nothing)
 
     End Sub
@@ -371,8 +352,6 @@ Public Class Form1
         ComboBox_CardRow_DataColumn.Invalidate()
 
         DurchlaufCSV()
-
-        CL_Default.Controlls_Read()
 
     End Sub
 
@@ -707,14 +686,31 @@ Public Class Form1
 
     End Sub
 
-    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Column_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
-        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Row_Value.ValueChanged
+    Private Sub PaperPaint(Sender As Object, e As EventArgs) Handles _
+        NumericUpDown_Separator_Column_Count.ValueChanged,
+        NumericUpDown_Separator_Column_Value.ValueChanged,
+        NumericUpDown_Separator_Row_Count.ValueChanged,
+        NumericUpDown_Separator_Row_Value.ValueChanged
 
-
-
-        CL_P.Ivalidate_Paper(Me, DS)
+        CL_Paint.Ivalidate_Paper(Me, DS)
 
     End Sub
+    Private Sub PaperPaint_Paper(Sender As Object, e As Border) Handles UC_Border_Paper.ChangeEvent
+
+        CL_Paint.Ivalidate_Paper(Me, DS)
+
+    End Sub
+    Private Sub PaperPaint_Card(Sender As Object, e As Border) Handles UC_Border_Card.ChangeEvent
+
+        'CL_Paint.Ivalidate_Card(Me, DS)
+
+    End Sub
+    Private Sub PaperPaint_CardRow(Sender As Object, e As Border) Handles UC_Border_CardRow.ChangeEvent
+
+        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+
+    End Sub
+
 
     Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DIN.SelectedIndexChanged
 
@@ -767,13 +763,21 @@ Public Class Form1
 
         Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
             Case "TabPage_Paper"
-                CL_P.Ivalidate_Paper(Me, DS)
+
+                CL_Paint.Ivalidate_Paper(Me, DS)
+
             Case "TabPage_Card"
-                CL_P.Ivalidate_Card(Me, DS)
+
+                'CL_Paint.Ivalidate_Card(Me, DS)
+
             Case "TabPage_CardRow"
-                CL_P.Ivalidate_CardRow(Me, DS)
+
+                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+
             Case "TabPage_CSV"
-                CL_P.Ivalidate_CSV(Me, DS)
+
+                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
+
         End Select
 
     End Sub
@@ -800,16 +804,6 @@ Public Class Form1
             End If
 
             GET_ColumnTabele()
-
-            Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
-                Case "TabPage_Paper"
-                    CL_P.Ivalidate_Paper(Me, DS)
-                Case "TabPage_Card"
-                    CL_P.Ivalidate_Card(Me, DS)
-                Case "TabPage_CardRow"
-                    CL_P.Ivalidate_CardRow(Me, DS)
-                Case "TabPage_Files"
-            End Select
 
         End If
 
@@ -912,7 +906,7 @@ Public Class Form1
         Set_CardRow_DataBinding()
         DataSetRead()
 
-        CL_P.Ivalidate_CardRow(Me, DS)
+        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
     Private Sub Set_CardRow_DataBinding()
@@ -948,7 +942,7 @@ Public Class Form1
 
         Set_CardRow_DataBinding()
 
-        CL_P.Ivalidate_CardRow(Me, DS)
+        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
 
@@ -1020,9 +1014,9 @@ Public Class Form1
                 CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
 
                 With UC_Border_CardRow
-                    .NUD_Left.Value = Convert.ToDecimal(DR("Left"))
-                    .NUD_Top.Value = Convert.ToDecimal(DR("Top"))
-                    .NUD_Right.Value = Convert.ToDecimal(DR("Right"))
+                    .NumericUpDown_Left.Value = Convert.ToDecimal(DR("Left"))
+                    .NumericUpDown_Top.Value = Convert.ToDecimal(DR("Top"))
+                    .NumericUpDown_Right.Value = Convert.ToDecimal(DR("Right"))
                     .NUD_Bottom.Value = Convert.ToDecimal(DR("Bottom"))
                 End With
 
@@ -1052,7 +1046,7 @@ Public Class Form1
         If sender.CanSelect = False Then Return
 
         CardRow_Sort(sender, e)
-        CL_P.Ivalidate_CardRow(Me, DS)
+        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
     Private Sub CardRow_Sort(sender As Object, e As EventArgs)
@@ -1100,9 +1094,9 @@ Public Class Form1
         DR("PaperHeight") = Label_Paper_Height_Value.Text
         DR("PaperWidth") = Label_Paper_Width_Value.Text
         Dim UCB As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
-        DR("Left") = UCB.NUD_Left.Value
-        DR("Top") = UCB.NUD_Top.Value
-        DR("Right") = UCB.NUD_Right.Value
+        DR("Left") = UCB.NumericUpDown_Left.Value
+        DR("Top") = UCB.NumericUpDown_Top.Value
+        DR("Right") = UCB.NumericUpDown_Right.Value
         DR("Bottom") = UCB.NUD_Bottom.Value
 
         IsModified = True
@@ -1124,9 +1118,9 @@ Public Class Form1
                 DR("FontColor") = Button_CardRow_FontColor.BackColor.ToArgb
                 DR("DataColumn") = ComboBox_CardRow_DataColumn.SelectedValue
                 DR("Font") = New Class_FontConverter().FontToString(UC_Font_CardRow.UC_Font)
-                DR("Left") = UC_Border_CardRow.NUD_Left.Value
-                DR("Top") = UC_Border_CardRow.NUD_Top.Value
-                DR("Right") = UC_Border_CardRow.NUD_Right.Value
+                DR("Left") = UC_Border_CardRow.NumericUpDown_Left.Value
+                DR("Top") = UC_Border_CardRow.NumericUpDown_Top.Value
+                DR("Right") = UC_Border_CardRow.NumericUpDown_Right.Value
                 DR("Bottom") = UC_Border_CardRow.NUD_Bottom.Value
 
                 IsModified = True
@@ -1160,7 +1154,7 @@ Public Class Form1
 
         If sender.CanSelect = False Then Return
 
-        CL_P.Ivalidate_CSV(Me, DS)
+        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
 
     End Sub
 
@@ -1212,8 +1206,9 @@ Public Class Form1
         'Dim qrBild As Bitmap = qrGen.ErstelleQR(zielURL, 960)
 
         'Me.PictureBox_CSV.Image = qrBild
+        'CL_XML.ReadXML_Exists()
 
-        CL_XML.ReadXML_Exists()
+        CL_Default.Controlls_Read()
 
     End Sub
 
@@ -1254,16 +1249,26 @@ Public Class Form1
 
         Select Case sender.Name
             Case UC_Border_Paper.Name
+
                 SetBorderValue("Paper", e)
-                CL_P.Ivalidate_Paper(Me, DS)
+
+                'CL_Paint.Ivalidate_Paper(Me, DS)
+
             Case UC_Border_Card.Name
+
                 SetBorderValue("Card", e)
-                CL_P.Ivalidate_Card(Me, DS)
+
+                'CL_Paint.Ivalidate_Card(Me, DS)
+
             Case UC_Border_CardRow.Name
+
                 If ListBox_CardRow.SelectedIndex = -1 Then Return
+
                 Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
                 SetBorderValue("CardRow", e, ID)
-                CL_P.Ivalidate_CardRow(Me, DS)
+
+                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+
         End Select
 
     End Sub
