@@ -51,11 +51,11 @@ Partial Class UserControl_Font
         'Label_Name
         '
         Me.Label_Name.AutoSize = True
-        Me.Label_Name.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Name.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Name.Location = New System.Drawing.Point(6, 32)
         Me.Label_Name.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Name.Name = "Label_Name"
-        Me.Label_Name.Size = New System.Drawing.Size(34, 17)
+        Me.Label_Name.Size = New System.Drawing.Size(36, 17)
         Me.Label_Name.TabIndex = 9
         Me.Label_Name.Text = "Name"
         Me.Label_Name.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -64,7 +64,7 @@ Partial Class UserControl_Font
         'Label_Size
         '
         Me.Label_Size.AutoSize = True
-        Me.Label_Size.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Size.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Size.Location = New System.Drawing.Point(6, 55)
         Me.Label_Size.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Size.Name = "Label_Size"
@@ -77,11 +77,11 @@ Partial Class UserControl_Font
         'Label_Style
         '
         Me.Label_Style.AutoSize = True
-        Me.Label_Style.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Style.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Style.Location = New System.Drawing.Point(6, 78)
         Me.Label_Style.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Style.Name = "Label_Style"
-        Me.Label_Style.Size = New System.Drawing.Size(29, 17)
+        Me.Label_Style.Size = New System.Drawing.Size(36, 17)
         Me.Label_Style.TabIndex = 11
         Me.Label_Style.Text = "Style"
         Me.Label_Style.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -91,12 +91,12 @@ Partial Class UserControl_Font
         '
         Me.Label_Name_Value.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label_Name_Value, 2)
-        Me.Label_Name_Value.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Name_Value.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Name_Value.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.Label_Name_Value.Location = New System.Drawing.Point(48, 32)
         Me.Label_Name_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Name_Value.Name = "Label_Name_Value"
-        Me.Label_Name_Value.Size = New System.Drawing.Size(70, 17)
+        Me.Label_Name_Value.Size = New System.Drawing.Size(122, 17)
         Me.Label_Name_Value.TabIndex = 13
         Me.Label_Name_Value.Text = "Name_Value"
         Me.Label_Name_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -105,11 +105,11 @@ Partial Class UserControl_Font
         'Label_Size_Value
         '
         Me.Label_Size_Value.AutoSize = True
-        Me.Label_Size_Value.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Size_Value.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Size_Value.Location = New System.Drawing.Point(48, 55)
         Me.Label_Size_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Size_Value.Name = "Label_Size_Value"
-        Me.Label_Size_Value.Size = New System.Drawing.Size(62, 17)
+        Me.Label_Size_Value.Size = New System.Drawing.Size(65, 17)
         Me.Label_Size_Value.TabIndex = 14
         Me.Label_Size_Value.Text = "Size_Value"
         Me.Label_Size_Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -118,7 +118,7 @@ Partial Class UserControl_Font
         'Label_Style_Value
         '
         Me.Label_Style_Value.AutoSize = True
-        Me.Label_Style_Value.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Label_Style_Value.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label_Style_Value.Location = New System.Drawing.Point(48, 78)
         Me.Label_Style_Value.Margin = New System.Windows.Forms.Padding(3)
         Me.Label_Style_Value.Name = "Label_Style_Value"
