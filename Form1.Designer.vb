@@ -76,6 +76,9 @@ Partial Class Form1
         Me.TextBox_Paper_Paper = New System.Windows.Forms.TextBox()
         Me.ComboBox_Paper_DIN = New System.Windows.Forms.ComboBox()
         Me.PictureBox_Paper = New System.Windows.Forms.PictureBox()
+        Me.Label_Paper_Width = New System.Windows.Forms.Label()
+        Me.Label_Paper_Width_Value = New System.Windows.Forms.Label()
+        Me.Label_Paper_Width_Unit = New System.Windows.Forms.Label()
         Me.TabPage_Card = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_Card = New System.Windows.Forms.TableLayoutPanel()
         Me.Label_Card_Size_Hight = New System.Windows.Forms.Label()
@@ -129,9 +132,6 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Label_Paper_Width_Unit = New System.Windows.Forms.Label()
-        Me.Label_Paper_Width_Value = New System.Windows.Forms.Label()
-        Me.Label_Paper_Width = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -669,6 +669,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width, 0, 4)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Value, 1, 4)
         Me.TableLayoutPanel_Paper.Controls.Add(Me.Label_Paper_Width_Unit, 2, 4)
+        Me.TableLayoutPanel_Paper.Dock = System.Windows.Forms.DockStyle.Top
         Me.TableLayoutPanel_Paper.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_Paper.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel_Paper.Name = "TableLayoutPanel_Paper"
@@ -682,7 +683,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Paper.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(233, 227)
+        Me.TableLayoutPanel_Paper.Size = New System.Drawing.Size(628, 227)
         Me.TableLayoutPanel_Paper.TabIndex = 45
         '
         'Label_Header
@@ -779,6 +780,40 @@ Partial Class Form1
         Me.PictureBox_Paper.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox_Paper.TabIndex = 46
         Me.PictureBox_Paper.TabStop = False
+        '
+        'Label_Paper_Width
+        '
+        Me.Label_Paper_Width.AutoSize = True
+        Me.Label_Paper_Width.Location = New System.Drawing.Point(3, 106)
+        Me.Label_Paper_Width.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_Paper_Width.Name = "Label_Paper_Width"
+        Me.Label_Paper_Width.Size = New System.Drawing.Size(34, 17)
+        Me.Label_Paper_Width.TabIndex = 6
+        Me.Label_Paper_Width.Text = "Breite"
+        Me.Label_Paper_Width.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Paper_Width.UseCompatibleTextRendering = True
+        '
+        'Label_Paper_Width_Value
+        '
+        Me.Label_Paper_Width_Value.AutoSize = True
+        Me.Label_Paper_Width_Value.Location = New System.Drawing.Point(45, 106)
+        Me.Label_Paper_Width_Value.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_Paper_Width_Value.Name = "Label_Paper_Width_Value"
+        Me.Label_Paper_Width_Value.Size = New System.Drawing.Size(25, 13)
+        Me.Label_Paper_Width_Value.TabIndex = 47
+        Me.Label_Paper_Width_Value.Text = "PW"
+        '
+        'Label_Paper_Width_Unit
+        '
+        Me.Label_Paper_Width_Unit.AutoSize = True
+        Me.Label_Paper_Width_Unit.Location = New System.Drawing.Point(108, 106)
+        Me.Label_Paper_Width_Unit.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_Paper_Width_Unit.Name = "Label_Paper_Width_Unit"
+        Me.Label_Paper_Width_Unit.Size = New System.Drawing.Size(23, 17)
+        Me.Label_Paper_Width_Unit.TabIndex = 9
+        Me.Label_Paper_Width_Unit.Text = "mm"
+        Me.Label_Paper_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Paper_Width_Unit.UseCompatibleTextRendering = True
         '
         'TabPage_Card
         '
@@ -1383,40 +1418,6 @@ Partial Class Form1
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
-        '
-        'Label_Paper_Width_Unit
-        '
-        Me.Label_Paper_Width_Unit.AutoSize = True
-        Me.Label_Paper_Width_Unit.Location = New System.Drawing.Point(108, 106)
-        Me.Label_Paper_Width_Unit.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_Paper_Width_Unit.Name = "Label_Paper_Width_Unit"
-        Me.Label_Paper_Width_Unit.Size = New System.Drawing.Size(23, 17)
-        Me.Label_Paper_Width_Unit.TabIndex = 9
-        Me.Label_Paper_Width_Unit.Text = "mm"
-        Me.Label_Paper_Width_Unit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Paper_Width_Unit.UseCompatibleTextRendering = True
-        '
-        'Label_Paper_Width_Value
-        '
-        Me.Label_Paper_Width_Value.AutoSize = True
-        Me.Label_Paper_Width_Value.Location = New System.Drawing.Point(45, 106)
-        Me.Label_Paper_Width_Value.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_Paper_Width_Value.Name = "Label_Paper_Width_Value"
-        Me.Label_Paper_Width_Value.Size = New System.Drawing.Size(25, 13)
-        Me.Label_Paper_Width_Value.TabIndex = 47
-        Me.Label_Paper_Width_Value.Text = "PW"
-        '
-        'Label_Paper_Width
-        '
-        Me.Label_Paper_Width.AutoSize = True
-        Me.Label_Paper_Width.Location = New System.Drawing.Point(3, 106)
-        Me.Label_Paper_Width.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_Paper_Width.Name = "Label_Paper_Width"
-        Me.Label_Paper_Width.Size = New System.Drawing.Size(34, 17)
-        Me.Label_Paper_Width.TabIndex = 6
-        Me.Label_Paper_Width.Text = "Breite"
-        Me.Label_Paper_Width.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_Paper_Width.UseCompatibleTextRendering = True
         '
         'Form1
         '

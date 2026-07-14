@@ -32,7 +32,7 @@ Partial Class UserControl_Border
         Me.NumericUpDown_Left = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown_Right = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown_Top = New System.Windows.Forms.NumericUpDown()
-        Me.NUD_Bottom = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDown_Bottom = New System.Windows.Forms.NumericUpDown()
         Me.Label_Bottom = New System.Windows.Forms.Label()
         Me.Label_Left_Unit = New System.Windows.Forms.Label()
         Me.Label_Header = New System.Windows.Forms.Label()
@@ -40,7 +40,7 @@ Partial Class UserControl_Border
         CType(Me.NumericUpDown_Left, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Right, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Top, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NUD_Bottom, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown_Bottom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel_Border
@@ -59,7 +59,7 @@ Partial Class UserControl_Border
         Me.TableLayoutPanel_Border.Controls.Add(Me.NumericUpDown_Left, 1, 1)
         Me.TableLayoutPanel_Border.Controls.Add(Me.NumericUpDown_Right, 1, 2)
         Me.TableLayoutPanel_Border.Controls.Add(Me.NumericUpDown_Top, 1, 3)
-        Me.TableLayoutPanel_Border.Controls.Add(Me.NUD_Bottom, 1, 4)
+        Me.TableLayoutPanel_Border.Controls.Add(Me.NumericUpDown_Bottom, 1, 4)
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Bottom, 0, 4)
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Left_Unit, 2, 1)
         Me.TableLayoutPanel_Border.Controls.Add(Me.Label_Header, 0, 0)
@@ -192,18 +192,18 @@ Partial Class UserControl_Border
         Me.NumericUpDown_Top.Tag = "Paper;Top"
         Me.NumericUpDown_Top.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'NUD_Bottom
+        'NumericUpDown_Bottom
         '
-        Me.NUD_Bottom.DecimalPlaces = 1
-        Me.NUD_Bottom.Dock = System.Windows.Forms.DockStyle.Top
-        Me.NUD_Bottom.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.NUD_Bottom.Location = New System.Drawing.Point(48, 107)
-        Me.NUD_Bottom.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
-        Me.NUD_Bottom.Name = "NUD_Bottom"
-        Me.NUD_Bottom.Size = New System.Drawing.Size(73, 20)
-        Me.NUD_Bottom.TabIndex = 4
-        Me.NUD_Bottom.Tag = "Paper;Bottom"
-        Me.NUD_Bottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NumericUpDown_Bottom.DecimalPlaces = 1
+        Me.NumericUpDown_Bottom.Dock = System.Windows.Forms.DockStyle.Top
+        Me.NumericUpDown_Bottom.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
+        Me.NumericUpDown_Bottom.Location = New System.Drawing.Point(48, 107)
+        Me.NumericUpDown_Bottom.Maximum = New Decimal(New Integer() {999, 0, 0, 0})
+        Me.NumericUpDown_Bottom.Name = "NumericUpDown_Bottom"
+        Me.NumericUpDown_Bottom.Size = New System.Drawing.Size(73, 20)
+        Me.NumericUpDown_Bottom.TabIndex = 4
+        Me.NumericUpDown_Bottom.Tag = "Paper;Bottom"
+        Me.NumericUpDown_Bottom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label_Bottom
         '
@@ -261,7 +261,7 @@ Partial Class UserControl_Border
         CType(Me.NumericUpDown_Left, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_Right, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_Top, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NUD_Bottom, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown_Bottom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -277,7 +277,7 @@ Partial Class UserControl_Border
     Friend WithEvents NumericUpDown_Left As NumericUpDown
     Friend WithEvents NumericUpDown_Right As NumericUpDown
     Friend WithEvents NumericUpDown_Top As NumericUpDown
-    Friend WithEvents NUD_Bottom As NumericUpDown
+    Friend WithEvents NumericUpDown_Bottom As NumericUpDown
     Friend WithEvents Label_Bottom As Label
     Friend WithEvents Label_Left_Unit As Label
     Friend WithEvents Label_Header As Label

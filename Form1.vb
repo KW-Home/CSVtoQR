@@ -249,6 +249,7 @@ Public Class Form1
         CL_Default = New Class_Default(Me)
 
         MySettings_Load()
+        CL_Default.Controlls_Read()
 
         Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
 
@@ -258,7 +259,6 @@ Public Class Form1
     End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        CL_Default.Controlls_Read()
         PaperPaint(Nothing, Nothing)
 
     End Sub
@@ -394,6 +394,7 @@ Public Class Form1
         ComboBox_Paper_DPI.Text = DR("DPI")
         ComboBox_Paper_DIN.Text = DR("DIN").ToString
 
+        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
         Border = New UserControl_Border.Border
         With Border
             .Left = CType(DR("Left"), Decimal)
@@ -401,7 +402,7 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
+        UC_Border_Paper.GET_BorderToUC(UC_Border_Paper, Border)
 
         Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
         Label_Paper_Width_Value.Text = DR("PaperWidth").ToString
@@ -500,6 +501,7 @@ Public Class Form1
         MySettings_Save()
 
     End Sub
+
     Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged,
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
         NumericUpDown_Separator_Column_Count.ValueChanged
@@ -514,6 +516,7 @@ Public Class Form1
         PaperPaint(Nothing, Nothing)
 
     End Sub
+
     Private Sub TextBox_Paper_Paper_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Paper_Paper.TextChanged
 
         If sender.canselect = False Then Return
@@ -523,37 +526,7 @@ Public Class Form1
         IsModified = True
 
     End Sub
-    Private Sub TextBox_General_Import_TextChanged(sender As Object, e As EventArgs)
 
-        If sender.canselect = False Then Return
-        If sender.canfocus = False Then Return
-
-        Dim File As String
-        File = UC_File_CSV.TextBox_Directory.Text
-        If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
-        File &= "\" & UC_File_CSV.TextBox_Filename.Text
-        If My.Computer.FileSystem.FileExists(File) = False Then Return
-
-        DS = CL_DS.Get_DS(DS)
-        IsModified = CType(DS.Tables("Paper").Rows(0).Item("Import") = File, Boolean)
-        DS.Tables("Paper").Rows(0).Item("Import") = File
-
-    End Sub
-    Private Sub TextBox_General_Export_TextChanged(sender As Object, e As EventArgs)
-
-        If sender.canselect = False Then Return
-        If sender.canfocus = False Then Return
-
-        Dim File As String
-        File = UC_File_PDF.TextBox_Directory.Text
-        If My.Computer.FileSystem.DirectoryExists(File) = False Then Return
-        File &= "\" & UC_File_PDF.TextBox_Filename.Text
-
-        DS = CL_DS.Get_DS(DS)
-        IsModified = CType(DS.Tables("Paper").Rows(0).Item("Export") = File, Boolean)
-        DS.Tables("Paper").Rows(0).Item("Export") = File
-
-    End Sub
     Private Sub CSVSearch()
 
         DGV_Search.EndEdit()
@@ -697,6 +670,7 @@ Public Class Form1
     End Sub
     Private Sub PaperPaint_Paper(Sender As Object, e As Border) Handles UC_Border_Paper.ChangeEvent
 
+        Save_Paper()
         CL_Paint.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -794,6 +768,7 @@ Public Class Form1
         If CL_XML.ReadXML_Exists = True Then
 
             Save_General()
+            Save_Paper()
             Save_CardRow()
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
@@ -1017,7 +992,7 @@ Public Class Form1
                     .NumericUpDown_Left.Value = Convert.ToDecimal(DR("Left"))
                     .NumericUpDown_Top.Value = Convert.ToDecimal(DR("Top"))
                     .NumericUpDown_Right.Value = Convert.ToDecimal(DR("Right"))
-                    .NUD_Bottom.Value = Convert.ToDecimal(DR("Bottom"))
+                    .NumericUpDown_Bottom.Value = Convert.ToDecimal(DR("Bottom"))
                 End With
 
                 If IsNumeric(DR("FontColor")) = True Then
@@ -1087,17 +1062,22 @@ Public Class Form1
 
     Private Sub Save_Paper()
 
-        Dim DR As DataRow = DS.Tables("Paper").Rows(0)
-        DR("Paper") = TextBox_Paper_Paper.Text
-        DR("DPI") = ComboBox_Paper_DPI.Text
-        DR("DIN") = ComboBox_Paper_DIN.Text
-        DR("PaperHeight") = Label_Paper_Height_Value.Text
-        DR("PaperWidth") = Label_Paper_Width_Value.Text
-        Dim UCB As UserControl_Border = CType(TableLayoutPanel_Paper.Controls("UC_Border_Paper"), UserControl_Border)
-        DR("Left") = UCB.NumericUpDown_Left.Value
-        DR("Top") = UCB.NumericUpDown_Top.Value
-        DR("Right") = UCB.NumericUpDown_Right.Value
-        DR("Bottom") = UCB.NUD_Bottom.Value
+        Dim DR_Paper As DataRow = DS.Tables("Paper").Rows(0)
+
+        DR_Paper("Paper") = TextBox_Paper_Paper.Text
+        DR_Paper("DPI") = ComboBox_Paper_DPI.Text
+        DR_Paper("DIN") = ComboBox_Paper_DIN.Text
+
+        If ComboBox_Paper_DIN.CanSelect = True Then
+            Dim DR_DIN As DataRow = DS.Tables("PaperDIN").Select($"[DIN]='{ComboBox_Paper_DIN.Text}'")(0)
+            DR_Paper("PaperHeight") = DR_DIN("Height")
+            DR_Paper("PaperWidth") = DR_DIN("Width")
+        End If
+
+        DR_Paper("Left") = UC_Border_Paper.NumericUpDown_Left.Value
+        DR_Paper("Top") = UC_Border_Paper.NumericUpDown_Top.Value
+        DR_Paper("Right") = UC_Border_Paper.NumericUpDown_Right.Value
+        DR_Paper("Bottom") = UC_Border_Paper.NumericUpDown_Bottom.Value
 
         IsModified = True
 
@@ -1121,7 +1101,7 @@ Public Class Form1
                 DR("Left") = UC_Border_CardRow.NumericUpDown_Left.Value
                 DR("Top") = UC_Border_CardRow.NumericUpDown_Top.Value
                 DR("Right") = UC_Border_CardRow.NumericUpDown_Right.Value
-                DR("Bottom") = UC_Border_CardRow.NUD_Bottom.Value
+                DR("Bottom") = UC_Border_CardRow.NumericUpDown_Bottom.Value
 
                 IsModified = True
 
@@ -1221,7 +1201,10 @@ Public Class Form1
 
 #Region "UC ChangeEvent"
 
-    Private Sub UC_ChangeEvent_Font(sender As Object, e As Font) Handles UC_Font_General.ChangeEvent, UC_Font_Card.ChangeEvent, UC_Font_CardRow.ChangeEvent
+    Private Sub UC_ChangeEvent_Font(sender As Object, e As Font) Handles _
+        UC_Font_General.ChangeEvent,
+        UC_Font_Card.ChangeEvent,
+        UC_Font_CardRow.ChangeEvent
 
         Dim FRMSize As Size = Me.Size
         Select Case sender.Name
@@ -1243,7 +1226,10 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_ChangeEvent_Border(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles UC_Border_Paper.ChangeEvent, UC_Border_Card.ChangeEvent, UC_Border_CardRow.ChangeEvent
+    Public Sub UC_ChangeEvent_Border(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles _
+        UC_Border_Paper.ChangeEvent,
+        UC_Border_Card.ChangeEvent,
+        UC_Border_CardRow.ChangeEvent
 
         If sender.CanSelect = False Then Return
 
@@ -1273,7 +1259,10 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_ChangeEvent_File(sender As Object, e As String) Handles UC_File_XML.ChangeEvent, UC_File_PDF.ChangeEvent, UC_File_CSV.ChangeEvent
+    Public Sub UC_ChangeEvent_File(sender As Object, e As String) Handles _
+        UC_File_XML.ChangeEvent,
+        UC_File_PDF.ChangeEvent,
+        UC_File_CSV.ChangeEvent
 
         Select Case sender.Name
             Case "UC_File_XML"

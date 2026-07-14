@@ -52,17 +52,15 @@ Public Class Class_Paint
 
         With DS.Tables("Card").Rows(0)
 
-            BCL = CDbl(.Item("Left") * DPIFactor) 'Border Left
-            BCT = CDbl(.Item("Top") * DPIFactor) 'Border Top
-            BCR = CDbl(.Item("Right") * DPIFactor)  'Border Right
-            BCB = CDbl(.Item("Bottom") * DPIFactor)  'Border Bottom
+            BCL = CDbl(.Item("Left"))
+            BCT = CDbl(.Item("Top"))
+            BCR = CDbl(.Item("Right"))
+            BCB = CDbl(.Item("Bottom"))
 
-            CW = (PW - ((PSSA - 1) * PSSW)) / PSSA
-            CW = (CW - (PBL + PBR)) - Pen1.Width
+            CW = (((PW - (PBL + PBR)) - ((PSSA - 1) * PSSW)) / PSSA)
+            CH = (((PH - (PBT + PBB)) - ((PSZA - 1) * PSZW)) / PSZA)
+
             .Item("CardSizeWidth") = CW
-
-            CH = (PH - ((PSZA - 1) * PSZW)) / PSZA
-            CH = (CH - (PBT + PBB)) - Pen1.Width
             .Item("CardSizeHeight") = CH
 
         End With
@@ -84,24 +82,23 @@ Public Class Class_Paint
 
             Try
                 Using g As Graphics = Graphics.FromImage(.PictureBox_Paper.Image)
+
                     g.Clear(Color.White)
                     g.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
                     g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-                    'g.DrawRectangle(P(0), PBL - 1, PBT - 1, PW + 2, PH + 2)
 
-                    FRM.Label_Card_Size_Hight_Value.Text = CType(CH, Decimal)
-                    FRM.Label_Card_Size_Width_Value.Text = CType(CW, Decimal)
+                    Dim CS As New SizeF(CW, CH)
+                    Dim CP = New PointF(PBL, PBT)
+                    For C = 1 To PSZA Step 1
+                        For R = 1 To PSSA Step 1
+                            g.DrawRectangle(P(1), CP.X, CP.Y, CS.Width, CS.Height)
+                            CP.X = CP.X + CW + PSSW
+                        Next
+                        CP.X = PBL
+                        CP.Y = CP.Y + CS.Height + PSZW
+                    Next
 
-                    'Dim CS As New SizeF(CW, CH)
-                    'Dim CP = New PointF(PBL, PBT)
-                    'For C = 1 To PSZA Step 1
-                    '    For R = 1 To PSSA Step 1
-                    '        g.DrawRectangle(P(1), CP.X, CP.Y, CS.Width, CS.Height)
-                    '        CP.X = CP.X + CW + PSSW
-                    '    Next
-                    '    CP.X = PBL
-                    '    CP.Y = CP.Y + CS.Height + PSZW
-                    'Next
+                    g.DrawRectangle(P(0), PBL, PBT, PW, PH)
 
                 End Using
 

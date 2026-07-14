@@ -29,17 +29,15 @@
 
             .SuspendLayout()
             .Enabled = False
-            .Font = _Font
 
             For Each Con As Control In .Controls
                 Controlls_Read_Sub(Con, _Font, False)
-                Application.DoEvents()
+                'Application.DoEvents()
             Next
-
 
             For Each Con As Control In .Controls
                 Controlls_Read_Sub(Con, _Font, True)
-                Application.DoEvents()
+                'Application.DoEvents()
             Next
 
             .Enabled = True
@@ -80,7 +78,7 @@
         With _PB
             .Dock = DockStyle.Fill
             .Location = New Point(0, 0)
-            .SizeMode = PictureBoxSizeMode.Zoom
+            .SizeMode = PictureBoxSizeMode.Normal
             .BackColor = Color.WhiteSmoke
         End With
 
