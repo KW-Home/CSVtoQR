@@ -23,27 +23,27 @@
 
     Public Sub Controlls_Read()
 
-        Dim _Font As Font = My.Settings.Main_Font
+        'Dim _Font As Font = My.Settings.Main_Font
 
-        With FRM
+        'With FRM
 
-            .SuspendLayout()
-            .Enabled = False
+        '    .SuspendLayout()
+        '    '.Enabled = False
 
-            For Each Con As Control In .Controls
-                Controlls_Read_Sub(Con, _Font, False)
-                'Application.DoEvents()
-            Next
+        '    For Each Con As Control In .Controls
+        '        Controlls_Read_Sub(Con, _Font, False)
+        '        'Application.DoEvents()
+        '    Next
 
-            For Each Con As Control In .Controls
-                Controlls_Read_Sub(Con, _Font, True)
-                'Application.DoEvents()
-            Next
+        '    For Each Con As Control In .Controls
+        '        Controlls_Read_Sub(Con, _Font, True)
+        '        'Application.DoEvents()
+        '    Next
 
-            .Enabled = True
-            .ResumeLayout()
+        '    .Enabled = True
+        '    .ResumeLayout()
 
-        End With
+        'End With
 
     End Sub
 

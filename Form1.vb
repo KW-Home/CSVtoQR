@@ -251,6 +251,10 @@ Public Class Form1
         MySettings_Load()
         CL_Default.Controlls_Read()
 
+
+        CL_DS.DT_Border(DS.Tables("Border"))
+        CL_DS.DT_Font(DS.Tables("Font"))
+
         Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
 
         ToolStripMenuItem_Save.Enabled = XMLBool
@@ -478,7 +482,9 @@ Public Class Form1
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         If IsModified = True Then
+
             Dim Result As DialogResult = MessageBox.Show("Wollen Sie Speichern ?", "Achtung Datenverlust !", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
             Select Case Result
                 Case DialogResult.Yes
 
@@ -670,7 +676,7 @@ Public Class Form1
     End Sub
     Private Sub PaperPaint_Paper(Sender As Object, e As Border) Handles UC_Border_Paper.ChangeEvent
 
-        Save_Paper()
+        'Save_Paper()
         CL_Paint.Ivalidate_Paper(Me, DS)
 
     End Sub
@@ -768,7 +774,7 @@ Public Class Form1
         If CL_XML.ReadXML_Exists = True Then
 
             Save_General()
-            Save_Paper()
+            'Save_Paper()
             Save_CardRow()
 
             If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
@@ -880,6 +886,9 @@ Public Class Form1
         CL_DS.GET_CardRow(DS, -1)
         Set_CardRow_DataBinding()
         DataSetRead()
+
+        CL_DS.DT_Border(DS.Tables("Border"), 1, "CardRow", 1, 1, 1, 1)
+        CL_DS.DT_Font(DS.Tables("Border"), 1, "CardRow", My.Settings.Main_Font)
 
         'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
@@ -1060,28 +1069,28 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Save_Paper()
+    'Private Sub Save_Paper()
 
-        Dim DR_Paper As DataRow = DS.Tables("Paper").Rows(0)
+    '    Dim DR_Paper As DataRow = DS.Tables("Paper").Rows(0)
 
-        DR_Paper("Paper") = TextBox_Paper_Paper.Text
-        DR_Paper("DPI") = ComboBox_Paper_DPI.Text
-        DR_Paper("DIN") = ComboBox_Paper_DIN.Text
+    '    DR_Paper("Paper") = TextBox_Paper_Paper.Text
+    '    DR_Paper("DPI") = ComboBox_Paper_DPI.Text
+    '    DR_Paper("DIN") = ComboBox_Paper_DIN.Text
 
-        If ComboBox_Paper_DIN.CanSelect = True Then
-            Dim DR_DIN As DataRow = DS.Tables("PaperDIN").Select($"[DIN]='{ComboBox_Paper_DIN.Text}'")(0)
-            DR_Paper("PaperHeight") = DR_DIN("Height")
-            DR_Paper("PaperWidth") = DR_DIN("Width")
-        End If
+    '    If ComboBox_Paper_DIN.CanSelect = True Then
+    '        Dim DR_DIN As DataRow = DS.Tables("PaperDIN").Select($"[DIN]='{ComboBox_Paper_DIN.Text}'")(0)
+    '        DR_Paper("PaperHeight") = DR_DIN("Height")
+    '        DR_Paper("PaperWidth") = DR_DIN("Width")
+    '    End If
 
-        DR_Paper("Left") = UC_Border_Paper.NumericUpDown_Left.Value
-        DR_Paper("Top") = UC_Border_Paper.NumericUpDown_Top.Value
-        DR_Paper("Right") = UC_Border_Paper.NumericUpDown_Right.Value
-        DR_Paper("Bottom") = UC_Border_Paper.NumericUpDown_Bottom.Value
+    '    DR_Paper("Left") = UC_Border_Paper.NumericUpDown_Left.Value
+    '    DR_Paper("Top") = UC_Border_Paper.NumericUpDown_Top.Value
+    '    DR_Paper("Right") = UC_Border_Paper.NumericUpDown_Right.Value
+    '    DR_Paper("Bottom") = UC_Border_Paper.NumericUpDown_Bottom.Value
 
-        IsModified = True
+    '    IsModified = True
 
-    End Sub
+    'End Sub
 
     Private Sub Save_CardRow()
 

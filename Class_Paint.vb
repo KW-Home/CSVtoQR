@@ -29,6 +29,7 @@ Public Class Class_Paint
     Private BCB As Single = 0 'Card Border Bottom
 
     Private Sub Fill_Parameter(ByRef DS As DataSet)
+
         DS = CL_DS.Get_DS(DS)
 
         With DS.Tables("Paper").Rows(0)
@@ -103,7 +104,9 @@ Public Class Class_Paint
                 End Using
 
             Catch ex As Exception
-                MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                MessageBox.Show("Ivalidate_Paper: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
             End Try
 
         End With
@@ -147,7 +150,9 @@ Public Class Class_Paint
                 End Using
 
             Catch ex As Exception
+
                 MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
             End Try
 
         End With
@@ -271,7 +276,9 @@ Public Class Class_Paint
             End Using
 
         Catch ex As Exception
+
             MessageBox.Show("Fehler beim Zeichnen: " & ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
         End Try
 
         Return PictureBox.Image

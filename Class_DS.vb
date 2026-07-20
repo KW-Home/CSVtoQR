@@ -7,6 +7,8 @@ Public Class Class_DS
 
     Private ReadOnly CL_F As New Class_FontConverter
 
+    'Public DT_Border As DataTable
+
     Public Enum Auto_Font
         None
         AutoFontSize
@@ -24,6 +26,8 @@ Public Class Class_DS
             If .Contains("CardRow") = False Then .Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
+            If .Contains("Border") = False Then .Add(DT_Border)
+            If .Contains("Font") = False Then .Add(DT_Font)
 
         End With
 
@@ -143,6 +147,7 @@ Public Class Class_DS
         Return DR
 
     End Function
+
     Private Function DT_Search() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search"}
@@ -170,6 +175,7 @@ Public Class Class_DS
         Next
 
     End Sub
+
     Private Function DT_Search_Columns() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search_Columns"}
@@ -182,6 +188,7 @@ Public Class Class_DS
         Return DT
 
     End Function
+
     Public Function DT_Search_Operator() As DataTable
 
         Dim DT As New DataTable With {.TableName = "Search_Operator"}
@@ -204,6 +211,7 @@ Public Class Class_DS
         'Return DS
 
     End Function
+
     Private Function DT_PaperDIN() As DataTable
 
         Dim DT As New DataTable With {.TableName = "PaperDIN"}
@@ -268,5 +276,145 @@ Public Class Class_DS
         Return DT
 
     End Function
+
+#Region "Border"
+
+    ''' <summary>
+    ''' Erstellt eine DataTable für die Border-Informationen. 
+    ''' Diese Tabelle enthält die Spalten "ID", "RowID", "Relation", "Left", "Top", "Right" und "Bottom". 
+    ''' Die Spalte "ID" wird als Primärschlüssel festgelegt, um eindeutige Einträge zu gewährleisten.
+    ''' </summary>
+
+    Private Function DT_Border() As DataTable
+
+        Dim DT As New DataTable With {.TableName = "Border"}
+        With DT
+            .TableName = "Border"
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "RowID", .DataType = GetType(Integer), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Relation", .DataType = GetType(String), .DefaultValue = "Paper"})
+            .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Top", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Right", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Bottom", .DataType = GetType(Double), .DefaultValue = 0.0})
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
+        End With
+
+        DT_Border = DT
+
+    End Function
+
+    ''' <summary>
+    ''' Fügt Standard-Border-Einträge für die Relationen "Paper", "Card" und "CardRow" in die angegebene DataTable ein. 
+    ''' Die Border-Werte (Left, Top, Right, Bottom) werden auf 0.0 gesetzt.
+    ''' </summary>
+    ''' <param name="_DT"></param>
+    Public Sub DT_Border(ByRef _DT As DataTable)
+
+        Dim LoRelation As New List(Of String) From {"Paper", "Card", "CardRow"}
+        For Each Relation As String In LoRelation
+            DT_Border(_DT, 0, Relation, 0.0, 0.0, 0.0, 0.0)
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Fügt einen Border-Eintrag für die angegebene Relation und RowID in die angegebene DataTable ein oder aktualisiert ihn, falls bereits vorhanden. 
+    ''' Die Border-Werte (Left, Top, Right, Bottom) werden entsprechend den übergebenen Parametern gesetzt.     
+    ''' </summary>
+    ''' <param name="_DT"></param>
+    ''' <param name="RowID"></param>
+    ''' <param name="Relation"></param>
+    ''' <param name="Left"></param>
+    ''' <param name="Top"></param>
+    ''' <param name="Right"></param>
+    ''' <param name="Bottom"></param>
+    Public Sub DT_Border(ByRef _DT As DataTable, RowID As Integer, Relation As String, Left As Double, Top As Double, Right As Double, Bottom As Double)
+
+        Dim DR() As DataRow = _DT.Select($"Relation = '{Relation}' AND RowID = {RowID}")
+
+        If DR.Count = 0 Then
+            Dim _DR As DataRow = _DT.NewRow()
+            _DR("RowID") = RowID
+            _DR("Relation") = Relation
+            _DR("Left") = Left
+            _DR("Top") = Top
+            _DR("Right") = Right
+            _DR("Bottom") = Bottom
+            _DT.Rows.Add(_DR)
+        Else
+            DR(0)("Left") = Left
+            DR(0)("Top") = Top
+            DR(0)("Right") = Right
+            DR(0)("Bottom") = Bottom
+        End If
+
+    End Sub
+
+#End Region
+
+
+#Region "Font"
+
+    ''' <summary>
+    ''' Erstellt eine DataTable für die Font-Informationen. 
+    ''' Diese Tabelle enthält die Spalten "ID", "RowID", "Relation", "Left", "Top", "Right" und "Bottom". 
+    ''' Die Spalte "ID" wird als Primärschlüssel festgelegt, um eindeutige Einträge zu gewährleisten.
+    ''' </summary>
+
+    Private Function DT_Font() As DataTable
+
+        Dim DT As New DataTable With {.TableName = "Font"}
+        With DT
+            .TableName = "Font"
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "RowID", .DataType = GetType(Integer), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Relation", .DataType = GetType(String), .DefaultValue = "General"})
+            .Columns.Add(New DataColumn With {.ColumnName = "Font", .DataType = GetType(String), .DefaultValue = (New Class_FontConverter).FontToString(My.Settings.Main_Font)})
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
+        End With
+
+        DT_Font = DT
+
+    End Function
+
+    ''' <summary>
+    ''' Fügt Standard-Font-Einträge für die Relationen "Paper", "Card" und "CardRow" in die angegebene DataTable ein. 
+    ''' Die Font-Werte (Left, Top, Right, Bottom) werden auf 0.0 gesetzt.
+    ''' </summary>
+    ''' <param name="_DT"></param>
+    Public Sub DT_Font(ByRef _DT As DataTable)
+        Dim LoRelation As New List(Of String) From {"General", "Card", "CardRow"}
+        For Each Relation As String In LoRelation
+            DT_Font(_DT, 0, Relation, My.Settings.Main_Font)
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Fügt einen Border-Eintrag für die angegebene Relation und RowID in die angegebene DataTable ein oder aktualisiert ihn, falls bereits vorhanden. 
+    ''' Die Border-Werte (Left, Top, Right, Bottom) werden entsprechend den übergebenen Parametern gesetzt.     
+    ''' </summary>
+    ''' <param name="_DT"></param>
+    ''' <param name="RowID"></param>
+    ''' <param name="Relation"></param>
+    ''' <param name="_Font"></param>
+    Public Sub DT_Font(ByRef _DT As DataTable, RowID As Integer, Relation As String, _Font As Font)
+
+        Dim DR() As DataRow = _DT.Select($"Relation = '{Relation}' AND RowID = {RowID}")
+
+        If DR.Count = 0 Then
+            Dim _DR As DataRow = _DT.NewRow()
+            _DR("RowID") = RowID
+            _DR("Relation") = Relation
+            _DR("Font") = (New Class_FontConverter).FontToString(_Font)
+            _DT.Rows.Add(_DR)
+        Else
+            DR(0)("Font") = (New Class_FontConverter).FontToString(_Font)
+        End If
+
+    End Sub
+
+#End Region
 
 End Class

@@ -94,6 +94,7 @@ Public Class Class_XML
                     Next
                 End If
             Next
+
         End If
 
         Dim ERRORString As String = "Fehlerhafte Dateien: " & vbCrLf
@@ -102,8 +103,11 @@ Public Class Class_XML
         Next
 
         If ERRORList.Count > 1 Then
+
             MessageBox.Show(ERRORString, "Fehlerhafte Dateien", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
             Return False
+
         End If
 
         Return True
