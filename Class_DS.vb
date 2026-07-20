@@ -28,6 +28,7 @@ Public Class Class_DS
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
             If .Contains("Border") = False Then .Add(DT_Border)
             If .Contains("Font") = False Then .Add(DT_Font)
+            If .Contains("File") = False Then .Add(DT_File)
 
         End With
 
@@ -411,6 +412,52 @@ Public Class Class_DS
             _DT.Rows.Add(_DR)
         Else
             DR(0)("Font") = (New Class_FontConverter).FontToString(_Font)
+        End If
+
+    End Sub
+
+#End Region
+
+#Region "Files"
+
+
+    Private Function DT_File() As DataTable
+
+        Dim DT As New DataTable With {.TableName = "File"}
+        With DT
+            .TableName = "File"
+            .Columns.Add(New DataColumn With {.ColumnName = "ID", .AutoIncrement = True, .AutoIncrementSeed = 1, .AutoIncrementStep = 1})
+            .Columns.Add(New DataColumn With {.ColumnName = "RowID", .DataType = GetType(Integer), .DefaultValue = 0})
+            .Columns.Add(New DataColumn With {.ColumnName = "Relation", .DataType = GetType(String), .DefaultValue = "XML"})
+            .Columns.Add(New DataColumn With {.ColumnName = "File", .DataType = GetType(String), .DefaultValue = ""})
+            .PrimaryKey = New DataColumn() { .Columns("ID")}
+        End With
+
+        DT_File = DT
+
+    End Function
+
+    Public Sub DT_File(ByRef _DT As DataTable)
+
+        Dim LoRelation As New List(Of String) From {"XML", "CSV", "PDF"}
+        For Each Relation As String In LoRelation
+            DT_File(_DT, 0, Relation, "")
+        Next
+
+    End Sub
+
+    Public Sub DT_File(ByRef _DT As DataTable, RowID As Integer, Relation As String, _File As String)
+
+        Dim DR() As DataRow = _DT.Select($"Relation = '{Relation}' AND RowID = {RowID}")
+
+        If DR.Count = 0 Then
+            Dim _DR As DataRow = _DT.NewRow()
+            _DR("RowID") = RowID
+            _DR("Relation") = Relation
+            _DR("File") = _File
+            _DT.Rows.Add(_DR)
+        Else
+            DR(0)("File") = _File
         End If
 
     End Sub

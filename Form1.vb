@@ -251,9 +251,9 @@ Public Class Form1
         MySettings_Load()
         CL_Default.Controlls_Read()
 
-
         CL_DS.DT_Border(DS.Tables("Border"))
         CL_DS.DT_Font(DS.Tables("Font"))
+        CL_DS.DT_File(DS.Tables("File"))
 
         Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
 

@@ -1270,6 +1270,7 @@ Partial Class Form1
         'DGV_Table
         '
         Me.DGV_Table.AllowUserToAddRows = False
+        Me.DGV_Table.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGV_Table.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
