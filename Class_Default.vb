@@ -23,27 +23,27 @@
 
     Public Sub Controlls_Read()
 
-        'Dim _Font As Font = My.Settings.Main_Font
+        Dim _Font As Font = My.Settings.Main_Font
 
-        'With FRM
+        With FRM
 
-        '    .SuspendLayout()
-        '    '.Enabled = False
+            .SuspendLayout()
+            .Enabled = False
 
-        '    For Each Con As Control In .Controls
-        '        Controlls_Read_Sub(Con, _Font, False)
-        '        'Application.DoEvents()
-        '    Next
+            For Each Con As Control In .Controls
+                Controlls_Read_Sub(Con, _Font, False)
+                Application.DoEvents()
+            Next
 
-        '    For Each Con As Control In .Controls
-        '        Controlls_Read_Sub(Con, _Font, True)
-        '        'Application.DoEvents()
-        '    Next
+            For Each Con As Control In .Controls
+                Controlls_Read_Sub(Con, _Font, True)
+                Application.DoEvents()
+            Next
 
-        '    .Enabled = True
-        '    .ResumeLayout()
+            .Enabled = True
+            .ResumeLayout()
 
-        'End With
+        End With
 
     End Sub
 
@@ -62,6 +62,14 @@
                         TLP.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
                     Case GetType(TabPage)
                         Con.Font = New Font(_Font.FontFamily, _Font.Size + 2, FontStyle.Bold And FontStyle.Underline And FontStyle.Italic)
+                    Case GetType(DataGridView)
+                        Dim DGV As DataGridView = Con
+                        DGV.Font = _Font
+                        DGV.ColumnHeadersDefaultCellStyle.Font = New Font(_Font.FontFamily, _Font.Size, FontStyle.Bold)
+                        DGV.RowHeadersDefaultCellStyle.Font = New Font(_Font.FontFamily, _Font.Size, FontStyle.Bold)
+                        DGV.DefaultCellStyle.Font = _Font
+                        DGV.BackgroundColor = Color.WhiteSmoke
+                        DGV.AlternatingRowsDefaultCellStyle = New DataGridViewCellStyle With {.BackColor = Color.FromArgb(255, 192, 255, 255)}
                     Case Else
                         Con.Font = _Font
                 End Select
@@ -77,7 +85,7 @@
 
         With _PB
             .Dock = DockStyle.Fill
-            .Location = New Point(0, 0)
+            .Location = New Point(3, 3)
             .SizeMode = PictureBoxSizeMode.Normal
             .BackColor = Color.WhiteSmoke
         End With

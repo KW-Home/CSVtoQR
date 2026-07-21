@@ -404,14 +404,18 @@ Public Class Class_DS
 
         Dim DR() As DataRow = _DT.Select($"Relation = '{Relation}' AND RowID = {RowID}")
 
-        If DR.Count = 0 Then
+        If IsDBNull(DR) OrElse DR.Count = 0 Then
+
             Dim _DR As DataRow = _DT.NewRow()
             _DR("RowID") = RowID
             _DR("Relation") = Relation
             _DR("Font") = (New Class_FontConverter).FontToString(_Font)
             _DT.Rows.Add(_DR)
+
         Else
+
             DR(0)("Font") = (New Class_FontConverter).FontToString(_Font)
+
         End If
 
     End Sub

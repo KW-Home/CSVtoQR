@@ -44,7 +44,6 @@ Partial Class Form1
         Me.Label_Paper_DPI = New System.Windows.Forms.Label()
         Me.Label_Paper_DIN = New System.Windows.Forms.Label()
         Me.ImageList_Main = New System.Windows.Forms.ImageList(Me.components)
-        Me.TableLayoutPanel_CSV = New System.Windows.Forms.TableLayoutPanel()
         Me.DGV_Search = New System.Windows.Forms.DataGridView()
         Me.DGV_CSV = New System.Windows.Forms.DataGridView()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
@@ -132,11 +131,12 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.SplitContainer_CSV_Horizontal = New System.Windows.Forms.SplitContainer()
+        Me.SplitContainer_CSV_Vertical = New System.Windows.Forms.SplitContainer()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Column_Value, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel_CSV.SuspendLayout()
         CType(Me.DGV_Search, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
@@ -163,6 +163,14 @@ Partial Class Form1
         Me.MenuStrip_Main.SuspendLayout()
         Me.StatusStrip_Main.SuspendLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitContainer_CSV_Horizontal, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer_CSV_Horizontal.Panel1.SuspendLayout()
+        Me.SplitContainer_CSV_Horizontal.Panel2.SuspendLayout()
+        Me.SplitContainer_CSV_Horizontal.SuspendLayout()
+        CType(Me.SplitContainer_CSV_Vertical, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer_CSV_Vertical.Panel1.SuspendLayout()
+        Me.SplitContainer_CSV_Vertical.Panel2.SuspendLayout()
+        Me.SplitContainer_CSV_Vertical.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -337,31 +345,6 @@ Partial Class Form1
         Me.ImageList_Main.Images.SetKeyName(11, "Plus")
         Me.ImageList_Main.Images.SetKeyName(12, "Edit")
         '
-        'TableLayoutPanel_CSV
-        '
-        Me.TableLayoutPanel_CSV.AutoSize = True
-        Me.TableLayoutPanel_CSV.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel_CSV.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel_CSV.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.TableLayoutPanel_CSV.ColumnCount = 2
-        Me.TableLayoutPanel_CSV.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_CSV.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_CSV.Controls.Add(Me.DGV_Search, 0, 0)
-        Me.TableLayoutPanel_CSV.Controls.Add(Me.DGV_CSV, 0, 2)
-        Me.TableLayoutPanel_CSV.Controls.Add(Me.FlowLayoutPanel1, 0, 1)
-        Me.TableLayoutPanel_CSV.Controls.Add(Me.PictureBox_CSV, 1, 0)
-        Me.TableLayoutPanel_CSV.Controls.Add(Me.BindingNavigator_CSV, 0, 3)
-        Me.TableLayoutPanel_CSV.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel_CSV.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel_CSV.Name = "TableLayoutPanel_CSV"
-        Me.TableLayoutPanel_CSV.RowCount = 4
-        Me.TableLayoutPanel_CSV.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel_CSV.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_CSV.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666!))
-        Me.TableLayoutPanel_CSV.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_CSV.Size = New System.Drawing.Size(628, 519)
-        Me.TableLayoutPanel_CSV.TabIndex = 0
-        '
         'DGV_Search
         '
         Me.DGV_Search.AllowUserToAddRows = False
@@ -379,11 +362,10 @@ Partial Class Form1
         Me.DGV_Search.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Search.EnableHeadersVisualStyles = False
         Me.DGV_Search.GridColor = System.Drawing.Color.DarkGray
-        Me.DGV_Search.Location = New System.Drawing.Point(4, 4)
-        Me.DGV_Search.MinimumSize = New System.Drawing.Size(200, 64)
+        Me.DGV_Search.Location = New System.Drawing.Point(0, 0)
         Me.DGV_Search.Name = "DGV_Search"
         Me.DGV_Search.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.DGV_Search.Size = New System.Drawing.Size(595, 138)
+        Me.DGV_Search.Size = New System.Drawing.Size(336, 255)
         Me.DGV_Search.TabIndex = 0
         '
         'DGV_CSV
@@ -397,28 +379,28 @@ Partial Class Form1
         Me.DGV_CSV.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_CSV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.DGV_CSV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.TableLayoutPanel_CSV.SetColumnSpan(Me.DGV_CSV, 2)
         Me.DGV_CSV.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_CSV.GridColor = System.Drawing.Color.DarkGray
-        Me.DGV_CSV.Location = New System.Drawing.Point(4, 200)
+        Me.DGV_CSV.Location = New System.Drawing.Point(0, 0)
         Me.DGV_CSV.MultiSelect = False
         Me.DGV_CSV.Name = "DGV_CSV"
         Me.DGV_CSV.RowHeadersWidth = 62
         Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGV_CSV.Size = New System.Drawing.Size(620, 282)
+        Me.DGV_CSV.Size = New System.Drawing.Size(657, 87)
         Me.DGV_CSV.TabIndex = 44
         '
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.AutoSize = True
         Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.FlowLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.FlowLayoutPanel1.Controls.Add(Me.Button_Search_Delete)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button_Search_Add)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button_Search_Refresh)
-        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(4, 149)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 255)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(132, 44)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(336, 44)
         Me.FlowLayoutPanel1.TabIndex = 49
         '
         'Button_Search_Delete
@@ -459,13 +441,12 @@ Partial Class Form1
         '
         'PictureBox_CSV
         '
-        Me.PictureBox_CSV.BackColor = System.Drawing.Color.Firebrick
+        Me.PictureBox_CSV.BackColor = System.Drawing.Color.WhiteSmoke
         Me.PictureBox_CSV.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox_CSV.Location = New System.Drawing.Point(603, 1)
+        Me.PictureBox_CSV.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox_CSV.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_CSV.Name = "PictureBox_CSV"
-        Me.TableLayoutPanel_CSV.SetRowSpan(Me.PictureBox_CSV, 2)
-        Me.PictureBox_CSV.Size = New System.Drawing.Size(24, 195)
+        Me.PictureBox_CSV.Size = New System.Drawing.Size(305, 299)
         Me.PictureBox_CSV.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox_CSV.TabIndex = 47
         Me.PictureBox_CSV.TabStop = False
@@ -473,22 +454,22 @@ Partial Class Form1
         'BindingNavigator_CSV
         '
         Me.BindingNavigator_CSV.AddNewItem = Nothing
-        Me.BindingNavigator_CSV.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel_CSV.SetColumnSpan(Me.BindingNavigator_CSV, 2)
+        Me.BindingNavigator_CSV.BackColor = System.Drawing.Color.WhiteSmoke
         Me.BindingNavigator_CSV.CountItem = Me.BindingNavigatorCountItem
         Me.BindingNavigator_CSV.DeleteItem = Nothing
+        Me.BindingNavigator_CSV.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.BindingNavigator_CSV.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BindingNavigator_CSV.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.BindingNavigator_CSV.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.BindingNavigator_CSV.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
-        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(1, 486)
+        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(0, 87)
         Me.BindingNavigator_CSV.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.BindingNavigator_CSV.MoveLastItem = Me.BindingNavigatorMoveLastItem
         Me.BindingNavigator_CSV.MoveNextItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator_CSV.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.BindingNavigator_CSV.Name = "BindingNavigator_CSV"
         Me.BindingNavigator_CSV.PositionItem = Me.BindingNavigatorPositionItem
-        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(626, 31)
+        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(657, 31)
         Me.BindingNavigator_CSV.TabIndex = 45
         Me.BindingNavigator_CSV.Text = "BindingNavigator1"
         '
@@ -565,11 +546,11 @@ Partial Class Form1
         Me.TabPage_CSV.AutoScroll = True
         Me.TabPage_CSV.BackColor = System.Drawing.Color.Transparent
         Me.TabPage_CSV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.TabPage_CSV.Controls.Add(Me.TableLayoutPanel_CSV)
+        Me.TabPage_CSV.Controls.Add(Me.SplitContainer_CSV_Horizontal)
         Me.TabPage_CSV.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_CSV.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_CSV.Name = "TabPage_CSV"
-        Me.TabPage_CSV.Size = New System.Drawing.Size(632, 523)
+        Me.TabPage_CSV.Size = New System.Drawing.Size(661, 437)
         Me.TabPage_CSV.TabIndex = 5
         Me.TabPage_CSV.Text = "CSV"
         '
@@ -589,7 +570,7 @@ Partial Class Form1
         Me.TabControl_Main.Name = "TabControl_Main"
         Me.TabControl_Main.Padding = New System.Drawing.Point(0, 0)
         Me.TabControl_Main.SelectedIndex = 0
-        Me.TabControl_Main.Size = New System.Drawing.Size(640, 552)
+        Me.TabControl_Main.Size = New System.Drawing.Size(669, 466)
         Me.TabControl_Main.TabIndex = 5
         '
         'TabPage_General
@@ -601,7 +582,7 @@ Partial Class Form1
         Me.TabPage_General.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_General.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_General.Name = "TabPage_General"
-        Me.TabPage_General.Size = New System.Drawing.Size(632, 523)
+        Me.TabPage_General.Size = New System.Drawing.Size(661, 437)
         Me.TabPage_General.TabIndex = 8
         Me.TabPage_General.Text = "Allgemein"
         '
@@ -620,7 +601,7 @@ Partial Class Form1
         Me.TableLayoutPanel_General.Padding = New System.Windows.Forms.Padding(9)
         Me.TableLayoutPanel_General.RowCount = 1
         Me.TableLayoutPanel_General.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(628, 20)
+        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(657, 20)
         Me.TableLayoutPanel_General.TabIndex = 5
         '
         'TabPage_Paper
@@ -944,7 +925,7 @@ Partial Class Form1
         Me.TabPage_CardRow.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_CardRow.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_CardRow.Name = "TabPage_CardRow"
-        Me.TabPage_CardRow.Size = New System.Drawing.Size(632, 523)
+        Me.TabPage_CardRow.Size = New System.Drawing.Size(661, 437)
         Me.TabPage_CardRow.TabIndex = 7
         Me.TabPage_CardRow.Text = "Zeile"
         Me.TabPage_CardRow.UseVisualStyleBackColor = True
@@ -964,7 +945,7 @@ Partial Class Form1
         Me.TableLayoutPanel_CardRow.RowCount = 2
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(628, 226)
+        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(657, 226)
         Me.TableLayoutPanel_CardRow.TabIndex = 0
         '
         'PictureBox_CardRow
@@ -1348,7 +1329,7 @@ Partial Class Form1
         Me.MenuStrip_Main.Location = New System.Drawing.Point(3, 3)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(640, 32)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(669, 32)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -1412,20 +1393,62 @@ Partial Class Form1
         '
         Me.StatusStrip_Main.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(3, 587)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(3, 501)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(640, 24)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(669, 24)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
+        '
+        'SplitContainer_CSV_Horizontal
+        '
+        Me.SplitContainer_CSV_Horizontal.BackColor = System.Drawing.SystemColors.Highlight
+        Me.SplitContainer_CSV_Horizontal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer_CSV_Horizontal.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
+        Me.SplitContainer_CSV_Horizontal.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer_CSV_Horizontal.Name = "SplitContainer_CSV_Horizontal"
+        Me.SplitContainer_CSV_Horizontal.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer_CSV_Horizontal.Panel1
+        '
+        Me.SplitContainer_CSV_Horizontal.Panel1.Controls.Add(Me.SplitContainer_CSV_Vertical)
+        '
+        'SplitContainer_CSV_Horizontal.Panel2
+        '
+        Me.SplitContainer_CSV_Horizontal.Panel2.Controls.Add(Me.DGV_CSV)
+        Me.SplitContainer_CSV_Horizontal.Panel2.Controls.Add(Me.BindingNavigator_CSV)
+        Me.SplitContainer_CSV_Horizontal.Size = New System.Drawing.Size(657, 433)
+        Me.SplitContainer_CSV_Horizontal.SplitterDistance = 299
+        Me.SplitContainer_CSV_Horizontal.SplitterWidth = 16
+        Me.SplitContainer_CSV_Horizontal.TabIndex = 1
+        '
+        'SplitContainer_CSV_Vertical
+        '
+        Me.SplitContainer_CSV_Vertical.BackColor = System.Drawing.SystemColors.Highlight
+        Me.SplitContainer_CSV_Vertical.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer_CSV_Vertical.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer_CSV_Vertical.Name = "SplitContainer_CSV_Vertical"
+        '
+        'SplitContainer_CSV_Vertical.Panel1
+        '
+        Me.SplitContainer_CSV_Vertical.Panel1.Controls.Add(Me.DGV_Search)
+        Me.SplitContainer_CSV_Vertical.Panel1.Controls.Add(Me.FlowLayoutPanel1)
+        '
+        'SplitContainer_CSV_Vertical.Panel2
+        '
+        Me.SplitContainer_CSV_Vertical.Panel2.Controls.Add(Me.PictureBox_CSV)
+        Me.SplitContainer_CSV_Vertical.Size = New System.Drawing.Size(657, 299)
+        Me.SplitContainer_CSV_Vertical.SplitterDistance = 336
+        Me.SplitContainer_CSV_Vertical.SplitterWidth = 16
+        Me.SplitContainer_CSV_Vertical.TabIndex = 50
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ClientSize = New System.Drawing.Size(646, 614)
+        Me.ClientSize = New System.Drawing.Size(675, 528)
         Me.Controls.Add(Me.TabControl_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
@@ -1446,8 +1469,6 @@ Partial Class Form1
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown_Separator_Column_Value, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel_CSV.ResumeLayout(False)
-        Me.TableLayoutPanel_CSV.PerformLayout()
         CType(Me.DGV_Search, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DGV_CSV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel1.ResumeLayout(False)
@@ -1457,7 +1478,6 @@ Partial Class Form1
         Me.BindingNavigator_CSV.ResumeLayout(False)
         Me.BindingNavigator_CSV.PerformLayout()
         Me.TabPage_CSV.ResumeLayout(False)
-        Me.TabPage_CSV.PerformLayout()
         Me.TabControl_Main.ResumeLayout(False)
         Me.TabPage_General.ResumeLayout(False)
         Me.TabPage_General.PerformLayout()
@@ -1489,6 +1509,16 @@ Partial Class Form1
         Me.StatusStrip_Main.ResumeLayout(False)
         Me.StatusStrip_Main.PerformLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer_CSV_Horizontal.Panel1.ResumeLayout(False)
+        Me.SplitContainer_CSV_Horizontal.Panel2.ResumeLayout(False)
+        Me.SplitContainer_CSV_Horizontal.Panel2.PerformLayout()
+        CType(Me.SplitContainer_CSV_Horizontal, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer_CSV_Horizontal.ResumeLayout(False)
+        Me.SplitContainer_CSV_Vertical.Panel1.ResumeLayout(False)
+        Me.SplitContainer_CSV_Vertical.Panel1.PerformLayout()
+        Me.SplitContainer_CSV_Vertical.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer_CSV_Vertical, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer_CSV_Vertical.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1502,7 +1532,6 @@ Partial Class Form1
     Friend WithEvents ComboBox_Paper_DIN As ComboBox
     Friend WithEvents Label_Paper_Height_Unit As Label
     Friend WithEvents ImageList_Main As ImageList
-    Friend WithEvents TableLayoutPanel_CSV As TableLayoutPanel
     Friend WithEvents Button_Search_Add As Button
     Friend WithEvents Button_Search_Delete As Button
     Friend WithEvents DGV_Search As DataGridView
@@ -1595,4 +1624,6 @@ Partial Class Form1
     Friend WithEvents Label_Paper_Width As Label
     Friend WithEvents Label_Paper_Width_Value As Label
     Friend WithEvents Label_Paper_Width_Unit As Label
+    Friend WithEvents SplitContainer_CSV_Horizontal As SplitContainer
+    Friend WithEvents SplitContainer_CSV_Vertical As SplitContainer
 End Class

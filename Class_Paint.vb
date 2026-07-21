@@ -160,7 +160,7 @@ Public Class Class_Paint
     End Sub
 
 
-    Public Function Ivalidate_CSV(ByRef DS As DataSet, PictureBox As PictureBox) As Image
+    Public Sub Ivalidate_CSV(ByRef DS As DataSet, PictureBox As PictureBox) 'As Image
 
         DS = CL_DS.Get_DS(DS)
 
@@ -252,17 +252,18 @@ Public Class Class_Paint
 
                             _Rec = New Rectangle(Loc, ImageNew.Size)
 
-                            g.DrawRectangle(Pen1, _Rec)
                             g.DrawImage(ImageNew, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
-
+                            g.DrawRectangle(Pen1, _Rec)
                             CurrentTop += ImageNew.Size.Height
 
                             ImageNew.Dispose()
 
                         Else
-                            g.DrawRectangle(Pen1, _Rec)
+
                             g.DrawString(STR, nFont, Brushes.Black, New Point(PBL + RowBorderLeft, CurrentTop + RowBorderTop))
+                            g.DrawRectangle(Pen1, _Rec)
                             CurrentTop += nFontHeight
+
                         End If
 
                         CurrentTop += RowBorderTop
@@ -281,9 +282,9 @@ Public Class Class_Paint
 
         End Try
 
-        Return PictureBox.Image
+        'Return PictureBox.Image
 
-    End Function
+    End Sub
 
     ' Hilfsfunktion: skaliert ein Image auf die gewünschte Pixel-Größe (hochwertig)
     Private Function ResizeImage(src As Image, width As Integer, height As Integer) As Image

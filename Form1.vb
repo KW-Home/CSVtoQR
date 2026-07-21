@@ -325,6 +325,8 @@ Public Class Form1
         DT_CSV = CL_CSV.GET_CSV(DS, CL_DS, Value)
         DV_CSV = New DataView(DT_CSV)
 
+
+        'To Do: DataBinding für die DataGridView und BindingNavigator einrichten
         BindingSource_CSV.DataSource = DV_CSV
         BindingNavigator_CSV.BindingSource = BindingSource_CSV
         DGV_CSV.DataSource = BindingSource_CSV
@@ -674,23 +676,26 @@ Public Class Form1
         CL_Paint.Ivalidate_Paper(Me, DS)
 
     End Sub
+
     Private Sub PaperPaint_Paper(Sender As Object, e As Border) Handles UC_Border_Paper.ChangeEvent
 
         'Save_Paper()
         CL_Paint.Ivalidate_Paper(Me, DS)
 
     End Sub
+
     Private Sub PaperPaint_Card(Sender As Object, e As Border) Handles UC_Border_Card.ChangeEvent
 
         'CL_Paint.Ivalidate_Card(Me, DS)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
 
     End Sub
+
     Private Sub PaperPaint_CardRow(Sender As Object, e As Border) Handles UC_Border_CardRow.ChangeEvent
 
-        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
-
 
     Public Sub CB_DIN_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_Paper_DIN.SelectedIndexChanged
 
@@ -743,21 +748,14 @@ Public Class Form1
 
         Select Case TabControl_Main.TabPages(TabControl_Main.SelectedIndex).Name
             Case "TabPage_Paper"
-
                 CL_Paint.Ivalidate_Paper(Me, DS)
-
             Case "TabPage_Card"
-
                 'CL_Paint.Ivalidate_Card(Me, DS)
-
+                CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
             Case "TabPage_CardRow"
-
-                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
-
+                CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
             Case "TabPage_CSV"
-
-                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
-
+                CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
         End Select
 
     End Sub
@@ -888,9 +886,9 @@ Public Class Form1
         DataSetRead()
 
         CL_DS.DT_Border(DS.Tables("Border"), 1, "CardRow", 1, 1, 1, 1)
-        CL_DS.DT_Font(DS.Tables("Border"), 1, "CardRow", My.Settings.Main_Font)
+        CL_DS.DT_Font(DS.Tables("Font"), 1, "CardRow", My.Settings.Main_Font)
 
-        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
     Private Sub Set_CardRow_DataBinding()
@@ -926,7 +924,7 @@ Public Class Form1
 
         Set_CardRow_DataBinding()
 
-        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
 
@@ -1030,7 +1028,7 @@ Public Class Form1
         If sender.CanSelect = False Then Return
 
         CardRow_Sort(sender, e)
-        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
     End Sub
     Private Sub CardRow_Sort(sender As Object, e As EventArgs)
@@ -1126,6 +1124,10 @@ Public Class Form1
         Save_CardRow()
         Set_CardRow_DataBinding()
 
+        'Dim _Font As Font = UC_Font_CardRow.UC_Font
+        'Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
+        'CL_DS.DT_Font(DS.Tables("DT_Font"), ID, "CardRow", _Font)
+
     End Sub
     Private Sub Button_CardRow_FontColor_Click(sender As Object, e As EventArgs) Handles Button_CardRow_FontColor.Click
 
@@ -1143,7 +1145,7 @@ Public Class Form1
 
         If sender.CanSelect = False Then Return
 
-        'CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
+        CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
 
     End Sub
 
@@ -1246,23 +1248,27 @@ Public Class Form1
             Case UC_Border_Paper.Name
 
                 SetBorderValue("Paper", e)
-
-                'CL_Paint.Ivalidate_Paper(Me, DS)
+                CL_Paint.Ivalidate_Paper(Me, DS)
 
             Case UC_Border_Card.Name
 
                 SetBorderValue("Card", e)
-
-                'CL_Paint.Ivalidate_Card(Me, DS)
+                CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
 
             Case UC_Border_CardRow.Name
 
-                If ListBox_CardRow.SelectedIndex = -1 Then Return
+                If ListBox_CardRow.SelectedIndex = -1 Then
+                    If ListBox_CardRow.Items.Count = 0 Then
+                        Return
+                    Else
+                        SetBorderValue("CardRow", e, 0)
+                    End If
+                Else
+                    Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
+                    SetBorderValue("CardRow", e, ID)
+                End If
 
-                Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
-                SetBorderValue("CardRow", e, ID)
-
-                'CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+                CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
 
         End Select
 
