@@ -2,29 +2,28 @@
 
 Public Class UserControl_Font
 
-    Public UC_Font As Font = My.Settings.Main_Font
-
     Public Event ChangeEvent(ByVal sender As Object, ByVal e As Font)
+    Public UC_Font As Font = My.Settings.Main_Font
 
     Private Sub Button_Font_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button_Font.Click
 
         Dim FD As New FontDialog With {.Font = My.Settings.Main_Font}
         If FD.ShowDialog = DialogResult.OK Then
             UC_Font = FD.Font
+            SetToUC(FD.Font)
             RaiseEvent ChangeEvent(Me, FD.Font)
-            GET_FontToUC(FD.Font)
         End If
 
     End Sub
 
-    Public Sub GET_FontToUC(FontString As String)
+    Public Sub SetToUC(FontString As String)
 
         Dim _Font As Font = New Class_FontConverter().StringToFont(FontString)
-        GET_FontToUC(_Font)
+        SetToUC(_Font)
 
     End Sub
 
-    Public Sub GET_FontToUC(_Font As Font)
+    Public Sub SetToUC(_Font As Font)
 
         Label_Name_Value.Text = _Font.Name.ToString
         Label_Style_Value.Text = _Font.Style.ToString
@@ -32,7 +31,7 @@ Public Class UserControl_Font
 
     End Sub
 
-    Public Sub UC_Load(ByRef FRM As Form1, ByRef UC As UserControl_Font, ByRef TLP As TableLayoutPanel)
+    Public Sub UC_Load(ByRef FRM As Form1, ByRef UC As UserControl_Font, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, Pos As Form1.UC_Pos)
 
         If TLP.Contains(UC) = False Then
             With UC
@@ -46,9 +45,23 @@ Public Class UserControl_Font
                         .Label_Header.Text = "Font Zeile"
                 End Select
             End With
-            TLP.RowCount += 1
-            TLP.RowStyles.Add(New RowStyle(SizeType.AutoSize))
-            TLP.Controls.Add(UC)
+
+            With TLP
+
+                If NewRow = True Then
+                    .RowCount += 1
+                    .RowStyles.Add(New RowStyle(SizeType.AutoSize))
+                End If
+
+                .Controls.Add(UC)
+
+                .SetRow(UC, Pos.Row)
+                .SetRowSpan(UC, Pos.RowSpan)
+                .SetColumn(UC, Pos.Column)
+                .SetColumnSpan(UC, Pos.ColumnSpan)
+
+            End With
+
         End If
 
     End Sub

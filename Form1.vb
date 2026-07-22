@@ -39,8 +39,15 @@ Public Class Form1
     Public DT_CSV As DataTable
     Private DV_CSV As DataView
 
-
     Private IsModified_Value As Boolean
+
+    Public Structure UC_Pos
+        'Dim Pos As New UC_Pos With {.Row = 0, .RowSpan = 0, .Column = 0, .ColumnSpan = 0}
+        Dim Row As Integer
+        Dim RowSpan As Integer
+        Dim Column As Integer
+        Dim ColumnSpan As Integer
+    End Structure
 
     Public Property IsModified() As Boolean
         Get
@@ -71,45 +78,29 @@ Public Class Form1
 
     Private Sub XMLChange()
 
-        Dim DirStr As String = System.IO.Path.GetDirectoryName(File_XML_Value)
-        If System.IO.Directory.Exists(DirStr) Then
+        UC_File_XML.SetToUC(New FileInfo(File_XML_Value))
 
-            ToolStripStatusLabel_SaveFile.Text = File_XML_Value
-            My.Settings.LastDirectory = DirStr
-
-
-            If System.IO.File.Exists(File_XML_Value) = True Then
-
-                Dim FileName As String = System.IO.Path.GetFileName(File_XML_Value)
-                With UC_File_XML
-                    .TextBox_Directory.Text = DirStr
-                    .TextBox_Filename.Text = FileName
-                End With
-                My.Settings.LastFile = FileName
-
-                DS = CL_DS.Get_DS(DS)
-                CL_XML.DataSetFile = File_XML_Value
-                CL_XML.ReadXML(DS)
-
-                DataSetRead()
-
-                GET_ColumnTabele()
-
-                ToolStripMenuItem_Save.Enabled = True
-
-            End If
-
+        If System.IO.File.Exists(File_XML_Value) = True Then
+            My.Settings.LastDirectory = System.IO.Path.GetDirectoryName(File_XML_Value)
+            My.Settings.LastFile = System.IO.Path.GetFileName(File_XML_Value)
             My.Settings.Save()
 
+            DS.Tables("File").Rows(0).Item("File") = File_XML_Value
+            DS.Tables("Paper").Rows(0).Item("Import") = File_XML_Value
+
+            DS = CL_DS.Get_DS(DS)
+            CL_XML.DataSetFile = File_XML_Value
+            CL_XML.ReadXML(DS)
+
+            DataSetRead()
+            GET_ColumnTabele()
+
+
+            ToolStripMenuItem_Save.Enabled = True
+            ToolStripStatusLabel_SaveFile.Text = File_XML_Value
         Else
-
-            With UC_File_XML
-                .TextBox_Directory.Text = String.Empty
-                .TextBox_Filename.Text = String.Empty
-            End With
-
+            ToolStripMenuItem_Save.Enabled = False
             ToolStripStatusLabel_SaveFile.Text = String.Empty
-
         End If
 
     End Sub
@@ -122,21 +113,14 @@ Public Class Form1
         Set(ByVal value As String)
 
             File_CSV_Value = value
+            DS.Tables("File").Rows(1).Item("File") = value
 
             DS = CL_DS.Get_DS(DS)
-            DS.Tables("Paper").Rows(0).Item("Import") = value
+            'DS.Tables("Paper").Rows(1).Item("Import") = value
             Load_CSV(value)
-
             Set_CardRow_DataBinding()
 
-            If IsNothing(File_CSV_Value) = True Then Return
-            If System.IO.File.Exists(File_CSV_Value) = False Then Return
-
-
-            With UC_File_CSV
-                .TextBox_Directory.Text = Path.GetDirectoryName(File_CSV_Value)
-                .TextBox_Filename.Text = Path.GetFileName(File_CSV_Value)
-            End With
+            UC_File_CSV.SetToUC(New FileInfo(value))
 
         End Set
     End Property
@@ -147,25 +131,38 @@ Public Class Form1
             Return File_PDF_Value
         End Get
         Set(ByVal value As String)
-            Dim finalPath As String = If(value, String.Empty)
 
-            If String.IsNullOrWhiteSpace(finalPath) Then
-                File_PDF_Value = String.Empty
-            Else
-                If finalPath.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) = False Then
-                    Try
-                        finalPath = System.IO.Path.ChangeExtension(finalPath, ".pdf")
-                    Catch
-                        finalPath &= ".pdf"
-                    End Try
-                End If
+            File_PDF_Value = value
 
-                File_PDF_Value = finalPath
-            End If
+            'If System.IO.Path.GetDirectoryName(value) = True Then
+            '    Dim FI As New FileInfo(value)
 
-            DS.Tables("Paper").Rows(0).Item("Export") = File_PDF_Value
+            '    UC_File_PDF.SetToUC(FI)
 
-            SET_Changetext_PDF(File_PDF_Value)
+
+
+            'End If
+
+            'Dim finalPath As String = If(value, String.Empty)
+
+            'If String.IsNullOrWhiteSpace(finalPath) Then
+            '    File_PDF_Value = String.Empty
+            'Else
+            '    If finalPath.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) = False Then
+            '        Try
+            '            finalPath = System.IO.Path.ChangeExtension(finalPath, ".pdf")
+            '        Catch
+            '            finalPath &= ".pdf"
+            '        End Try
+            '    End If
+
+            '    File_PDF_Value = finalPath
+
+            '    DS.Tables("Paper").Rows(0).Item("Export") = File_PDF_Value
+            '    DS.Tables("File").Rows(2).Item("File") = File_PDF_Value
+
+            '    'SET_Changetext_PDF(File_PDF_Value)
+            'End If
 
         End Set
     End Property
@@ -179,81 +176,48 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+        CL_DS.DT_Border(DS.Tables("Border"))
+        CL_DS.DT_Font(DS.Tables("Font"))
+        CL_DS.DT_File(DS.Tables("File"))
 
-        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General)
+        Dim Border As New UC_Pos
+        Dim Pos() = New UC_Pos(12) {}
 
-        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General)
-        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General)
-        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General)
+        Pos(0) = New UC_Pos With {.Row = 0, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'Default
 
-        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
-        With TableLayoutPanel_Paper
+        Pos(1) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_General
+        Pos(2) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_XML
+        Pos(3) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_CSV
+        Pos(4) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_PDF
 
-            .SetRow(PictureBox_Paper, 0)
-            .SetRowSpan(PictureBox_Paper, 10)
-            .SetColumn(PictureBox_Paper, 4)
-            .SetColumnSpan(PictureBox_Paper, 1)
+        Pos(5) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Paper
 
-            .SetRow(UC_Border_Paper, 9)
-            .SetRowSpan(UC_Border_Paper, 1)
-            .SetColumn(UC_Border_Paper, 0)
-            .SetColumnSpan(UC_Border_Paper, 3)
+        Pos(6) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Card
+        Pos(8) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_Card
 
-        End With
+        Pos(7) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Border_CardRow
+        Pos(9) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_CardRow
 
-        UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card)
-        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card)
+        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General, False, Pos(1))
 
-        With TableLayoutPanel_Card
+        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General, False, Pos(2))
+        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General, False, Pos(3))
+        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General, False, Pos(4))
 
-            .SetRow(UC_Font_Card, 2)
-            .SetRowSpan(UC_Font_Card, 1)
-            .SetColumn(UC_Font_Card, 0)
-            .SetColumnSpan(UC_Font_Card, 3)
+        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper, True, Pos(5))
 
-            .SetRow(UC_Border_Card, 3)
-            .SetRowSpan(UC_Border_Card, 1)
-            .SetColumn(UC_Border_Card, 0)
-            .SetColumnSpan(UC_Border_Card, 3)
+        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card, True, Pos(6))
+        UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card, True, Pos(8))
 
-            .SetRow(PictureBox_Card, 0)
-            .SetRowSpan(PictureBox_Card, 4)
-            .SetColumn(PictureBox_Card, 4)
-            .SetColumnSpan(PictureBox_Card, 1)
-
-        End With
-
-        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow)
-        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
-
-        With TableLayoutPanel_CardRow
-
-            .SetRow(UC_Font_CardRow, 2)
-            .SetRowSpan(UC_Font_CardRow, 1)
-            .SetColumn(UC_Font_CardRow, 0)
-            .SetColumnSpan(UC_Font_CardRow, 1)
-
-            .SetRow(UC_Border_CardRow, 3)
-            .SetRowSpan(UC_Border_CardRow, 1)
-            .SetColumn(UC_Border_CardRow, 0)
-            .SetColumnSpan(UC_Border_CardRow, 1)
-
-            .SetRow(PictureBox_CardRow, 0)
-            .SetRowSpan(PictureBox_CardRow, 8)
-            .SetColumn(PictureBox_CardRow, 1)
-            .SetColumnSpan(PictureBox_CardRow, 1)
-
-        End With
+        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow, True, Pos(7))
+        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow, True, Pos(9))
 
         CL_Default = New Class_Default(Me)
 
         MySettings_Load()
+
         CL_Default.Controlls_Read()
 
-        CL_DS.DT_Border(DS.Tables("Border"))
-        CL_DS.DT_Font(DS.Tables("Font"))
-        CL_DS.DT_File(DS.Tables("File"))
 
         Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
 
@@ -271,7 +235,7 @@ Public Class Form1
         With My.Settings
 
             Me.Font = .Main_Font
-            UC_Font_General.GET_FontToUC(.Main_Font)
+            UC_Font_General.SetToUC(.Main_Font)
             Me.Size = .MySize
 
             If System.IO.File.Exists(.LastFile) = True Then
@@ -400,7 +364,8 @@ Public Class Form1
         ComboBox_Paper_DPI.Text = DR("DPI")
         ComboBox_Paper_DIN.Text = DR("DIN").ToString
 
-        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper)
+        UC_Border_Paper.SetToUC(Border)
+
         Border = New UserControl_Border.Border
         With Border
             .Left = CType(DR("Left"), Decimal)
@@ -408,7 +373,8 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border_Paper.GET_BorderToUC(UC_Border_Paper, Border)
+
+        UC_Border_Paper.SetToUC(Border)
 
         Label_Paper_Height_Value.Text = DR("PaperHeight").ToString
         Label_Paper_Width_Value.Text = DR("PaperWidth").ToString
@@ -421,7 +387,7 @@ Public Class Form1
         DR = DS.Tables("Card").Rows(0)
 
         nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-        UC_Font_Card.GET_FontToUC(nFont)
+        UC_Font_Card.SetToUC(nFont)
 
         Border = New UserControl_Border.Border
         With Border
@@ -430,7 +396,8 @@ Public Class Form1
             .Right = CType(DR("Right"), Decimal)
             .Bottom = CType(DR("Bottom"), Decimal)
         End With
-        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card)
+
+        UC_Border_Card.SetToUC(Border)
 
         Label_Card_Size_Hight_Value.Text = CType(DR("CardSizeHeight"), Decimal)
         Label_Card_Size_Width_Value.Text = CType(DR("CardSizeWidth"), Decimal)
@@ -444,7 +411,9 @@ Public Class Form1
                 .Right = 0
                 .Bottom = 0
             End With
-            UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
+
+            UC_Border_CardRow.SetToUC(Border)
+
         Else
 
             Dim ID As Integer = ListBox_CardRow.Items(ListBox_CardRow.SelectedIndex)("ID")
@@ -452,7 +421,7 @@ Public Class Form1
             DR = CL_DS.GET_CardRow(DS, ID)
 
             nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
-            UC_Font_CardRow.GET_FontToUC(nFont)
+            UC_Font_CardRow.SetToUC(nFont)
 
             Border = New UserControl_Border.Border
             With Border
@@ -461,7 +430,9 @@ Public Class Form1
                 .Right = CType(DR("Right"), Decimal)
                 .Bottom = CType(DR("Bottom"), Decimal)
             End With
-            UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow)
+
+            'UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow, True)
+            UC_Border_CardRow.SetToUC(Border)
 
             CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
             CheckBox_CardRow_AutoFont.Checked = CType(DR("AutoFont"), Boolean)
@@ -845,39 +816,39 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
+    'Private Sub CL_XML_Changetext(sender As Object, e As Object) Handles CL_XML.Changetext
 
-        SET_Changetext_XML(sender, e)
+    '    SET_Changetext_XML(sender, e)
 
-    End Sub
+    'End Sub
 
-    Private Sub SET_Changetext_XML(sender As Object, e As Object)
+    'Private Sub SET_Changetext_XML(sender As Object, e As Object)
 
-        Dim FI As New FileInfo(e)
+    '    Dim FI As New FileInfo(e)
 
-        With FI
-            UC_File_XML.TextBox_Directory.Text = .Directory.ToString
-            UC_File_XML.TextBox_Filename.Text = .Name.ToString
-            ToolStripStatusLabel_SaveFile.Text = .FullName
-        End With
+    '    With FI
+    '        UC_File_XML.TextBox_Directory.Text = .Directory.ToString
+    '        UC_File_XML.TextBox_Filename.Text = .Name.ToString
+    '        ToolStripStatusLabel_SaveFile.Text = .FullName
+    '    End With
 
-        IsModified = False
+    '    IsModified = False
 
-    End Sub
+    'End Sub
 
-    Private Sub SET_Changetext_PDF(File As String)
+    'Private Sub SET_Changetext_PDF(File As String)
 
-        'ToDo Ordner Überprüfen und erstellen fals nicht vorhanden
-        If System.IO.File.Exists(File) = True Then MessageBox.Show("Die Datei wurde nicht gefunden.", "Export in PDF")
-        If File.Length = 0 Then Return
+    '    'ToDo Ordner Überprüfen und erstellen fals nicht vorhanden
+    '    If System.IO.File.Exists(File) = True Then MessageBox.Show("Die Datei wurde nicht gefunden.", "Export in PDF")
+    '    If File.Length = 0 Then Return
 
-        Dim FI As New FileInfo(File)
-        UC_File_PDF.TextBox_Directory.Text = FI.Directory.ToString
-        UC_File_PDF.TextBox_Filename.Text = FI.Name.ToString
+    '    Dim FI As New FileInfo(File)
+    '    UC_File_PDF.TextBox_Directory.Text = FI.Directory.ToString
+    '    UC_File_PDF.TextBox_Filename.Text = FI.Name.ToString
 
-        IsModified = False
+    '    IsModified = False
 
-    End Sub
+    'End Sub
 
     Private Sub Button_CardRow_Add_Click(sender As Object, e As EventArgs) Handles Button_CardRow_Add.Click
 
@@ -1104,7 +1075,7 @@ Public Class Form1
                 DR("AutoFont") = CheckBox_CardRow_AutoFont.Checked
                 DR("FontColor") = Button_CardRow_FontColor.BackColor.ToArgb
                 DR("DataColumn") = ComboBox_CardRow_DataColumn.SelectedValue
-                DR("Font") = New Class_FontConverter().FontToString(UC_Font_CardRow.UC_Font)
+                DR("Font") = New Class_FontConverter().FontToString(My.Settings.Main_Font)
                 DR("Left") = UC_Border_CardRow.NumericUpDown_Left.Value
                 DR("Top") = UC_Border_CardRow.NumericUpDown_Top.Value
                 DR("Right") = UC_Border_CardRow.NumericUpDown_Right.Value

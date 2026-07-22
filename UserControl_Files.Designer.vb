@@ -26,11 +26,11 @@ Partial Class UserControl_File
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UserControl_File))
         Me.TableLayoutPanel_General_XML = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_Filename = New System.Windows.Forms.TextBox()
-        Me.Label_General_XML_Filname = New System.Windows.Forms.Label()
+        Me.Label_Filname = New System.Windows.Forms.Label()
         Me.Button_File = New System.Windows.Forms.Button()
         Me.ImageList_File = New System.Windows.Forms.ImageList(Me.components)
         Me.TextBox_Directory = New System.Windows.Forms.TextBox()
-        Me.Label_General_XML_Directory = New System.Windows.Forms.Label()
+        Me.Label_Directory = New System.Windows.Forms.Label()
         Me.Label_Header = New System.Windows.Forms.Label()
         Me.TableLayoutPanel_General_XML.SuspendLayout()
         Me.SuspendLayout()
@@ -43,10 +43,10 @@ Partial Class UserControl_File
         Me.TableLayoutPanel_General_XML.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_General_XML.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_General_XML.Controls.Add(Me.TextBox_Filename, 1, 2)
-        Me.TableLayoutPanel_General_XML.Controls.Add(Me.Label_General_XML_Filname, 0, 2)
+        Me.TableLayoutPanel_General_XML.Controls.Add(Me.Label_Filname, 0, 2)
         Me.TableLayoutPanel_General_XML.Controls.Add(Me.Button_File, 2, 1)
         Me.TableLayoutPanel_General_XML.Controls.Add(Me.TextBox_Directory, 1, 1)
-        Me.TableLayoutPanel_General_XML.Controls.Add(Me.Label_General_XML_Directory, 0, 1)
+        Me.TableLayoutPanel_General_XML.Controls.Add(Me.Label_Directory, 0, 1)
         Me.TableLayoutPanel_General_XML.Controls.Add(Me.Label_Header, 0, 0)
         Me.TableLayoutPanel_General_XML.Dock = System.Windows.Forms.DockStyle.Top
         Me.TableLayoutPanel_General_XML.Location = New System.Drawing.Point(0, 0)
@@ -67,18 +67,18 @@ Partial Class UserControl_File
         Me.TextBox_Filename.Size = New System.Drawing.Size(88, 20)
         Me.TextBox_Filename.TabIndex = 12
         '
-        'Label_General_XML_Filname
+        'Label_Filname
         '
-        Me.Label_General_XML_Filname.AutoSize = True
-        Me.Label_General_XML_Filname.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_General_XML_Filname.Location = New System.Drawing.Point(3, 56)
-        Me.Label_General_XML_Filname.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_General_XML_Filname.Name = "Label_General_XML_Filname"
-        Me.Label_General_XML_Filname.Size = New System.Drawing.Size(59, 20)
-        Me.Label_General_XML_Filname.TabIndex = 11
-        Me.Label_General_XML_Filname.Text = "Dateiname"
-        Me.Label_General_XML_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_General_XML_Filname.UseCompatibleTextRendering = True
+        Me.Label_Filname.AutoSize = True
+        Me.Label_Filname.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Filname.Location = New System.Drawing.Point(3, 56)
+        Me.Label_Filname.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_Filname.Name = "Label_Filname"
+        Me.Label_Filname.Size = New System.Drawing.Size(59, 20)
+        Me.Label_Filname.TabIndex = 11
+        Me.Label_Filname.Text = "Dateiname"
+        Me.Label_Filname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Filname.UseCompatibleTextRendering = True
         '
         'Button_File
         '
@@ -110,18 +110,18 @@ Partial Class UserControl_File
         Me.TextBox_Directory.TabIndex = 9
         Me.TextBox_Directory.Tag = "Export"
         '
-        'Label_General_XML_Directory
+        'Label_Directory
         '
-        Me.Label_General_XML_Directory.AutoSize = True
-        Me.Label_General_XML_Directory.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label_General_XML_Directory.Location = New System.Drawing.Point(3, 30)
-        Me.Label_General_XML_Directory.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_General_XML_Directory.Name = "Label_General_XML_Directory"
-        Me.Label_General_XML_Directory.Size = New System.Drawing.Size(59, 20)
-        Me.Label_General_XML_Directory.TabIndex = 8
-        Me.Label_General_XML_Directory.Text = "Ordner"
-        Me.Label_General_XML_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label_General_XML_Directory.UseCompatibleTextRendering = True
+        Me.Label_Directory.AutoSize = True
+        Me.Label_Directory.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label_Directory.Location = New System.Drawing.Point(3, 30)
+        Me.Label_Directory.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_Directory.Name = "Label_Directory"
+        Me.Label_Directory.Size = New System.Drawing.Size(59, 20)
+        Me.Label_Directory.TabIndex = 8
+        Me.Label_Directory.Text = "Ordner"
+        Me.Label_Directory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label_Directory.UseCompatibleTextRendering = True
         '
         'Label_Header
         '
@@ -156,10 +156,10 @@ Partial Class UserControl_File
 
     Friend WithEvents TableLayoutPanel_General_XML As TableLayoutPanel
     Friend WithEvents TextBox_Filename As TextBox
-    Friend WithEvents Label_General_XML_Filname As Label
+    Friend WithEvents Label_Filname As Label
     Friend WithEvents Button_File As Button
     Friend WithEvents TextBox_Directory As TextBox
-    Friend WithEvents Label_General_XML_Directory As Label
+    Friend WithEvents Label_Directory As Label
     Friend WithEvents Label_Header As Label
     Friend WithEvents ImageList_File As ImageList
 End Class
