@@ -69,41 +69,38 @@ Public Class Form1
             Return File_XML_Value
         End Get
         Set(ByVal value As String)
-            If File_XML_Value <> value Then
+            If System.IO.File.Exists(value) = True Then
                 File_XML_Value = value
-                XMLChange()
+
+                UC_File_XML.SetToUC(New FileInfo(value))
+
+                My.Settings.LastDirectory = System.IO.Path.GetDirectoryName(value)
+                My.Settings.LastFile = System.IO.Path.GetFileName(value)
+                My.Settings.Save()
+
+                DS = CL_DS.Get_DS(DS)
+
+                Dim DT = DS.Tables("File")
+                CL_DS.DT_File(DT, 0, "CSV", value)
+
+                'DT.Rows(0).Item("File") = value
+                'DS.Tables("Paper").Rows(0).Item("Import") = value
+
+                CL_XML.ReadXML(DS)
+
+                DataSetRead()
+                GET_ColumnTabele()
+
+                ToolStripMenuItem_Save.Enabled = True
+                ToolStripStatusLabel_SaveFile.Text = value
+            Else
+                ToolStripMenuItem_Save.Enabled = False
+                ToolStripStatusLabel_SaveFile.Text = String.Empty
             End If
+
         End Set
+
     End Property
-
-    Private Sub XMLChange()
-
-        UC_File_XML.SetToUC(New FileInfo(File_XML_Value))
-
-        If System.IO.File.Exists(File_XML_Value) = True Then
-            My.Settings.LastDirectory = System.IO.Path.GetDirectoryName(File_XML_Value)
-            My.Settings.LastFile = System.IO.Path.GetFileName(File_XML_Value)
-            My.Settings.Save()
-
-            DS.Tables("File").Rows(0).Item("File") = File_XML_Value
-            DS.Tables("Paper").Rows(0).Item("Import") = File_XML_Value
-
-            DS = CL_DS.Get_DS(DS)
-            CL_XML.DataSetFile = File_XML_Value
-            CL_XML.ReadXML(DS)
-
-            DataSetRead()
-            GET_ColumnTabele()
-
-
-            ToolStripMenuItem_Save.Enabled = True
-            ToolStripStatusLabel_SaveFile.Text = File_XML_Value
-        Else
-            ToolStripMenuItem_Save.Enabled = False
-            ToolStripStatusLabel_SaveFile.Text = String.Empty
-        End If
-
-    End Sub
 
     Private File_CSV_Value As String
     Public Property File_CSV() As String
@@ -112,15 +109,13 @@ Public Class Form1
         End Get
         Set(ByVal value As String)
 
+            If System.IO.File.Exists(value) = False Then Return
+
             File_CSV_Value = value
             DS.Tables("File").Rows(1).Item("File") = value
-
-            DS = CL_DS.Get_DS(DS)
-            'DS.Tables("Paper").Rows(1).Item("Import") = value
+            UC_File_CSV.SetToUC(New FileInfo(value))
             Load_CSV(value)
             Set_CardRow_DataBinding()
-
-            UC_File_CSV.SetToUC(New FileInfo(value))
 
         End Set
     End Property
@@ -198,11 +193,11 @@ Public Class Form1
         Pos(7) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Border_CardRow
         Pos(9) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_CardRow
 
-        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General, False, Pos(1))
+        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General, True, Pos(1))
 
-        UC_File_XML.UC_Load(Me, UC_File_XML, TableLayoutPanel_General, False, Pos(2))
-        UC_File_CSV.UC_Load(Me, UC_File_CSV, TableLayoutPanel_General, False, Pos(3))
-        UC_File_PDF.UC_Load(Me, UC_File_PDF, TableLayoutPanel_General, False, Pos(4))
+        UC_File_XML.UC_Load(UC_File_XML, TableLayoutPanel_General, True, Pos(2))
+        UC_File_CSV.UC_Load(UC_File_CSV, TableLayoutPanel_General, True, Pos(3))
+        UC_File_PDF.UC_Load(UC_File_PDF, TableLayoutPanel_General, True, Pos(4))
 
         UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper, True, Pos(5))
 
@@ -219,10 +214,10 @@ Public Class Form1
         CL_Default.Controlls_Read()
 
 
-        Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
+        'Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
 
-        ToolStripMenuItem_Save.Enabled = XMLBool
-        TabControl_Main.Enabled = XMLBool
+        'ToolStripMenuItem_Save.Enabled = XMLBool
+        'TabControl_Main.Enabled = XMLBool
 
     End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -244,12 +239,13 @@ Public Class Form1
                 File_XML = String.Empty
             End If
 
-            If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
+            If System.IO.File.Exists(File_XML_Value) = True Then
                 DS = CL_DS.Get_DS(DS)
                 CL_XML.ReadXML(DS)
-                Dim DT As DataTable = DS.Tables("Paper")
+
+                Dim DT As DataTable = DS.Tables("File")
                 If DT.Rows.Count > 0 Then
-                    File_CSV = DT(0)("Import").ToString()
+                    File_CSV = DT("File")(0)("File").ToString()
                     File_PDF = DT(0)("Export").ToString()
                 Else
                     DS = CL_DS.Get_DS(DS)
@@ -350,17 +346,21 @@ Public Class Form1
     Private Sub DataSetRead()
 
         If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
-        If CL_XML.ReadXML_Exists() = False Then Return
+        'If CL_XML.ReadXML_Exists() = False Then Return
 
         Dim DR As DataRow
         Dim nFont As Font
         Dim Border As UserControl_Border.Border
 
+        'Aus der Tabelle File lesen und in die entsprechenden Steuerelemente einfügen
+        'ID Relation File
+        'DR = DS.Tables("File").Select("Relation = 'CSV'")(0)("File")
+        File_CSV = DS.Tables("File").Select("RowID = 0 AND Relation = 'CSV'")(0)("File")
+        File_PDF = DS.Tables("File").Select("RowID = 0 AND Relation = 'PDF'")(0)("File")
+
         'Paper auslesen und in die entsprechenden Steuerelemente einfügen
         DR = DS.Tables("Paper").Rows(0)
         TextBox_Paper_Paper.Text = DR("Paper").ToString
-        File_CSV = DR("Import").ToString
-        File_PDF = DR("Export").ToString
         ComboBox_Paper_DPI.Text = DR("DPI")
         ComboBox_Paper_DIN.Text = DR("DIN").ToString
 
@@ -461,7 +461,7 @@ Public Class Form1
             Select Case Result
                 Case DialogResult.Yes
 
-                    If IsNothing(CL_XML.DataSetFile) = True Then
+                    If IsNothing(File_XML_Value) = True Then
                         If SaveFileDialog_XML() = DialogResult.Cancel Then
                             e.Cancel = True
                             Return
@@ -740,22 +740,22 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem_Save_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Save.Click
 
-        If CL_XML.ReadXML_Exists = True Then
+        'If CL_XML.ReadXML_Exists = True Then
 
-            Save_General()
-            'Save_Paper()
-            Save_CardRow()
+        'Save_General()
+        'Save_Paper()
+        'Save_CardRow()
 
-            If System.IO.File.Exists(CL_XML.DataSetFile) = True Then
-                CL_XML.SaveXML(DS)
-                IsModified = False
-            Else
-                SaveFileDialog_XML()
+        If System.IO.File.Exists(File_XML_Value) = True Then
+            CL_XML.SaveXML(DS)
+            IsModified = False
+        Else
+            SaveFileDialog_XML()
             End If
 
             GET_ColumnTabele()
 
-        End If
+        'End If
 
     End Sub
     Private Sub ToolStripMenuItem_XML_Save(sender As Object, e As EventArgs) Handles ToolStripMenuItem_XML_SaveAs.Click
@@ -777,8 +777,8 @@ Public Class Form1
         Dim SFD As New SaveFileDialog
         With SFD
             .CheckPathExists = True
-            .Title = "Die Datei Speichern (" & CL_XML.DataSetFile & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(CL_XML.DataSetFile)
+            .Title = "Die Datei Speichern (" & File_XML_Value & ")"
+            .InitialDirectory = System.IO.Path.GetDirectoryName(File_XML_Value)
             .FileName = TextBox_Paper_Paper.Text
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
@@ -786,7 +786,7 @@ Public Class Form1
         If SFD.ShowDialog = DialogResult.OK Then
 
             DS = CL_DS.Get_DS(DS)
-            CL_XML.DataSetFile = SFD.FileName
+            File_XML = SFD.FileName
             CL_XML.SaveXML(DS)
             IsModified = False
 
@@ -1030,13 +1030,13 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Save_General()
+    'Private Sub Save_General()
 
-        Dim DR As DataRow = DS.Tables("Paper").Rows(0)
-        DR("Import") = File_CSV
-        DR("Export") = File_PDF
+    '    Dim DR As DataRow = DS.Tables("Paper").Rows(0)
+    '    DR("Import") = File_CSV
+    '    DR("Export") = File_PDF
 
-    End Sub
+    'End Sub
 
     'Private Sub Save_Paper()
 
@@ -1135,11 +1135,11 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem_Open_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem_Open.Click
 
-        UC_ChangeEvent_File(UC_File_XML, CL_XML.DataSetFile)
+        UC_ChangeEvent_File(UC_File_XML, File_XML)
 
-        Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
-        ToolStripMenuItem_Save.Enabled = XMLBool
-        TabControl_Main.Enabled = XMLBool
+        'Dim XMLBool As Boolean = CL_XML.ReadXML_Exists()
+        'ToolStripMenuItem_Save.Enabled = XMLBool
+        'TabControl_Main.Enabled = XMLBool
 
     End Sub
 
@@ -1251,25 +1251,32 @@ Public Class Form1
         UC_File_CSV.ChangeEvent
 
         Select Case sender.Name
+
             Case "UC_File_XML"
+
                 CL_XML.OpenFileDialog_XML(DS)
                 DataSetRead()
                 GET_ColumnTabele()
+
             Case "UC_File_PDF"
+
                 Dim FBD As New FolderBrowserDialog
                 If FBD.ShowDialog = DialogResult.OK Then
                     File_PDF = FBD.SelectedPath
                 End If
+
             Case "UC_File_CSV"
-                Dim Path As String = CL_XML.DataSetFile
+
+                'Dim Path As String = File_XML_Value
                 Dim OFD As New OpenFileDialog With {.Title = "Import CSV-Datei", .Filter = "CSV-Dateien (*.CSV)|*.CSV|Alle Dateien (*.*)|*.*"}
-                If IsNothing(Path) = False Then
-                    If System.IO.Directory.Exists(Path) = False AndAlso Path.Length > 0 Then
-                        OFD.InitialDirectory = System.IO.Path.GetDirectoryName(Path)
-                        OFD.FileName = System.IO.Path.GetFileName(Path)
+                If IsNothing(File_XML_Value) = False Then
+                    If System.IO.Directory.Exists(File_XML_Value) = False AndAlso File_XML_Value.Length > 0 Then
+                        OFD.InitialDirectory = System.IO.Path.GetDirectoryName(File_XML_Value)
+                        OFD.FileName = System.IO.Path.GetFileName(File_XML_Value)
                     End If
                 End If
                 If OFD.ShowDialog = DialogResult.OK Then File_CSV = OFD.FileName
+
         End Select
 
     End Sub

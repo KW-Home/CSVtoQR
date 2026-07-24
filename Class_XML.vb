@@ -6,24 +6,24 @@ Public Class Class_XML
 
     Public Event Changetext(sender, e)
 
-    Private DataSetFile_Value As String
-    Public Property DataSetFile() As String
-        Get
-            Return DataSetFile_Value
-        End Get
-        Set(ByVal value As String)
-            If DataSetFile_Value <> value Then
-                DataSetFile_Value = value
-                RaiseEvent Changetext(Me, value)
-            End If
-        End Set
-    End Property
+    'Private File_XML_Value As String
+    'Public Property File_XML() As String
+    '    Get
+    '        Return File_XML_Value
+    '    End Get
+    '    Set(ByVal value As String)
+    '        If File_XML_Value <> value Then
+    '            File_XML_Value = value
+    '            RaiseEvent Changetext(Me, value)
+    '        End If
+    '    End Set
+    'End Property
 
     Public Sub SaveXML(ByRef DS As DataSet)
 
-        If IsNothing(DataSetFile_Value) = False Then
-            DS.WriteXml(DataSetFile_Value, XmlWriteMode.IgnoreSchema)
-            DS.WriteXmlSchema(Replace(DataSetFile_Value, ".xml", ".xsd"))
+        If IsNothing(Form1.File_XML) = False Then
+            DS.WriteXml(Form1.File_XML, XmlWriteMode.IgnoreSchema)
+            DS.WriteXmlSchema(Replace(Form1.File_XML, ".xml", ".xsd"))
         Else
             MessageBox.Show("Kein Pfad vorhanden")
         End If
@@ -34,14 +34,14 @@ Public Class Class_XML
 
         Dim OFD As New OpenFileDialog
         With OFD
-            .Title = "Datei Speichern (" & DataSetFile_Value & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(DataSetFile_Value)
+            .Title = "Datei Speichern (" & Form1.File_XML & ")"
+            .InitialDirectory = System.IO.Path.GetDirectoryName(Form1.File_XML)
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
 
         If OFD.ShowDialog = DialogResult.OK Then
             DS = New DataSet
-            DataSetFile = OFD.FileName
+            Form1.File_XML = OFD.FileName
             ReadXML(DS)
 
             Form1.File_XML = OFD.FileName
@@ -53,10 +53,10 @@ Public Class Class_XML
 
     Public Sub ReadXML(ByRef DS As DataSet)
 
-        If System.IO.File.Exists(DataSetFile_Value) = True Then
+        If System.IO.File.Exists(Form1.File_XML) = True Then
             DS.Clear()
-            DS.ReadXmlSchema(Replace(DataSetFile_Value, "xml", "xsd", 1, -1, CompareMethod.Text))
-            DS.ReadXml(DataSetFile_Value, XmlReadMode.ReadSchema)
+            DS.ReadXmlSchema(Replace(Form1.File_XML, "xml", "xsd", 1, -1, CompareMethod.Text))
+            DS.ReadXml(Form1.File_XML, XmlReadMode.ReadSchema)
         End If
 
     End Sub
@@ -67,15 +67,15 @@ Public Class Class_XML
 
         If Directory.Exists(My.Settings.LastDirectory) = False Then ERRORList.Add("LastDirectory")
         If File.Exists(System.IO.Path.Combine(My.Settings.LastDirectory, My.Settings.LastFile)) = False Then ERRORList.Add("LastFile")
-        If File.Exists(DataSetFile_Value) = False Then ERRORList.Add("DataSetFile")
+        'If File.Exists(File_XML_Value) = False Then ERRORList.Add("File_XML")
 
         Dim FileName As String = String.Empty
 
         If ERRORList.Count = 1 Then
-
-            Dim _File As String = Replace(DataSetFile_Value, ".xml", ".xsd")
-            If File.Exists(_File) = False Then ERRORList.Add("DataSetFile_XSD")
-            If ERRORList.Contains("DataSetFile_XSD") = True Then Return False
+            Dim XML As String = Form1.File_XML
+            Dim _File As String = Replace(XML, ".xml", ".xsd")
+            If File.Exists(_File) = False Then ERRORList.Add("File_XML_XSD")
+            If ERRORList.Contains("File_XML_XSD") = True Then Return False
 
             Dim _DS As New DataSet
             _DS.ReadXmlSchema(_File)

@@ -23,9 +23,13 @@ Public Class UserControl_File
 
     End Sub
 
-    Public Sub UC_Load(FRM As Form1, UC As UserControl_File, TLP As TableLayoutPanel, ByVal NewRow As Boolean, ByVal Pos As Form1.UC_Pos)
+    Public Sub UC_Load(UC As UserControl_File,
+                       TLP As TableLayoutPanel,
+                       ByVal NewRow As Boolean,
+                       ByVal Pos As Form1.UC_Pos)
 
         With UC
+
             .Dock = DockStyle.Top
             .Font = My.Settings.Main_Font
             Select Case .Name
@@ -39,8 +43,8 @@ Public Class UserControl_File
                     .Label_Header.Text = "PDF File"
                     .Button_File.ImageKey = "File_PDF"
             End Select
-        End With
 
+        End With
 
         With TLP
 

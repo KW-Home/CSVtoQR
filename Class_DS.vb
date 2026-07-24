@@ -44,8 +44,6 @@ Public Class Class_DS
 
             .Columns.Add(New DataColumn With {.ColumnName = "ID", .DataType = GetType(Integer), .DefaultValue = 0})
             .Columns.Add(New DataColumn With {.ColumnName = "Paper", .Unique = False, .DataType = GetType(String), .DefaultValue = "Default"})
-            .Columns.Add(New DataColumn With {.ColumnName = "Import", .DataType = GetType(String), .DefaultValue = ""})
-            .Columns.Add(New DataColumn With {.ColumnName = "Export", .DataType = GetType(String), .DefaultValue = ""})
             .Columns.Add(New DataColumn With {.ColumnName = "DPI", .DataType = GetType(Integer), .DefaultValue = 96})
             .Columns.Add(New DataColumn With {.ColumnName = "DIN", .DataType = GetType(String), .DefaultValue = "A4"})
             .Columns.Add(New DataColumn With {.ColumnName = "Left", .DataType = GetType(Double), .DefaultValue = 0.0})
@@ -427,6 +425,7 @@ Public Class Class_DS
 
     Private Function DT_File() As DataTable
 
+        'ID RowID Relation File
         Dim DT As New DataTable With {.TableName = "File"}
         With DT
             .TableName = "File"
