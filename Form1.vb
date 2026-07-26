@@ -69,22 +69,23 @@ Public Class Form1
             Return File_XML_Value
         End Get
         Set(ByVal value As String)
-            If System.IO.File.Exists(value) = True Then
-                File_XML_Value = value
 
-                UC_File_XML.SetToUC(New FileInfo(value))
+            If System.IO.File.Exists(value) = True Then
+
+                File_XML_Value = value
 
                 My.Settings.LastDirectory = System.IO.Path.GetDirectoryName(value)
                 My.Settings.LastFile = System.IO.Path.GetFileName(value)
                 My.Settings.Save()
 
+                UC_File_XML.SetToUC(New FileInfo(value))
+
+
                 DS = CL_DS.Get_DS(DS)
 
                 Dim DT = DS.Tables("File")
-                CL_DS.DT_File(DT, 0, "CSV", value)
-
-                'DT.Rows(0).Item("File") = value
-                'DS.Tables("Paper").Rows(0).Item("Import") = value
+                DT = DataSet_Main.Tables("DT_File")
+                Fill_DT_File(0, "XML", value)
 
                 CL_XML.ReadXML(DS)
 
@@ -93,9 +94,14 @@ Public Class Form1
 
                 ToolStripMenuItem_Save.Enabled = True
                 ToolStripStatusLabel_SaveFile.Text = value
+                TabControl_Main.Enabled = True
             Else
+
+                CL_XML.DS_WriteXml(Me, DS)
                 ToolStripMenuItem_Save.Enabled = False
                 ToolStripStatusLabel_SaveFile.Text = String.Empty
+                TabControl_Main.Enabled = False
+
             End If
 
         End Set
@@ -162,21 +168,48 @@ Public Class Form1
         End Set
     End Property
 
+    Public Sub Fill_DT_File()
+
+        Dim ListOfRelation As New List(Of String) From {"XML", "CSV", "PDF"}
+        For Each Relation As String In ListOfRelation
+            Fill_DT_File(0, Relation, "Nichts ausgewählt")
+        Next
+
+    End Sub
+
+    Public Sub Fill_DT_File(RowID As Integer, Relation As String, File As String)
+
+        Dim DRa() As DataRow = DataSet_Main.Tables("DT_File").Select($"Relation = '{Relation}' AND RowID = {RowID}")
+
+        If DRa.Count = 0 Then
+            Dim DR As DataRow = DataSet_Main.Tables("DT_File").NewRow()
+            DR("RowID") = RowID
+            DR("Relation") = Relation
+            DR("File") = File
+            DataSet_Main.Tables("DT_File").Rows.Add(DR)
+        Else
+            DRa(0)("File") = File
+        End If
+
+    End Sub
+
     Public Sub New()
 
         InitializeComponent()
+        Fill_DT_File()
         DS = CL_DS.Get_DS(DS)
 
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        CL_DS.DT_Border(DS.Tables("Border"))
-        CL_DS.DT_Font(DS.Tables("Font"))
-        CL_DS.DT_File(DS.Tables("File"))
+        'CL_DS.DT_Border(DS.Tables("Border"))
+        'CL_DS.DT_Font(DS.Tables("Font"))
 
-        Dim Border As New UC_Pos
-        Dim Pos() = New UC_Pos(12) {}
+
+        'Dim Border As New UC_Pos
+        Dim Pos() = New UC_Pos(9) {}
+        Dim TLP() = New TableLayoutPanel(3) {TableLayoutPanel_General, TableLayoutPanel_Paper, TableLayoutPanel_Card, TableLayoutPanel_CardRow}
 
         Pos(0) = New UC_Pos With {.Row = 0, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'Default
 
@@ -184,28 +217,24 @@ Public Class Form1
         Pos(2) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_XML
         Pos(3) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_CSV
         Pos(4) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_PDF
-
         Pos(5) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Paper
-
         Pos(6) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Card
         Pos(8) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_Card
-
         Pos(7) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Border_CardRow
         Pos(9) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_CardRow
 
-        UC_Font_General.UC_Load(Me, UC_Font_General, TableLayoutPanel_General, True, Pos(1))
+        UC_File_XML.UC_Load(UC_File_XML, TLP(0), True, Pos(2))
+        UC_File_CSV.UC_Load(UC_File_CSV, TLP(0), True, Pos(3))
+        UC_File_PDF.UC_Load(UC_File_PDF, TLP(0), True, Pos(4))
+        UC_Font_General.UC_Load(Me, UC_Font_General, TLP(0), True, Pos(1))
 
-        UC_File_XML.UC_Load(UC_File_XML, TableLayoutPanel_General, True, Pos(2))
-        UC_File_CSV.UC_Load(UC_File_CSV, TableLayoutPanel_General, True, Pos(3))
-        UC_File_PDF.UC_Load(UC_File_PDF, TableLayoutPanel_General, True, Pos(4))
+        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TLP(1), True, Pos(5))
 
-        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TableLayoutPanel_Paper, True, Pos(5))
+        UC_Border_Card.UC_Load(Me, UC_Border_Card, TLP(2), True, Pos(6))
+        UC_Font_Card.UC_Load(Me, UC_Font_Card, TLP(2), True, Pos(8))
 
-        UC_Border_Card.UC_Load(Me, UC_Border_Card, TableLayoutPanel_Card, True, Pos(6))
-        UC_Font_Card.UC_Load(Me, UC_Font_Card, TableLayoutPanel_Card, True, Pos(8))
-
-        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow, True, Pos(7))
-        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TableLayoutPanel_CardRow, True, Pos(9))
+        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TLP(3), True, Pos(7))
+        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TLP(3), True, Pos(9))
 
         CL_Default = New Class_Default(Me)
 
@@ -252,6 +281,7 @@ Public Class Form1
                 End If
             Else
                 DS = CL_DS.Get_DS(DS)
+
                 UC_File_XML.TextBox_Directory.Text = String.Empty
                 UC_File_XML.TextBox_Filename.Text = String.Empty
                 ToolStripStatusLabel_SaveFile.Text = String.Empty
@@ -355,8 +385,8 @@ Public Class Form1
         'Aus der Tabelle File lesen und in die entsprechenden Steuerelemente einfügen
         'ID Relation File
         'DR = DS.Tables("File").Select("Relation = 'CSV'")(0)("File")
-        File_CSV = DS.Tables("File").Select("RowID = 0 AND Relation = 'CSV'")(0)("File")
-        File_PDF = DS.Tables("File").Select("RowID = 0 AND Relation = 'PDF'")(0)("File")
+        'File_CSV = DS.Tables("File").Select("RowID = 0 AND Relation = 'CSV'")(0)("File")
+        'File_PDF = DS.Tables("File").Select("RowID = 0 AND Relation = 'PDF'")(0)("File")
 
         'Paper auslesen und in die entsprechenden Steuerelemente einfügen
         DR = DS.Tables("Paper").Rows(0)
@@ -467,7 +497,7 @@ Public Class Form1
                             Return
                         End If
                     End If
-                    CL_XML.SaveXML(DS)
+                    CL_XML.DS_WriteXml(Me, DS)
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -747,7 +777,7 @@ Public Class Form1
         'Save_CardRow()
 
         If System.IO.File.Exists(File_XML_Value) = True Then
-            CL_XML.SaveXML(DS)
+            CL_XML.DS_WriteXml(Me, DS)
             IsModified = False
         Else
             SaveFileDialog_XML()
@@ -787,7 +817,7 @@ Public Class Form1
 
             DS = CL_DS.Get_DS(DS)
             File_XML = SFD.FileName
-            CL_XML.SaveXML(DS)
+            CL_XML.DS_WriteXml(Me, DS)
             IsModified = False
 
             DataSetRead()

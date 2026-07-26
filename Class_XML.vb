@@ -4,7 +4,7 @@ Public Class Class_XML
 
     Private ReadOnly CL_DS As New Class_DS
 
-    Public Event Changetext(sender, e)
+    'Public Event Changetext(sender, e)
 
     'Private File_XML_Value As String
     'Public Property File_XML() As String
@@ -19,23 +19,26 @@ Public Class Class_XML
     '    End Set
     'End Property
 
-    Public Sub SaveXML(ByRef DS As DataSet)
+    Public Sub DS_WriteXml(ByRef FRM As Form1, ByRef DS As DataSet)
 
-        If IsNothing(Form1.File_XML) = False Then
-            DS.WriteXml(Form1.File_XML, XmlWriteMode.IgnoreSchema)
-            DS.WriteXmlSchema(Replace(Form1.File_XML, ".xml", ".xsd"))
+        Dim XMLFile As String = FRM.DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+        If IsNothing(XMLFile) = False Then
+            DS.WriteXml(XMLFile, XmlWriteMode.IgnoreSchema)
+            DS.WriteXmlSchema(Replace(XMLFile, ".xml", ".xsd"))
         Else
-            MessageBox.Show("Kein Pfad vorhanden")
+            MessageBox.Show("Pfad: " & XMLFile)
         End If
 
     End Sub
 
     Public Sub OpenFileDialog_XML(ByRef DS As DataSet)
 
+        Dim XMLFile As String = Form1.DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+
         Dim OFD As New OpenFileDialog
         With OFD
-            .Title = "Datei Speichern (" & Form1.File_XML & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(Form1.File_XML)
+            .Title = "Datei Speichern (" & XMLFile & ")"
+            .InitialDirectory = System.IO.Path.GetDirectoryName(XMLFile)
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
 

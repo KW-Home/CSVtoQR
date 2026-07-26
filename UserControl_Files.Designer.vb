@@ -137,7 +137,7 @@ Partial Class UserControl_File
         Me.Label_Header.Padding = New System.Windows.Forms.Padding(3)
         Me.Label_Header.Size = New System.Drawing.Size(197, 21)
         Me.Label_Header.TabIndex = 13
-        Me.Label_Header.Text = "Label1"
+        Me.Label_Header.Text = "Datei"
         '
         'UserControl_File
         '

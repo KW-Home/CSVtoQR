@@ -170,7 +170,7 @@ Partial Class UserControl_Font
         Me.Label_Header.Name = "Label_Header"
         Me.Label_Header.Size = New System.Drawing.Size(164, 20)
         Me.Label_Header.TabIndex = 16
-        Me.Label_Header.Text = "Schriftart"
+        Me.Label_Header.Text = "Schrift"
         Me.Label_Header.UseCompatibleTextRendering = True
         '
         'UserControl_Font

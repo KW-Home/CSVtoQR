@@ -26,10 +26,10 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim MySettings1 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim MySettings2 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
         Me.Label_Separator_Row = New System.Windows.Forms.Label()
         Me.NumericUpDown_Separator_Column_Count = New System.Windows.Forms.NumericUpDown()
         Me.Label_Separator_Column_Count = New System.Windows.Forms.Label()
@@ -133,6 +133,13 @@ Partial Class Form1
         Me.StatusStrip_Main = New System.Windows.Forms.StatusStrip()
         Me.BindingSource_CSV = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.DataSet_Main = New System.Data.DataSet()
+        Me.DT_File = New System.Data.DataTable()
+        Me.ID = New System.Data.DataColumn()
+        Me.RowID = New System.Data.DataColumn()
+        Me.Relation = New System.Data.DataColumn()
+        Me.File = New System.Data.DataColumn()
+        Me.DT_Font = New System.Data.DataTable()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -171,6 +178,9 @@ Partial Class Form1
         Me.MenuStrip_Main.SuspendLayout()
         Me.StatusStrip_Main.SuspendLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DT_File, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -352,8 +362,8 @@ Partial Class Form1
         Me.DGV_Search.AllowUserToOrderColumns = True
         Me.DGV_Search.AllowUserToResizeColumns = False
         Me.DGV_Search.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
@@ -372,8 +382,8 @@ Partial Class Form1
         '
         Me.DGV_CSV.AllowUserToAddRows = False
         Me.DGV_CSV.AllowUserToDeleteRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.BackgroundColor = System.Drawing.Color.WhiteSmoke
@@ -722,7 +732,7 @@ Partial Class Form1
         Me.Label_Header.Name = "Label_Header"
         Me.Label_Header.Size = New System.Drawing.Size(195, 20)
         Me.Label_Header.TabIndex = 46
-        Me.Label_Header.Text = "Separatoren Spalte"
+        Me.Label_Header.Text = "Separator"
         Me.Label_Header.UseCompatibleTextRendering = True
         '
         'Label_Paper_Height_Unit
@@ -1302,14 +1312,14 @@ Partial Class Form1
         Me.DGV_Table.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.DGV_Table.Location = New System.Drawing.Point(140, 3)
         Me.DGV_Table.Name = "DGV_Table"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.DGV_Table.RowHeadersWidth = 62
         Me.DGV_Table.Size = New System.Drawing.Size(514, 427)
         Me.DGV_Table.TabIndex = 0
@@ -1445,6 +1455,50 @@ Partial Class Form1
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
         '
+        'DataSet_Main
+        '
+        Me.DataSet_Main.DataSetName = "DataSet_Main"
+        Me.DataSet_Main.Tables.AddRange(New System.Data.DataTable() {Me.DT_File, Me.DT_Font})
+        '
+        'DT_File
+        '
+        Me.DT_File.Columns.AddRange(New System.Data.DataColumn() {Me.ID, Me.RowID, Me.Relation, Me.File})
+        Me.DT_File.TableName = "DT_File"
+        '
+        'ID
+        '
+        Me.ID.AllowDBNull = False
+        Me.ID.AutoIncrement = True
+        Me.ID.Caption = "ID"
+        Me.ID.ColumnName = "ID"
+        Me.ID.DataType = GetType(Integer)
+        Me.ID.ReadOnly = True
+        '
+        'RowID
+        '
+        Me.RowID.Caption = "RowID"
+        Me.RowID.ColumnName = "RowID"
+        Me.RowID.DataType = GetType(Integer)
+        Me.RowID.DefaultValue = 0
+        '
+        'Relation
+        '
+        Me.Relation.AllowDBNull = False
+        Me.Relation.Caption = "Relation"
+        Me.Relation.ColumnName = "Relation"
+        Me.Relation.DefaultValue = "XML"
+        Me.Relation.MaxLength = 3
+        '
+        'File
+        '
+        Me.File.Caption = "File"
+        Me.File.ColumnName = "File"
+        Me.File.DefaultValue = "*.XML"
+        '
+        'DT_Font
+        '
+        Me.DT_Font.TableName = "DT_Font"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1454,13 +1508,13 @@ Partial Class Form1
         Me.Controls.Add(Me.TabControl_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
-        MySettings1.LastDirectory = "C:\"
-        MySettings1.LastFile = "C:\"
-        MySettings1.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        MySettings1.MyLocation = New System.Drawing.Point(100, 100)
-        MySettings1.MySize = New System.Drawing.Size(600, 600)
-        MySettings1.SettingsKey = ""
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings1, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        MySettings2.LastDirectory = "C:\"
+        MySettings2.LastFile = "C:\"
+        MySettings2.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        MySettings2.MyLocation = New System.Drawing.Point(100, 100)
+        MySettings2.MySize = New System.Drawing.Size(600, 600)
+        MySettings2.SettingsKey = ""
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings2, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.Location = Global.CSVtoQR.My.MySettings.Default.MyLocation
@@ -1521,6 +1575,9 @@ Partial Class Form1
         Me.StatusStrip_Main.ResumeLayout(False)
         Me.StatusStrip_Main.PerformLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DT_File, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1628,4 +1685,11 @@ Partial Class Form1
     Friend WithEvents Label_Paper_Width_Unit As Label
     Friend WithEvents SplitContainer_CSV_Horizontal As SplitContainer
     Friend WithEvents SplitContainer_CSV_Vertical As SplitContainer
+    Friend WithEvents DataSet_Main As DataSet
+    Friend WithEvents DT_File As DataTable
+    Friend WithEvents ID As DataColumn
+    Friend WithEvents RowID As DataColumn
+    Friend WithEvents Relation As DataColumn
+    Friend WithEvents File As DataColumn
+    Friend WithEvents DT_Font As DataTable
 End Class
