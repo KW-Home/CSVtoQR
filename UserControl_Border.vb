@@ -2,13 +2,13 @@
 
 Public Class UserControl_Border
 
-    Public Structure Border
-        'Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
-        Dim Left As Decimal
-        Dim Top As Decimal
-        Dim Right As Decimal
-        Dim Bottom As Decimal
-    End Structure
+    'Public Structure Border
+    '    'Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+    '    Dim Left As Decimal
+    '    Dim Top As Decimal
+    '    Dim Right As Decimal
+    '    Dim Bottom As Decimal
+    'End Structure
 
     'Public Structure UC_Pos
     '    'Dim Pos As New UserControl_Border.UC_Pos With {.Row = 0, .RowSpan = 0, .Column = 0, .ColumnSpan = 0}
@@ -18,7 +18,7 @@ Public Class UserControl_Border
     '    Dim ColumnSpan As Integer
     'End Structure
 
-    Public Event ChangeEvent(ByVal sender As Object, ByVal e As Border)
+    Public Event ChangeEvent(ByVal sender As Object, ByVal e As Form1.Border)
 
     Private Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles _
         NumericUpDown_Top.ValueChanged,
@@ -26,7 +26,7 @@ Public Class UserControl_Border
         NumericUpDown_Right.ValueChanged,
         NumericUpDown_Left.ValueChanged
 
-        Dim B As New Border With {.Left = NumericUpDown_Left.Value, .Top = NumericUpDown_Top.Value, .Right = NumericUpDown_Right.Value, .Bottom = NumericUpDown_Bottom.Value}
+        Dim B As New Form1.Border With {.Left = NumericUpDown_Left.Value, .Top = NumericUpDown_Top.Value, .Right = NumericUpDown_Right.Value, .Bottom = NumericUpDown_Bottom.Value}
         RaiseEvent ChangeEvent(Me, B)
 
     End Sub
@@ -65,7 +65,7 @@ Public Class UserControl_Border
 
     End Sub
 
-    Public Sub SetToUC(B As Border)
+    Public Sub SetToUC(B As Form1.Border)
 
         NumericUpDown_Left.Value = B.Left
         NumericUpDown_Top.Value = B.Top

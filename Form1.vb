@@ -15,9 +15,25 @@ Imports ZXing.Common
 
 Public Class Form1
 
+    Public Structure Border
+        'Dim Border As New UserControl_Border.Border With {.Left = 0, .Top = 0, .Right = 0, .Bottom = 0}
+        Dim Left As Decimal
+        Dim Top As Decimal
+        Dim Right As Decimal
+        Dim Bottom As Decimal
+    End Structure
+
+    Public Structure UC_Pos
+        'Dim Pos As New UC_Pos With {.Row = 0, .RowSpan = 0, .Column = 0, .ColumnSpan = 0}
+        Dim Row As Integer
+        Dim RowSpan As Integer
+        Dim Column As Integer
+        Dim ColumnSpan As Integer
+    End Structure
+
     Public DS As New DataSet
 
-    Public WithEvents CL_XML As New Class_XML
+    Public WithEvents CL_XML As New Class_XML(Me)
 
     Private WithEvents UC_File_XML As New UserControl_File With {.Name = "UC_File_XML"}
     Private WithEvents UC_File_CSV As New UserControl_File With {.Name = "UC_File_CSV"}
@@ -39,15 +55,12 @@ Public Class Form1
     Public DT_CSV As DataTable
     Private DV_CSV As DataView
 
-    Private IsModified_Value As Boolean
+#Region "Properties"
 
-    Public Structure UC_Pos
-        'Dim Pos As New UC_Pos With {.Row = 0, .RowSpan = 0, .Column = 0, .ColumnSpan = 0}
-        Dim Row As Integer
-        Dim RowSpan As Integer
-        Dim Column As Integer
-        Dim ColumnSpan As Integer
-    End Structure
+    Private IsModified_Value As Boolean
+    Private File_XML_Value As String
+    Private File_CSV_Value As String
+    Private File_PDF_Value As String
 
     Public Property IsModified() As Boolean
         Get
@@ -63,7 +76,6 @@ Public Class Form1
         End Set
     End Property
 
-    Private File_XML_Value As String
     Public Property File_XML() As String
         Get
             Return File_XML_Value
@@ -80,14 +92,13 @@ Public Class Form1
 
                 UC_File_XML.SetToUC(New FileInfo(value))
 
-
                 DS = CL_DS.Get_DS(DS)
 
                 Dim DT = DS.Tables("File")
                 DT = DataSet_Main.Tables("DT_File")
                 Fill_DT_File(0, "XML", value)
 
-                CL_XML.ReadXML(DS)
+                CL_XML.ReadXML(DS, value)
 
                 DataSetRead()
                 GET_ColumnTabele()
@@ -95,9 +106,9 @@ Public Class Form1
                 ToolStripMenuItem_Save.Enabled = True
                 ToolStripStatusLabel_SaveFile.Text = value
                 TabControl_Main.Enabled = True
+
             Else
 
-                CL_XML.DS_WriteXml(Me, DS)
                 ToolStripMenuItem_Save.Enabled = False
                 ToolStripStatusLabel_SaveFile.Text = String.Empty
                 TabControl_Main.Enabled = False
@@ -108,7 +119,6 @@ Public Class Form1
 
     End Property
 
-    Private File_CSV_Value As String
     Public Property File_CSV() As String
         Get
             Return File_CSV_Value
@@ -118,7 +128,7 @@ Public Class Form1
             If System.IO.File.Exists(value) = False Then Return
 
             File_CSV_Value = value
-            DS.Tables("File").Rows(1).Item("File") = value
+            DataSet_Main.Tables("DT_File").Rows(1).Item("File") = value
             UC_File_CSV.SetToUC(New FileInfo(value))
             Load_CSV(value)
             Set_CardRow_DataBinding()
@@ -126,8 +136,7 @@ Public Class Form1
         End Set
     End Property
 
-    Private File_PDF_Value As String
-    Property File_PDF() As String
+    Public Property File_PDF() As String
         Get
             Return File_PDF_Value
         End Get
@@ -168,36 +177,14 @@ Public Class Form1
         End Set
     End Property
 
+#End Region
+
     Public Sub Fill_DT_File()
 
         Dim ListOfRelation As New List(Of String) From {"XML", "CSV", "PDF"}
         For Each Relation As String In ListOfRelation
             Fill_DT_File(0, Relation, "Nichts ausgewählt")
         Next
-
-    End Sub
-
-    Public Sub Fill_DT_File(RowID As Integer, Relation As String, File As String)
-
-        Dim DRa() As DataRow = DataSet_Main.Tables("DT_File").Select($"Relation = '{Relation}' AND RowID = {RowID}")
-
-        If DRa.Count = 0 Then
-            Dim DR As DataRow = DataSet_Main.Tables("DT_File").NewRow()
-            DR("RowID") = RowID
-            DR("Relation") = Relation
-            DR("File") = File
-            DataSet_Main.Tables("DT_File").Rows.Add(DR)
-        Else
-            DRa(0)("File") = File
-        End If
-
-    End Sub
-
-    Public Sub New()
-
-        InitializeComponent()
-        Fill_DT_File()
-        DS = CL_DS.Get_DS(DS)
 
     End Sub
 
@@ -249,35 +236,59 @@ Public Class Form1
         'TabControl_Main.Enabled = XMLBool
 
     End Sub
+
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         PaperPaint(Nothing, Nothing)
 
     End Sub
+
+    Public Sub Fill_DT_File(RowID As Integer, Relation As String, File As String)
+
+        Dim DRa() As DataRow = DataSet_Main.Tables("DT_File").Select($"Relation = '{Relation}' AND RowID = {RowID}")
+
+        If DRa.Count = 0 Then
+            Dim DR As DataRow = DataSet_Main.Tables("DT_File").NewRow()
+            DR("RowID") = RowID
+            DR("Relation") = Relation
+            DR("File") = File
+            DataSet_Main.Tables("DT_File").Rows.Add(DR)
+        Else
+            DRa(0)("File") = File
+        End If
+
+    End Sub
+
+    Public Sub New()
+
+        InitializeComponent()
+        Fill_DT_File()
+        DS = CL_DS.Get_DS(DS)
+
+    End Sub
+
     Private Sub MySettings_Load()
 
         With My.Settings
 
-            Me.Font = .Main_Font
+    .LastDirectory = "C:\TMP"
+    .LastFile = "C:\TMP\Default.xml"
+
+    Me.Font = .Main_Font
             UC_Font_General.SetToUC(.Main_Font)
             Me.Size = .MySize
 
-            If System.IO.File.Exists(.LastFile) = True Then
-                File_XML = .LastFile
-            Else
-                File_XML = String.Empty
-            End If
+            File_XML = .LastFile
 
             If System.IO.File.Exists(File_XML_Value) = True Then
-                DS = CL_DS.Get_DS(DS)
-                CL_XML.ReadXML(DS)
 
-                Dim DT As DataTable = DS.Tables("File")
+                DS = CL_DS.Get_DS(DS)
+                CL_XML.ReadXML(DS, File_XML_Value)
+
+                Dim DT As DataTable = DataSet_Main.Tables("DT_File")
                 If DT.Rows.Count > 0 Then
-                    File_CSV = DT("File")(0)("File").ToString()
-                    File_PDF = DT(0)("Export").ToString()
-                Else
-                    DS = CL_DS.Get_DS(DS)
+                    File_CSV = DT(0).Item("File").ToString
+                    File_PDF = DT(2).Item("File").ToString
                 End If
             Else
                 DS = CL_DS.Get_DS(DS)
@@ -380,7 +391,7 @@ Public Class Form1
 
         Dim DR As DataRow
         Dim nFont As Font
-        Dim Border As UserControl_Border.Border
+        Dim Border As Border
 
         'Aus der Tabelle File lesen und in die entsprechenden Steuerelemente einfügen
         'ID Relation File
@@ -396,7 +407,7 @@ Public Class Form1
 
         UC_Border_Paper.SetToUC(Border)
 
-        Border = New UserControl_Border.Border
+        Border = New Border
         With Border
             .Left = CType(DR("Left"), Decimal)
             .Top = CType(DR("Top"), Decimal)
@@ -419,7 +430,7 @@ Public Class Form1
         nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
         UC_Font_Card.SetToUC(nFont)
 
-        Border = New UserControl_Border.Border
+        Border = New Border
         With Border
             .Left = CType(DR("Left"), Decimal)
             .Top = CType(DR("Top"), Decimal)
@@ -434,7 +445,7 @@ Public Class Form1
 
         'CardRow auslesen und in die entsprechenden Steuerelemente einfügen
         If ListBox_CardRow.SelectedIndex = -1 Then
-            Border = New UserControl_Border.Border
+            Border = New Border
             With Border
                 .Left = 0
                 .Top = 0
@@ -453,7 +464,7 @@ Public Class Form1
             nFont = New Class_FontConverter().StringToFont(DR("Font").ToString)
             UC_Font_CardRow.SetToUC(nFont)
 
-            Border = New UserControl_Border.Border
+            Border = New Border
             With Border
                 .Left = CType(DR("Left"), Decimal)
                 .Top = CType(DR("Top"), Decimal)
@@ -497,7 +508,7 @@ Public Class Form1
                             Return
                         End If
                     End If
-                    CL_XML.DS_WriteXml(Me, DS)
+                    CL_XML.DS_WriteXml(DS)
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -763,8 +774,15 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem_XML_New_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
-        SaveFileDialog_XML()
-        GET_ColumnTabele()
+
+        File_XML = "C:\TMP\Default.xml"
+        'File_XML = DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+
+        CL_XML.DS_WriteXml(DS)
+        DS.WriteXml(File_XML_Value, XmlWriteMode.IgnoreSchema)
+
+        'SaveFileDialog_XML()
+        'GET_ColumnTabele()
 
     End Sub
 
@@ -776,14 +794,14 @@ Public Class Form1
         'Save_Paper()
         'Save_CardRow()
 
-        If System.IO.File.Exists(File_XML_Value) = True Then
-            CL_XML.DS_WriteXml(Me, DS)
-            IsModified = False
-        Else
-            SaveFileDialog_XML()
-            End If
+        'If System.IO.File.Exists(File_XML_Value) = True Then
+        'CL_XML.DS_WriteXml(Me, DS)
+        '    IsModified = False
+        'Else
+        '    SaveFileDialog_XML()
+        'End If
 
-            GET_ColumnTabele()
+        GET_ColumnTabele()
 
         'End If
 
@@ -817,7 +835,7 @@ Public Class Form1
 
             DS = CL_DS.Get_DS(DS)
             File_XML = SFD.FileName
-            CL_XML.DS_WriteXml(Me, DS)
+            CL_XML.DS_WriteXml(DS)
             IsModified = False
 
             DataSetRead()
@@ -1150,7 +1168,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub SetBorderValue(ByVal Table As String, ByVal e As UserControl_Border.Border, Optional ID As Integer = 0)
+    Private Sub SetBorderValue(ByVal Table As String, ByVal e As Border, Optional ID As Integer = 0)
 
         Dim DR As DataRow = DS.Tables(Table).Rows.Find(ID)
 
@@ -1238,7 +1256,7 @@ Public Class Form1
 
     End Sub
 
-    Public Sub UC_ChangeEvent_Border(ByVal sender As Object, ByVal e As UserControl_Border.Border) Handles _
+    Public Sub UC_ChangeEvent_Border(ByVal sender As Object, ByVal e As Border) Handles _
         UC_Border_Paper.ChangeEvent,
         UC_Border_Card.ChangeEvent,
         UC_Border_CardRow.ChangeEvent

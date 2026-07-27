@@ -3,6 +3,13 @@
 Public Class Class_XML
 
     Private ReadOnly CL_DS As New Class_DS
+    Private ReadOnly FRM As Form1
+
+    Public Sub New(ByRef _FRM As Form1)
+
+        FRM = _FRM
+
+    End Sub
 
     'Public Event Changetext(sender, e)
 
@@ -19,7 +26,7 @@ Public Class Class_XML
     '    End Set
     'End Property
 
-    Public Sub DS_WriteXml(ByRef FRM As Form1, ByRef DS As DataSet)
+    Public Sub DS_WriteXml(ByRef DS As DataSet)
 
         Dim XMLFile As String = FRM.DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
         If IsNothing(XMLFile) = False Then
@@ -38,14 +45,14 @@ Public Class Class_XML
         Dim OFD As New OpenFileDialog
         With OFD
             .Title = "Datei Speichern (" & XMLFile & ")"
-            .InitialDirectory = System.IO.Path.GetDirectoryName(XMLFile)
+            .InitialDirectory = System.IO.Path.GetDirectoryName(path:=XMLFile)
             .Filter = "XML-Dateien (*.xml)|*.xml|Alle Dateien (*.*)|*.*"
         End With
 
         If OFD.ShowDialog = DialogResult.OK Then
             DS = New DataSet
             Form1.File_XML = OFD.FileName
-            ReadXML(DS)
+            ReadXML(DS, OFD.FileName)
 
             Form1.File_XML = OFD.FileName
             Form1.ToolStripMenuItem_Save.Enabled = True
@@ -54,13 +61,18 @@ Public Class Class_XML
 
     End Sub
 
-    Public Sub ReadXML(ByRef DS As DataSet)
+    Public Sub ReadXML(ByRef DS As DataSet, XMLFile As String)
 
-        If System.IO.File.Exists(Form1.File_XML) = True Then
-            DS.Clear()
-            DS.ReadXmlSchema(Replace(Form1.File_XML, "xml", "xsd", 1, -1, CompareMethod.Text))
-            DS.ReadXml(Form1.File_XML, XmlReadMode.ReadSchema)
-        End If
+        Dim XMLName As String = XMLFile
+        XMLName = Replace(XMLName, "xml", "", 1, -1, CompareMethod.Text)
+        XMLName = Replace(XMLName, "XSD", "", 1, -1, CompareMethod.Text)
+
+        If System.IO.File.Exists(XMLName & ".xsd") = False Then Return
+        If System.IO.File.Exists(XMLName & ".xml") = False Then Return
+
+        DS.Clear()
+        DS.ReadXmlSchema(XMLName & ".xsd")
+        DS.ReadXml(XMLName & ".xml", XmlReadMode.ReadSchema)
 
     End Sub
 
