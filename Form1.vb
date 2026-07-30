@@ -541,7 +541,13 @@ Public Class Form1
 
     End Sub
 
+<<<<<<< HEAD
     Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Column_Count.ValueChanged
+=======
+    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles , NumericUpDown_Separator_Row_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Column_Count.ValueChanged
+        NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
+        NumericUpDown_Separator_Column_Count.ValueChanged
+>>>>>>> 981cc776eb00174d2436773fa50765b91fe7ac48
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
