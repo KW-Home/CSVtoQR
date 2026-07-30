@@ -11,19 +11,19 @@ Public Class UserControl_File
 
     End Sub
 
-    Public Sub SetToUC(File As FileInfo)
+    Public Sub SetToUC(File As String)
 
-        If File.Exists = False Then
+        If System.IO.File.Exists(File) = False Then
             TextBox_Directory.Text = String.Empty
             TextBox_Filename.Text = String.Empty
         Else
-            TextBox_Directory.Text = File.DirectoryName
-            TextBox_Filename.Text = File.Name
+            TextBox_Directory.Text = System.IO.Path.GetDirectoryName(File)
+            TextBox_Filename.Text = System.IO.Path.GetFileName(File)
         End If
 
     End Sub
 
-    Public Sub UC_Load(UC As UserControl_File, TLP As TableLayoutPanel, ByVal NewRow As Boolean, ByVal Pos As Form1.UC_Pos)
+    Public Sub UC_Load(ByRef UC As UserControl_File, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, ByVal Pos As Form1.UC_Pos)
 
         With UC
 
@@ -51,6 +51,8 @@ Public Class UserControl_File
             End If
 
             .Controls.Add(UC)
+
+            Application.DoEvents()
 
             .SetRow(UC, Pos.Row)
             .SetRowSpan(UC, Pos.RowSpan)

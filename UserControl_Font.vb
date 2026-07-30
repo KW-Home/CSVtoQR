@@ -31,7 +31,10 @@ Public Class UserControl_Font
 
     End Sub
 
-    Public Sub UC_Load(ByRef FRM As Form1, ByRef UC As UserControl_Font, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, Pos As Form1.UC_Pos)
+    Public Sub UC_Load(ByRef UC As UserControl_Font, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, Pos As Form1.UC_Pos)
+
+        Debug.Print("UC_Load: " & UC.Name & vbNewLine &
+                    "Row:" & Pos.Row & " | " & Pos.RowSpan & " Column:" & Pos.Column & " | " & Pos.ColumnSpan)
 
         If TLP.Contains(UC) = False Then
             With UC

@@ -33,7 +33,7 @@ Public Class Form1
 
     Public DS As New DataSet
 
-    Public WithEvents CL_XML As New Class_XML(Me)
+    Public WithEvents CL_File As New Class_File(Me)
 
     Private WithEvents UC_File_XML As New UserControl_File With {.Name = "UC_File_XML"}
     Private WithEvents UC_File_CSV As New UserControl_File With {.Name = "UC_File_CSV"}
@@ -90,15 +90,15 @@ Public Class Form1
                 My.Settings.LastFile = System.IO.Path.GetFileName(value)
                 My.Settings.Save()
 
-                UC_File_XML.SetToUC(New FileInfo(value))
+                UC_File_XML.SetToUC(value)
 
-                DS = CL_DS.Get_DS(DS)
+                DS = CL_DS.Get_DS(DS, DataSet_Main)
 
                 Dim DT = DS.Tables("File")
                 DT = DataSet_Main.Tables("DT_File")
                 Fill_DT_File(0, "XML", value)
 
-                CL_XML.ReadXML(DS, value)
+                CL_File.ReadXML(DS, value)
 
                 DataSetRead()
                 GET_ColumnTabele()
@@ -128,10 +128,15 @@ Public Class Form1
             If System.IO.File.Exists(value) = False Then Return
 
             File_CSV_Value = value
-            DataSet_Main.Tables("DT_File").Rows(1).Item("File") = value
-            UC_File_CSV.SetToUC(New FileInfo(value))
+
+            Dim DT As DataTable = DataSet_Main.Tables("DT_File")
+            'Dim DR() As DataRow
+            DT.Select("Relation='CSV' AND RowID=0")(0)("File") = value
+            'DR(0)("File") = value
+            UC_File_CSV.SetToUC(value)
             Load_CSV(value)
-            Set_CardRow_DataBinding()
+
+            'Set_CardRow_DataBinding()
 
         End Set
     End Property
@@ -194,39 +199,52 @@ Public Class Form1
         'CL_DS.DT_Font(DS.Tables("Font"))
 
 
-        'Dim Border As New UC_Pos
+        'benötigte UserControls in die TableLayoutPanels laden
+        Dim TLP() = New TableLayoutPanel(3) {}
+        TLP(0) = TableLayoutPanel_General
+        TLP(1) = TableLayoutPanel_Paper
+        TLP(2) = TableLayoutPanel_Card
+        TLP(3) = TableLayoutPanel_CardRow
+
+        'Positionen der UserControls in den TableLayoutPanels festlegen
         Dim Pos() = New UC_Pos(9) {}
-        Dim TLP() = New TableLayoutPanel(3) {TableLayoutPanel_General, TableLayoutPanel_Paper, TableLayoutPanel_Card, TableLayoutPanel_CardRow}
 
         Pos(0) = New UC_Pos With {.Row = 0, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'Default
 
-        Pos(1) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_General
-        Pos(2) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_XML
-        Pos(3) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_CSV
-        Pos(4) = New UC_Pos With {.Row = 0, .RowSpan = 8, .Column = 1, .ColumnSpan = 1} 'UC_File_PDF
-        Pos(5) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Paper
-        Pos(6) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Card
-        Pos(8) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_Card
-        Pos(7) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Border_CardRow
-        Pos(9) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_CardRow
+        'TableLayoutPanel_General
+        Pos(1) = New UC_Pos With {.Row = 0, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_General
+        Pos(2) = New UC_Pos With {.Row = 1, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_File_XML
+        Pos(3) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_File_CSV
+        Pos(4) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_File_PDF
 
+        UC_Font_General.UC_Load(UC_Font_General, TLP(0), True, Pos(1))
         UC_File_XML.UC_Load(UC_File_XML, TLP(0), True, Pos(2))
         UC_File_CSV.UC_Load(UC_File_CSV, TLP(0), True, Pos(3))
         UC_File_PDF.UC_Load(UC_File_PDF, TLP(0), True, Pos(4))
-        UC_Font_General.UC_Load(Me, UC_Font_General, TLP(0), True, Pos(1))
 
-        UC_Border_Paper.UC_Load(Me, UC_Border_Paper, TLP(1), True, Pos(5))
+        'TableLayoutPanel_Paper
+        Pos(5) = New UC_Pos With {.Row = 9, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Paper
 
-        UC_Border_Card.UC_Load(Me, UC_Border_Card, TLP(2), True, Pos(6))
-        UC_Font_Card.UC_Load(Me, UC_Font_Card, TLP(2), True, Pos(8))
+        UC_Border_Paper.UC_Load(UC_Border_Paper, TLP(1), True, Pos(5))
 
-        UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TLP(3), True, Pos(7))
-        UC_Font_CardRow.UC_Load(Me, UC_Font_CardRow, TLP(3), True, Pos(9))
+        'TableLayoutPanel_Card
+        Pos(6) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Border_Card
+        Pos(8) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 3} 'UC_Font_Card
 
-        CL_Default = New Class_Default(Me)
+        UC_Border_Card.UC_Load(UC_Border_Card, TLP(2), True, Pos(6))
+        UC_Font_Card.UC_Load(UC_Font_Card, TLP(2), True, Pos(8))
+
+        'TableLayoutPanel_CardRow
+        Pos(7) = New UC_Pos With {.Row = 3, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Border_CardRow
+        Pos(9) = New UC_Pos With {.Row = 2, .RowSpan = 1, .Column = 0, .ColumnSpan = 1} 'UC_Font_CardRow
+
+        UC_Border_CardRow.UC_Load(UC_Border_CardRow, TLP(3), True, Pos(7))
+        UC_Font_CardRow.UC_Load(UC_Font_CardRow, TLP(3), True, Pos(9))
+
 
         MySettings_Load()
 
+        CL_Default = New Class_Default(Me)
         CL_Default.Controlls_Read()
 
 
@@ -237,7 +255,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
 
         PaperPaint(Nothing, Nothing)
 
@@ -263,7 +281,7 @@ Public Class Form1
 
         InitializeComponent()
         Fill_DT_File()
-        DS = CL_DS.Get_DS(DS)
+        DS = CL_DS.Get_DS(DS, DataSet_Main)
 
     End Sub
 
@@ -271,10 +289,10 @@ Public Class Form1
 
         With My.Settings
 
-    .LastDirectory = "C:\TMP"
-    .LastFile = "C:\TMP\Default.xml"
+            .LastDirectory = "C:\TMP"
+            .LastFile = "C:\TMP\Default.xml"
 
-    Me.Font = .Main_Font
+            Me.Font = .Main_Font
             UC_Font_General.SetToUC(.Main_Font)
             Me.Size = .MySize
 
@@ -282,8 +300,8 @@ Public Class Form1
 
             If System.IO.File.Exists(File_XML_Value) = True Then
 
-                DS = CL_DS.Get_DS(DS)
-                CL_XML.ReadXML(DS, File_XML_Value)
+                DS = CL_DS.Get_DS(DS, DataSet_Main)
+                CL_File.ReadXML(DS, File_XML_Value)
 
                 Dim DT As DataTable = DataSet_Main.Tables("DT_File")
                 If DT.Rows.Count > 0 Then
@@ -291,7 +309,7 @@ Public Class Form1
                     File_PDF = DT(2).Item("File").ToString
                 End If
             Else
-                DS = CL_DS.Get_DS(DS)
+                DS = CL_DS.Get_DS(DS, DataSet_Main)
 
                 UC_File_XML.TextBox_Directory.Text = String.Empty
                 UC_File_XML.TextBox_Filename.Text = String.Empty
@@ -380,13 +398,14 @@ Public Class Form1
     Private Sub ListBox_Tabellen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox_Tabellen.SelectedIndexChanged
 
         If ListBox_Tabellen.SelectedIndex = -1 Then Return
-        DGV_Table.DataSource = DS.Tables(ListBox_Tabellen.Items(ListBox_Tabellen.SelectedIndex).ToString)
+        'DGV_Table.DataSource = DS.Tables(ListBox_Tabellen.Items(ListBox_Tabellen.SelectedIndex).ToString)
+        DGV_Table.DataSource = DataSet_Main.Tables(ListBox_Tabellen.Items(ListBox_Tabellen.SelectedIndex).ToString)
 
     End Sub
 
     Private Sub DataSetRead()
 
-        If IsNothing(DS) Then DS = CL_DS.Get_DS(DS)
+        If IsNothing(DS) Then DS = CL_DS.Get_DS(DS, DataSet_Main)
         'If CL_XML.ReadXML_Exists() = False Then Return
 
         Dim DR As DataRow
@@ -472,7 +491,6 @@ Public Class Form1
                 .Bottom = CType(DR("Bottom"), Decimal)
             End With
 
-            'UC_Border_CardRow.UC_Load(Me, UC_Border_CardRow, TableLayoutPanel_CardRow, True)
             UC_Border_CardRow.SetToUC(Border)
 
             CheckBox_CardRow_QRCode.Checked = CType(DR("QRCode"), Boolean)
@@ -508,7 +526,8 @@ Public Class Form1
                             Return
                         End If
                     End If
-                    CL_XML.DS_WriteXml(DS)
+                    Dim XMLFile As String = DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+                    CL_File.WriteXml(DS, XMLFile)
                 Case DialogResult.No
                     ' Do nothing
                 Case DialogResult.Cancel
@@ -522,7 +541,7 @@ Public Class Form1
 
     End Sub
 
-    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged,
+    Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles , NumericUpDown_Separator_Row_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Column_Count.ValueChanged
         NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged,
         NumericUpDown_Separator_Column_Count.ValueChanged
 
@@ -541,7 +560,7 @@ Public Class Form1
 
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
-        DS = CL_DS.Get_DS(DS)
+        DS = CL_DS.Get_DS(DS, DataSet_Main)
         DS.Tables("Paper").Rows(0).Item("Paper") = TextBox_Paper_Paper.Text
         IsModified = True
 
@@ -699,13 +718,13 @@ Public Class Form1
     Private Sub PaperPaint_Card(Sender As Object, e As Border) Handles UC_Border_Card.ChangeEvent
 
         'CL_Paint.Ivalidate_Card(Me, DS)
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_Card)
 
     End Sub
 
     Private Sub PaperPaint_CardRow(Sender As Object, e As Border) Handles UC_Border_CardRow.ChangeEvent
 
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
 
     End Sub
 
@@ -763,11 +782,11 @@ Public Class Form1
                 CL_Paint.Ivalidate_Paper(Me, DS)
             Case "TabPage_Card"
                 'CL_Paint.Ivalidate_Card(Me, DS)
-                CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
+                CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_Card)
             Case "TabPage_CardRow"
-                CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+                CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
             Case "TabPage_CSV"
-                CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
+                CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CSV)
         End Select
 
     End Sub
@@ -778,8 +797,10 @@ Public Class Form1
         File_XML = "C:\TMP\Default.xml"
         'File_XML = DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
 
-        CL_XML.DS_WriteXml(DS)
-        DS.WriteXml(File_XML_Value, XmlWriteMode.IgnoreSchema)
+        Dim XMLFile As String = DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+
+        CL_File.WriteXml(DS, XMLFile)
+        'DS.WriteXml(File_XML_Value, XmlWriteMode.IgnoreSchema)
 
         'SaveFileDialog_XML()
         'GET_ColumnTabele()
@@ -833,9 +854,9 @@ Public Class Form1
 
         If SFD.ShowDialog = DialogResult.OK Then
 
-            DS = CL_DS.Get_DS(DS)
+            DS = CL_DS.Get_DS(DS, DataSet_Main)
             File_XML = SFD.FileName
-            CL_XML.DS_WriteXml(DS)
+            CL_File.WriteXml(DS, SFD.FileName)
             IsModified = False
 
             DataSetRead()
@@ -907,7 +928,7 @@ Public Class Form1
         CL_DS.DT_Border(DS.Tables("Border"), 1, "CardRow", 1, 1, 1, 1)
         CL_DS.DT_Font(DS.Tables("Font"), 1, "CardRow", My.Settings.Main_Font)
 
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
 
     End Sub
     Private Sub Set_CardRow_DataBinding()
@@ -943,7 +964,7 @@ Public Class Form1
 
         Set_CardRow_DataBinding()
 
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
 
     End Sub
 
@@ -1047,7 +1068,7 @@ Public Class Form1
         If sender.CanSelect = False Then Return
 
         CardRow_Sort(sender, e)
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
 
     End Sub
     Private Sub CardRow_Sort(sender As Object, e As EventArgs)
@@ -1164,7 +1185,7 @@ Public Class Form1
 
         If sender.CanSelect = False Then Return
 
-        CL_Paint.Ivalidate_CSV(DS, PictureBox_CSV)
+        CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CSV)
 
     End Sub
 
@@ -1272,7 +1293,7 @@ Public Class Form1
             Case UC_Border_Card.Name
 
                 SetBorderValue("Card", e)
-                CL_Paint.Ivalidate_CSV(DS, PictureBox_Card)
+                CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_Card)
 
             Case UC_Border_CardRow.Name
 
@@ -1287,7 +1308,7 @@ Public Class Form1
                     SetBorderValue("CardRow", e, ID)
                 End If
 
-                CL_Paint.Ivalidate_CSV(DS, PictureBox_CardRow)
+                CL_Paint.Ivalidate_CSV(Me, DS, PictureBox_CardRow)
 
         End Select
 
@@ -1302,7 +1323,7 @@ Public Class Form1
 
             Case "UC_File_XML"
 
-                CL_XML.OpenFileDialog_XML(DS)
+                CL_File.OpenFileDialog_XML(DS)
                 DataSetRead()
                 GET_ColumnTabele()
 
@@ -1326,6 +1347,26 @@ Public Class Form1
                 If OFD.ShowDialog = DialogResult.OK Then File_CSV = OFD.FileName
 
         End Select
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        Dim Los As New List(Of String)
+
+        With ListBox_Tabellen
+            'erst alles entfernen, damit die Datenbindung neu aufgebaut werden kann, ohne dass es zu Fehlern kommt
+            .DataSource = Nothing
+            For Each Table As DataTable In DS.Tables
+                Los.Add(Table.TableName)
+            Next
+            'befüllen die ListBox mit den Tabellennamen aus dem DataSet
+            .DataSource = Los
+        End With
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
 
     End Sub
 

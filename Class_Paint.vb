@@ -28,9 +28,9 @@ Public Class Class_Paint
     Private BCR As Single = 0 'Card Border Right
     Private BCB As Single = 0 'Card Border Bottom
 
-    Private Sub Fill_Parameter(ByRef DS As DataSet)
+    Private Sub Fill_Parameter(ByRef DS As DataSet, ByRef DS_Main As DataSet)
 
-        DS = CL_DS.Get_DS(DS)
+        DS = CL_DS.Get_DS(DS, DS_Main)
 
         With DS.Tables("Paper").Rows(0)
 
@@ -70,7 +70,7 @@ Public Class Class_Paint
 
     Public Sub Ivalidate_Paper(ByRef FRM As Form1, ByRef DS As DataSet)
 
-        Fill_Parameter(DS)
+        Fill_Parameter(DS, FRM.DataSet_Main)
 
         With FRM
             Dim P(2) As Pen
@@ -115,7 +115,7 @@ Public Class Class_Paint
 
     Public Sub Ivalidate_Card(ByRef FRM As Form1, ByRef DS As DataSet)
 
-        Fill_Parameter(DS)
+        Fill_Parameter(DS, FRM.DataSet_Main)
 
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
         'Dim DPI As Single = CType(DS.Tables("Paper").Rows(0)("DPI"), Single)
@@ -160,9 +160,9 @@ Public Class Class_Paint
     End Sub
 
 
-    Public Sub Ivalidate_CSV(ByRef DS As DataSet, PictureBox As PictureBox) 'As Image
+    Public Sub Ivalidate_CSV(ByRef FRM As Form1, ByRef DS As DataSet, PictureBox As PictureBox) 'As Image
 
-        DS = CL_DS.Get_DS(DS)
+        DS = CL_DS.Get_DS(DS, FRM.DataSet_Main)
 
         Dim DR_Card As DataRow = DS.Tables("Card").Rows(0)
         Dim DPI As Single = CType(DS.Tables("Paper").Rows(0)("DPI"), Single)

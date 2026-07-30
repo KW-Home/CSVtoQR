@@ -31,7 +31,7 @@ Public Class UserControl_Border
 
     End Sub
 
-    Public Sub UC_Load(FRM As Form1, ByRef UC As UserControl_Border, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, ByVal Pos As Form1.UC_Pos)
+    Public Sub UC_Load(ByRef UC As UserControl_Border, ByRef TLP As TableLayoutPanel, ByVal NewRow As Boolean, ByVal Pos As Form1.UC_Pos)
 
         With UC
             .Dock = DockStyle.Top
