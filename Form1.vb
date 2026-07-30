@@ -543,6 +543,7 @@ Public Class Form1
 
     Public Sub NumericUpDown_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown_Separator_Row_Value.ValueChanged, NumericUpDown_Separator_Row_Count.ValueChanged, NumericUpDown_Separator_Column_Value.ValueChanged, NumericUpDown_Separator_Column_Count.ValueChanged
 
+
         If sender.canselect = False Then Return
         If sender.canfocus = False Then Return
         IsModified = True
