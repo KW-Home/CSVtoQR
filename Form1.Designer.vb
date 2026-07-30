@@ -26,10 +26,10 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim MySettings2 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim MySettings1 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
         Me.Label_Separator_Row = New System.Windows.Forms.Label()
         Me.NumericUpDown_Separator_Column_Count = New System.Windows.Forms.NumericUpDown()
         Me.Label_Separator_Column_Count = New System.Windows.Forms.Label()
@@ -140,6 +140,9 @@ Partial Class Form1
         Me.Relation = New System.Data.DataColumn()
         Me.File = New System.Data.DataColumn()
         Me.DT_Font = New System.Data.DataTable()
+        Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -181,6 +184,7 @@ Partial Class Form1
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FlowLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -362,8 +366,8 @@ Partial Class Form1
         Me.DGV_Search.AllowUserToOrderColumns = True
         Me.DGV_Search.AllowUserToResizeColumns = False
         Me.DGV_Search.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
@@ -382,8 +386,8 @@ Partial Class Form1
         '
         Me.DGV_CSV.AllowUserToAddRows = False
         Me.DGV_CSV.AllowUserToDeleteRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.BackgroundColor = System.Drawing.Color.WhiteSmoke
@@ -641,20 +645,16 @@ Partial Class Form1
         'TableLayoutPanel_General
         '
         Me.TableLayoutPanel_General.AutoSize = True
-        Me.TableLayoutPanel_General.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel_General.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel_General.ColumnCount = 1
-        Me.TableLayoutPanel_General.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel_General.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel_General.Dock = System.Windows.Forms.DockStyle.Top
         Me.TableLayoutPanel_General.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel_General.Margin = New System.Windows.Forms.Padding(0)
-        Me.TableLayoutPanel_General.MinimumSize = New System.Drawing.Size(200, 0)
         Me.TableLayoutPanel_General.Name = "TableLayoutPanel_General"
-        Me.TableLayoutPanel_General.Padding = New System.Windows.Forms.Padding(9)
-        Me.TableLayoutPanel_General.RowCount = 1
+        Me.TableLayoutPanel_General.RowCount = 2
         Me.TableLayoutPanel_General.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(657, 20)
-        Me.TableLayoutPanel_General.TabIndex = 5
+        Me.TableLayoutPanel_General.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(657, 0)
+        Me.TableLayoutPanel_General.TabIndex = 0
         '
         'TabPage_Paper
         '
@@ -1277,15 +1277,17 @@ Partial Class Form1
         '
         Me.TableLayoutPanel_DataSet.AutoSize = True
         Me.TableLayoutPanel_DataSet.ColumnCount = 2
-        Me.TableLayoutPanel_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_DataSet.Controls.Add(Me.ListBox_Tabellen, 0, 0)
+        Me.TableLayoutPanel_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.09285!))
+        Me.TableLayoutPanel_DataSet.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.90715!))
         Me.TableLayoutPanel_DataSet.Controls.Add(Me.DGV_Table, 1, 0)
+        Me.TableLayoutPanel_DataSet.Controls.Add(Me.ListBox_Tabellen, 0, 1)
+        Me.TableLayoutPanel_DataSet.Controls.Add(Me.FlowLayoutPanel3, 0, 0)
         Me.TableLayoutPanel_DataSet.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel_DataSet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.TableLayoutPanel_DataSet.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel_DataSet.Name = "TableLayoutPanel_DataSet"
-        Me.TableLayoutPanel_DataSet.RowCount = 1
+        Me.TableLayoutPanel_DataSet.RowCount = 2
+        Me.TableLayoutPanel_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel_DataSet.Size = New System.Drawing.Size(657, 433)
         Me.TableLayoutPanel_DataSet.TabIndex = 3
@@ -1293,13 +1295,12 @@ Partial Class Form1
         'ListBox_Tabellen
         '
         Me.ListBox_Tabellen.BackColor = System.Drawing.SystemColors.Control
-        Me.ListBox_Tabellen.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ListBox_Tabellen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.ListBox_Tabellen.FormattingEnabled = True
-        Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 3)
+        Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 38)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(131, 427)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(172, 392)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'DGV_Table
@@ -1310,18 +1311,19 @@ Partial Class Form1
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.DGV_Table.Location = New System.Drawing.Point(140, 3)
+        Me.DGV_Table.Location = New System.Drawing.Point(181, 3)
         Me.DGV_Table.Name = "DGV_Table"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DGV_Table.RowHeadersWidth = 62
-        Me.DGV_Table.Size = New System.Drawing.Size(514, 427)
+        Me.TableLayoutPanel_DataSet.SetRowSpan(Me.DGV_Table, 2)
+        Me.DGV_Table.Size = New System.Drawing.Size(473, 427)
         Me.DGV_Table.TabIndex = 0
         '
         'ToolStripMenuItem_Beenden
@@ -1499,6 +1501,35 @@ Partial Class Form1
         '
         Me.DT_Font.TableName = "DT_Font"
         '
+        'FlowLayoutPanel3
+        '
+        Me.FlowLayoutPanel3.AutoSize = True
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button2)
+        Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
+        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(172, 29)
+        Me.FlowLayoutPanel3.TabIndex = 3
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(3, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(84, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1508,13 +1539,13 @@ Partial Class Form1
         Me.Controls.Add(Me.TabControl_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
-        MySettings2.LastDirectory = "C:\"
-        MySettings2.LastFile = "C:\"
-        MySettings2.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        MySettings2.MyLocation = New System.Drawing.Point(100, 100)
-        MySettings2.MySize = New System.Drawing.Size(600, 600)
-        MySettings2.SettingsKey = ""
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings2, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        MySettings1.LastDirectory = "C:\"
+        MySettings1.LastFile = "C:\"
+        MySettings1.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        MySettings1.MyLocation = New System.Drawing.Point(100, 100)
+        MySettings1.MySize = New System.Drawing.Size(600, 600)
+        MySettings1.SettingsKey = ""
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings1, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.Location = Global.CSVtoQR.My.MySettings.Default.MyLocation
@@ -1569,6 +1600,7 @@ Partial Class Form1
         Me.TabPage_DataSet.ResumeLayout(False)
         Me.TabPage_DataSet.PerformLayout()
         Me.TableLayoutPanel_DataSet.ResumeLayout(False)
+        Me.TableLayoutPanel_DataSet.PerformLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip_Main.ResumeLayout(False)
         Me.MenuStrip_Main.PerformLayout()
@@ -1578,6 +1610,7 @@ Partial Class Form1
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FlowLayoutPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1659,7 +1692,6 @@ Partial Class Form1
     Friend WithEvents Label_CardRow_FontColor As Label
     Friend WithEvents Button_CardRow_FontColor As Button
     Friend WithEvents Label_Separator_Column As Label
-    Friend WithEvents TableLayoutPanel_General As TableLayoutPanel
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents TableLayoutPanel_CardRow As TableLayoutPanel
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
@@ -1692,4 +1724,8 @@ Partial Class Form1
     Friend WithEvents Relation As DataColumn
     Friend WithEvents File As DataColumn
     Friend WithEvents DT_Font As DataTable
+    Friend WithEvents TableLayoutPanel_General As TableLayoutPanel
+    Friend WithEvents FlowLayoutPanel3 As FlowLayoutPanel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
 End Class

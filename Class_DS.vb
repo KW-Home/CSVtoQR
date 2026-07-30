@@ -15,7 +15,7 @@ Public Class Class_DS
         AutoWordWrap
     End Enum
 
-    Public Function Get_DS(DS As DataSet) As DataSet
+    Public Function Get_DS(DS As DataSet, DS_Main As DataSet) As DataSet
 
         If DS Is Nothing Then DS = New DataSet With {.DataSetName = "DataSetSystem"}
 
@@ -26,9 +26,14 @@ Public Class Class_DS
             If .Contains("CardRow") = False Then .Add(DT_CardRow)
             If .Contains("Search") = False Then .Add(DT_Search)
             If .Contains("Search_Columns") = False Then .Add(DT_Search_Columns)
+
+            'If .Contains("File") = False AndAlso DS_Main?.Tables.Contains("DT_File") Then
+            '    Dim DT As DataTable = DS_Main.Tables("DT_File").Clone
+            '    .Add(DT)
+            'End If
+
             If .Contains("Border") = False Then .Add(DT_Border)
             If .Contains("Font") = False Then .Add(DT_Font)
-            'If .Contains("File") = False Then .Add(DT_File)
 
         End With
 

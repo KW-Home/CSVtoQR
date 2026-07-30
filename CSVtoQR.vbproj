@@ -79,7 +79,7 @@
     <Compile Include="Class_DS.vb" />
     <Compile Include="Class_FontConverter.vb" />
     <Compile Include="Class_Paint.vb" />
-    <Compile Include="Class_XML.vb" />
+    <Compile Include="Class_File.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>

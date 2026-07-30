@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class Class_XML
+Public Class Class_File
 
     Private ReadOnly CL_DS As New Class_DS
     Private ReadOnly FRM As Form1
@@ -26,15 +26,23 @@ Public Class Class_XML
     '    End Set
     'End Property
 
-    Public Sub DS_WriteXml(ByRef DS As DataSet)
+    Public Sub WriteXml(DS As DataSet, XMLFile As String)
 
-        Dim XMLFile As String = FRM.DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
-        If IsNothing(XMLFile) = False Then
-            DS.WriteXml(XMLFile, XmlWriteMode.IgnoreSchema)
-            DS.WriteXmlSchema(Replace(XMLFile, ".xml", ".xsd"))
-        Else
-            MessageBox.Show("Pfad: " & XMLFile)
-        End If
+        'Dim XMLFile As String = FRM.DataSet_Main.Tables("DT_File").Select("Relation='XML' AND RowID=0")(0)("File")
+
+        If IsNothing(XMLFile) = True Then Return
+
+        Dim XMLName As String = XMLFile
+
+        XMLName = Replace(XMLName, ".xml", "", 1, -1, CompareMethod.Text)
+        XMLName = Replace(XMLName, "xsd", "", 1, -1, CompareMethod.Text)
+
+
+        If System.IO.File.Exists(XMLName & ".xsd") = True Then System.IO.File.Delete(XMLName & ".xsd")
+        If System.IO.File.Exists(XMLName & ".xml") = True Then System.IO.File.Delete(XMLName & ".xml")
+
+        DS.WriteXmlSchema(XMLName & ".xsd")
+        DS.WriteXml(XMLName & ".xml", XmlWriteMode.IgnoreSchema)
 
     End Sub
 
@@ -96,7 +104,7 @@ Public Class Class_XML
             _DS.ReadXmlSchema(_File)
 
             Dim DS As New DataSet
-            DS = CL_DS.Get_DS(DS)
+            DS = CL_DS.Get_DS(DS, Form1.DataSet_Main)
 
             For Each Table As DataTable In _DS.Tables
                 If DS.Tables.Contains(Table.TableName) = False Then
