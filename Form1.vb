@@ -1355,7 +1355,7 @@ Public Class Form1
         With ListBox_Tabellen
             'erst alles entfernen, damit die Datenbindung neu aufgebaut werden kann, ohne dass es zu Fehlern kommt
             .DataSource = Nothing
-            For Each Table As DataTable In DS.Tables
+            For Each Table As DataTable In DataSet_Main.Tables
                 Los.Add(Table.TableName)
             Next
             'befüllen die ListBox mit den Tabellennamen aus dem DataSet
@@ -1364,9 +1364,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs)
-
-    End Sub
 
 #End Region
 

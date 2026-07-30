@@ -112,8 +112,11 @@ Partial Class Form1
         Me.Button_CardRow_Delete = New System.Windows.Forms.Button()
         Me.TabPage_DataSet = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel_DataSet = New System.Windows.Forms.TableLayoutPanel()
-        Me.ListBox_Tabellen = New System.Windows.Forms.ListBox()
         Me.DGV_Table = New System.Windows.Forms.DataGridView()
+        Me.ListBox_Tabellen = New System.Windows.Forms.ListBox()
+        Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.ToolStripMenuItem_Beenden = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator03 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripSeparator02 = New System.Windows.Forms.ToolStripSeparator()
@@ -140,9 +143,6 @@ Partial Class Form1
         Me.Relation = New System.Data.DataColumn()
         Me.File = New System.Data.DataColumn()
         Me.DT_Font = New System.Data.DataTable()
-        Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -178,13 +178,13 @@ Partial Class Form1
         Me.TabPage_DataSet.SuspendLayout()
         Me.TableLayoutPanel_DataSet.SuspendLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FlowLayoutPanel3.SuspendLayout()
         Me.MenuStrip_Main.SuspendLayout()
         Me.StatusStrip_Main.SuspendLayout()
         CType(Me.BindingSource_CSV, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FlowLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -1292,17 +1292,6 @@ Partial Class Form1
         Me.TableLayoutPanel_DataSet.Size = New System.Drawing.Size(657, 433)
         Me.TableLayoutPanel_DataSet.TabIndex = 3
         '
-        'ListBox_Tabellen
-        '
-        Me.ListBox_Tabellen.BackColor = System.Drawing.SystemColors.Control
-        Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListBox_Tabellen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.ListBox_Tabellen.FormattingEnabled = True
-        Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 38)
-        Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(172, 392)
-        Me.ListBox_Tabellen.TabIndex = 2
-        '
         'DGV_Table
         '
         Me.DGV_Table.AllowUserToAddRows = False
@@ -1325,6 +1314,46 @@ Partial Class Form1
         Me.TableLayoutPanel_DataSet.SetRowSpan(Me.DGV_Table, 2)
         Me.DGV_Table.Size = New System.Drawing.Size(473, 427)
         Me.DGV_Table.TabIndex = 0
+        '
+        'ListBox_Tabellen
+        '
+        Me.ListBox_Tabellen.BackColor = System.Drawing.SystemColors.Control
+        Me.ListBox_Tabellen.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListBox_Tabellen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.ListBox_Tabellen.FormattingEnabled = True
+        Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 38)
+        Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(172, 392)
+        Me.ListBox_Tabellen.TabIndex = 2
+        '
+        'FlowLayoutPanel3
+        '
+        Me.FlowLayoutPanel3.AutoSize = True
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button2)
+        Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
+        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(172, 29)
+        Me.FlowLayoutPanel3.TabIndex = 3
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(3, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(84, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'ToolStripMenuItem_Beenden
         '
@@ -1501,35 +1530,6 @@ Partial Class Form1
         '
         Me.DT_Font.TableName = "DT_Font"
         '
-        'FlowLayoutPanel3
-        '
-        Me.FlowLayoutPanel3.AutoSize = True
-        Me.FlowLayoutPanel3.Controls.Add(Me.Button1)
-        Me.FlowLayoutPanel3.Controls.Add(Me.Button2)
-        Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
-        Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(172, 29)
-        Me.FlowLayoutPanel3.TabIndex = 3
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(84, 3)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Button2"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1602,6 +1602,7 @@ Partial Class Form1
         Me.TableLayoutPanel_DataSet.ResumeLayout(False)
         Me.TableLayoutPanel_DataSet.PerformLayout()
         CType(Me.DGV_Table, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FlowLayoutPanel3.ResumeLayout(False)
         Me.MenuStrip_Main.ResumeLayout(False)
         Me.MenuStrip_Main.PerformLayout()
         Me.StatusStrip_Main.ResumeLayout(False)
@@ -1610,7 +1611,6 @@ Partial Class Form1
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FlowLayoutPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
