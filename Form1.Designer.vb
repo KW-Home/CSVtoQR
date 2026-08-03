@@ -26,10 +26,10 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim MySettings1 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim MySettings2 As CSVtoQR.My.MySettings = New CSVtoQR.My.MySettings()
         Me.Label_Separator_Row = New System.Windows.Forms.Label()
         Me.NumericUpDown_Separator_Column_Count = New System.Windows.Forms.NumericUpDown()
         Me.Label_Separator_Column_Count = New System.Windows.Forms.Label()
@@ -143,6 +143,38 @@ Partial Class Form1
         Me.Relation = New System.Data.DataColumn()
         Me.File = New System.Data.DataColumn()
         Me.DT_Font = New System.Data.DataTable()
+        Me.DT_Paper = New System.Data.DataTable()
+        Me.DT_Font_ID = New System.Data.DataColumn()
+        Me.DT_Font_RowID = New System.Data.DataColumn()
+        Me.DT_Font_Relation = New System.Data.DataColumn()
+        Me.DT_Font_Font = New System.Data.DataColumn()
+        Me.DT_Border = New System.Data.DataTable()
+        Me.DT_Border_ID = New System.Data.DataColumn()
+        Me.DT_Border_RowID = New System.Data.DataColumn()
+        Me.DT_Border_Left = New System.Data.DataColumn()
+        Me.DT_Border_Top = New System.Data.DataColumn()
+        Me.DT_Border_Right = New System.Data.DataColumn()
+        Me.DT_Border_Bottom = New System.Data.DataColumn()
+        Me.DT_Border_Relation = New System.Data.DataColumn()
+        Me.DT_Paper_ID = New System.Data.DataColumn()
+        Me.DT_Paper_Name = New System.Data.DataColumn()
+        Me.DT_Paper_DPI = New System.Data.DataColumn()
+        Me.DT_Paper_DIN = New System.Data.DataColumn()
+        Me.DT_Paper_SpalteWert = New System.Data.DataColumn()
+        Me.DT_Paper_SpalteAnzahl = New System.Data.DataColumn()
+        Me.DT_Paper_ZeileWert = New System.Data.DataColumn()
+        Me.DT_Paper_ZeileAnzahl = New System.Data.DataColumn()
+        Me.DT_Paper_PaperSizeHeight = New System.Data.DataColumn()
+        Me.DT_Paper_PaperSizeWidth = New System.Data.DataColumn()
+        Me.DTPaper_CardSizeWidth = New System.Data.DataColumn()
+        Me.DTPaper_CardSizeHeight = New System.Data.DataColumn()
+        Me.DT_CardRow = New System.Data.DataTable()
+        Me.DT_CardRow_ID = New System.Data.DataColumn()
+        Me.DT_CardRow_Line = New System.Data.DataColumn()
+        Me.DT_CardRow_DataColumn = New System.Data.DataColumn()
+        Me.DT_CardRow_FontColor = New System.Data.DataColumn()
+        Me.DT_CardRow_Style = New System.Data.DataColumn()
+        Me.DT_CardRow_RowID = New System.Data.DataColumn()
         CType(Me.NumericUpDown_Separator_Column_Count, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Value, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown_Separator_Row_Count, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -185,6 +217,9 @@ Partial Class Form1
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DT_Paper, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DT_Border, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DT_CardRow, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label_Separator_Row
@@ -366,8 +401,8 @@ Partial Class Form1
         Me.DGV_Search.AllowUserToOrderColumns = True
         Me.DGV_Search.AllowUserToResizeColumns = False
         Me.DGV_Search.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_Search.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DGV_Search.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DGV_Search.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DGV_Search.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
@@ -379,15 +414,15 @@ Partial Class Form1
         Me.DGV_Search.Location = New System.Drawing.Point(0, 0)
         Me.DGV_Search.Name = "DGV_Search"
         Me.DGV_Search.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.DGV_Search.Size = New System.Drawing.Size(336, 255)
+        Me.DGV_Search.Size = New System.Drawing.Size(188, 124)
         Me.DGV_Search.TabIndex = 0
         '
         'DGV_CSV
         '
         Me.DGV_CSV.AllowUserToAddRows = False
         Me.DGV_CSV.AllowUserToDeleteRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DGV_CSV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DGV_CSV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DGV_CSV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.DGV_CSV.BackgroundColor = System.Drawing.Color.WhiteSmoke
@@ -400,7 +435,7 @@ Partial Class Form1
         Me.DGV_CSV.Name = "DGV_CSV"
         Me.DGV_CSV.RowHeadersWidth = 62
         Me.DGV_CSV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DGV_CSV.Size = New System.Drawing.Size(657, 87)
+        Me.DGV_CSV.Size = New System.Drawing.Size(430, 81)
         Me.DGV_CSV.TabIndex = 44
         '
         'FlowLayoutPanel1
@@ -412,9 +447,9 @@ Partial Class Form1
         Me.FlowLayoutPanel1.Controls.Add(Me.Button_Search_Add)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button_Search_Refresh)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 255)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 124)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(336, 44)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(188, 44)
         Me.FlowLayoutPanel1.TabIndex = 49
         '
         'Button_Search_Delete
@@ -460,7 +495,7 @@ Partial Class Form1
         Me.PictureBox_CSV.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox_CSV.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_CSV.Name = "PictureBox_CSV"
-        Me.PictureBox_CSV.Size = New System.Drawing.Size(305, 299)
+        Me.PictureBox_CSV.Size = New System.Drawing.Size(226, 168)
         Me.PictureBox_CSV.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox_CSV.TabIndex = 47
         Me.PictureBox_CSV.TabStop = False
@@ -476,14 +511,14 @@ Partial Class Form1
         Me.BindingNavigator_CSV.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.BindingNavigator_CSV.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.BindingNavigator_CSV.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
-        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(0, 87)
+        Me.BindingNavigator_CSV.Location = New System.Drawing.Point(0, 81)
         Me.BindingNavigator_CSV.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.BindingNavigator_CSV.MoveLastItem = Me.BindingNavigatorMoveLastItem
         Me.BindingNavigator_CSV.MoveNextItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator_CSV.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.BindingNavigator_CSV.Name = "BindingNavigator_CSV"
         Me.BindingNavigator_CSV.PositionItem = Me.BindingNavigatorPositionItem
-        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(657, 31)
+        Me.BindingNavigator_CSV.Size = New System.Drawing.Size(430, 31)
         Me.BindingNavigator_CSV.TabIndex = 45
         Me.BindingNavigator_CSV.Text = "BindingNavigator1"
         '
@@ -564,7 +599,7 @@ Partial Class Form1
         Me.TabPage_CSV.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_CSV.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_CSV.Name = "TabPage_CSV"
-        Me.TabPage_CSV.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_CSV.Size = New System.Drawing.Size(434, 300)
         Me.TabPage_CSV.TabIndex = 5
         Me.TabPage_CSV.Text = "CSV"
         '
@@ -585,8 +620,8 @@ Partial Class Form1
         '
         Me.SplitContainer_CSV_Horizontal.Panel2.Controls.Add(Me.DGV_CSV)
         Me.SplitContainer_CSV_Horizontal.Panel2.Controls.Add(Me.BindingNavigator_CSV)
-        Me.SplitContainer_CSV_Horizontal.Size = New System.Drawing.Size(657, 433)
-        Me.SplitContainer_CSV_Horizontal.SplitterDistance = 299
+        Me.SplitContainer_CSV_Horizontal.Size = New System.Drawing.Size(430, 296)
+        Me.SplitContainer_CSV_Horizontal.SplitterDistance = 168
         Me.SplitContainer_CSV_Horizontal.SplitterWidth = 16
         Me.SplitContainer_CSV_Horizontal.TabIndex = 1
         '
@@ -605,8 +640,8 @@ Partial Class Form1
         'SplitContainer_CSV_Vertical.Panel2
         '
         Me.SplitContainer_CSV_Vertical.Panel2.Controls.Add(Me.PictureBox_CSV)
-        Me.SplitContainer_CSV_Vertical.Size = New System.Drawing.Size(657, 299)
-        Me.SplitContainer_CSV_Vertical.SplitterDistance = 336
+        Me.SplitContainer_CSV_Vertical.Size = New System.Drawing.Size(430, 168)
+        Me.SplitContainer_CSV_Vertical.SplitterDistance = 188
         Me.SplitContainer_CSV_Vertical.SplitterWidth = 16
         Me.SplitContainer_CSV_Vertical.TabIndex = 50
         '
@@ -626,7 +661,7 @@ Partial Class Form1
         Me.TabControl_Main.Name = "TabControl_Main"
         Me.TabControl_Main.Padding = New System.Drawing.Point(0, 0)
         Me.TabControl_Main.SelectedIndex = 0
-        Me.TabControl_Main.Size = New System.Drawing.Size(669, 466)
+        Me.TabControl_Main.Size = New System.Drawing.Size(442, 329)
         Me.TabControl_Main.TabIndex = 5
         '
         'TabPage_General
@@ -638,7 +673,7 @@ Partial Class Form1
         Me.TabPage_General.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_General.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_General.Name = "TabPage_General"
-        Me.TabPage_General.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_General.Size = New System.Drawing.Size(669, 237)
         Me.TabPage_General.TabIndex = 8
         Me.TabPage_General.Text = "Allgemein"
         '
@@ -653,7 +688,7 @@ Partial Class Form1
         Me.TableLayoutPanel_General.RowCount = 2
         Me.TableLayoutPanel_General.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_General.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(657, 0)
+        Me.TableLayoutPanel_General.Size = New System.Drawing.Size(665, 0)
         Me.TableLayoutPanel_General.TabIndex = 0
         '
         'TabPage_Paper
@@ -664,7 +699,7 @@ Partial Class Form1
         Me.TabPage_Paper.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_Paper.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_Paper.Name = "TabPage_Paper"
-        Me.TabPage_Paper.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_Paper.Size = New System.Drawing.Size(669, 237)
         Me.TabPage_Paper.TabIndex = 0
         Me.TabPage_Paper.Text = "Papier"
         Me.TabPage_Paper.UseVisualStyleBackColor = True
@@ -858,7 +893,7 @@ Partial Class Form1
         Me.TabPage_Card.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_Card.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_Card.Name = "TabPage_Card"
-        Me.TabPage_Card.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_Card.Size = New System.Drawing.Size(669, 237)
         Me.TabPage_Card.TabIndex = 6
         Me.TabPage_Card.Text = "Karte"
         Me.TabPage_Card.UseVisualStyleBackColor = True
@@ -886,7 +921,7 @@ Partial Class Form1
         Me.TableLayoutPanel_Card.RowCount = 2
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_Card.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(657, 53)
+        Me.TableLayoutPanel_Card.Size = New System.Drawing.Size(665, 53)
         Me.TableLayoutPanel_Card.TabIndex = 53
         '
         'Label_Card_Size_Hight
@@ -979,7 +1014,7 @@ Partial Class Form1
         Me.TabPage_CardRow.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_CardRow.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_CardRow.Name = "TabPage_CardRow"
-        Me.TabPage_CardRow.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_CardRow.Size = New System.Drawing.Size(669, 237)
         Me.TabPage_CardRow.TabIndex = 7
         Me.TabPage_CardRow.Text = "Zeile"
         Me.TabPage_CardRow.UseVisualStyleBackColor = True
@@ -999,7 +1034,7 @@ Partial Class Form1
         Me.TableLayoutPanel_CardRow.RowCount = 2
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_CardRow.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(657, 226)
+        Me.TableLayoutPanel_CardRow.Size = New System.Drawing.Size(665, 226)
         Me.TableLayoutPanel_CardRow.TabIndex = 0
         '
         'PictureBox_CardRow
@@ -1268,7 +1303,7 @@ Partial Class Form1
         Me.TabPage_DataSet.Location = New System.Drawing.Point(4, 25)
         Me.TabPage_DataSet.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage_DataSet.Name = "TabPage_DataSet"
-        Me.TabPage_DataSet.Size = New System.Drawing.Size(661, 437)
+        Me.TabPage_DataSet.Size = New System.Drawing.Size(669, 237)
         Me.TabPage_DataSet.TabIndex = 4
         Me.TabPage_DataSet.Text = "DataSet"
         Me.TabPage_DataSet.UseVisualStyleBackColor = True
@@ -1289,7 +1324,7 @@ Partial Class Form1
         Me.TableLayoutPanel_DataSet.RowCount = 2
         Me.TableLayoutPanel_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel_DataSet.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel_DataSet.Size = New System.Drawing.Size(657, 433)
+        Me.TableLayoutPanel_DataSet.Size = New System.Drawing.Size(665, 233)
         Me.TableLayoutPanel_DataSet.TabIndex = 3
         '
         'DGV_Table
@@ -1300,19 +1335,19 @@ Partial Class Form1
         Me.DGV_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGV_Table.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DGV_Table.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.DGV_Table.Location = New System.Drawing.Point(181, 3)
+        Me.DGV_Table.Location = New System.Drawing.Point(183, 3)
         Me.DGV_Table.Name = "DGV_Table"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DGV_Table.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.DGV_Table.RowHeadersWidth = 62
         Me.TableLayoutPanel_DataSet.SetRowSpan(Me.DGV_Table, 2)
-        Me.DGV_Table.Size = New System.Drawing.Size(473, 427)
+        Me.DGV_Table.Size = New System.Drawing.Size(479, 227)
         Me.DGV_Table.TabIndex = 0
         '
         'ListBox_Tabellen
@@ -1323,7 +1358,7 @@ Partial Class Form1
         Me.ListBox_Tabellen.FormattingEnabled = True
         Me.ListBox_Tabellen.Location = New System.Drawing.Point(3, 38)
         Me.ListBox_Tabellen.Name = "ListBox_Tabellen"
-        Me.ListBox_Tabellen.Size = New System.Drawing.Size(172, 392)
+        Me.ListBox_Tabellen.Size = New System.Drawing.Size(174, 192)
         Me.ListBox_Tabellen.TabIndex = 2
         '
         'FlowLayoutPanel3
@@ -1334,7 +1369,7 @@ Partial Class Form1
         Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
         Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(172, 29)
+        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(174, 29)
         Me.FlowLayoutPanel3.TabIndex = 3
         '
         'Button1
@@ -1414,7 +1449,7 @@ Partial Class Form1
         Me.MenuStrip_Main.Location = New System.Drawing.Point(3, 3)
         Me.MenuStrip_Main.Name = "MenuStrip_Main"
         Me.MenuStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip_Main.Size = New System.Drawing.Size(669, 32)
+        Me.MenuStrip_Main.Size = New System.Drawing.Size(442, 32)
         Me.MenuStrip_Main.TabIndex = 4
         Me.MenuStrip_Main.Text = "MenuStrip1"
         '
@@ -1478,10 +1513,10 @@ Partial Class Form1
         '
         Me.StatusStrip_Main.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.StatusStrip_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel_IsModified, Me.ToolStripStatusLabel_SaveInfo, Me.ToolStripStatusLabel_SaveFile})
-        Me.StatusStrip_Main.Location = New System.Drawing.Point(3, 501)
+        Me.StatusStrip_Main.Location = New System.Drawing.Point(3, 364)
         Me.StatusStrip_Main.Name = "StatusStrip_Main"
         Me.StatusStrip_Main.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode
-        Me.StatusStrip_Main.Size = New System.Drawing.Size(669, 24)
+        Me.StatusStrip_Main.Size = New System.Drawing.Size(442, 24)
         Me.StatusStrip_Main.SizingGrip = False
         Me.StatusStrip_Main.TabIndex = 5
         Me.StatusStrip_Main.Text = "StatusStrip1"
@@ -1489,11 +1524,13 @@ Partial Class Form1
         'DataSet_Main
         '
         Me.DataSet_Main.DataSetName = "DataSet_Main"
-        Me.DataSet_Main.Tables.AddRange(New System.Data.DataTable() {Me.DT_File, Me.DT_Font})
+        Me.DataSet_Main.Tables.AddRange(New System.Data.DataTable() {Me.DT_File, Me.DT_Font, Me.DT_Paper, Me.DT_Border, Me.DT_CardRow})
         '
         'DT_File
         '
         Me.DT_File.Columns.AddRange(New System.Data.DataColumn() {Me.ID, Me.RowID, Me.Relation, Me.File})
+        Me.DT_File.Constraints.AddRange(New System.Data.Constraint() {New System.Data.UniqueConstraint("Constraint1", New String() {"ID"}, True)})
+        Me.DT_File.PrimaryKey = New System.Data.DataColumn() {Me.ID}
         Me.DT_File.TableName = "DT_File"
         '
         'ID
@@ -1528,24 +1565,266 @@ Partial Class Form1
         '
         'DT_Font
         '
+        Me.DT_Font.Columns.AddRange(New System.Data.DataColumn() {Me.DT_Font_ID, Me.DT_Font_RowID, Me.DT_Font_Relation, Me.DT_Font_Font})
+        Me.DT_Font.Constraints.AddRange(New System.Data.Constraint() {New System.Data.UniqueConstraint("Constraint1", New String() {"ID"}, True)})
+        Me.DT_Font.PrimaryKey = New System.Data.DataColumn() {Me.DT_Font_ID}
         Me.DT_Font.TableName = "DT_Font"
+        '
+        'DT_Paper
+        '
+        Me.DT_Paper.Columns.AddRange(New System.Data.DataColumn() {Me.DT_Paper_ID, Me.DT_Paper_Name, Me.DT_Paper_DPI, Me.DT_Paper_DIN, Me.DT_Paper_SpalteWert, Me.DT_Paper_SpalteAnzahl, Me.DT_Paper_ZeileWert, Me.DT_Paper_ZeileAnzahl, Me.DT_Paper_PaperSizeHeight, Me.DT_Paper_PaperSizeWidth, Me.DTPaper_CardSizeWidth, Me.DTPaper_CardSizeHeight})
+        Me.DT_Paper.Constraints.AddRange(New System.Data.Constraint() {New System.Data.UniqueConstraint("Constraint1", New String() {"ID"}, True)})
+        Me.DT_Paper.PrimaryKey = New System.Data.DataColumn() {Me.DT_Paper_ID}
+        Me.DT_Paper.TableName = "DT_Paper"
+        '
+        'DT_Font_ID
+        '
+        Me.DT_Font_ID.AllowDBNull = False
+        Me.DT_Font_ID.AutoIncrement = True
+        Me.DT_Font_ID.Caption = "ID"
+        Me.DT_Font_ID.ColumnName = "ID"
+        Me.DT_Font_ID.DataType = GetType(Long)
+        Me.DT_Font_ID.ReadOnly = True
+        '
+        'DT_Font_RowID
+        '
+        Me.DT_Font_RowID.Caption = "RowID"
+        Me.DT_Font_RowID.ColumnName = "RowID"
+        Me.DT_Font_RowID.DataType = GetType(Long)
+        Me.DT_Font_RowID.DefaultValue = CType(0, Long)
+        '
+        'DT_Font_Relation
+        '
+        Me.DT_Font_Relation.Caption = "Relation"
+        Me.DT_Font_Relation.ColumnName = "Relation"
+        Me.DT_Font_Relation.MaxLength = 20
+        '
+        'DT_Font_Font
+        '
+        Me.DT_Font_Font.Caption = "Font"
+        Me.DT_Font_Font.ColumnName = "Font"
+        '
+        'DT_Border
+        '
+        Me.DT_Border.Columns.AddRange(New System.Data.DataColumn() {Me.DT_Border_ID, Me.DT_Border_RowID, Me.DT_Border_Left, Me.DT_Border_Top, Me.DT_Border_Right, Me.DT_Border_Bottom, Me.DT_Border_Relation})
+        Me.DT_Border.Constraints.AddRange(New System.Data.Constraint() {New System.Data.UniqueConstraint("Constraint1", New String() {"ID"}, True)})
+        Me.DT_Border.PrimaryKey = New System.Data.DataColumn() {Me.DT_Border_ID}
+        Me.DT_Border.TableName = "DT_Border"
+        '
+        'DT_Border_ID
+        '
+        Me.DT_Border_ID.AllowDBNull = False
+        Me.DT_Border_ID.AutoIncrement = True
+        Me.DT_Border_ID.Caption = "ID"
+        Me.DT_Border_ID.ColumnName = "ID"
+        Me.DT_Border_ID.DataType = GetType(Long)
+        '
+        'DT_Border_RowID
+        '
+        Me.DT_Border_RowID.AllowDBNull = False
+        Me.DT_Border_RowID.Caption = "RowID"
+        Me.DT_Border_RowID.ColumnName = "RowID"
+        Me.DT_Border_RowID.DataType = GetType(Long)
+        '
+        'DT_Border_Left
+        '
+        Me.DT_Border_Left.AllowDBNull = False
+        Me.DT_Border_Left.Caption = "Left"
+        Me.DT_Border_Left.ColumnName = "Left"
+        Me.DT_Border_Left.DataType = GetType(Double)
+        Me.DT_Border_Left.DefaultValue = 0R
+        '
+        'DT_Border_Top
+        '
+        Me.DT_Border_Top.AllowDBNull = False
+        Me.DT_Border_Top.Caption = "Top"
+        Me.DT_Border_Top.ColumnName = "Top"
+        Me.DT_Border_Top.DataType = GetType(Double)
+        Me.DT_Border_Top.DefaultValue = 0R
+        '
+        'DT_Border_Right
+        '
+        Me.DT_Border_Right.AllowDBNull = False
+        Me.DT_Border_Right.Caption = "Right"
+        Me.DT_Border_Right.ColumnName = "Right"
+        Me.DT_Border_Right.DataType = GetType(Double)
+        Me.DT_Border_Right.DefaultValue = 0R
+        '
+        'DT_Border_Bottom
+        '
+        Me.DT_Border_Bottom.AllowDBNull = False
+        Me.DT_Border_Bottom.Caption = "Bottom"
+        Me.DT_Border_Bottom.ColumnName = "Bottom"
+        Me.DT_Border_Bottom.DataType = GetType(Double)
+        Me.DT_Border_Bottom.DefaultValue = 0R
+        '
+        'DT_Border_Relation
+        '
+        Me.DT_Border_Relation.AllowDBNull = False
+        Me.DT_Border_Relation.Caption = "Relation"
+        Me.DT_Border_Relation.ColumnName = "Relation"
+        '
+        'DT_Paper_ID
+        '
+        Me.DT_Paper_ID.AllowDBNull = False
+        Me.DT_Paper_ID.AutoIncrement = True
+        Me.DT_Paper_ID.Caption = "ID"
+        Me.DT_Paper_ID.ColumnName = "ID"
+        Me.DT_Paper_ID.DataType = GetType(Long)
+        Me.DT_Paper_ID.ReadOnly = True
+        '
+        'DT_Paper_Name
+        '
+        Me.DT_Paper_Name.AllowDBNull = False
+        Me.DT_Paper_Name.Caption = "Name"
+        Me.DT_Paper_Name.ColumnName = "Name"
+        Me.DT_Paper_Name.MaxLength = 20
+        '
+        'DT_Paper_DPI
+        '
+        Me.DT_Paper_DPI.AllowDBNull = False
+        Me.DT_Paper_DPI.Caption = "DPI"
+        Me.DT_Paper_DPI.ColumnName = "DPI"
+        Me.DT_Paper_DPI.DataType = GetType(Integer)
+        Me.DT_Paper_DPI.DefaultValue = 96
+        '
+        'DT_Paper_DIN
+        '
+        Me.DT_Paper_DIN.AllowDBNull = False
+        Me.DT_Paper_DIN.Caption = "DIN"
+        Me.DT_Paper_DIN.ColumnName = "DIN"
+        Me.DT_Paper_DIN.DefaultValue = "A4"
+        Me.DT_Paper_DIN.MaxLength = 2
+        '
+        'DT_Paper_SpalteWert
+        '
+        Me.DT_Paper_SpalteWert.AllowDBNull = False
+        Me.DT_Paper_SpalteWert.Caption = "SpalteWert"
+        Me.DT_Paper_SpalteWert.ColumnName = "SpalteWert"
+        Me.DT_Paper_SpalteWert.DataType = GetType(Double)
+        Me.DT_Paper_SpalteWert.DefaultValue = 0R
+        '
+        'DT_Paper_SpalteAnzahl
+        '
+        Me.DT_Paper_SpalteAnzahl.AllowDBNull = False
+        Me.DT_Paper_SpalteAnzahl.Caption = "SpalteAnzahl"
+        Me.DT_Paper_SpalteAnzahl.ColumnName = "SpalteAnzahl"
+        Me.DT_Paper_SpalteAnzahl.DataType = GetType(Integer)
+        Me.DT_Paper_SpalteAnzahl.DefaultValue = 1
+        '
+        'DT_Paper_ZeileWert
+        '
+        Me.DT_Paper_ZeileWert.AllowDBNull = False
+        Me.DT_Paper_ZeileWert.Caption = "ZeileWert"
+        Me.DT_Paper_ZeileWert.ColumnName = "ZeileWert"
+        Me.DT_Paper_ZeileWert.DataType = GetType(Double)
+        Me.DT_Paper_ZeileWert.DefaultValue = 0R
+        '
+        'DT_Paper_ZeileAnzahl
+        '
+        Me.DT_Paper_ZeileAnzahl.AllowDBNull = False
+        Me.DT_Paper_ZeileAnzahl.Caption = "ZeileAnzahl"
+        Me.DT_Paper_ZeileAnzahl.ColumnName = "ZeileAnzahl"
+        Me.DT_Paper_ZeileAnzahl.DataType = GetType(Integer)
+        Me.DT_Paper_ZeileAnzahl.DefaultValue = 1
+        '
+        'DT_Paper_PaperSizeHeight
+        '
+        Me.DT_Paper_PaperSizeHeight.AllowDBNull = False
+        Me.DT_Paper_PaperSizeHeight.Caption = "PaperSizeHeight"
+        Me.DT_Paper_PaperSizeHeight.ColumnName = "PaperSizeHeight"
+        Me.DT_Paper_PaperSizeHeight.DataType = GetType(Double)
+        Me.DT_Paper_PaperSizeHeight.DefaultValue = 0!
+        '
+        'DT_Paper_PaperSizeWidth
+        '
+        Me.DT_Paper_PaperSizeWidth.AllowDBNull = False
+        Me.DT_Paper_PaperSizeWidth.Caption = "PaperSizeWidth"
+        Me.DT_Paper_PaperSizeWidth.ColumnName = "PaperSizeWidth"
+        Me.DT_Paper_PaperSizeWidth.DataType = GetType(Double)
+        Me.DT_Paper_PaperSizeWidth.DefaultValue = 0!
+        '
+        'DTPaper_CardSizeWidth
+        '
+        Me.DTPaper_CardSizeWidth.AllowDBNull = False
+        Me.DTPaper_CardSizeWidth.Caption = "CardSizeWidth"
+        Me.DTPaper_CardSizeWidth.ColumnName = "CardSizeWidth"
+        Me.DTPaper_CardSizeWidth.DataType = GetType(Double)
+        Me.DTPaper_CardSizeWidth.DefaultValue = 0R
+        '
+        'DTPaper_CardSizeHeight
+        '
+        Me.DTPaper_CardSizeHeight.AllowDBNull = False
+        Me.DTPaper_CardSizeHeight.ColumnName = "CardSizeHeight"
+        Me.DTPaper_CardSizeHeight.DataType = GetType(Double)
+        Me.DTPaper_CardSizeHeight.DefaultValue = 0R
+        '
+        'DT_CardRow
+        '
+        Me.DT_CardRow.Columns.AddRange(New System.Data.DataColumn() {Me.DT_CardRow_ID, Me.DT_CardRow_Line, Me.DT_CardRow_DataColumn, Me.DT_CardRow_FontColor, Me.DT_CardRow_Style, Me.DT_CardRow_RowID})
+        Me.DT_CardRow.Constraints.AddRange(New System.Data.Constraint() {New System.Data.UniqueConstraint("Constraint1", New String() {"ID"}, True)})
+        Me.DT_CardRow.PrimaryKey = New System.Data.DataColumn() {Me.DT_CardRow_ID}
+        Me.DT_CardRow.TableName = "DT_CardRow"
+        '
+        'DT_CardRow_ID
+        '
+        Me.DT_CardRow_ID.AllowDBNull = False
+        Me.DT_CardRow_ID.AutoIncrement = True
+        Me.DT_CardRow_ID.Caption = "ID"
+        Me.DT_CardRow_ID.ColumnName = "ID"
+        Me.DT_CardRow_ID.DataType = GetType(Long)
+        Me.DT_CardRow_ID.ReadOnly = True
+        '
+        'DT_CardRow_Line
+        '
+        Me.DT_CardRow_Line.AllowDBNull = False
+        Me.DT_CardRow_Line.Caption = "Line"
+        Me.DT_CardRow_Line.ColumnName = "Line"
+        Me.DT_CardRow_Line.DataType = GetType(Double)
+        '
+        'DT_CardRow_DataColumn
+        '
+        Me.DT_CardRow_DataColumn.AllowDBNull = False
+        Me.DT_CardRow_DataColumn.Caption = "QRCode"
+        Me.DT_CardRow_DataColumn.ColumnName = "QRCode"
+        Me.DT_CardRow_DataColumn.DataType = GetType(Boolean)
+        Me.DT_CardRow_DataColumn.DefaultValue = False
+        '
+        'DT_CardRow_FontColor
+        '
+        Me.DT_CardRow_FontColor.AllowDBNull = False
+        Me.DT_CardRow_FontColor.Caption = "FontColor"
+        Me.DT_CardRow_FontColor.ColumnName = "FontColor"
+        '
+        'DT_CardRow_Style
+        '
+        Me.DT_CardRow_Style.Caption = "Style"
+        Me.DT_CardRow_Style.ColumnName = "Style"
+        '
+        'DT_CardRow_RowID
+        '
+        Me.DT_CardRow_RowID.AllowDBNull = False
+        Me.DT_CardRow_RowID.Caption = "RowID"
+        Me.DT_CardRow_RowID.ColumnName = "RowID"
+        Me.DT_CardRow_RowID.DataType = GetType(Long)
+        Me.DT_CardRow_RowID.DefaultValue = CType(0, Long)
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ClientSize = New System.Drawing.Size(675, 528)
+        Me.ClientSize = New System.Drawing.Size(448, 391)
         Me.Controls.Add(Me.TabControl_Main)
         Me.Controls.Add(Me.StatusStrip_Main)
         Me.Controls.Add(Me.MenuStrip_Main)
-        MySettings1.LastDirectory = "C:\"
-        MySettings1.LastFile = "C:\"
-        MySettings1.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        MySettings1.MyLocation = New System.Drawing.Point(100, 100)
-        MySettings1.MySize = New System.Drawing.Size(600, 600)
-        MySettings1.SettingsKey = ""
-        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings1, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        MySettings2.LastDirectory = "C:\"
+        MySettings2.LastFile = "C:\"
+        MySettings2.Main_Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        MySettings2.MyLocation = New System.Drawing.Point(100, 100)
+        MySettings2.MySize = New System.Drawing.Size(600, 600)
+        MySettings2.SettingsKey = ""
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", MySettings2, "MySize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.CSVtoQR.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.Location = Global.CSVtoQR.My.MySettings.Default.MyLocation
@@ -1611,6 +1890,9 @@ Partial Class Form1
         CType(Me.DataSet_Main, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_File, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DT_Font, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DT_Paper, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DT_Border, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DT_CardRow, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1728,4 +2010,36 @@ Partial Class Form1
     Friend WithEvents FlowLayoutPanel3 As FlowLayoutPanel
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
+    Friend WithEvents DT_Font_ID As DataColumn
+    Friend WithEvents DT_Font_RowID As DataColumn
+    Friend WithEvents DT_Font_Relation As DataColumn
+    Friend WithEvents DT_Font_Font As DataColumn
+    Friend WithEvents DT_Paper As DataTable
+    Friend WithEvents DT_Paper_ID As DataColumn
+    Friend WithEvents DT_Paper_Name As DataColumn
+    Friend WithEvents DT_Paper_DPI As DataColumn
+    Friend WithEvents DT_Paper_DIN As DataColumn
+    Friend WithEvents DT_Paper_SpalteWert As DataColumn
+    Friend WithEvents DT_Paper_SpalteAnzahl As DataColumn
+    Friend WithEvents DT_Paper_ZeileWert As DataColumn
+    Friend WithEvents DT_Paper_ZeileAnzahl As DataColumn
+    Friend WithEvents DT_Paper_PaperSizeHeight As DataColumn
+    Friend WithEvents DT_Paper_PaperSizeWidth As DataColumn
+    Friend WithEvents DTPaper_CardSizeWidth As DataColumn
+    Friend WithEvents DTPaper_CardSizeHeight As DataColumn
+    Friend WithEvents DT_Border As DataTable
+    Friend WithEvents DT_Border_ID As DataColumn
+    Friend WithEvents DT_Border_RowID As DataColumn
+    Friend WithEvents DT_Border_Left As DataColumn
+    Friend WithEvents DT_Border_Top As DataColumn
+    Friend WithEvents DT_Border_Right As DataColumn
+    Friend WithEvents DT_Border_Bottom As DataColumn
+    Friend WithEvents DT_Border_Relation As DataColumn
+    Friend WithEvents DT_CardRow As DataTable
+    Friend WithEvents DT_CardRow_ID As DataColumn
+    Friend WithEvents DT_CardRow_Line As DataColumn
+    Friend WithEvents DT_CardRow_DataColumn As DataColumn
+    Friend WithEvents DT_CardRow_FontColor As DataColumn
+    Friend WithEvents DT_CardRow_Style As DataColumn
+    Friend WithEvents DT_CardRow_RowID As DataColumn
 End Class
